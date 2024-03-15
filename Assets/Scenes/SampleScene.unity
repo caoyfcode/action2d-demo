@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 532384325}
   - component: {fileID: 532384326}
   - component: {fileID: 532384324}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,6 +336,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c1b86263cba1e4082481ee91a480b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCastFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  wallCastFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!50 &532384325
 Rigidbody2D:
   serializedVersion: 4
@@ -351,7 +379,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -420,7 +448,7 @@ GameObject:
   - component: {fileID: 1993294473}
   - component: {fileID: 1993294472}
   - component: {fileID: 1993294471}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +471,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d4dfea97159c5b64d93fd38ad1022b8d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -578,7 +606,7 @@ GameObject:
   - component: {fileID: 2000963554}
   - component: {fileID: 2000963553}
   - component: {fileID: 2000963552}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Wall_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +764,7 @@ GameObject:
   - component: {fileID: 2079897544}
   - component: {fileID: 2079897543}
   - component: {fileID: 2079897542}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
