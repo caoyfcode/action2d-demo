@@ -15,7 +15,7 @@ class WarriorController : MonoBehaviour
 
     internal abstract class State
     {
-        // Free State: moving x, falling 
+        // Free State: moving x, falling, second jump
         internal abstract class Free: State
         { 
             internal class OnGround : Free { }
@@ -27,6 +27,7 @@ class WarriorController : MonoBehaviour
 
     const float MAX_RUN_SPEED = 6f;
     const float JUMP_SPEED = 5f;
+    const float AIR_JUMP_SPEED = 8f;
     const float MAX_JUMP_TIME = 0.3f;
     const float DASH_TIME = 0.2f;
     const float DASH_SPEED = 18f;
@@ -35,16 +36,19 @@ class WarriorController : MonoBehaviour
     const string ANIM_ATTACK_2 = "Attack_2";
     const float ATTACK_COMBO_TIME = 0.1f;
 
+    public GameObject smokeRingPrefab;
     Animator animator;
     Rigidbody2D rb;
     BoxCollider2D boxCol;
 
     ContactFilter2D envCastFilter; // 环境检测
     RaycastHit2D[] castHits = new RaycastHit2D[5];
+
+    public bool enableSecondJump = true;
     
 
     // 状态
-    bool IsAttacking => animator.GetBool("IsAttacking");
+    public bool isAttacking = false; // set by animator
     bool Flip
     {
         get => rb.transform.localScale.x < 0;
@@ -64,22 +68,15 @@ class WarriorController : MonoBehaviour
             _isOnGround = value;
         }
     }
-    bool _isJumping;
-    bool IsJumping
-    {
-        get => _isJumping;
-        set
-        {
-            animator.SetBool("IsJumping", value);
-            _isJumping = value;
-        }
-    }
+    bool isJumping = false;
     bool isOnLeftWall = false;
     bool isOnRightWall = false;
+    bool isOnCeiling = false;
 
     // 跳跃状态
     // TODO 实现跳跃 coyote time(土狼时间)
     Timer jumpTimer = null;
+    int airJumpCount = 0; // 在空中跳跃次数, 用于进行二段跳, 三段跳
 
     // 攻击状态
     string nextAttack = ANIM_ATTACK_1;
@@ -116,11 +113,11 @@ class WarriorController : MonoBehaviour
     // 根据分散的状态得到总状态
     State GetState()
     {
-        if (IsAttacking)
+        if (isAttacking)
         {
             return new State.Attack();
         }
-        if (IsJumping)
+        if (isJumping)
         {
             return new State.Jump();
         }
@@ -140,10 +137,12 @@ class WarriorController : MonoBehaviour
         // 更新状态
         isOnLeftWall = boxCol.Cast(Vector2.left, envCastFilter, castHits, 0.2f) > 0;
         isOnRightWall = boxCol.Cast(Vector2.right, envCastFilter, castHits, 0.2f) > 0;
+        isOnCeiling = boxCol.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
         IsOnGround = boxCol.Cast(Vector2.down, envCastFilter, castHits, 0.1f) > 0;
         if (IsOnGround)
         {
             airAttackCount = 0;
+            airJumpCount = 0;
         }
         // 获取指令
         var cmd = GetCommand();
@@ -172,9 +171,14 @@ class WarriorController : MonoBehaviour
                     Attack(out velocity);
                     state = new State.Attack();
                 }
+                else if (cmd.justJump && enableSecondJump && airJumpCount < 1)
+                {
+                    AirJump(ref velocity);
+                    // state does not change
+                }
                 break;
             case State.Jump:
-                if (!cmd.jump)
+                if (!cmd.jump || isOnCeiling)
                 {
                     StopJump(ref velocity);
                     state = GetState();
@@ -188,8 +192,10 @@ class WarriorController : MonoBehaviour
                 break;
         }
 
-        // 额外处理水平移动
+        // 更新额外的动画变量
+        animator.SetBool("IsRising", velocity.y > 0);
         animator.SetBool("IsRunning", cmd.moveX != 0 && state is State.Free.OnGround);
+        // 处理水平移动
         velocity.x = 0;
         if (state is State.Jump || state is State.Free)
         {
@@ -207,17 +213,21 @@ class WarriorController : MonoBehaviour
             }
         }
 
-        if (nextAttack == ANIM_ATTACK_2 && prevIsAttacking == true && IsAttacking == false)
+        if (prevIsAttacking && !isAttacking)
         {
-            attackComboTimer.Reset(ATTACK_COMBO_TIME, () => nextAttack = ANIM_ATTACK_1);
+            attackBuffer = false;
+            if (nextAttack == ANIM_ATTACK_2)
+            {
+                attackComboTimer.Reset(ATTACK_COMBO_TIME, () => nextAttack = ANIM_ATTACK_1);
+            }
         }
-        prevIsAttacking = IsAttacking;
+        prevIsAttacking = isAttacking;
         rb.velocity = velocity;
     }
 
     void FixedUpdate()
     {
-        if (!IsAttacking && !IsOnGround && !IsJumping)
+        if (!isAttacking && !IsOnGround && !isJumping)
         {
             var velocity = rb.velocity;
             velocity.y -= GRAVITY * Time.deltaTime;
@@ -243,14 +253,23 @@ class WarriorController : MonoBehaviour
     void StartJump(ref Vector2 velocity)
     {
         velocity.y = JUMP_SPEED;
-        IsJumping = true;
-        jumpTimer.Reset(MAX_JUMP_TIME, () => IsJumping = false);
+        isJumping = true;
+        jumpTimer.Reset(MAX_JUMP_TIME, () => isJumping = false);
     }
 
     void StopJump(ref Vector2 velocity)
     {
         velocity.y = 0;
-        IsJumping = false;
+        isJumping = false;
         jumpTimer.Stop();
+    }
+
+    void AirJump(ref Vector2 velocity)
+    {
+        velocity.y = AIR_JUMP_SPEED;
+        isJumping = false;
+        airJumpCount++;
+        airAttackCount = 0;
+        Instantiate(smokeRingPrefab, new Vector3(transform.position.x - 0.1f, transform.position.y - 0.7f, 0), Quaternion.identity);
     }
 }
