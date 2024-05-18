@@ -10,7 +10,7 @@ class WarriorController : MonoBehaviour
         internal float moveX = 0; 
         internal bool jump = false, justJump = false;
         internal bool attack = false;
-        // internal bool dash = false;
+        internal bool dash = false;
     }
 
     internal abstract class State
@@ -23,6 +23,7 @@ class WarriorController : MonoBehaviour
         }
         internal class Jump: State { }
         internal class Attack: State { }
+        internal class Dash: State { }
     }
 
     const float MAX_RUN_SPEED = 6f;
@@ -31,9 +32,12 @@ class WarriorController : MonoBehaviour
     const float MAX_JUMP_TIME = 0.3f;
     const float DASH_TIME = 0.2f;
     const float DASH_SPEED = 18f;
+    const float DASH_COOL_DOWN_TIME = DASH_TIME + 0.3f; // 相邻两次 dash 的冷却时间
     const float GRAVITY = 15f;
+    const string ANIM_IDLE = "Idle";
     const string ANIM_ATTACK_1 = "Attack_1";
     const string ANIM_ATTACK_2 = "Attack_2";
+    const string ANIM_DASH = "Dash";
     const float ATTACK_COMBO_TIME = 0.1f;
 
     public GameObject smokeRingPrefab;
@@ -41,14 +45,13 @@ class WarriorController : MonoBehaviour
     Rigidbody2D rb;
     BoxCollider2D boxCol;
 
-    ContactFilter2D envCastFilter; // 环境检测
-    RaycastHit2D[] castHits = new RaycastHit2D[5];
-
+    // 设置
     public bool enableSecondJump = true;
+    public bool enableDash = true;
     
 
     // 状态
-    public bool isAttacking = false; // set by animator
+    Vector2 velocity; // 每次 update 使用
     bool Flip
     {
         get => rb.transform.localScale.x < 0;
@@ -68,22 +71,33 @@ class WarriorController : MonoBehaviour
             _isOnGround = value;
         }
     }
-    bool isJumping = false;
+    
+    // 环境检测
+    ContactFilter2D envCastFilter;
+    RaycastHit2D[] castHits = new RaycastHit2D[5];
     bool isOnLeftWall = false;
     bool isOnRightWall = false;
     bool isOnCeiling = false;
 
     // 跳跃状态
     // TODO 实现跳跃 coyote time(土狼时间)
+    bool isJumping = false;
     Timer jumpTimer = null;
     int airJumpCount = 0; // 在空中跳跃次数, 用于进行二段跳, 三段跳
 
     // 攻击状态
-    string nextAttack = ANIM_ATTACK_1;
+    public bool isAttacking = false; // set by animator or StopAttack()
+    string nextAttackName = ANIM_ATTACK_1;
     bool attackBuffer = false;
     Timer attackComboTimer = null;
     bool prevIsAttacking = false;
     int airAttackCount = 0; // 在空中进行两次攻击后不可再攻击, 直到落地或二段跳
+
+    // 冲刺状态
+    bool isDashing = false; // set by StopDash()
+    bool isDashCold = false;
+    Timer dashTimer = null;
+    Timer dashCoolDownTimer = null;
 
 
     // Start is called before the first frame update
@@ -95,6 +109,8 @@ class WarriorController : MonoBehaviour
         envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
         jumpTimer = new Timer(this);
         attackComboTimer = new Timer(this);
+        dashTimer = new Timer(this);
+        dashCoolDownTimer = new Timer(this);
     }
 
     // 从输入获取指令
@@ -105,7 +121,8 @@ class WarriorController : MonoBehaviour
             moveX = Input.GetAxis("Horizontal"),
             justJump = Input.GetButtonDown("Jump"),
             jump = Input.GetButton("Jump"),
-            attack = Input.GetButtonDown("Attack")
+            attack = Input.GetButtonDown("Attack"),
+            dash = Input.GetButtonDown("Dash"),
         };
         return cmd;
     }
@@ -113,6 +130,10 @@ class WarriorController : MonoBehaviour
     // 根据分散的状态得到总状态
     State GetState()
     {
+        if (isDashing)
+        {
+            return new State.Dash();
+        }
         if (isAttacking)
         {
             return new State.Attack();
@@ -148,77 +169,95 @@ class WarriorController : MonoBehaviour
         var cmd = GetCommand();
         // 聚合状态
         var state = GetState();
-        var velocity = rb.velocity;
+        velocity = rb.velocity;
 
         // 更新状态
         switch (state)
         {
             case State.Free.OnGround:
-                if (cmd.attack || attackBuffer)
+                if (cmd.dash && enableDash && !isDashCold)
                 {
-                    Attack(out velocity);
+                    Dash();
+                    state = new State.Dash();
+                }
+                else if (cmd.attack || attackBuffer)
+                {
+                    Attack();
                     state = new State.Attack();
                 }
                 else if (cmd.justJump)
                 {
-                    StartJump(ref velocity);
+                    StartJump();
                     state = new State.Jump();
                 }
                 break;
             case State.Free.OnAir:
-                if ((cmd.attack || attackBuffer) && airAttackCount < 2)
+                if (cmd.dash && enableDash && !isDashCold)
                 {
-                    Attack(out velocity);
+                    Dash();
+                    state = new State.Dash();
+                }
+                else if ((cmd.attack || attackBuffer) && airAttackCount < 2)
+                {
+                    Attack();
                     state = new State.Attack();
                 }
                 else if (cmd.justJump && enableSecondJump && airJumpCount < 1)
                 {
-                    AirJump(ref velocity);
+                    AirJump();
                     // state does not change
                 }
                 break;
             case State.Jump:
-                if (!cmd.jump || isOnCeiling)
+                if (cmd.dash && enableDash && !isDashCold)
                 {
-                    StopJump(ref velocity);
+                    StopJump();
+                    Dash();
+                    state = new State.Dash();
+                }
+                else if ((cmd.attack || attackBuffer) && airAttackCount < 2)
+                {
+                    StopJump();
+                    Attack();
+                    state = new State.Attack();
+                }
+                else if (!cmd.jump || isOnCeiling)
+                {
+                    StopJump();
                     state = GetState();
                 }
                 break;
             case State.Attack:
-                if (cmd.attack)
+                if (cmd.dash && enableDash && !isDashCold)
+                {
+                    StopAttack();
+                    Dash();
+                    state = new State.Dash();
+                }
+                else if (cmd.attack)
                 {
                     attackBuffer = true;
                 }
+                break;
+            case State.Dash:
+                // nothing
                 break;
         }
 
         // 更新额外的动画变量
         animator.SetBool("IsRising", velocity.y > 0);
         animator.SetBool("IsRunning", cmd.moveX != 0 && state is State.Free.OnGround);
-        // 处理水平移动
-        velocity.x = 0;
-        if (state is State.Jump || state is State.Free)
-        {
-            if (cmd.moveX != 0)
-            {
-                Flip = cmd.moveX < 0;
-                if ((cmd.moveX < 0 && isOnLeftWall) || (cmd.moveX > 0 && isOnRightWall))
-                {
-                    velocity.x = 0;
-                }
-                else
-                {
-                    velocity.x = cmd.moveX * MAX_RUN_SPEED;
-                }
-            }
+        // 处理水平输入的移动
+        if (state is State.Jump || state is State.Free) {
+            HorizontalMoveAndFlip(cmd.moveX);
         }
-
+        
         if (prevIsAttacking && !isAttacking)
         {
             attackBuffer = false;
-            if (nextAttack == ANIM_ATTACK_2)
+            if (nextAttackName == ANIM_ATTACK_2)
             {
-                attackComboTimer.Reset(ATTACK_COMBO_TIME, () => nextAttack = ANIM_ATTACK_1);
+                attackComboTimer.Reset(ATTACK_COMBO_TIME, () => nextAttackName = ANIM_ATTACK_1);
             }
         }
         prevIsAttacking = isAttacking;
@@ -227,7 +266,7 @@ class WarriorController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isAttacking && !IsOnGround && !isJumping)
+        if (!isAttacking && !IsOnGround && !isJumping && !isDashing)
         {
             var velocity = rb.velocity;
             velocity.y -= GRAVITY * Time.deltaTime;
@@ -235,14 +274,30 @@ class WarriorController : MonoBehaviour
         }
     }
 
-    // 转换到 Attack 状态
-    void Attack(out Vector2 velocity)
+    void HorizontalMoveAndFlip(float moveX)
     {
-        animator.Play(nextAttack);
+        velocity.x = 0;
+        if (moveX != 0)
+        {
+            Flip = moveX < 0;
+            if ((moveX < 0 && isOnLeftWall) || (moveX > 0 && isOnRightWall))
+            {
+                velocity.x = 0;
+            }
+            else
+            {
+                velocity.x = moveX * MAX_RUN_SPEED;
+            }
+        }
+    }
+
+    // 转换到 Attack 状态
+    void Attack()
+    {
+        animator.Play(nextAttackName);
         velocity.x = 0;
         velocity.y = 0;
-        StopJump(ref velocity);
-        nextAttack = nextAttack == ANIM_ATTACK_1 ? ANIM_ATTACK_2 : ANIM_ATTACK_1;
+        nextAttackName = nextAttackName == ANIM_ATTACK_1 ? ANIM_ATTACK_2 : ANIM_ATTACK_1;
         attackBuffer = false;
         if (!IsOnGround)
         {
@@ -250,26 +305,58 @@ class WarriorController : MonoBehaviour
         }
     }
 
-    void StartJump(ref Vector2 velocity)
+    // attack 被打断(被dash或者受伤打断)
+    void StopAttack()
+    {
+        animator.Play(ANIM_IDLE);
+        isAttacking = false;
+        attackComboTimer.Stop();
+        nextAttackName = ANIM_ATTACK_1;
+        attackBuffer = false;
+        airAttackCount = 0;
+    }
+
+    void StartJump()
     {
         velocity.y = JUMP_SPEED;
         isJumping = true;
         jumpTimer.Reset(MAX_JUMP_TIME, () => isJumping = false);
     }
 
-    void StopJump(ref Vector2 velocity)
+    void StopJump()
     {
         velocity.y = 0;
         isJumping = false;
         jumpTimer.Stop();
     }
 
-    void AirJump(ref Vector2 velocity)
+    void AirJump()
     {
         velocity.y = AIR_JUMP_SPEED;
         isJumping = false;
         airJumpCount++;
-        airAttackCount = 0;
+        airAttackCount = 0; // 跳跃重置攻击
         Instantiate(smokeRingPrefab, new Vector3(transform.position.x - 0.1f, transform.position.y - 0.7f, 0), Quaternion.identity);
+    }
+
+    void Dash()
+    {
+        animator.Play(ANIM_DASH);
+        velocity.y = 0;
+        velocity.x = DASH_SPEED * (Flip ? -1 : 1);
+        isDashing = true;
+        isDashCold = true;
+        airAttackCount = 0; // 冲刺重置攻击
+        dashTimer.Reset(DASH_TIME, () => StopDash());
+        dashCoolDownTimer.Reset(DASH_COOL_DOWN_TIME, () => isDashCold = false);
+    }
+
+    void StopDash()
+    {
+        animator.Play(ANIM_IDLE);
+        velocity.y = 0;
+        velocity.x = 0;
+        isDashing = false;
+        dashTimer.Stop();
     }
 }
