@@ -1,0 +1,319 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class WarriorState : IStateMachineState
+{
+    protected Warrior warrior;
+    protected StateMachine<WarriorState> stateMachine;
+
+    public WarriorState(Warrior warrior, StateMachine<WarriorState> machine)
+    {
+        this.warrior = warrior;
+        this.stateMachine = machine;
+    }
+
+    public virtual void Enter() {}
+    public abstract bool Transition();
+    public abstract void Update();
+    public virtual void Exit() {}
+}
+
+
+public class WarriorGroundFree : WarriorState
+{
+    public WarriorGroundFree(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        warrior.airJumpCount = 0;
+        warrior.airAttackCount = 0;
+        warrior.airDashCount = 0;
+    }
+
+    public override bool Transition()
+    {
+        bool changed = true;
+        var cmd = warrior.CurrentCommand;
+        if (cmd.dash && warrior.dashCoolDownTimer <= 0 && warrior.airDashCount == 0 && warrior.dashAbility)
+        {
+            stateMachine.ChangeState(warrior.dashState);
+        }
+        else if (cmd.attack && warrior.airAttackCount < 2)
+        {
+            stateMachine.ChangeState(warrior.attackState);
+        }
+        else if (cmd.startJump && !warrior.isOnCeiling)
+        {
+            stateMachine.ChangeState(warrior.holdJumpState);
+        }
+        else if (!warrior.isOnGround)
+        {
+            stateMachine.ChangeState(warrior.airFreeState);
+        }
+        else
+        {
+            changed = false;
+        }
+        return changed;
+    }
+
+    public override void Update()
+    {
+        if (warrior.CurrentCommand.moveX != 0)
+        {
+            warrior.animator.Play(Warrior.ANIM_RUN);
+        }
+        else
+        {
+            warrior.animator.Play(Warrior.ANIM_IDLE);
+        }
+
+        warrior.velocity.y = 0;
+        warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+    }
+}
+
+public abstract class WarriorAirState : WarriorState
+{
+    public WarriorAirState(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override bool Transition()
+    {
+        bool changed = true;
+        var cmd = warrior.CurrentCommand;
+        if (cmd.dash && warrior.dashCoolDownTimer <= 0 && warrior.airDashCount == 0 && warrior.dashAbility)
+        {
+            stateMachine.ChangeState(warrior.dashState);
+        }
+        else if (cmd.attack && warrior.airAttackCount < 2)
+        {
+            stateMachine.ChangeState(warrior.attackState);
+        }
+        else if (warrior.isOnCeiling && warrior.velocity.y > 0) // 碰到头顶
+        {
+            if (this == warrior.airFreeState)
+                changed = false;
+            warrior.velocity.y = 0;
+            stateMachine.ChangeState(warrior.airFreeState);
+        }
+        else
+        {
+            changed = false;
+        }
+        return changed;
+    }
+
+    public override void Update()
+    {
+        if (warrior.velocity.y > 0)
+        {
+            warrior.animator.Play(Warrior.ANIM_RISE);
+        }
+        else
+        {
+            warrior.animator.Play(Warrior.ANIM_FALL);
+        }
+        warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+    }
+}
+
+/// airFree 状态同时作为所有状态结束时到达的状态
+/// 至于为什么不是groundFree, 因为进入地面状态会清除一些计数器
+public class WarriorAirFree : WarriorAirState
+{
+    public WarriorAirFree(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override bool Transition()
+    {
+        // 这里先判断地是因为该有的状态转换地上都有
+        // 并且进入地上可以重置一些计数器
+        if (warrior.isOnGround)
+        {
+            stateMachine.ChangeState(warrior.groundFreeState);
+            return true;
+        }
+        if (base.Transition())
+            return true;
+        if (warrior.CurrentCommand.startJump && warrior.airJumpCount == 0 && warrior.secondJumpAbility) // air jump
+        {
+            warrior.velocity.y = Warrior.AIR_JUMP_SPEED;
+            warrior.airJumpCount++;
+            warrior.airAttackCount = 0; // 跳跃重置攻击
+            UnityEngine.Object.Instantiate(warrior.smokeRingPrefab, new Vector3(warrior.transform.position.x - 0.1f, warrior.transform.position.y - 0.7f, 0), Quaternion.identity);
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+}
+
+
+public class WarriorHoldJump : WarriorAirState
+{
+    float timer = 0;
+    public WarriorHoldJump(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        timer = Warrior.MAX_JUMP_TIME;
+        warrior.animator.Play(Warrior.ANIM_RISE);
+        warrior.velocity.y = Warrior.JUMP_SPEED;
+        warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+    }
+
+    public override bool Transition()
+    {
+        if (base.Transition())
+            return true;
+        if (IsEnd)
+        {
+            stateMachine.ChangeState(warrior.airFreeState);
+            return true;
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        timer -= Time.deltaTime;
+        warrior.velocity.y = Warrior.JUMP_SPEED;
+    }
+
+    public override void Exit()
+    {
+        timer = 0;
+    }
+
+    bool IsEnd => timer <= 0 || !warrior.CurrentCommand.holdJump;
+}
+
+public class WarriorDash : WarriorState
+{
+    float timer = 0;
+    public WarriorDash(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        timer = Warrior.DASH_TIME;
+        warrior.dashCoolDownTimer = Warrior.DASH_COOL_DOWN_TIME;
+        warrior.animator.Play(Warrior.ANIM_DASH);
+        // 调用 horizon... 是为了在冲刺前转向
+        warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+        warrior.velocity.y = 0;
+        warrior.velocity.x = Warrior.DASH_SPEED * warrior.FacingDirection;
+        if (!warrior.isOnGround)
+        {
+            warrior.airDashCount++;
+        }
+    }
+
+    public override bool Transition()
+    {
+        if (IsEnd)
+        {
+            stateMachine.ChangeState(warrior.airFreeState);
+            return true;
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        timer -= Time.deltaTime;
+        warrior.velocity.y = 0;
+        warrior.velocity.x = Warrior.DASH_SPEED * warrior.FacingDirection;
+        // TODO 拖尾
+    }
+
+    public override void Exit()
+    {
+        timer = 0;
+    }
+
+    bool IsEnd => timer <= 0;
+}
+
+public class WarriorAttack : WarriorState
+{
+    string nextAnimName = Warrior.ANIM_ATTACK_1;
+    bool attackBuffer;
+    public WarriorAttack(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        attackBuffer = false;
+        warrior.attackCancelable = true;
+        warrior.attackEnd = false;
+        warrior.velocity.x = 0;
+        warrior.velocity.y = 0;
+        if (warrior.attackComboTimer <= 0)
+            nextAnimName = Warrior.ANIM_ATTACK_1;
+        warrior.animator.Play(nextAnimName);
+        nextAnimName = nextAnimName == Warrior.ANIM_ATTACK_1 ? Warrior.ANIM_ATTACK_2 : Warrior.ANIM_ATTACK_1;
+        if (!warrior.isOnGround)
+        {
+            warrior.airAttackCount++;
+        }
+    }
+
+    public override bool Transition()
+    {
+        if (warrior.attackCancelable && warrior.CurrentCommand.dash && warrior.dashCoolDownTimer <= 0 && warrior.airDashCount == 0 && warrior.dashAbility)
+        {
+            // airFree 也可进入 dash, 并且还能处理进入地面的情况
+            warrior.attackComboTimer = 0;
+            stateMachine.ChangeState(warrior.airFreeState);
+            return true;
+        }
+        if (warrior.attackEnd)
+        {
+            warrior.attackComboTimer = Warrior.ATTACK_COMBO_TIME;
+            if (!attackBuffer)
+            {
+                stateMachine.ChangeState(warrior.airFreeState);
+            }
+            else if (warrior.airAttackCount < 2)
+            {
+                stateMachine.ChangeState(warrior.attackState);
+            }
+            return true;
+        }
+        if (warrior.CurrentCommand.attack)
+        {
+            attackBuffer = true;
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        if (warrior.hitBoxEnabled)
+        {
+            // ...
+        }
+    }
+
+    public override void Exit()
+    {
+        warrior.hitBoxEnabled = false;
+    }
+
+}
