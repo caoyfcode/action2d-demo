@@ -49,6 +49,8 @@ public class WarriorGroundFree : WarriorState
         else if (cmd.startJump && !warrior.isOnCeiling)
         {
             stateMachine.ChangeState(warrior.holdJumpState);
+            if (warrior.IsFacingWall)
+                warrior.holdJumpState.jumpFromWallFoot = true;
         }
         else if (!warrior.isOnGround)
         {
@@ -79,6 +81,8 @@ public class WarriorGroundFree : WarriorState
 
 public abstract class WarriorAirState : WarriorState
 {
+    // 若从墙脚起跳，则不会转到爬墙状态
+    public bool jumpFromWallFoot = false;
     public WarriorAirState(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
     {
     }
@@ -94,6 +98,10 @@ public abstract class WarriorAirState : WarriorState
         else if (cmd.attack && warrior.airAttackCount < 2)
         {
             stateMachine.ChangeState(warrior.attackState);
+        }
+        else if (warrior.IsFacingWall && cmd.moveX * warrior.FacingDirection > 0 && !jumpFromWallFoot && warrior.wallSlideAbility)
+        {
+            stateMachine.ChangeState(warrior.wallSlideState);
         }
         else if (warrior.isOnCeiling && warrior.velocity.y > 0) // 碰到头顶
         {
@@ -120,6 +128,12 @@ public abstract class WarriorAirState : WarriorState
             warrior.animator.Play(Warrior.ANIM_FALL);
         }
         warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        jumpFromWallFoot = false;
     }
 }
 
@@ -172,6 +186,7 @@ public class WarriorHoldJump : WarriorAirState
         warrior.animator.Play(Warrior.ANIM_RISE);
         warrior.velocity.y = Warrior.JUMP_SPEED;
         warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
+        warrior.CurrentCommand.startJump = false; // 消耗掉 start jump
     }
 
     public override bool Transition()
@@ -179,7 +194,7 @@ public class WarriorHoldJump : WarriorAirState
         if (base.Transition())
             return true;
         if (IsEnd)
-        {
+        { 
             stateMachine.ChangeState(warrior.airFreeState);
             return true;
         }
@@ -187,7 +202,7 @@ public class WarriorHoldJump : WarriorAirState
     }
 
     public override void Update()
-    {
+    {  
         base.Update();
         timer -= Time.deltaTime;
         warrior.velocity.y = Warrior.JUMP_SPEED;
@@ -195,6 +210,7 @@ public class WarriorHoldJump : WarriorAirState
 
     public override void Exit()
     {
+        base.Exit();
         timer = 0;
     }
 
@@ -227,7 +243,10 @@ public class WarriorDash : WarriorState
     {
         if (IsEnd)
         {
-            stateMachine.ChangeState(warrior.airFreeState);
+            if (!warrior.isOnGround && warrior.IsFacingWall && warrior.wallSlideAbility)
+                stateMachine.ChangeState(warrior.wallSlideState);
+            else
+                stateMachine.ChangeState(warrior.airFreeState);
             return true;
         }
         return false;
@@ -296,10 +315,6 @@ public class WarriorAttack : WarriorState
             }
             return true;
         }
-        if (warrior.CurrentCommand.attack)
-        {
-            attackBuffer = true;
-        }
         return false;
     }
 
@@ -307,7 +322,11 @@ public class WarriorAttack : WarriorState
     {
         if (warrior.hitBoxEnabled)
         {
-            // ...
+            // TODO
+        }
+        if (!warrior.attackCancelable && warrior.CurrentCommand.attack)
+        {
+            attackBuffer = true;
         }
     }
 
@@ -316,4 +335,47 @@ public class WarriorAttack : WarriorState
         warrior.hitBoxEnabled = false;
     }
 
+}
+
+public class WarriorWallSlide : WarriorState
+{
+    public WarriorWallSlide(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        warrior.airJumpCount = 0;
+        warrior.airAttackCount = 0;
+        warrior.airDashCount = 0;
+        warrior.velocity.x = 0;
+        warrior.velocity.y = -Warrior.WALL_SLIDE_SPEED;
+        warrior.animator.Play(Warrior.ANIM_WALL_SLIDE);
+    }
+
+    public override bool Transition()
+    {
+        if (warrior.CurrentCommand.dash && warrior.dashCoolDownTimer <= 0 && warrior.airDashCount == 0 && warrior.dashAbility && warrior.CurrentCommand.moveX * warrior.FacingDirection < 0)
+        {
+            stateMachine.ChangeState(warrior.dashState);
+            return true;
+        }
+        if (warrior.CurrentCommand.startJump && !warrior.isOnCeiling && warrior.CurrentCommand.moveX * warrior.FacingDirection < 0)
+        {
+            stateMachine.ChangeState(warrior.holdJumpState);
+            return true;
+        }
+        if (warrior.isOnGround || !warrior.IsFacingWall || warrior.CurrentCommand.moveX * warrior.FacingDirection < 0)
+        {
+            stateMachine.ChangeState(warrior.airFreeState);
+            return true;
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        warrior.velocity.x = 0;
+        warrior.velocity.y = -Warrior.WALL_SLIDE_SPEED;
+    }
 }

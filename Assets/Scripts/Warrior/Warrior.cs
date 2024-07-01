@@ -13,6 +13,7 @@ public class Warrior : MonoBehaviour
     internal const float DASH_TIME = 0.2f;
     internal const float DASH_SPEED = 18f;
     internal const float DASH_COOL_DOWN_TIME = DASH_TIME + 0.3f; // 相邻两次 dash 的冷却时间
+    internal const float WALL_SLIDE_SPEED = 2f;
     const float GRAVITY = 15f;
     internal const float ATTACK_COMBO_TIME = 0.1f;
     internal const string ANIM_IDLE = "Idle";
@@ -22,6 +23,8 @@ public class Warrior : MonoBehaviour
     internal const string ANIM_ATTACK_1 = "Attack_1";
     internal const string ANIM_ATTACK_2 = "Attack_2";
     internal const string ANIM_DASH = "Dash";
+    internal const string ANIM_WALL_SLIDE = "WallSlide";
+    internal const string ANIM_WALL_STAY = "WallStay";
     #endregion
 
     #region Component
@@ -35,6 +38,7 @@ public class Warrior : MonoBehaviour
     [Header("Ability")]
     public bool secondJumpAbility = true;
     public bool dashAbility = true;
+    public bool wallSlideAbility = true;
     #endregion
 
     #region Command
@@ -44,6 +48,7 @@ public class Warrior : MonoBehaviour
         public bool holdJump = false, startJump = false;
         public bool attack = false;
         public bool dash = false;
+        public bool slideDown = false;
     }
     internal Command CurrentCommand {get; private set;}
     private bool gotNewCommand = false;
@@ -64,8 +69,11 @@ public class Warrior : MonoBehaviour
         }
     }
     internal bool isOnGround = false;
-    internal bool isOnWall = false;
     internal bool isOnCeiling = false;
+    internal bool isOnLeftWall = false;
+    internal bool isOnRightWall = false;
+    // 之所以两边都检测是因为更新过程方向会变
+    internal bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
     internal int airJumpCount = 0;
     internal int airAttackCount = 0;
     internal int airDashCount = 0;
@@ -77,12 +85,13 @@ public class Warrior : MonoBehaviour
     #endregion
 
     #region State Machine
-    private StateMachine<WarriorState> stateMachine;
+    internal StateMachine<WarriorState> stateMachine;
     internal WarriorGroundFree groundFreeState;
     internal WarriorAirFree airFreeState;
     internal WarriorHoldJump holdJumpState;
     internal WarriorAttack attackState;
     internal WarriorDash dashState;
+    internal WarriorWallSlide wallSlideState;
     #endregion
 
     private ContactFilter2D envCastFilter;
@@ -107,6 +116,7 @@ public class Warrior : MonoBehaviour
         holdJumpState = new WarriorHoldJump(this, stateMachine);
         attackState = new WarriorAttack(this, stateMachine);
         dashState = new WarriorDash(this, stateMachine);
+        wallSlideState = new WarriorWallSlide(this, stateMachine);
         stateMachine.Init(groundFreeState);
     }
 
@@ -116,8 +126,10 @@ public class Warrior : MonoBehaviour
         // 本帧的状态
         isOnGround = boxCol.Cast(Vector2.down, envCastFilter, castHits, 0.1f) > 0;
         isOnCeiling = boxCol.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
-        isOnWall = boxCol.Cast(Vector2.right * FacingDirection, envCastFilter, castHits, 0.1f) > 0;
-        if (!gotNewCommand) {
+        isOnRightWall = boxCol.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
+        isOnLeftWall = boxCol.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
+        if (!gotNewCommand)
+        {
             CurrentCommand = new Command();
         }
         velocity = rb.velocity;
@@ -136,7 +148,7 @@ public class Warrior : MonoBehaviour
             rb.velocity = velocity;
         }
         // 遇到墙不再前进，避免与墙重叠导致错误检测到地面
-        if (isOnWall && rb.velocity.x * FacingDirection > 0)
+        if (IsFacingWall && rb.velocity.x * FacingDirection > 0)
         {
             var velocity = rb.velocity;
             velocity.x = 0;
@@ -146,8 +158,10 @@ public class Warrior : MonoBehaviour
 
     void UpdateTimers()
     {
-        dashCoolDownTimer -= Time.deltaTime;
-        attackComboTimer -= Time.deltaTime;
+        if (dashCoolDownTimer > 0)
+            dashCoolDownTimer -= Time.deltaTime;
+        if (attackComboTimer > 0)
+            attackComboTimer -= Time.deltaTime;
     }
 
     public void HorizontalMoveAndFlip(float moveX)
