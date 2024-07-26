@@ -3,19 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Warrior : MonoBehaviour
+public class Warrior : Entity
 {
     #region Constant Number
-    internal const float MAX_RUN_SPEED = 6f;
-    internal const float JUMP_SPEED = 5f;
-    internal const float AIR_JUMP_SPEED = 8f;
-    internal const float MAX_JUMP_TIME = 0.3f;
-    internal const float DASH_TIME = 0.2f;
-    internal const float DASH_SPEED = 18f;
-    internal const float DASH_COOL_DOWN_TIME = DASH_TIME + 0.3f; // 相邻两次 dash 的冷却时间
-    internal const float WALL_SLIDE_SPEED = 2f;
-    const float GRAVITY = 15f;
-    internal const float ATTACK_COMBO_TIME = 0.1f;
+    internal float jumpSpeed = 5f;
+    internal float airJumpSpeed = 8f;
+    internal float maxJumpTime = 0.3f;
+    internal float dashTime = 0.2f;
+    internal float dashSpeed = 18f;
+    internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
+    internal float wallSlideSpeed = 2f;
+    internal float attackComboTime = 0.1f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_RISE = "Rise";
@@ -28,10 +26,9 @@ public class Warrior : MonoBehaviour
     #endregion
 
     #region Component
+    [Header("Component")]
     public GameObject smokeRingPrefab;
-    internal Animator animator;
-    private Rigidbody2D rb;
-    private BoxCollider2D boxCol;
+    public Collider2D hitBox;
     #endregion
 
     #region Abilitiy
@@ -46,7 +43,7 @@ public class Warrior : MonoBehaviour
     {
         public float moveX = 0; 
         public bool holdJump = false, startJump = false;
-        public bool attack = false;
+        public bool attack = false; 
         public bool dash = false;
         public bool slideDown = false;
     }
@@ -55,28 +52,10 @@ public class Warrior : MonoBehaviour
     #endregion
 
     #region Status
-    internal Vector2 velocity; // 每次 update 期间使用
-    private float _facingDirection = 1;
-    internal float FacingDirection // 1 向右, -1 向左
-    {
-        get => _facingDirection;
-        private set
-        {   if (value * _facingDirection < 0)
-            {
-                rb.transform.Rotate(0, 180, 0);
-                _facingDirection = -_facingDirection;
-            }
-        }
-    }
-    internal bool isOnGround = false;
-    internal bool isOnCeiling = false;
-    internal bool isOnLeftWall = false;
-    internal bool isOnRightWall = false;
-    // 之所以两边都检测是因为更新过程方向会变
-    internal bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
     internal int airJumpCount = 0;
     internal int airAttackCount = 0;
     internal int airDashCount = 0;
+    [Header("Status")]
     public bool attackCancelable;
     public bool attackEnd;
     public bool hitBoxEnabled;
@@ -94,9 +73,6 @@ public class Warrior : MonoBehaviour
     internal WarriorWallSlide wallSlideState;
     #endregion
 
-    private ContactFilter2D envCastFilter;
-    private RaycastHit2D[] castHits = new RaycastHit2D[5];
-
     public void AddCommand(Command cmd)
     {
         CurrentCommand = cmd;
@@ -104,12 +80,9 @@ public class Warrior : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        boxCol = GetComponent<BoxCollider2D>();
-        envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
+        base.Start();
         stateMachine = new StateMachine<WarriorState>();
         groundFreeState = new WarriorGroundFree(this, stateMachine);
         airFreeState = new WarriorAirFree(this, stateMachine);
@@ -121,13 +94,10 @@ public class Warrior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         // 本帧的状态
-        isOnGround = boxCol.Cast(Vector2.down, envCastFilter, castHits, 0.1f) > 0;
-        isOnCeiling = boxCol.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
-        isOnRightWall = boxCol.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
-        isOnLeftWall = boxCol.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
+        base.Update();
         if (!gotNewCommand)
         {
             CurrentCommand = new Command();
@@ -139,19 +109,13 @@ public class Warrior : MonoBehaviour
         rb.velocity = velocity;
     }
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
-            velocity.y -= GRAVITY * Time.deltaTime;
-            rb.velocity = velocity;
-        }
-        // 遇到墙不再前进，避免与墙重叠导致错误检测到地面
-        if (IsFacingWall && rb.velocity.x * FacingDirection > 0)
-        {
-            var velocity = rb.velocity;
-            velocity.x = 0;
+            velocity.y -= gravity * Time.deltaTime;
             rb.velocity = velocity;
         }
     }
@@ -164,13 +128,4 @@ public class Warrior : MonoBehaviour
             attackComboTimer -= Time.deltaTime;
     }
 
-    public void HorizontalMoveAndFlip(float moveX)
-    {
-        velocity.x = 0;
-        if (moveX != 0)
-        {
-            FacingDirection = moveX > 0 ? 1 : -1;
-            velocity.x = moveX * MAX_RUN_SPEED;
-        }
-    }
 }

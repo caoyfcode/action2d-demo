@@ -158,7 +158,7 @@ public class WarriorAirFree : WarriorAirState
             return true;
         if (warrior.CurrentCommand.startJump && warrior.airJumpCount == 0 && warrior.secondJumpAbility) // air jump
         {
-            warrior.velocity.y = Warrior.AIR_JUMP_SPEED;
+            warrior.velocity.y = warrior.airJumpSpeed;
             warrior.airJumpCount++;
             warrior.airAttackCount = 0; // 跳跃重置攻击
             UnityEngine.Object.Instantiate(warrior.smokeRingPrefab, new Vector3(warrior.transform.position.x - 0.1f, warrior.transform.position.y - 0.7f, 0), Quaternion.identity);
@@ -182,9 +182,9 @@ public class WarriorHoldJump : WarriorAirState
 
     public override void Enter()
     {
-        timer = Warrior.MAX_JUMP_TIME;
+        timer = warrior.maxJumpTime;
         warrior.animator.Play(Warrior.ANIM_RISE);
-        warrior.velocity.y = Warrior.JUMP_SPEED;
+        warrior.velocity.y = warrior.jumpSpeed;
         warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
         warrior.CurrentCommand.startJump = false; // 消耗掉 start jump
     }
@@ -205,7 +205,7 @@ public class WarriorHoldJump : WarriorAirState
     {  
         base.Update();
         timer -= Time.deltaTime;
-        warrior.velocity.y = Warrior.JUMP_SPEED;
+        warrior.velocity.y = warrior.jumpSpeed;
     }
 
     public override void Exit()
@@ -226,13 +226,13 @@ public class WarriorDash : WarriorState
 
     public override void Enter()
     {
-        timer = Warrior.DASH_TIME;
-        warrior.dashCoolDownTimer = Warrior.DASH_COOL_DOWN_TIME;
+        timer = warrior.dashTime;
+        warrior.dashCoolDownTimer = warrior.dashCoolDownTime;
         warrior.animator.Play(Warrior.ANIM_DASH);
         // 调用 horizon... 是为了在冲刺前转向
         warrior.HorizontalMoveAndFlip(warrior.CurrentCommand.moveX);
         warrior.velocity.y = 0;
-        warrior.velocity.x = Warrior.DASH_SPEED * warrior.FacingDirection;
+        warrior.velocity.x = warrior.dashSpeed * warrior.FacingDirection;
         if (!warrior.isOnGround)
         {
             warrior.airDashCount++;
@@ -256,7 +256,7 @@ public class WarriorDash : WarriorState
     {
         timer -= Time.deltaTime;
         warrior.velocity.y = 0;
-        warrior.velocity.x = Warrior.DASH_SPEED * warrior.FacingDirection;
+        warrior.velocity.x = warrior.dashSpeed * warrior.FacingDirection;
         // TODO 拖尾
     }
 
@@ -272,8 +272,12 @@ public class WarriorAttack : WarriorState
 {
     string nextAnimName = Warrior.ANIM_ATTACK_1;
     bool attackBuffer;
+    private ContactFilter2D hitBoxFilter = new();
+    private Collider2D[] hitResults = new Collider2D[5];
+    private HashSet<Entity> attatckedObjects = new();
     public WarriorAttack(Warrior warrior, StateMachine<WarriorState> machine) : base(warrior, machine)
     {
+        hitBoxFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
     }
 
     public override void Enter()
@@ -291,6 +295,7 @@ public class WarriorAttack : WarriorState
         {
             warrior.airAttackCount++;
         }
+        attatckedObjects.Clear();
     }
 
     public override bool Transition()
@@ -304,7 +309,7 @@ public class WarriorAttack : WarriorState
         }
         if (warrior.attackEnd)
         {
-            warrior.attackComboTimer = Warrior.ATTACK_COMBO_TIME;
+            warrior.attackComboTimer = warrior.attackComboTime;
             if (!attackBuffer)
             {
                 stateMachine.ChangeState(warrior.airFreeState);
@@ -322,7 +327,16 @@ public class WarriorAttack : WarriorState
     {
         if (warrior.hitBoxEnabled)
         {
-            // TODO
+            int hitNum = warrior.hitBox.OverlapCollider(hitBoxFilter, hitResults);
+            for (int i = 0; i < hitNum; i++)
+            {
+                Entity target = hitResults[i].GetComponentInParent<Entity>();
+                if (target && !attatckedObjects.Contains(target))
+                {
+                    target.OnAttacked();
+                    attatckedObjects.Add(target);
+                }
+            }
         }
         if (!warrior.attackCancelable && warrior.CurrentCommand.attack)
         {
@@ -333,6 +347,7 @@ public class WarriorAttack : WarriorState
     public override void Exit()
     {
         warrior.hitBoxEnabled = false;
+        attatckedObjects.Clear();
     }
 
 }
@@ -349,7 +364,7 @@ public class WarriorWallSlide : WarriorState
         warrior.airAttackCount = 0;
         warrior.airDashCount = 0;
         warrior.velocity.x = 0;
-        warrior.velocity.y = -Warrior.WALL_SLIDE_SPEED;
+        warrior.velocity.y = -warrior.wallSlideSpeed;
         warrior.animator.Play(Warrior.ANIM_WALL_SLIDE);
     }
 
@@ -376,6 +391,6 @@ public class WarriorWallSlide : WarriorState
     public override void Update()
     {
         warrior.velocity.x = 0;
-        warrior.velocity.y = -Warrior.WALL_SLIDE_SPEED;
+        warrior.velocity.y = -warrior.wallSlideSpeed;
     }
 }
