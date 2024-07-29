@@ -146,7 +146,12 @@ public class DeathBringerAttack : DeathBringerState
                 Entity target = hitResults[i].GetComponentInParent<Entity>();
                 if (target && !attatckedObjects.Contains(target))
                 {
-                    target.OnAttacked();
+                    target.OnAttacked(new AttackInfo()
+                    {
+                        attacker = entity,
+                        hitBox = entity.hitBox,
+                        hurtBox = hitResults[i],
+                    });
                     attatckedObjects.Add(target);
                 }
             }

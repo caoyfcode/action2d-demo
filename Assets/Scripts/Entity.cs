@@ -87,7 +87,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual void OnAttacked()
+    public virtual void OnAttacked(AttackInfo attackInfo)
     {
         Debug.Log(gameObject.name + " is attacked.");
         if (hitFX)

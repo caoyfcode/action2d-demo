@@ -333,7 +333,12 @@ public class WarriorAttack : WarriorState
                 Entity target = hitResults[i].GetComponentInParent<Entity>();
                 if (target && !attatckedObjects.Contains(target))
                 {
-                    target.OnAttacked();
+                    target.OnAttacked(new AttackInfo()
+                    {
+                        attacker = warrior,
+                        hitBox = warrior.hitBox,
+                        hurtBox = hitResults[i],
+                    });
                     attatckedObjects.Add(target);
                 }
             }

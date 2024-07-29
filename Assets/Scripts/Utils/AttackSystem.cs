@@ -13,12 +13,29 @@ public class AttackInfo
     public float damage;
     public Vector2 direction;
     // public float poiseDamage; // 削韧;架势伤害
-    Collider2D attackerCollider;
-    Collider2D attackedCollider;
+    public Collider2D hitBox;
+    public Collider2D hurtBox;
 
     public AttackInfo()
     {
         Id = nextId;
         nextId++;
     }
+
+    public Vector2 AttackPoint
+    {
+        get
+        {
+            var attackerBB = hitBox.bounds;
+            var attackedBB = hurtBox.bounds;
+            var overlapBB = new Bounds
+            {
+                min = Vector2.Max(attackedBB.min, attackedBB.min),
+                max = Vector2.Min(attackerBB.max, attackedBB.max),
+            };
+
+            return new Vector2(overlapBB.center.x, overlapBB.max.y);
+        }
+    }
+
 }

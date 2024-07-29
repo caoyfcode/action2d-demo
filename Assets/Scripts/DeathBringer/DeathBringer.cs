@@ -85,8 +85,8 @@ public class DeathBringer : Entity
         }
     }
 
-    public override void OnAttacked()
+    public override void OnAttacked(AttackInfo attackInfo)
     {
-        base.OnAttacked();
+        base.OnAttacked(attackInfo);
     }
 }
