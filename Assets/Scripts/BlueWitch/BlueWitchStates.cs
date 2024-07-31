@@ -303,13 +303,13 @@ public class BlueWitchAttack : BlueWitchState
         }
         if (entity.summonAttack.isEnd)
         {
-            if (!attackBuffer)
-            {
-                stateMachine.ChangeState(entity.airFreeState);
-            }
-            else if (entity.airAttackCount < 2)
+            if ((attackBuffer || entity.CurrentCommand.attack) && entity.airAttackCount < 2)
             {
                 stateMachine.ChangeState(entity.attackState);
+            }
+            else
+            {
+                stateMachine.ChangeState(entity.airFreeState);
             }
             return true;
         }
@@ -320,11 +320,9 @@ public class BlueWitchAttack : BlueWitchState
     {
         if (entity.summonAttack.isHitBoxEnabled)
         {
-            Console.WriteLine("hit box enable.");
             int hitNum = entity.summonAttack.CurentHitBox.OverlapCollider(hitBoxFilter, hitResults);
             for (int i = 0; i < hitNum; i++)
             {
-                Console.WriteLine("handle hit object " + i);
                 Entity target = hitResults[i].GetComponentInParent<Entity>();
                 if (target && !attatckedObjects.Contains(target))
                 {
