@@ -14,7 +14,7 @@ TagManager:
   - Player
   - Environment
   - Enemy
-  - 
+  - LevelTransitionArea
   - 
   - 
   - 
@@ -83,6 +83,6 @@ TagManager:
   - name: 
     uniqueID: 1742234331
     locked: 0
-  - name: ForeGround
+  - name: Tile
     uniqueID: 2066893387
     locked: 0
