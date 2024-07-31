@@ -41,3 +41,48 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: 
+    uniqueID: 312162315
+    locked: 0
+  - name: 
+    uniqueID: 2248657287
+    locked: 0
+  - name: Background
+    uniqueID: 3700413859
+    locked: 0
+  - name: 
+    uniqueID: 2085702017
+    locked: 0
+  - name: Envrionment
+    uniqueID: 1112727097
+    locked: 0
+  - name: 
+    uniqueID: 278080827
+    locked: 0
+  - name: 
+    uniqueID: 1299524255
+    locked: 0
+  - name: Enemy
+    uniqueID: 1655161843
+    locked: 0
+  - name: 
+    uniqueID: 1570460155
+    locked: 0
+  - name: 
+    uniqueID: 299519511
+    locked: 0
+  - name: PlayerSummon
+    uniqueID: 1262390441
+    locked: 0
+  - name: Player
+    uniqueID: 3897911893
+    locked: 0
+  - name: 
+    uniqueID: 1730377211
+    locked: 0
+  - name: 
+    uniqueID: 1742234331
+    locked: 0
+  - name: ForeGround
+    uniqueID: 2066893387
+    locked: 0

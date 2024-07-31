@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 6879692889049918612}
   m_Layer: 6
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   isOnGround: 0
+  isDead: 0
   smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
   hitBox: {fileID: 2807013910772403757}
   secondJumpAbility: 1

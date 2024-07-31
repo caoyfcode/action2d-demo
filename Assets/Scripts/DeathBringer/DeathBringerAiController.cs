@@ -33,7 +33,7 @@ public class DeathBringerAiController : MonoBehaviour
             for (int i = 0; i < num; i++)
             {
                 Entity t = detectResults[i].GetComponentInParent<Entity>();
-                if (t && t is Warrior)
+                if (t && t.CompareTag("Player"))
                 {
                     target = t;
                     targetPosition = t.transform.position;
