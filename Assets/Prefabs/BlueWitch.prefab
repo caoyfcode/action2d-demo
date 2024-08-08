@@ -291,13 +291,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.266824, y: 1.1870956}
+    - - {x: 1.3375673, y: 1.501265}
       - {x: 0.33311176, y: 1.6032023}
       - {x: -0.5549236, y: 1.4163884}
       - {x: -0.6237972, y: -0.76400197}
       - {x: 0.2892952, y: -0.8792689}
-      - {x: 1.2720147, y: -0.42188704}
-      - {x: 1.6082767, y: 0.47107154}
+      - {x: 1.5978204, y: -0.6196975}
+      - {x: 1.9348675, y: 0.50705004}
   m_UseDelaunayMesh: 0
 --- !u!1 &8724509926727482288
 GameObject:
@@ -436,7 +436,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &8051787666902710617
 BoxCollider2D:

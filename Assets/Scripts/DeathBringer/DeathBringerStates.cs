@@ -59,7 +59,6 @@ public class DeathBringerIdle : DeathBringerState
 
     public override void Update()
     {
-        entity.velocity.y = 0;
         entity.velocity.x = 0;
     }
 
@@ -97,7 +96,6 @@ public class DeathBringerWalk : DeathBringerState
 
     public override void Update()
     {
-        entity.velocity.y = 0;
         entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
     }
 }

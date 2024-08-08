@@ -37,15 +37,15 @@ public class BlueWitchGroundFree : BlueWitchState
     {
         bool changed = true;
         var cmd = entity.CurrentCommand;
-        if (cmd.dash && entity.dashCoolDownTimer <= 0 && entity.airDashCount == 0 && entity.dashAbility)
+        if (entity.DashCondition)
         {
             stateMachine.ChangeState(entity.dashState);
         }
-        else if (cmd.attack && entity.airAttackCount < 2)
+        else if (entity.AttackCondition)
         {
             stateMachine.ChangeState(entity.attackState);
         }
-        else if (cmd.startJump && !entity.isOnCeiling)
+        else if (entity.JumpCondition)
         {
             stateMachine.ChangeState(entity.holdJumpState);
             if (entity.IsFacingWall)
@@ -90,15 +90,15 @@ public abstract class BlueWitchAirState : BlueWitchState
     {
         bool changed = true;
         var cmd = entity.CurrentCommand;
-        if (cmd.dash && entity.dashCoolDownTimer <= 0 && entity.airDashCount == 0 && entity.dashAbility)
+        if (entity.DashCondition)
         {
             stateMachine.ChangeState(entity.dashState);
         }
-        else if (cmd.attack && entity.airAttackCount < 2)
+        else if (entity.AttackCondition)
         {
             stateMachine.ChangeState(entity.attackState);
         }
-        else if (entity.IsFacingWall && cmd.moveX * entity.FacingDirection > 0 && !jumpFromWallFoot && entity.wallSlideAbility)
+        else if (entity.WallSlideCondition && cmd.moveX * entity.FacingDirection > 0 && !jumpFromWallFoot)
         {
             stateMachine.ChangeState(entity.wallSlideState);
         }
@@ -155,7 +155,7 @@ public class BlueWitchAirFree : BlueWitchAirState
         }
         if (base.Transition())
             return true;
-        if (entity.CurrentCommand.startJump && entity.airJumpCount == 0 && entity.secondJumpAbility) // air jump
+        if (entity.AirJumpCondition)
         {
             entity.velocity.y = entity.airJumpSpeed;
             entity.airJumpCount++;
@@ -294,7 +294,7 @@ public class BlueWitchAttack : BlueWitchState
 
     public override bool Transition()
     {
-        if (entity.summonAttack.isCancelable && entity.CurrentCommand.dash && entity.dashCoolDownTimer <= 0 && entity.airDashCount == 0 && entity.dashAbility)
+        if (entity.summonAttack.isCancelable && entity.DashCondition)
         {
             // airFree 也可进入 dash, 并且还能处理进入地面的情况
             entity.summonAttack.attackComboTimer = 0;
@@ -368,12 +368,12 @@ public class BlueWitchWallSlide : BlueWitchState
 
     public override bool Transition()
     {
-        if (entity.CurrentCommand.dash && entity.dashCoolDownTimer <= 0 && entity.airDashCount == 0 && entity.dashAbility && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
+        if (entity.DashCondition && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
         {
             stateMachine.ChangeState(entity.dashState);
             return true;
         }
-        if (entity.CurrentCommand.startJump && !entity.isOnCeiling && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
+        if (entity.JumpCondition && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
         {
             stateMachine.ChangeState(entity.holdJumpState);
             return true;

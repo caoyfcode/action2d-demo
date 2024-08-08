@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BlueWitch : Entity
 {
+    // TODO 将状态切换条件写为属性, xxxCondition
+    // TODO 添加受击强制移动、顿帧、屏幕振动、受击无敌
+    // 强制移动可以放到 Entity 中写一个 foreMove 向量, 利用摩擦来减小它
     #region Constant Number
     internal float jumpSpeed = 5f;
     internal float airJumpSpeed = 8f;
@@ -57,6 +60,12 @@ public class BlueWitch : Entity
     internal BlueWitchAttack attackState;
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
+    // 状态转换条件中的通用部分
+    internal bool DashCondition => dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
+    internal bool AttackCondition => CurrentCommand.attack && airAttackCount < 2;
+    internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
+    internal bool AirJumpCondition => secondJumpAbility && airJumpCount <= 0 && JumpCondition;
+    internal bool WallSlideCondition => wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
     public void AddCommand(Command cmd)
