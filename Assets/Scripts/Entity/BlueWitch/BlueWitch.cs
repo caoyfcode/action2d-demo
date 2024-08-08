@@ -23,6 +23,7 @@ public class BlueWitch : Entity
     #endregion
 
     public SummonAttack summonAttack;
+    public Summon summon;
     public GameObject smokeRingPrefab;
 
     #region Command
@@ -31,6 +32,7 @@ public class BlueWitch : Entity
         public float moveX = 0;
         public bool holdJump = false, startJump = false;
         public bool attack = false;
+        public bool summon = false;
         public bool dash = false;
         public bool slideDown = false;
     }
@@ -100,6 +102,10 @@ public class BlueWitch : Entity
         velocity = rb.velocity;
         UpdateTimers();
         stateMachine.Update();
+        if (CurrentCommand.summon)
+        {
+            summon.StartSummon();
+        }
         gotNewCommand = false;
         rb.velocity = velocity;
     }

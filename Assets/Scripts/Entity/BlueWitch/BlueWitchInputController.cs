@@ -33,8 +33,10 @@ public class BlueWitchInputController : MonoBehaviour
             attack = Input.GetButtonDown("Attack"),
             dash = Input.GetButtonDown("Dash"),
             slideDown = Input.GetKey(KeyCode.S),
+            summon = Input.GetKeyDown(KeyCode.H),
         };
         // 在墙上冲刺或跳跃时修改方向，并在跳跃一段时间内强制方向
+        // TODO 这样有时无法正常跳跃, 改为在状态机里实现
         if (entity.stateMachine.CurrentState == entity.wallSlideState)
         {
             if (cmd.dash || cmd.startJump)

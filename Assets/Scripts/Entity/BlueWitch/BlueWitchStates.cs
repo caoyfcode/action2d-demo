@@ -242,7 +242,7 @@ public class BlueWitchDash : BlueWitchState
     {
         if (IsEnd)
         {
-            if (!entity.isOnGround && entity.IsFacingWall && entity.wallSlideAbility)
+            if (entity.WallSlideCondition)
                 stateMachine.ChangeState(entity.wallSlideState);
             else
                 stateMachine.ChangeState(entity.airFreeState);

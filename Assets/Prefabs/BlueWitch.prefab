@@ -336,6 +336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9021600062347910207}
+  - {fileID: 7908851953335353190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5749543971831427573
@@ -514,6 +515,7 @@ MonoBehaviour:
   isOnGround: 0
   isDead: 0
   summonAttack: {fileID: 5858170743173833713}
+  summon: {fileID: 4009853865239540776}
   smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
   secondJumpAbility: 1
   dashAbility: 1
@@ -530,3 +532,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4257ff3b1f5579408428d5ca57572a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9193238035026991724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7908851953335353190}
+  - component: {fileID: 4009853865239540776}
+  m_Layer: 6
+  m_Name: SummonNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7908851953335353190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193238035026991724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.43, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 576043769695160053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4009853865239540776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193238035026991724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88405b94e82d25840ae77adccc65a928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 9140382425955994235}
+  batPrefab: {fileID: 6497769052888873774, guid: 4dbe4a4064c0f204ca1d058fabbda604, type: 3}
