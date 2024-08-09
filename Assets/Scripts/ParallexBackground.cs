@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParallexBackground : MonoBehaviour
 {
+    const float MAX_DEPTH = 50f; // ×îÔ¶ 50 Ã×
     float startX, startY;
     // Start is called before the first frame update
     void Start()
@@ -14,9 +15,10 @@ public class ParallexBackground : MonoBehaviour
 
     void Update()
     {
+       float factor = Mathf.Clamp01(transform.position.z / MAX_DEPTH);
         transform.position = new Vector3(
-            (Game.Camera.transform.position.x - startX) / (1 + transform.position.z) + startX,
-            (Game.Camera.transform.position.y - startY) / (1 + transform.position.z) + startY,
+            factor * (Game.Camera.transform.position.x - startX) + startX,
+            factor * (Game.Camera.transform.position.y - startY) + startY,
             transform.position.z
         );
     }
