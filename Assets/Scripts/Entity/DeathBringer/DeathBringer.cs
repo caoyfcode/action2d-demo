@@ -71,7 +71,7 @@ public class DeathBringer : Entity
         }
         stateMachine.Update();
         gotNewCommand = false;
-        rb.velocity = velocity;
+        rb.velocity = CalcMixedVelocity();
     }
 
     protected override void FixedUpdate()

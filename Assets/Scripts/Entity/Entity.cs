@@ -9,6 +9,8 @@ public class Entity : MonoBehaviour
     #region Constant
     internal float horizontalMoveSpeed = 6f;
     internal float gravity = 15f;
+    internal float forceMoveDecay = 10f;
+    internal float attackForceMove = 20;
     #endregion
 
     #region Component
@@ -20,7 +22,8 @@ public class Entity : MonoBehaviour
 
     #region Status
     [Header("Status")]
-    public Vector2 velocity;
+    public Vector2 velocity; // 自身状态确定的速度
+    public float forceMove; // 水平方向的,外力施加的，会衰减的速度
     protected float _facingDirection = 1; // 默认向右
     public float FacingDirection
     {
@@ -64,6 +67,13 @@ public class Entity : MonoBehaviour
             isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
             isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
         }
+
+        float prev = forceMove > 0 ? 1 : -1;
+        forceMove *= 1 - forceMoveDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
+        if (prev * forceMove <= 0.1f) // 速度过小或反向, 则设置为 0
+        {
+            forceMove = 0;
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -87,12 +97,27 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public Vector2 CalcMixedVelocity()
+    {
+        Vector2 vol = velocity;
+        if (Mathf.Abs(forceMove) > Mathf.Epsilon)
+        {
+            vol.x = forceMove;
+        }
+        return vol;
+    }
+
     public virtual void OnAttacked(AttackInfo attackInfo)
     {
         Debug.Log(gameObject.name + " is attacked.");
         if (hitFX)
         {
             hitFX.StartFlash();
+        }
+        if (attackInfo.direction != null)
+        {
+            forceMove += attackInfo.direction.x * attackForceMove;
+            velocity.y += attackInfo.direction.y * attackForceMove;
         }
     }
 

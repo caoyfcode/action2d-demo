@@ -107,7 +107,7 @@ public class BlueWitch : Entity
             summon.StartSummon();
         }
         gotNewCommand = false;
-        rb.velocity = velocity;
+        rb.velocity = CalcMixedVelocity();
     }
 
     protected override void FixedUpdate()
