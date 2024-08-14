@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParallexBackground : MonoBehaviour
 {
-    const float MAX_DEPTH = 50f; // ��Զ 50 ��
+    const float MAX_DEPTH = 50f; // 最大深度处与摄像机相对静止
     float startX, startY;
     // Start is called before the first frame update
     void Start()
