@@ -331,7 +331,7 @@ public class BlueWitchAttack : BlueWitchState
                         attacker = entity,
                         hitBox = entity.summonAttack.CurentHitBox,
                         hurtBox = hitResults[i],
-                        direction = new Vector2(entity.FacingDirection, 0),
+                        force = new Vector2(entity.FacingDirection, 0),
                     });
                     attatckedObjects.Add(target);
                 }

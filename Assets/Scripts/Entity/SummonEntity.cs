@@ -24,7 +24,7 @@ public class SummonEntity : Entity
                     attacker = source,
                     hitBox = col,
                     damage = damage,
-                    direction = rb.velocity.normalized,
+                    force = rb.velocity.normalized,
                     hurtBox = hitResults[i],
                 }); ;
             }

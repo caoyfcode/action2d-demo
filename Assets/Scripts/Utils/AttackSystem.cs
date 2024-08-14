@@ -11,7 +11,7 @@ public class AttackInfo
     }
     public Entity attacker;
     public float damage;
-    public Vector2 direction;
+    public Vector2 force;
     // public float poiseDamage; // 削韧;架势伤害
     public Collider2D hitBox;
     public Collider2D hurtBox;

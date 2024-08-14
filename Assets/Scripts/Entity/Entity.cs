@@ -9,8 +9,9 @@ public class Entity : MonoBehaviour
     #region Constant
     internal float horizontalMoveSpeed = 6f;
     internal float gravity = 15f;
-    internal float forceMoveDecay = 10f;
-    internal float attackForceMove = 20;
+    internal float forceMoveDecay = 10f; // 水平衰减速度
+    internal float attackForceMove = 5f; // 单位力施加到单位质量产生的速度
+    internal float minForceMove = 0.1f; // 水平衰减的最小值, 到达此值设为 0
     #endregion
 
     #region Component
@@ -23,7 +24,7 @@ public class Entity : MonoBehaviour
     #region Status
     [Header("Status")]
     public Vector2 velocity; // 自身状态确定的速度
-    public float forceMove; // 水平方向的,外力施加的，会衰减的速度
+    public float forceMove; // 水平方向速度中会衰减的部分, 用于实现瞬间受力
     protected float _facingDirection = 1; // 默认向右
     public float FacingDirection
     {
@@ -60,30 +61,31 @@ public class Entity : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (col)
-        {
-            isOnGround = col.Cast(Vector2.down, envCastFilter, castHits, 0.1f) > 0;
-            isOnCeiling = col.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
-            isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
-            isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
-        }
-
+        isOnGround = col.Cast(Vector2.down, envCastFilter, castHits, 0.1f) > 0;
+        isOnCeiling = col.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
+        isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
+        isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
         float prev = forceMove > 0 ? 1 : -1;
         forceMove *= 1 - forceMoveDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
-        if (prev * forceMove <= 0.1f) // 速度过小或反向, 则设置为 0
+        if (prev * forceMove <= minForceMove) // 速度过小或反向, 则设置为 0
         {
             forceMove = 0;
         }
     }
 
-    protected virtual void FixedUpdate()
+    // 在 Update 末设置 rigidbody 速度前调用
+    public void MergeVelocity()
     {
-        // 遇到墙不再前进，避免与墙重叠导致错误检测到地面
-        if (IsFacingWall && rb.velocity.x * FacingDirection > 0)
+        // 严格用 0 判断, 因为会设置为 0
+        if (forceMove != 0)
         {
-            var velocity = rb.velocity;
+            velocity.x = forceMove;
+        }
+        // 撞墙后停止
+        if (velocity.x > 0 && isOnRightWall || velocity.x < 0 && isOnLeftWall)
+        {
             velocity.x = 0;
-            rb.velocity = velocity;
+            forceMove = 0;
         }
     }
 
@@ -97,16 +99,6 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public Vector2 CalcMixedVelocity()
-    {
-        Vector2 vol = velocity;
-        if (Mathf.Abs(forceMove) > Mathf.Epsilon)
-        {
-            vol.x = forceMove;
-        }
-        return vol;
-    }
-
     public virtual void OnAttacked(AttackInfo attackInfo)
     {
         Debug.Log(gameObject.name + " is attacked.");
@@ -114,20 +106,20 @@ public class Entity : MonoBehaviour
         {
             hitFX.StartFlash();
         }
-        if (attackInfo.direction != null)
+        if (attackInfo.force != null)
         {
-            forceMove += attackInfo.direction.x * attackForceMove;
-            velocity.y += attackInfo.direction.y * attackForceMove;
+            Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
+            forceMove += deltaV.x;
+            velocity.y += deltaV.y;
+            forceMove += attackInfo.force.x * attackForceMove;
+            velocity.y += attackInfo.force.y * attackForceMove;
         }
     }
 
-    public virtual void onDeath()
+    public virtual void OnDeath()
     {
         Debug.Log(gameObject.name + " dies.");
-        if (col)
-        {
-            col.enabled = false;
-        }
+        col.enabled = false;
         isDead = true;
     }
 }

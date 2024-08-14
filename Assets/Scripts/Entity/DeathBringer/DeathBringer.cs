@@ -71,16 +71,16 @@ public class DeathBringer : Entity
         }
         stateMachine.Update();
         gotNewCommand = false;
-        rb.velocity = CalcMixedVelocity();
+        MergeVelocity();
+        rb.velocity = velocity;
     }
 
-    protected override void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        base.Update();
         if (stateMachine.CurrentState == ildeState || stateMachine.CurrentState == walkState)
         {
             var velocity = rb.velocity;
-            velocity.y -= gravity * Time.deltaTime;
+            velocity.y -= gravity * Time.fixedDeltaTime;
             rb.velocity = velocity;
         }
     }

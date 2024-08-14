@@ -149,7 +149,7 @@ public class DeathBringerAttack : DeathBringerState
                         attacker = entity,
                         hitBox = entity.hitBox,
                         hurtBox = hitResults[i],
-                        direction = new Vector2(entity.FacingDirection, 0),
+                        force = new Vector2(entity.FacingDirection, 0),
                     });
                     attatckedObjects.Add(target);
                 }
