@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7057590457908465901}
   - component: {fileID: 8280371536993583240}
   - component: {fileID: 5858170743173833713}
+  - component: {fileID: 4281157381578100810}
   m_Layer: 0
-  m_Name: SummonAttack
+  m_Name: SummonHeroKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,15 +122,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce7c75d2f5761445a6737236f40e54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 9140382425955994235}
+  AnimAttack1: HeroKnightAttack_1
+  AnimAttack2: HeroKnightAttack_2
   sr: {fileID: 7057590457908465901}
   animator: {fileID: 8280371536993583240}
-  hitBoxHeroKnightAttack1: {fileID: 3161071544513280931}
-  hitBoxHeroKnightAttack2: {fileID: 3120773542747484452}
+  hitBoxAttack1: {fileID: 3161071544513280931}
+  hitBoxAttack2: {fileID: 3120773542747484452}
+  hitBox: {fileID: 4281157381578100810}
   isEnd: 0
   isCancelable: 1
   isHitBoxEnabled: 0
   attackComboTimer: 0
+--- !u!114 &4281157381578100810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126307468853297446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b61848ec4a68fb478c48d1bc3fa7838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 9140382425955994235}
+  targetFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 256
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  hitBox: {fileID: 0}
+  maxHitNum: 5
 --- !u!1 &1238109578639638251
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
+  forceMove: 0
   isOnGround: 0
   isDead: 0
   summonAttack: {fileID: 5858170743173833713}

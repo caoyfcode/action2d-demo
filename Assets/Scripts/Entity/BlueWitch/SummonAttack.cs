@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class SummonAttack : MonoBehaviour
 {
-    public const string ANIM_HERO_KNIGHT_ATTACK_1 = "HeroKnightAttack_1";
-    public const string ANIM_HERO_KNIGHT_ATTACK_2 = "HeroKnightAttack_2";
-
-    public BlueWitch parent;
+    public string AnimAttack1 = "HeroKnightAttack_1";
+    public string AnimAttack2 = "HeroKnightAttack_2";
+    
     public SpriteRenderer sr;
     public Animator animator;
-    public Collider2D hitBoxHeroKnightAttack1;
-    public Collider2D hitBoxHeroKnightAttack2;
-    public Collider2D CurentHitBox { get; private set; }
+    public Collider2D hitBoxAttack1;
+    public Collider2D hitBoxAttack2;
+    public HitBox hitBox;
+
+    public Collider2D CurrentHitBox
+    {
+        get => hitBox.hitBox; 
+        private set => hitBox.hitBox = value;
+    }
 
     #region Status
     public bool isEnd = false;
@@ -34,7 +39,7 @@ public class SummonAttack : MonoBehaviour
     void Start()
     {
         ComponentsEnabled = false;
-        CurentHitBox = null;
+        CurrentHitBox = null;
     }
 
     // Update is called once per frame
@@ -44,20 +49,30 @@ public class SummonAttack : MonoBehaviour
         {
             attackComboTimer -= Time.deltaTime;
         }
+
+        if (isHitBoxEnabled)
+        {
+            hitBox.StartHit();
+            hitBox.DoHit();
+        }
+        else
+        {
+            hitBox.StopHit();
+        }
     }
 
     public void StartAttack()
     {
         ComponentsEnabled = true;
-        if (CurentHitBox == null || attackComboTimer <= 0 || CurentHitBox == hitBoxHeroKnightAttack2)
+        if (CurrentHitBox == null || attackComboTimer <= 0 || CurrentHitBox == hitBoxAttack2)
         {
-            CurentHitBox = hitBoxHeroKnightAttack1;
-            animator.Play(ANIM_HERO_KNIGHT_ATTACK_1);
+            CurrentHitBox = hitBoxAttack1;
+            animator.Play(AnimAttack1);
         }
         else
         {
-            CurentHitBox = hitBoxHeroKnightAttack2;
-            animator.Play(ANIM_HERO_KNIGHT_ATTACK_2);
+            CurrentHitBox = hitBoxAttack2;
+            animator.Play(AnimAttack2);
         }
         isCancelable = true;
         isEnd = false;
@@ -70,6 +85,7 @@ public class SummonAttack : MonoBehaviour
         isEnd = true;
         isHitBoxEnabled = false;
         ComponentsEnabled = false;
-        attackComboTimer = parent.attackComboTime;
+        attackComboTimer = Game.Player.attackComboTime;
+        hitBox.StopHit();
     }
 }

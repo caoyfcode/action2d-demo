@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class BlueWitch : Entity
 {
-    // TODO 将状态切换条件写为属性, xxxCondition
-    // TODO 添加受击强制移动、顿帧、屏幕振动、受击无敌
-    // 强制移动可以放到 Entity 中写一个 foreMove 向量, 利用摩擦来减小它
+    // TODO 添加顿帧、屏幕振动、受击无敌
     #region Constant Number
     internal float jumpSpeed = 5f;
     internal float airJumpSpeed = 8f;
@@ -22,6 +20,7 @@ public class BlueWitch : Entity
     internal const string ANIM_CHARGE = "Charge";
     #endregion
 
+    // TODO GameObject 下将有多个 SummonAttack 结点, 要选择其中之一使用, 选择时也要设置 maxAirAttackCount
     public SummonAttack summonAttack;
     public Summon summon;
     public GameObject smokeRingPrefab;
@@ -50,6 +49,7 @@ public class BlueWitch : Entity
     #region Status
     internal int airJumpCount = 0;
     internal int airAttackCount = 0;
+    internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
     #endregion
@@ -64,7 +64,7 @@ public class BlueWitch : Entity
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
     internal bool DashCondition => dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
-    internal bool AttackCondition => CurrentCommand.attack && airAttackCount < 2;
+    internal bool AttackCondition => CurrentCommand.attack && airAttackCount < maxAirAttackCount;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
     internal bool AirJumpCondition => secondJumpAbility && airJumpCount <= 0 && JumpCondition;
     internal bool WallSlideCondition => wallSlideAbility && !isOnGround && IsFacingWall;

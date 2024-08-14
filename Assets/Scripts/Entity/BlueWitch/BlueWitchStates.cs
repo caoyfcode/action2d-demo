@@ -310,12 +310,8 @@ public class BlueWitchDash : BlueWitchState
 public class BlueWitchAttack : BlueWitchState
 {
     bool attackBuffer;
-    private ContactFilter2D hitBoxFilter = new();
-    private Collider2D[] hitResults = new Collider2D[5];
-    private HashSet<Entity> attatckedObjects = new();
     public BlueWitchAttack(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
-        hitBoxFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
     }
 
     public override void Enter()
@@ -329,7 +325,6 @@ public class BlueWitchAttack : BlueWitchState
         {
             entity.airAttackCount++;
         }
-        attatckedObjects.Clear();
     }
 
     public override bool Transition()
@@ -343,7 +338,7 @@ public class BlueWitchAttack : BlueWitchState
         }
         if (entity.summonAttack.isEnd)
         {
-            if ((attackBuffer || entity.CurrentCommand.attack) && entity.airAttackCount < 2)
+            if ((attackBuffer || entity.CurrentCommand.attack) && entity.airAttackCount < entity.maxAirAttackCount)
             {
                 stateMachine.ChangeState(entity.attackState);
             }
@@ -358,25 +353,6 @@ public class BlueWitchAttack : BlueWitchState
 
     public override void Update()
     {
-        if (entity.summonAttack.isHitBoxEnabled)
-        {
-            int hitNum = entity.summonAttack.CurentHitBox.OverlapCollider(hitBoxFilter, hitResults);
-            for (int i = 0; i < hitNum; i++)
-            {
-                Entity target = hitResults[i].GetComponentInParent<Entity>();
-                if (target && !attatckedObjects.Contains(target))
-                {
-                    target.OnAttacked(new AttackInfo()
-                    {
-                        attacker = entity,
-                        hitBox = entity.summonAttack.CurentHitBox,
-                        hurtBox = hitResults[i],
-                        force = new Vector2(entity.FacingDirection, 0),
-                    });
-                    attatckedObjects.Add(target);
-                }
-            }
-        }
         if (!entity.summonAttack.isCancelable && entity.CurrentCommand.attack)
         {
             attackBuffer = true;
@@ -386,7 +362,6 @@ public class BlueWitchAttack : BlueWitchState
     public override void Exit()
     {
         entity.summonAttack.OnAttackEnd();
-        attatckedObjects.Clear();
     }
 
 }
