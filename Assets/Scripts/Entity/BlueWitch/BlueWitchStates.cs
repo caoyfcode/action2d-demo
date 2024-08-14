@@ -82,8 +82,25 @@ public abstract class BlueWitchAirState : BlueWitchState
 {
     // 若从墙脚起跳，则不会转到爬墙状态
     public bool jumpFromWallFoot = false;
+    // 从爬墙状态转来时, 持续施加方向的 Timer
+    float keepDirectionTimer = 0f;
+    private float keepDirection = 1f;
+    private float MoveX => keepDirectionTimer > 0 ? keepDirection : entity.CurrentCommand.moveX;
     public BlueWitchAirState(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        keepDirectionTimer = 0f;
+    }
+
+    // 在 WallSlideState 调用
+    public void KeepDirection()
+    {
+        keepDirectionTimer = 0.3f;
+        keepDirection = entity.FacingDirection;
     }
 
     public override bool Transition()
@@ -98,7 +115,7 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             stateMachine.ChangeState(entity.attackState);
         }
-        else if (entity.WallSlideCondition && cmd.moveX * entity.FacingDirection > 0 && !jumpFromWallFoot)
+        else if (entity.WallSlideCondition && MoveX * entity.FacingDirection > 0 && !jumpFromWallFoot)
         {
             stateMachine.ChangeState(entity.wallSlideState);
         }
@@ -118,6 +135,15 @@ public abstract class BlueWitchAirState : BlueWitchState
 
     public override void Update()
     {
+        if (keepDirectionTimer > 0)
+        {
+            keepDirectionTimer -= Time.deltaTime;
+            entity.ChangeInputDirectionAndFlip(entity.FacingDirection);
+        }
+        else
+        {
+            keepDirectionTimer = 0;
+        }
         if (entity.CurrentCommand.moveX != 0)
         {
             entity.animator.Play(BlueWitch.ANIM_RUN);
@@ -181,6 +207,7 @@ public class BlueWitchHoldJump : BlueWitchAirState
 
     public override void Enter()
     {
+        base.Enter();
         timer = entity.maxJumpTime;
         //entity.animator.Play(BlueWitch.ANIM_IDLE);
         entity.velocity.y = entity.jumpSpeed;
@@ -228,8 +255,6 @@ public class BlueWitchDash : BlueWitchState
         timer = entity.dashTime;
         entity.dashCoolDownTimer = entity.dashCoolDownTime;
         entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
-        // 调用 horizon... 是为了在冲刺前转向
-        entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
         entity.velocity.y = 0;
         entity.velocity.x = entity.dashSpeed * entity.FacingDirection;
         if (!entity.isOnGround)
@@ -369,14 +394,17 @@ public class BlueWitchWallSlide : BlueWitchState
 
     public override bool Transition()
     {
-        if (entity.DashCondition && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
+        if (entity.DashCondition)
         {
+            entity.ChangeInputDirectionAndFlip(-entity.FacingDirection);
             stateMachine.ChangeState(entity.dashState);
             return true;
         }
-        if (entity.JumpCondition && entity.CurrentCommand.moveX * entity.FacingDirection < 0)
+        if (entity.JumpCondition)
         {
+            entity.ChangeInputDirectionAndFlip(-entity.FacingDirection);
             stateMachine.ChangeState(entity.holdJumpState);
+            entity.holdJumpState.KeepDirection();
             return true;
         }
         if (entity.isOnGround || !entity.IsFacingWall || entity.CurrentCommand.moveX * entity.FacingDirection < 0)

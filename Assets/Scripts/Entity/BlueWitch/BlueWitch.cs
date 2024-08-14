@@ -126,4 +126,10 @@ public class BlueWitch : Entity
         if (dashCoolDownTimer > 0)
             dashCoolDownTimer -= Time.deltaTime;
     }
+
+    public void ChangeInputDirectionAndFlip(float direction)
+    {
+        CurrentCommand.moveX = direction;
+        HorizontalMoveAndFlip(direction);
+    }
 }
