@@ -1,10 +1,12 @@
 public class StateMachine<T> where T: IStateMachineState
 {
     public T CurrentState {get; private set;}
+    public T PrevState { get; private set; }
 
     public virtual void Init(T initState)
     {
         CurrentState = initState;
+        PrevState = default(T);
         CurrentState.Enter();
     }
 
@@ -17,6 +19,7 @@ public class StateMachine<T> where T: IStateMachineState
 
     public void Update()
     {
+        PrevState = CurrentState;
         while (CurrentState.Transition());
         CurrentState.Update();
     }

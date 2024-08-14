@@ -166,12 +166,27 @@ public abstract class BlueWitchAirState : BlueWitchState
 /// 至于为什么不是groundFree, 因为进入地面状态会清除一些计数器
 public class BlueWitchAirFree : BlueWitchAirState
 {
+    private float coyoteTimer = 0f;
     public BlueWitchAirFree(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+        if (stateMachine.PrevState == entity.groundFreeState || stateMachine.PrevState == entity.wallSlideState)
+        {
+            coyoteTimer = 0.1f;
+        }
+        else
+        {
+            coyoteTimer = 0f;
+        }
+    }
+
     public override bool Transition()
     {
+        coyoteTimer -= Time.deltaTime;
         // 这里先判断地是因为该有的状态转换地上都有
         // 并且进入地上可以重置一些计数器
         if (entity.isOnGround)
@@ -181,6 +196,11 @@ public class BlueWitchAirFree : BlueWitchAirState
         }
         if (base.Transition())
             return true;
+        if (entity.JumpCondition && coyoteTimer > 0)
+        {
+            stateMachine.ChangeState(entity.holdJumpState);
+            return true;
+        }
         if (entity.AirJumpCondition)
         {
             entity.velocity.y = entity.airJumpSpeed;
@@ -189,11 +209,6 @@ public class BlueWitchAirFree : BlueWitchAirState
             UnityEngine.Object.Instantiate(entity.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
         }
         return false;
-    }
-
-    public override void Update()
-    {
-        base.Update();
     }
 }
 
