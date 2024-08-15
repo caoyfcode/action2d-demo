@@ -309,15 +309,22 @@ public class BlueWitchDash : BlueWitchState
 
 public class BlueWitchAttack : BlueWitchState
 {
-    bool attackBuffer;
+    private Summon currentSummon;
     public BlueWitchAttack(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
 
     public override void Enter()
     {
-        attackBuffer = false;
-        entity.summonAttack.StartAttack();
+        var currentType = entity.attackBuffer == BlueWitch.AttackType.None ? entity.CurrentAttackCommand : entity.attackBuffer;
+        currentSummon = currentType switch
+        {
+            BlueWitch.AttackType.HeroKnight => entity.summonAttack,
+            BlueWitch.AttackType.ProjectileBat => entity.summonProjectile,
+            _ => entity.summonAttack
+        };
+        entity.attackBuffer = BlueWitch.AttackType.None;
+        currentSummon.StartSummon();
         entity.velocity.x = 0;
         entity.velocity.y = 0;
         entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
@@ -329,16 +336,16 @@ public class BlueWitchAttack : BlueWitchState
 
     public override bool Transition()
     {
-        if (entity.summonAttack.isCancelable && entity.DashCondition)
+        if (currentSummon.isCancelable && entity.DashCondition)
         {
             // airFree 也可进入 dash, 并且还能处理进入地面的情况
-            entity.summonAttack.attackComboTimer = 0;
             stateMachine.ChangeState(entity.airFreeState);
+            currentSummon.comboTimer = 0;
             return true;
         }
-        if (entity.summonAttack.isEnd)
+        if (currentSummon.isEnd)
         {
-            if ((attackBuffer || entity.CurrentCommand.attack) && entity.airAttackCount < entity.maxAirAttackCount)
+            if (entity.AttackCondition)
             {
                 stateMachine.ChangeState(entity.attackState);
             }
@@ -353,17 +360,16 @@ public class BlueWitchAttack : BlueWitchState
 
     public override void Update()
     {
-        if (!entity.summonAttack.isCancelable && entity.CurrentCommand.attack)
+        if (!currentSummon.isCancelable && entity.CurrentCommand.attack)
         {
-            attackBuffer = true;
+            entity.attackBuffer = entity.CurrentAttackCommand;
         }
     }
 
     public override void Exit()
     {
-        entity.summonAttack.OnAttackEnd();
+        currentSummon.OnSummonEnd();
     }
-
 }
 
 public class BlueWitchWallSlide : BlueWitchState

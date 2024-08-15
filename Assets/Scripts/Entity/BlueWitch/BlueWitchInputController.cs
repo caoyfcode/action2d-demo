@@ -29,10 +29,9 @@ public class BlueWitchInputController : MonoBehaviour
             moveX = moveX,
             startJump = Input.GetButtonDown("Jump"),
             holdJump = Input.GetButton("Jump"),
-            attack = Input.GetButtonDown("Attack"),
+            attackHeroKnight = Input.GetButtonDown("Attack"),
             dash = Input.GetButtonDown("Dash"),
-            slideDown = Input.GetKey(KeyCode.S),
-            summon = Input.GetKeyDown(KeyCode.H),
+            attackProjectileBat = Input.GetKeyDown(KeyCode.H),
         };
 
         entity.AddCommand(cmd);

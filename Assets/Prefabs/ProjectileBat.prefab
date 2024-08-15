@@ -209,7 +209,6 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  hitBox: {fileID: 2105088618521717203}
   maxHitNum: 5
 --- !u!114 &1188174684163306775
 MonoBehaviour:

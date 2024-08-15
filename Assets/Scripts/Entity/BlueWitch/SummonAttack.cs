@@ -1,54 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class SummonAttack : MonoBehaviour
+public class SummonAttack : Summon
 {
-    public string AnimAttack1 = "HeroKnightAttack_1";
-    public string AnimAttack2 = "HeroKnightAttack_2";
-    
-    public SpriteRenderer sr;
-    public Animator animator;
-    public Collider2D hitBoxAttack1;
-    public Collider2D hitBoxAttack2;
+    public Collider2D[] hitBoxes;
     public HitBox hitBox;
-
-    public Collider2D CurrentHitBox
-    {
-        get => hitBox.hitBox; 
-        private set => hitBox.hitBox = value;
-    }
-
-    #region Status
-    public bool isEnd = false;
-    public bool isCancelable = true;
     public bool isHitBoxEnabled = false;
-    public float attackComboTimer = 0;
-    #endregion
-
-    bool ComponentsEnabled 
-    {
-        set
-        {
-            animator.enabled = value;
-            sr.enabled = value; 
-        }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        ComponentsEnabled = false;
-        CurrentHitBox = null;
-    }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if (attackComboTimer > 0)
-        {
-            attackComboTimer -= Time.deltaTime;
-        }
+        base.Update();
 
         if (isHitBoxEnabled)
         {
@@ -61,31 +25,25 @@ public class SummonAttack : MonoBehaviour
         }
     }
 
-    public void StartAttack()
+    public override void StartSummon()
     {
+        if (comboTimer <= 0)
+        {
+            nextIndex = 0;
+        }
         ComponentsEnabled = true;
-        if (CurrentHitBox == null || attackComboTimer <= 0 || CurrentHitBox == hitBoxAttack2)
-        {
-            CurrentHitBox = hitBoxAttack1;
-            animator.Play(AnimAttack1);
-        }
-        else
-        {
-            CurrentHitBox = hitBoxAttack2;
-            animator.Play(AnimAttack2);
-        }
+        animator.Play(animNames[nextIndex]);
+        hitBox.hitBox = hitBoxes[nextIndex];
+        nextIndex = (nextIndex + 1) % animNames.Length;
         isCancelable = true;
         isEnd = false;
         isHitBoxEnabled = false;
     }
 
-    // 由状态机调用
-    public void OnAttackEnd()
+    public override void OnSummonEnd()
     {
-        isEnd = true;
+        base.OnSummonEnd();
         isHitBoxEnabled = false;
-        ComponentsEnabled = false;
-        attackComboTimer = Game.Player.attackComboTime;
         hitBox.StopHit();
     }
 }

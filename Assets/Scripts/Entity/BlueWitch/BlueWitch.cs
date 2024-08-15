@@ -30,13 +30,34 @@ public class BlueWitch : Entity
     {
         public float moveX = 0;
         public bool holdJump = false, startJump = false;
-        public bool attack = false;
-        public bool summon = false;
         public bool dash = false;
-        public bool slideDown = false;
+        public bool attack => attackHeroKnight || attackProjectileBat;
+        public bool attackProjectileBat = false;
+        public bool attackHeroKnight = false;
     }
     internal Command CurrentCommand { get; private set; }
+    internal AttackType CurrentAttackCommand
+    {
+        get
+        {
+            if (CurrentCommand.attackHeroKnight)
+                return AttackType.HeroKnight;
+            if (CurrentCommand.attackProjectileBat)
+                return AttackType.ProjectileBat;
+            return AttackType.None;
+        }
+    }
     private bool gotNewCommand = false;
+    #endregion
+
+    #region Attack Info
+    public enum AttackType
+    {
+        None,
+        HeroKnight,
+        ProjectileBat,
+    }
+    internal AttackType attackBuffer = AttackType.None;
     #endregion
 
     #region Abilitiy
@@ -64,7 +85,7 @@ public class BlueWitch : Entity
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
     internal bool DashCondition => dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
-    internal bool AttackCondition => CurrentCommand.attack && airAttackCount < maxAirAttackCount;
+    internal bool AttackCondition => (attackBuffer != AttackType.None || CurrentCommand.attack) && airAttackCount < maxAirAttackCount;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
     internal bool AirJumpCondition => secondJumpAbility && airJumpCount <= 0 && JumpCondition;
     internal bool WallSlideCondition => wallSlideAbility && !isOnGround && IsFacingWall;
@@ -102,10 +123,6 @@ public class BlueWitch : Entity
         velocity = rb.velocity;
         UpdateTimers();
         stateMachine.Update();
-        if (CurrentCommand.summon)
-        {
-            summonProjectile.StartSummon();
-        }
         gotNewCommand = false;
         MergeVelocity();
         rb.velocity = velocity;

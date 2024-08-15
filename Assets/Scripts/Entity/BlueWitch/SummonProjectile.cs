@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class SummonProjectile : MonoBehaviour
+public class SummonProjectile : Summon
 {
-    public BlueWitch parent;
+    public GameObject projectilePrefab;
 
-    public GameObject batPrefab;
-
-    public void StartSummon()
+    public override void StartSummon()
     {
-        GameObject batObj = Instantiate(batPrefab, transform.position, Quaternion.identity);
-        Projectile bat = batObj.GetComponent<Projectile>();
-        bat.velocity = (parent.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
-        bat.hitBox.source = parent;
-        bat.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy") | LayerMask.GetMask("Environment"));
+        base.StartSummon();
+        GameObject obj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = obj.GetComponent<Projectile>();
+        projectile.velocity = (Game.Player.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
+        projectile.hitBox.source = Game.Player;
+        projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy") | LayerMask.GetMask("Environment"));
     }
 }

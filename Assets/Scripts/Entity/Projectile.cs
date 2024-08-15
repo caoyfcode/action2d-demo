@@ -20,10 +20,12 @@ public class Projectile : Entity
             Destroy(gameObject);
             return;
         }
-        if (hitBox.GenAttackInfo == null)
+        if (hitBox.genAttackInfo == null)
         {
-            hitBox.GenAttackInfo = GenAttackInfo;
+            hitBox.genAttackInfo = GenAttackInfo;
         }
+
+        hitBox.hitBox = col;
         hitBox.StartHit();
         if (hitBox.DoHit() > 0)
         {
