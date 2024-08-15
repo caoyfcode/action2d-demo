@@ -548,7 +548,7 @@ MonoBehaviour:
   isOnGround: 0
   isDead: 0
   summonAttack: {fileID: 5858170743173833713}
-  summon: {fileID: 4009853865239540776}
+  summonProjectile: {fileID: 4009853865239540776}
   smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
   secondJumpAbility: 1
   dashAbility: 1
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 7908851953335353190}
   - component: {fileID: 4009853865239540776}
   m_Layer: 6
-  m_Name: SummonNode
+  m_Name: SummonProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

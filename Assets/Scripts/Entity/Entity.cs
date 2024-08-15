@@ -111,8 +111,6 @@ public class Entity : MonoBehaviour
             Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
             forceMove += deltaV.x;
             velocity.y += deltaV.y;
-            forceMove += attackInfo.force.x * attackForceMove;
-            velocity.y += attackInfo.force.y * attackForceMove;
         }
     }
 

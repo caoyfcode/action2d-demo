@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 875133397985828056}
   - component: {fileID: 830039601719452775}
   - component: {fileID: 2105088618521717203}
-  - component: {fileID: 6032785758260660515}
+  - component: {fileID: 6226931671566889465}
+  - component: {fileID: 1188174684163306775}
   m_Layer: 10
-  m_Name: SummonBat
+  m_Name: ProjectileBat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6497769052888873774}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.972, y: 5.683, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1262390441
-  m_SortingLayer: 11
+  m_SortingLayerID: 1730377211
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 479953089, guid: 780f50ff7d418e34a8b9b774bc0058ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -181,7 +182,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.73332596, y: 0.55519867}
   m_EdgeRadius: 0
---- !u!114 &6032785758260660515
+--- !u!114 &6226931671566889465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,15 +191,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6497769052888873774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a394c9908c754454c9c62a53e7e0abeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b61848ec4a68fb478c48d1bc3fa7838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
-  isOnGround: 0
-  isDead: 0
   source: {fileID: 0}
-  damage: 0
-  targetCastFilter:
+  targetFilter:
     useTriggers: 0
     useLayerMask: 0
     useDepth: 0
@@ -212,4 +209,23 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  direction: {x: 0, y: 0}
+  hitBox: {fileID: 2105088618521717203}
+  maxHitNum: 5
+--- !u!114 &1188174684163306775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497769052888873774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98df406d200f04743965f1d6ea8ad8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0}
+  forceMove: 0
+  isOnGround: 0
+  isDead: 0
+  damage: 0
+  hitBox: {fileID: 6226931671566889465}

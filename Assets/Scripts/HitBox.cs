@@ -36,16 +36,18 @@ public class HitBox : MonoBehaviour
         hitStarted = false;
     }
 
-    public void DoHit()
+    public int DoHit()
     {
         if (!hitStarted)
-            return;
+            return 0;
         int hitNum = hitBox.OverlapCollider(targetFilter, hitResults);
+        int num = 0;
         for (int i = 0; i < hitNum; i++)
         {
             Entity target = hitResults[i].GetComponentInParent<Entity>();
             if (target && !attackedEntities.Contains(target))
             {
+                num++;
                 attackedEntities.Add(target);
                 var attackInfo = GenAttackInfo != null
                     ? GenAttackInfo()
@@ -60,5 +62,6 @@ public class HitBox : MonoBehaviour
                 target.OnAttacked(attackInfo);
             }
         }
+        return num;
     }
 }

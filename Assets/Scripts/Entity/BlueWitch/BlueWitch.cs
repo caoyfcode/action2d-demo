@@ -22,7 +22,7 @@ public class BlueWitch : Entity
 
     // TODO GameObject 下将有多个 SummonAttack 结点, 要选择其中之一使用, 选择时也要设置 maxAirAttackCount
     public SummonAttack summonAttack;
-    public Summon summon;
+    public SummonProjectile summonProjectile;
     public GameObject smokeRingPrefab;
 
     #region Command
@@ -104,7 +104,7 @@ public class BlueWitch : Entity
         stateMachine.Update();
         if (CurrentCommand.summon)
         {
-            summon.StartSummon();
+            summonProjectile.StartSummon();
         }
         gotNewCommand = false;
         MergeVelocity();
