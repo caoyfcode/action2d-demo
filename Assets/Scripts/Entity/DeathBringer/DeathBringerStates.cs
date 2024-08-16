@@ -88,7 +88,7 @@ public class DeathBringerWalk : DeathBringerState
         }
         if (entity.CurrentCommand.moveX == 0)
         {
-            stateMachine.ChangeState(entity.ildeState);
+            stateMachine.ChangeState(entity.idleState);
             return true;
         }
         return false;
@@ -112,7 +112,6 @@ public class DeathBringerAttack : DeathBringerState
 
     public override void Enter()
     {
-        entity.attackCancelable = true;
         entity.attackEnd = false;
         entity.velocity.x = 0;
         entity.velocity.y = 0;
@@ -128,7 +127,7 @@ public class DeathBringerAttack : DeathBringerState
         }
         if (entity.attackEnd)
         {
-            stateMachine.ChangeState(entity.ildeState);
+            stateMachine.ChangeState(entity.idleState);
             return true;
         }
         return false;
@@ -162,6 +161,7 @@ public class DeathBringerAttack : DeathBringerState
     {
         entity.hitBoxEnabled = false;
         attatckedObjects.Clear();
+        entity.attackCoolDownTimer = entity.attackCoolDownTime;
     }
 }
 

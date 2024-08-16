@@ -6,6 +6,7 @@ public class DeathBringer : Entity
     internal const string ANIM_WALK = "Walk";
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_DEATH = "Death";
+    internal float attackCoolDownTime = 0.5f; // 攻击结束后下一次攻击需要的时间
 
     [Header("Component")]
     public Collider2D hitBox;
@@ -18,31 +19,25 @@ public class DeathBringer : Entity
         public Vector2 forceMove = Vector2.zero;
     }
     internal Command CurrentCommand {get; private set;}
-    private bool gotNewCommand = false;
     #endregion
 
     #region State Machine
     internal StateMachine<DeathBringerState> stateMachine;
-    internal DeathBringerIdle ildeState;
+    internal DeathBringerIdle idleState;
     internal DeathBringerWalk walkState;
     internal DeathBringerAttack attackState;
     internal DeathBringerDeath deathState;
     #endregion
 
-    #region Animation
-    #endregion
-
     [Header("Status")]
     public bool hitBoxEnabled = false;
-    public bool attackCancelable = true;
     public bool attackEnd = true;
     public bool deathEnd = false;
     internal float attackCoolDownTimer = 0;
 
-    public void AddCommand(Command cmd)
+    public void SetCommand(Command cmd)
     {
         CurrentCommand = cmd;
-        gotNewCommand = true;
     }
 
     protected override void Start()
@@ -50,34 +45,29 @@ public class DeathBringer : Entity
         base.Start();
         hitFX = GetComponent<HitFlashFX>();
         stateMachine = new StateMachine<DeathBringerState>();
-        ildeState = new DeathBringerIdle(this, stateMachine);
+        idleState = new DeathBringerIdle(this, stateMachine);
         walkState = new DeathBringerWalk(this, stateMachine);
         attackState = new DeathBringerAttack(this, stateMachine);
         deathState = new DeathBringerDeath(this, stateMachine);
-        stateMachine.Init(ildeState);
+        stateMachine.Init(idleState);
     }
 
     protected override void Update()
     {
         base.Update();
-        if (!gotNewCommand)
-        {
-            CurrentCommand = new Command();
-        }
         velocity = rb.velocity;
         if (attackCoolDownTimer > 0)
         {
-            attackCoolDownTimer = -Time.deltaTime;
+            attackCoolDownTimer -= Time.deltaTime;
         }
         stateMachine.Update();
-        gotNewCommand = false;
         MergeVelocity();
         rb.velocity = velocity;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (stateMachine.CurrentState == ildeState || stateMachine.CurrentState == walkState)
+        if (stateMachine.CurrentState == idleState || stateMachine.CurrentState == walkState)
         {
             var velocity = rb.velocity;
             velocity.y -= gravity * Time.fixedDeltaTime;

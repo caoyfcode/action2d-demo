@@ -17,8 +17,9 @@ public class Entity : MonoBehaviour
     #region Component
     internal Animator animator;
     protected Rigidbody2D rb;
-    protected Collider2D col;
+    internal Collider2D col;
     protected HitFlashFX hitFX;
+    protected EntityController controller;
     #endregion
 
     #region Status
@@ -56,7 +57,12 @@ public class Entity : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        controller = GetComponent<EntityController>();
         envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
+        if (controller)
+        {
+            controller.Init();
+        }
     }
 
     protected virtual void Update()
@@ -71,10 +77,15 @@ public class Entity : MonoBehaviour
         {
             forceMove = 0;
         }
+
+        if (controller)
+        {
+            controller.UpdateCommand();
+        }
     }
 
     // 在 Update 末设置 rigidbody 速度前调用
-    public void MergeVelocity()
+    protected void MergeVelocity()
     {
         // 严格用 0 判断, 因为会设置为 0
         if (forceMove != 0)
@@ -106,11 +117,12 @@ public class Entity : MonoBehaviour
         {
             hitFX.StartFlash();
         }
-        if (attackInfo.force != null)
+        Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
+        forceMove += deltaV.x;
+        velocity.y += deltaV.y;
+        if (controller)
         {
-            Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
-            forceMove += deltaV.x;
-            velocity.y += deltaV.y;
+            controller.OnAttacked(attackInfo);
         }
     }
 
@@ -119,5 +131,9 @@ public class Entity : MonoBehaviour
         Debug.Log(gameObject.name + " dies.");
         col.enabled = false;
         isDead = true;
+        if (controller)
+        {
+            controller.OnDeath();
+        }
     }
 }
