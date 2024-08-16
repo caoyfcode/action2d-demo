@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlueWitchInputController : MonoBehaviour
+public class BlueWitchController : EntityController
 {
     private BlueWitch entity;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Init()
     {
         entity = GetComponent<BlueWitch>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UpdateCommand()
     {
         bool left = Input.GetKey(KeyCode.A);
         bool right = Input.GetKey(KeyCode.D);
@@ -34,6 +32,16 @@ public class BlueWitchInputController : MonoBehaviour
             attackProjectileBat = Input.GetKeyDown(KeyCode.H),
         };
 
-        entity.AddCommand(cmd);
+        entity.SetCommand(cmd);
+    }
+
+    public override void OnAttacked(AttackInfo attackInfo)
+    {
+
+    }
+
+    public override void OnDeath()
+    {
+
     }
 }

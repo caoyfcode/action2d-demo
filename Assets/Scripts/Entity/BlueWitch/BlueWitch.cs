@@ -47,7 +47,6 @@ public class BlueWitch : Entity
             return AttackType.None;
         }
     }
-    private bool gotNewCommand = false;
     #endregion
 
     #region Attack Info
@@ -91,10 +90,9 @@ public class BlueWitch : Entity
     internal bool WallSlideCondition => wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
-    public void AddCommand(Command cmd)
+    public void SetCommand(Command cmd)
     {
         CurrentCommand = cmd;
-        gotNewCommand = true;
     }
 
     // Start is called before the first frame update
@@ -116,14 +114,9 @@ public class BlueWitch : Entity
     {
         // 本帧的状态
         base.Update();
-        if (!gotNewCommand)
-        {
-            CurrentCommand = new Command();
-        }
         velocity = rb.velocity;
         UpdateTimers();
         stateMachine.Update();
-        gotNewCommand = false;
         MergeVelocity();
         rb.velocity = velocity;
     }
