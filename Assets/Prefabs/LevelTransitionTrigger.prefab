@@ -90,6 +90,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1910fc719a1374ca2b62a7dfed34c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 0}
-  targetLevelPrefab: {fileID: 1285174202146716303, guid: af1641e657fa4944da13fac089760015, type: 3}
-  direction: {x: 0, y: 0}
+  targetLevelIndex: {x: 0, y: 0}

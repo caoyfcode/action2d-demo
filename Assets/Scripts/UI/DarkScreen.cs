@@ -38,7 +38,7 @@ public class DarkScreen : MonoBehaviour
             yield return loadingCoroutine;
             IsLoading = false;
             yield return new WaitWhile(() => isEnd);
-            DarkScreenPlaying = true;
+            DarkScreenPlaying = false;
         }
     }
 }

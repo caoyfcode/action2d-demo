@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4097109642387926378}
   - component: {fileID: 7634154506421366616}
   - component: {fileID: 4190380351897641557}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SampleLevel_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa1e16149420f24681f1e971eff65e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounds: {fileID: 0}
+  areaName: 
 --- !u!1 &1357610711327031530
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,7 +4929,7 @@ PrefabInstance:
     - target: {fileID: 3783273190789333122, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: currentLevel
       value: 
-      objectReference: {fileID: 1285174202146716303}
+      objectReference: {fileID: 0}
     - target: {fileID: 3783273190789333122, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: positionMove.x
       value: 1

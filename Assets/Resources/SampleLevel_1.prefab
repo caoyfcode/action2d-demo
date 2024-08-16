@@ -1136,35 +1136,35 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 5044765671714919713}
     m_ColliderPaths:
-    - - X: 310000000
-        Y: 30000000
-      - X: 270000000
-        Y: 30000000
-      - X: 270000000
-        Y: -20000000
-      - X: 140000000
-        Y: -20000000
-      - X: 140000000
-        Y: 40000000
+    - - X: 309375008
+        Y: 28750000
+      - X: 270624992
+        Y: 28750000
+      - X: 270624992
+        Y: -21250000
+      - X: 139375008
+        Y: -21250000
+      - X: 139375008
+        Y: 38750000
       - X: 70000000
-        Y: 40000000
+        Y: 38750000
       - X: 70000000
         Y: 30000000
       - X: 90000000
         Y: 30000000
       - X: 90000000
         Y: -30000000
-      - X: 310000000
+      - X: 309375008
         Y: -30000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 30.999971, y: -3}
-      - {x: 30.999971, y: 3}
-      - {x: 27, y: 2.999971}
-      - {x: 26.999971, y: -2}
-      - {x: 14, y: -1.9999707}
-      - {x: 13.999971, y: 4}
-      - {x: 7, y: 3.999971}
+    - - {x: 30.937473, y: -3}
+      - {x: 30.937473, y: 2.875}
+      - {x: 27.0625, y: 2.874971}
+      - {x: 27.062471, y: -2.125}
+      - {x: 13.937501, y: -2.1249707}
+      - {x: 13.937472, y: 3.875}
+      - {x: 7, y: 3.874971}
       - {x: 7.0000296, y: 3}
       - {x: 9, y: 2.9999707}
       - {x: 9.00003, y: -3}
@@ -1183,7 +1183,7 @@ GameObject:
   - component: {fileID: 3999170560502227257}
   - component: {fileID: 6398909502842031238}
   - component: {fileID: 2835093163963001932}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SampleLevel_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1237,7 +1237,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1252,10 +1252,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 31, y: 6}
-      - {x: 9, y: 6}
-      - {x: 9, y: -3}
-      - {x: 31, y: -3}
+    - - {x: 35, y: 10}
+      - {x: 8, y: 10}
+      - {x: 8, y: -3}
+      - {x: 35, y: -3}
   m_UseDelaunayMesh: 0
 --- !u!114 &2835093163963001932
 MonoBehaviour:
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa1e16149420f24681f1e971eff65e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounds: {fileID: 0}
+  areaName: 
 --- !u!1001 &3571818080379602659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1387,7 +1387,7 @@ PrefabInstance:
     - target: {fileID: 3783273190789333122, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: currentLevel
       value: 
-      objectReference: {fileID: 7749882688885457192}
+      objectReference: {fileID: 0}
     - target: {fileID: 3783273190789333122, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: positionMove.x
       value: -1

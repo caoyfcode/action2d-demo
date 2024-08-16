@@ -25,21 +25,46 @@ public class Game : MonoBehaviour
     DarkScreen darkScreen;
     [SerializeField]
     CinemachineConfiner2D machineConfiner;
-
+    [SerializeField]
     Level currentLevel;
 
     void Start()
     {
         instance = this;
+        SetCurrentLevel(currentLevel);
     }
 
-    public static void SetCurrentLevel(Level level)
+    public static void StartChangeLevel(Vector2Int levelIndex)
     {
-        if (instance == null)
+        instance.StartCoroutine(DarkScreen.WaitForLoading(instance.ChangeLevel(levelIndex)));
+    }
+
+    void SetCurrentLevel(Level level)
+    {
+        if (level != null)
         {
-            return;
+            currentLevel = level;
+            machineConfiner.m_BoundingShape2D = level.GetComponent<Collider2D>();
         }
-        instance.currentLevel = level;
-        instance.machineConfiner.m_BoundingShape2D = level.bounds;
+        else
+        {
+            currentLevel = null;
+            machineConfiner.m_BoundingShape2D = null;
+        }
+        machineConfiner.InvalidateCache(); // 清除缓存
+    }
+
+    IEnumerator ChangeLevel(Vector2Int levelIndex)
+    {
+        Destroy(currentLevel.gameObject);
+        SetCurrentLevel(null);
+        player.gameObject.SetActive(false);
+        string level = LevelPath[levelIndex];
+        var request = Resources.LoadAsync(level);
+        yield return request;
+        GameObject prefab = request.asset as GameObject;
+        GameObject obj = Instantiate(prefab);
+        SetCurrentLevel(obj.GetComponent<Level>());
+        player.gameObject.SetActive(true);
     }
 }
