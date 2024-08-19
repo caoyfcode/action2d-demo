@@ -59,19 +59,13 @@ public class BlueWitch : Entity
     internal AttackType attackBuffer = AttackType.None;
     #endregion
 
-    #region Abilitiy
-    [Header("Ability")]
-    public bool secondJumpAbility = true;
-    public bool dashAbility = true;
-    public bool wallSlideAbility = true;
-    #endregion
-
     #region Status
     internal int airJumpCount = 0;
     internal int airAttackCount = 0;
     internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
+    public BlueWitchStatus status;
     #endregion
 
     #region StateMachine
@@ -83,11 +77,11 @@ public class BlueWitch : Entity
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
-    internal bool DashCondition => dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
+    internal bool DashCondition => status.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal bool AttackCondition => (attackBuffer != AttackType.None || CurrentCommand.attack) && airAttackCount < maxAirAttackCount;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
-    internal bool AirJumpCondition => secondJumpAbility && airJumpCount <= 0 && JumpCondition;
-    internal bool WallSlideCondition => wallSlideAbility && !isOnGround && IsFacingWall;
+    internal bool AirJumpCondition => status.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
+    internal bool WallSlideCondition => status.wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
     public void SetCommand(Command cmd)
@@ -141,5 +135,12 @@ public class BlueWitch : Entity
     {
         CurrentCommand.moveX = direction;
         HorizontalMoveAndFlip(direction);
+    }
+
+    public override void OnAttacked(AttackInfo attackInfo)
+    {
+        base.OnAttacked(attackInfo);
+        status.heath -= attackInfo.damage;
+        // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
 }

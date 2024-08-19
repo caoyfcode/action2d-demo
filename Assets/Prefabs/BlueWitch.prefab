@@ -164,6 +164,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
+  hitBox: {fileID: 0}
 --- !u!1 &1238109578639638251
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,9 +637,16 @@ MonoBehaviour:
   summonAttack: {fileID: 5858170743173833713}
   summonProjectile: {fileID: 4009853865239540776}
   smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
-  secondJumpAbility: 1
-  dashAbility: 1
-  wallSlideAbility: 1
+  status:
+    maxHeath: 5
+    heath: 5
+    maxMagic: 0
+    magic: 0
+    attack: 0
+    defence: 0
+    secondJumpAbility: 1
+    dashAbility: 1
+    wallSlideAbility: 1
 --- !u!114 &5420220995527051328
 MonoBehaviour:
   m_ObjectHideFlags: 0

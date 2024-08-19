@@ -297,6 +297,13 @@ MonoBehaviour:
   hitBoxEnabled: 0
   attackEnd: 1
   deathEnd: 0
+  status:
+    maxHeath: 4
+    heath: 4
+    maxMagic: 0
+    magic: 0
+    attack: 0
+    defence: 0
 --- !u!114 &7559753241443075438
 MonoBehaviour:
   m_ObjectHideFlags: 0

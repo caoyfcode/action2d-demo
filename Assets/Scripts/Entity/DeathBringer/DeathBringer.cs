@@ -33,6 +33,7 @@ public class DeathBringer : Entity
     public bool attackEnd = true;
     public bool deathEnd = false;
     internal float attackCoolDownTimer = 0;
+    public CharacterStatus status;
 
     public void SetCommand(Command cmd)
     {
@@ -77,5 +78,16 @@ public class DeathBringer : Entity
     public override void OnAttacked(AttackInfo attackInfo)
     {
         base.OnAttacked(attackInfo);
+        status.heath -= attackInfo.damage;
+        if (Mathf.Abs(status.heath) <= Mathf.Epsilon)
+        {
+            OnDeath();
+        }
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        stateMachine.ChangeState(deathState);
     }
 }

@@ -38,6 +38,10 @@ public class SummonAttack : Summon
         isCancelable = true;
         isEnd = false;
         isHitBoxEnabled = false;
+        if (hitBox.genAttackInfo == null)
+        {
+            hitBox.genAttackInfo = GenAttackInfo;
+        }
     }
 
     public override void OnSummonEnd()
@@ -46,4 +50,12 @@ public class SummonAttack : Summon
         isHitBoxEnabled = false;
         hitBox.StopHit();
     }
+
+    private AttackInfo GenAttackInfo() => new()
+    {
+        attacker = Game.Player,
+        damage = 1,
+        force = new Vector2(Game.Player.FacingDirection, 0),
+        hitBox = hitBox.hitBox,
+    };
 }

@@ -13,6 +13,7 @@ public class SummonProjectile : Summon
         GameObject obj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         Projectile projectile = obj.GetComponent<Projectile>();
         projectile.velocity = (Game.Player.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
+        projectile.damage = 0.5f;
         projectile.hitBox.source = Game.Player;
         projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy") | LayerMask.GetMask("Environment"));
     }
