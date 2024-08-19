@@ -102,12 +102,8 @@ public class DeathBringerWalk : DeathBringerState
 
 public class DeathBringerAttack : DeathBringerState
 {
-    private ContactFilter2D hitBoxFilter = new();
-    private Collider2D[] hitResults = new Collider2D[5];
-    private HashSet<Entity> attatckedObjects = new HashSet<Entity>();
     public DeathBringerAttack(DeathBringer deathBringer, StateMachine<DeathBringerState> machine) : base(deathBringer, machine)
     {
-        hitBoxFilter.SetLayerMask(LayerMask.GetMask("Player"));
     }
 
     public override void Enter()
@@ -116,7 +112,6 @@ public class DeathBringerAttack : DeathBringerState
         entity.velocity.x = 0;
         entity.velocity.y = 0;
         entity.animator.Play(DeathBringer.ANIM_ATTACK);
-        attatckedObjects.Clear();
     }
 
     public override bool Transition()
@@ -137,31 +132,20 @@ public class DeathBringerAttack : DeathBringerState
     {
         if (entity.hitBoxEnabled)
         {
-            int hitNum = entity.hitBox.OverlapCollider(hitBoxFilter, hitResults);
-            for (int i = 0; i < hitNum; i++)
-            {
-                Entity target = hitResults[i].GetComponentInParent<Entity>();
-                if (target && !attatckedObjects.Contains(target))
-                {
-                    target.OnAttacked(new AttackInfo()
-                    {
-                        attacker = entity,
-                        hitBox = entity.hitBox,
-                        hurtBox = hitResults[i],
-                        force = new Vector2(entity.FacingDirection, 0),
-                    });
-                    attatckedObjects.Add(target);
-                }
-            }
+            entity.hitBox.StartHit();
+            entity.hitBox.DoHit();
+        }
+        else
+        {
+            entity.hitBox.StopHit();
         }
     }
-
 
     public override void Exit()
     {
         entity.hitBoxEnabled = false;
-        attatckedObjects.Clear();
         entity.attackCoolDownTimer = entity.attackCoolDownTime;
+        entity.hitBox.StopHit();
     }
 }
 

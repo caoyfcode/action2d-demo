@@ -293,7 +293,7 @@ MonoBehaviour:
   forceMove: 0
   isOnGround: 0
   isDead: 0
-  hitBox: {fileID: 5575057430158882683}
+  hitBox: {fileID: 3319153082700948944}
   hitBoxEnabled: 0
   attackEnd: 1
   deathEnd: 0
@@ -309,7 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01b4bbe4c2aaae42b51554c06c6a6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 0
   targetDetector: {fileID: 1087030679118331385}
 --- !u!1 &7260349971379907219
 GameObject:
@@ -321,6 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1042706111800184683}
   - component: {fileID: 5575057430158882683}
+  - component: {fileID: 3319153082700948944}
   m_Layer: 8
   m_Name: HitBox
   m_TagString: Untagged
@@ -393,3 +393,32 @@ PolygonCollider2D:
       - {x: -0.63659334, y: 1.5658748}
       - {x: 2.7653785, y: -1.0944474}
   m_UseDelaunayMesh: 0
+--- !u!114 &3319153082700948944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7260349971379907219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b61848ec4a68fb478c48d1bc3fa7838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 4879109318323231696}
+  targetFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  maxHitNum: 5
+  hitBox: {fileID: 5575057430158882683}

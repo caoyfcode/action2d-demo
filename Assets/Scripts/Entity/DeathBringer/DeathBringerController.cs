@@ -54,7 +54,7 @@ public class DeathBringerController : EntityController
                 }
             }
             cmd.moveX = CalcMoveDirection();
-            if (entity.hitBox.bounds.Contains(targetPosition) && entity.attackCoolDownTimer <= 0)
+            if (entity.hitBox.hitBox.bounds.Contains(targetPosition) && entity.attackCoolDownTimer <= 0)
             {
                 cmd.attack = true;
                 target = null;

@@ -8,8 +8,7 @@ public class DeathBringer : Entity
     internal const string ANIM_DEATH = "Death";
     internal float attackCoolDownTime = 0.5f; // 攻击结束后下一次攻击需要的时间
 
-    [Header("Component")]
-    public Collider2D hitBox;
+    public HitBox hitBox;
 
     #region Command
     public class Command
