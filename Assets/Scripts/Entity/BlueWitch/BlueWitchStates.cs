@@ -83,9 +83,9 @@ public abstract class BlueWitchAirState : BlueWitchState
     // 若从墙脚起跳，则不会转到爬墙状态
     public bool jumpFromWallFoot = false;
     // 从爬墙状态转来时, 持续施加方向的 Timer
-    float keepDirectionTimer = 0f;
-    private float keepDirection = 1f;
-    private float MoveX => keepDirectionTimer > 0 ? keepDirection : entity.CurrentCommand.moveX;
+    protected float keepDirectionTimer = 0f;
+    protected float keepDirection = 1f;
+    protected float MoveX => keepDirectionTimer > 0 ? keepDirection : entity.CurrentCommand.moveX;
     public BlueWitchAirState(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
@@ -93,7 +93,7 @@ public abstract class BlueWitchAirState : BlueWitchState
     public override void Enter()
     {
         base.Enter();
-        keepDirectionTimer = 0f;
+        keepDirectionTimer = 0;
     }
 
     // 在 WallSlideState 调用
@@ -101,12 +101,12 @@ public abstract class BlueWitchAirState : BlueWitchState
     {
         keepDirectionTimer = 0.3f;
         keepDirection = entity.FacingDirection;
+        entity.HorizontalMoveAndFlip(MoveX);
     }
 
     public override bool Transition()
     {
         bool changed = true;
-        var cmd = entity.CurrentCommand;
         if (entity.DashCondition)
         {
             stateMachine.ChangeState(entity.dashState);
@@ -138,13 +138,12 @@ public abstract class BlueWitchAirState : BlueWitchState
         if (keepDirectionTimer > 0)
         {
             keepDirectionTimer -= Time.deltaTime;
-            entity.ChangeInputDirectionAndFlip(entity.FacingDirection);
         }
         else
         {
             keepDirectionTimer = 0;
         }
-        if (entity.CurrentCommand.moveX != 0)
+        if (MoveX != 0)
         {
             entity.animator.Play(BlueWitch.ANIM_RUN);
         }
@@ -152,13 +151,14 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             entity.animator.Play(BlueWitch.ANIM_IDLE);
         }
-        entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
+        entity.HorizontalMoveAndFlip(MoveX);
     }
 
     public override void Exit()
     {
         base.Exit();
         jumpFromWallFoot = false;
+        keepDirectionTimer = 0f;
     }
 }
 
@@ -199,6 +199,10 @@ public class BlueWitchAirFree : BlueWitchAirState
         if (entity.JumpCondition && coyoteTimer > 0)
         {
             stateMachine.ChangeState(entity.holdJumpState);
+            if (entity.stateMachine.PrevState == entity.wallSlideState)
+            {
+                entity.holdJumpState.KeepDirection();
+            }
             return true;
         }
         if (entity.AirJumpCondition)
@@ -226,7 +230,6 @@ public class BlueWitchHoldJump : BlueWitchAirState
         timer = entity.maxJumpTime;
         //entity.animator.Play(BlueWitch.ANIM_IDLE);
         entity.velocity.y = entity.jumpSpeed;
-        entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
         entity.CurrentCommand.startJump = false; // 消耗掉 start jump
     }
 
@@ -253,6 +256,7 @@ public class BlueWitchHoldJump : BlueWitchAirState
     {
         base.Exit();
         timer = 0;
+        entity.velocity.y = 0;
     }
 
     bool IsEnd => timer <= 0 || !entity.CurrentCommand.holdJump;
@@ -280,12 +284,14 @@ public class BlueWitchDash : BlueWitchState
 
     public override bool Transition()
     {
+        if (entity.WallSlideCondition)
+        {
+            stateMachine.ChangeState(entity.wallSlideState);
+            return true;
+        }
         if (IsEnd)
         {
-            if (entity.WallSlideCondition)
-                stateMachine.ChangeState(entity.wallSlideState);
-            else
-                stateMachine.ChangeState(entity.airFreeState);
+            stateMachine.ChangeState(entity.airFreeState);
             return true;
         }
         return false;

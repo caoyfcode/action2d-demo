@@ -6,8 +6,8 @@ public class BlueWitch : Entity
 {
     // TODO 添加顿帧、屏幕振动、受击无敌
     #region Constant Number
-    internal float jumpSpeed = 5f;
-    internal float airJumpSpeed = 8f;
+    internal float jumpSpeed = 12f;
+    internal float airJumpSpeed = 12f;
     internal float maxJumpTime = 0.3f;
     internal float dashTime = 0.2f;
     internal float dashSpeed = 18f;
@@ -120,6 +120,21 @@ public class BlueWitch : Entity
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
+            if (velocity.y > Mathf.Epsilon && velocity.y <= airJumpSpeed) // 向上跳跃时, 希望尽可能以高速达到高度
+            {
+                if (velocity.y > airJumpSpeed / 2)
+                {
+                    velocity.y -= 0.5f * gravity * Time.fixedDeltaTime;
+                }
+                else // 向上低速的时间尽量少
+                {
+                    velocity.y -= 2 * gravity * Time.fixedDeltaTime;
+                }
+            }
+            else
+            {
+                velocity.y -= gravity * Time.fixedDeltaTime;
+            }
             velocity.y -= gravity * Time.fixedDeltaTime;
             rb.velocity = velocity;
         }
