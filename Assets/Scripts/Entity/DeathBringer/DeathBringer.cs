@@ -6,7 +6,7 @@ public class DeathBringer : Entity
     internal const string ANIM_WALK = "Walk";
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_DEATH = "Death";
-    internal float attackCoolDownTime = 0.5f; // 攻击结束后下一次攻击需要的时间
+    internal float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间
 
     public HitBox hitBox;
 
@@ -32,6 +32,7 @@ public class DeathBringer : Entity
     public bool hitBoxEnabled = false;
     public bool attackEnd = true;
     public bool deathEnd = false;
+    public bool attackCancelable;
     internal float attackCoolDownTimer = 0;
     public CharacterStatus status;
 
@@ -82,6 +83,13 @@ public class DeathBringer : Entity
         if (Mathf.Abs(status.heath) <= Mathf.Epsilon)
         {
             OnDeath();
+        }
+        else
+        {
+            if (stateMachine.CurrentState == attackState && attackCancelable)
+            {
+                stateMachine.ChangeState(idleState);
+            }
         }
     }
 

@@ -29,7 +29,7 @@ public class BlueWitchGroundFree : BlueWitchState
     public override void Enter()
     {
         entity.airJumpCount = 0;
-        entity.airAttackCount = 0;
+        entity.ResetAirAttackCount();
         entity.airDashCount = 0;
     }
 
@@ -209,7 +209,7 @@ public class BlueWitchAirFree : BlueWitchAirState
         {
             entity.velocity.y = entity.airJumpSpeed;
             entity.airJumpCount++;
-            entity.airAttackCount = 0; // 跳跃重置攻击
+            entity.ResetAirAttackCount(); // 跳跃重置攻击
             UnityEngine.Object.Instantiate(entity.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
         }
         return false;
@@ -316,13 +316,14 @@ public class BlueWitchDash : BlueWitchState
 public class BlueWitchAttack : BlueWitchState
 {
     private Summon currentSummon;
+    private BlueWitch.AttackType currentType;
     public BlueWitchAttack(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
 
     public override void Enter()
     {
-        var currentType = entity.attackBuffer == BlueWitch.AttackType.None ? entity.CurrentAttackCommand : entity.attackBuffer;
+        currentType = entity.CurrentAttack;
         currentSummon = currentType switch
         {
             BlueWitch.AttackType.HeroKnight => entity.summonAttack,
@@ -336,7 +337,7 @@ public class BlueWitchAttack : BlueWitchState
         entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
         if (!entity.isOnGround)
         {
-            entity.airAttackCount++;
+            entity.AddAirAttackCount(currentType);
         }
     }
 
@@ -366,9 +367,9 @@ public class BlueWitchAttack : BlueWitchState
 
     public override void Update()
     {
-        if (!currentSummon.isCancelable && entity.CurrentCommand.attack)
+        if (!currentSummon.isCancelable && entity.CurrentCommand.AttackType != BlueWitch.AttackType.None)
         {
-            entity.attackBuffer = entity.CurrentAttackCommand;
+            entity.attackBuffer = entity.CurrentCommand.AttackType;
         }
     }
 
@@ -387,7 +388,7 @@ public class BlueWitchWallSlide : BlueWitchState
     public override void Enter()
     {
         entity.airJumpCount = 0;
-        entity.airAttackCount = 0;
+        entity.ResetAirAttackCount();
         entity.airDashCount = 0;
         entity.velocity.x = 0;
         entity.velocity.y = -entity.wallSlideSpeed;

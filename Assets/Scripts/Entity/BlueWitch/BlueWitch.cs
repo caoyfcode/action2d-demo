@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO 爬墙跳跃保持时间 minKeepDirectionTime
+// TODO 碰撞伤害
+
 public class BlueWitch : Entity
 {
     // TODO 添加顿帧、屏幕振动、受击无敌
@@ -13,7 +16,8 @@ public class BlueWitch : Entity
     internal float dashSpeed = 18f;
     internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
     internal float wallSlideSpeed = 2f;
-    internal float attackComboTime = 0.1f;
+    internal float attackComboTime = 0.3f;
+    internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
@@ -26,27 +30,27 @@ public class BlueWitch : Entity
     public GameObject smokeRingPrefab;
 
     #region Command
+
     public class Command
     {
         public float moveX = 0;
         public bool holdJump = false, startJump = false;
         public bool dash = false;
-        public bool attack => attackHeroKnight || attackProjectileBat;
         public bool attackProjectileBat = false;
         public bool attackHeroKnight = false;
-    }
-    internal Command CurrentCommand { get; private set; }
-    internal AttackType CurrentAttackCommand
-    {
-        get
+        public AttackType AttackType
         {
-            if (CurrentCommand.attackHeroKnight)
-                return AttackType.HeroKnight;
-            if (CurrentCommand.attackProjectileBat)
-                return AttackType.ProjectileBat;
-            return AttackType.None;
+            get
+            {
+                if (attackHeroKnight)
+                    return AttackType.HeroKnight;
+                if (attackProjectileBat)
+                    return AttackType.ProjectileBat;
+                return AttackType.None;
+            }
         }
     }
+    internal Command CurrentCommand { get; private set; }
     #endregion
 
     #region Attack Info
@@ -62,10 +66,31 @@ public class BlueWitch : Entity
     #region Status
     internal int airJumpCount = 0;
     internal int airAttackCount = 0;
-    internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
     public BlueWitchStatus status;
+    public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
+    public void AddAirAttackCount(AttackType type)
+    {
+        switch (type)
+        {
+            case AttackType.HeroKnight:
+                airAttackCount++;
+                break;
+        }
+    }
+    public bool TestAttackCount(AttackType type)
+    {
+        switch (type)
+        {
+            case AttackType.HeroKnight:
+                return airAttackCount < maxAirAttackCount;
+            case AttackType.ProjectileBat:
+                return true;
+            default: // no attack command
+                return false;
+        }
+    }
     #endregion
 
     #region StateMachine
@@ -78,7 +103,22 @@ public class BlueWitch : Entity
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
     internal bool DashCondition => status.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
-    internal bool AttackCondition => (attackBuffer != AttackType.None || CurrentCommand.attack) && airAttackCount < maxAirAttackCount;
+    internal AttackType CurrentAttack
+    {
+        get
+        {
+            if (attackBuffer != AttackType.None && TestAttackCount(attackBuffer))
+            {
+                return attackBuffer;
+            }
+            if (TestAttackCount(CurrentCommand.AttackType))
+            {
+                return CurrentCommand.AttackType;
+            }
+            return AttackType.None;
+        }
+    }
+    internal bool AttackCondition => CurrentAttack != AttackType.None;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
     internal bool AirJumpCondition => status.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
     internal bool WallSlideCondition => status.wallSlideAbility && !isOnGround && IsFacingWall;
