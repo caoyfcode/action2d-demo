@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// TODO, 在 OnAttack 作参数传入
 public class AttackInfo
 {
     static int nextId = 0;
@@ -15,6 +14,7 @@ public class AttackInfo
     // public float poiseDamage; // 削韧;架势伤害
     public Collider2D hitBox;
     public Collider2D hurtBox;
+    public HitType hitType = HitType.Unknown;
 
     public AttackInfo()
     {
@@ -39,3 +39,17 @@ public class AttackInfo
     }
 
 }
+
+public enum HitType
+{
+    Unknown,
+    BodyCollision,
+    Environment,
+    EntityAttack,
+}
+
+// public enum DamageType
+// {
+//     Physics,
+//     Magic,
+// }

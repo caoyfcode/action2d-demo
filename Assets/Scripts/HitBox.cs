@@ -46,7 +46,7 @@ public class HitBox : MonoBehaviour
         for (int i = 0; i < hitNum; i++)
         {
             Entity target = hitResults[i].GetComponentInParent<Entity>();
-            if (target && !attackedEntities.Contains(target))
+            if (target && !target.IsInvincible && !attackedEntities.Contains(target))
             {
                 num++;
                 attackedEntities.Add(target);
@@ -57,7 +57,8 @@ public class HitBox : MonoBehaviour
                         attacker = source,
                         damage = 0,
                         force = new Vector2(source.FacingDirection, 0),
-                        hitBox = hitBox
+                        hitBox = hitBox,
+                        hitType = HitType.EntityAttack,
                     };
                 attackInfo.hurtBox = hitResults[i];
                 target.OnAttacked(attackInfo);

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 碰撞伤害
 
 public class BlueWitch : Entity
 {
@@ -18,13 +17,13 @@ public class BlueWitch : Entity
     internal float wallSlideSpeed = 2f;
     internal float attackComboTime = 0.3f;
     internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
+    internal float hitInvincibleTime = 1f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_CHARGE = "Charge";
     #endregion
 
-    // TODO GameObject 下将有多个 SummonAttack 结点, 要选择其中之一使用, 选择时也要设置 maxAirAttackCount
     public SummonAttack summonAttack;
     public SummonProjectile summonProjectile;
     public GameObject smokeRingPrefab;
@@ -68,6 +67,8 @@ public class BlueWitch : Entity
     internal int airAttackCount = 0;
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
+    internal float hitInvincibleTimer = 0;
+    internal bool stateControlInvincible = false;
     public BlueWitchStatus status;
     public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
     public void AddAirAttackCount(AttackType type)
@@ -91,6 +92,7 @@ public class BlueWitch : Entity
                 return false;
         }
     }
+    public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
     #endregion
 
     #region StateMachine
@@ -184,6 +186,8 @@ public class BlueWitch : Entity
     {
         if (dashCoolDownTimer > 0)
             dashCoolDownTimer -= Time.deltaTime;
+        if (hitInvincibleTimer > 0)
+            hitInvincibleTimer -= Time.deltaTime;
     }
 
     public void ChangeInputDirectionAndFlip(float direction)
@@ -196,6 +200,7 @@ public class BlueWitch : Entity
     {
         base.OnAttacked(attackInfo);
         status.heath -= attackInfo.damage;
+        hitInvincibleTimer = hitInvincibleTime;
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
 }

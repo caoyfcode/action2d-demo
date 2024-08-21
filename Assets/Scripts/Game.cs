@@ -15,7 +15,6 @@ public class Game : MonoBehaviour
         {new Vector2Int(-100, 1), "SampleLevel_1"},
     };
     public static Level CurrentLevel => instance.currentLevel;
-    // TODO Level 类与 currentLevel, 并且内部有矩形表示摄像机边界
 
     [SerializeField]
     BlueWitch player;

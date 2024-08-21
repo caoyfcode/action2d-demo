@@ -73,7 +73,7 @@ public class BlueWitchGroundFree : BlueWitchState
             entity.animator.Play(BlueWitch.ANIM_IDLE);
         }
 
-        entity.velocity.y = 0;
+        // entity.velocity.y = 0;
         entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
     }
 }
@@ -295,6 +295,8 @@ public class BlueWitchDash : BlueWitchState
         {
             entity.airDashCount++;
         }
+
+        entity.stateControlInvincible = true;
     }
 
     public override bool Transition()
@@ -323,6 +325,7 @@ public class BlueWitchDash : BlueWitchState
     public override void Exit()
     {
         timer = 0;
+        entity.stateControlInvincible = false;
     }
 
     bool IsEnd => timer <= 0;

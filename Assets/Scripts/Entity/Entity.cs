@@ -46,6 +46,7 @@ public class Entity : MonoBehaviour
     public bool isDead = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
+    public virtual bool IsInvincible => false;
     #endregion
 
     protected ContactFilter2D envCastFilter;
@@ -119,7 +120,11 @@ public class Entity : MonoBehaviour
         }
         Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
         forceMove += deltaV.x;
-        velocity.y += deltaV.y;
+        var vel = rb.velocity;
+        vel.x += deltaV.x;
+        vel.y += deltaV.y; // TIP: 竖直方向若处于持续设置为 0 的状态，则无法生效
+        rb.velocity = vel;
+        // velocity.y += deltaV.y;
         if (controller)
         {
             controller.OnAttacked(attackInfo);

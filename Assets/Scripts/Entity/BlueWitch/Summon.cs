@@ -6,7 +6,6 @@ using UnityEngine;
 public class Summon : MonoBehaviour
 {
     public string[] animNames;
-    // public Collider2D[] hitBoxes; // TODO 在子类中存在
 
     public SpriteRenderer sr;
     public Animator animator;
