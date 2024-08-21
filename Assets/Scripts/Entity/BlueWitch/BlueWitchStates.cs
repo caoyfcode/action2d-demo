@@ -82,10 +82,23 @@ public abstract class BlueWitchAirState : BlueWitchState
 {
     // 若从墙脚起跳，则不会转到爬墙状态
     public bool jumpFromWallFoot = false;
-    // 从爬墙状态转来时, 持续施加方向的 Timer
+    // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
     protected float keepDirectionTimer = 0f;
     protected float keepDirection = 1f;
-    protected float MoveX => keepDirectionTimer > 0 ? keepDirection : entity.CurrentCommand.moveX;
+    protected bool shouldKeepDirection = false;
+
+    protected float MoveX
+    {
+        get
+        {
+            if (!shouldKeepDirection || (keepDirectionTimer <= 0 && entity.CurrentCommand.moveX * keepDirection < 0))
+            { // 不需要 keep direction 或者超出 minKeepDirectionTime 且反向输入
+                return entity.CurrentCommand.moveX;
+            }
+
+            return keepDirection;
+        }
+    }
     public BlueWitchAirState(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
@@ -94,12 +107,14 @@ public abstract class BlueWitchAirState : BlueWitchState
     {
         base.Enter();
         keepDirectionTimer = 0;
+        shouldKeepDirection = false;
     }
 
     // 在 WallSlideState 调用
     public void KeepDirection()
     {
-        keepDirectionTimer = 0.3f;
+        shouldKeepDirection = true;
+        keepDirectionTimer = entity.minKeepDirectionTime;
         keepDirection = entity.FacingDirection;
         entity.HorizontalMoveAndFlip(MoveX);
     }

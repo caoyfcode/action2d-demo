@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 爬墙跳跃保持时间 minKeepDirectionTime
 // TODO 碰撞伤害
 
 public class BlueWitch : Entity
@@ -12,6 +11,7 @@ public class BlueWitch : Entity
     internal float jumpSpeed = 12f;
     internal float airJumpSpeed = 12f;
     internal float maxJumpTime = 0.3f;
+    internal float minKeepDirectionTime = 0.15f; // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
     internal float dashTime = 0.2f;
     internal float dashSpeed = 18f;
     internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
