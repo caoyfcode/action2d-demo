@@ -8,6 +8,6 @@ public abstract class EntityController : MonoBehaviour
 {
     public abstract void Init();
     public abstract void UpdateCommand();
-    public abstract void OnAttacked(AttackInfo attackInfo);
+    public abstract void OnAttacked(HitInfo hitInfo);
     public abstract void OnDeath();
 }

@@ -20,9 +20,9 @@ public class Projectile : Entity
             Destroy(gameObject);
             return;
         }
-        if (hitBox.genAttackInfo == null)
+        if (hitBox.genHitInfo == null)
         {
-            hitBox.genAttackInfo = GenAttackInfo;
+            hitBox.genHitInfo = GenHitInfo;
         }
 
         hitBox.hitBox = col;
@@ -34,7 +34,7 @@ public class Projectile : Entity
         rb.velocity = velocity;
     }
 
-    protected virtual AttackInfo GenAttackInfo() => new AttackInfo()
+    protected virtual HitInfo GenHitInfo() => new()
     {
         attacker = hitBox.source,
         damage = damage,

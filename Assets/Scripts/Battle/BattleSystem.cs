@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AttackInfo
+public class HitInfo
 {
     static int nextId = 0;
     public int Id
@@ -16,13 +16,13 @@ public class AttackInfo
     public Collider2D hurtBox;
     public HitType hitType = HitType.Unknown;
 
-    public AttackInfo()
+    public HitInfo()
     {
         Id = nextId;
         nextId++;
     }
 
-    public Vector2 AttackPoint
+    public Vector2 HitPoint
     {
         get
         {

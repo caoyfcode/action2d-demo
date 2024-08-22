@@ -10,7 +10,7 @@ public class HitBox : MonoBehaviour
     public int maxHitNum = 5; // 同时碰撞的最多数量
 
     public Collider2D hitBox;
-    internal Func<AttackInfo> genAttackInfo = null; // 获取不带 hurtbox 的 attackInfo
+    internal Func<HitInfo> genHitInfo = null; // 获取不带 hurtbox 的 HitInfo
 
     private HashSet<Entity> attackedEntities = new();
     private Collider2D[] hitResults;
@@ -50,9 +50,9 @@ public class HitBox : MonoBehaviour
             {
                 num++;
                 attackedEntities.Add(target);
-                var attackInfo = genAttackInfo != null
-                    ? genAttackInfo()
-                    : new AttackInfo()
+                var hitInfo = genHitInfo != null
+                    ? genHitInfo()
+                    : new HitInfo()
                     {
                         attacker = source,
                         damage = 0,
@@ -60,8 +60,8 @@ public class HitBox : MonoBehaviour
                         hitBox = hitBox,
                         hitType = HitType.EntityAttack,
                     };
-                attackInfo.hurtBox = hitResults[i];
-                target.OnAttacked(attackInfo);
+                hitInfo.hurtBox = hitResults[i];
+                target.OnAttacked(hitInfo);
             }
         }
         return num;

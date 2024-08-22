@@ -38,9 +38,9 @@ public class SummonAttack : Summon
         isCancelable = true;
         isEnd = false;
         isHitBoxEnabled = false;
-        if (hitBox.genAttackInfo == null)
+        if (hitBox.genHitInfo == null)
         {
-            hitBox.genAttackInfo = GenAttackInfo;
+            hitBox.genHitInfo = GenHitInfo;
         }
     }
 
@@ -51,7 +51,7 @@ public class SummonAttack : Summon
         hitBox.StopHit();
     }
 
-    private AttackInfo GenAttackInfo() => new()
+    private HitInfo GenHitInfo() => new()
     {
         attacker = Game.Player,
         damage = 1,

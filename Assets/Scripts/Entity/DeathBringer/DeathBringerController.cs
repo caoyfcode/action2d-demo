@@ -61,9 +61,9 @@ public class DeathBringerController : EntityController
     }
 
 
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override void OnAttacked(HitInfo hitInfo)
     {
-        entity.HorizontalMoveAndFlip(Mathf.Sign(-attackInfo.force.x));
+        entity.HorizontalMoveAndFlip(Mathf.Sign(-hitInfo.force.x));
     }
 
     public override void OnDeath()

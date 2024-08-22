@@ -111,14 +111,14 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual void OnAttacked(AttackInfo attackInfo)
+    public virtual void OnAttacked(HitInfo hitInfo)
     {
         Debug.Log(gameObject.name + " is attacked.");
         if (hitFX)
         {
             hitFX.StartFlash();
         }
-        Vector2 deltaV = attackInfo.force * attackForceMove / rb.mass;
+        Vector2 deltaV = hitInfo.force * attackForceMove / rb.mass;
         forceMove += deltaV.x;
         var vel = rb.velocity;
         vel.x += deltaV.x;
@@ -127,7 +127,7 @@ public class Entity : MonoBehaviour
         // velocity.y += deltaV.y;
         if (controller)
         {
-            controller.OnAttacked(attackInfo);
+            controller.OnAttacked(hitInfo);
         }
     }
 

@@ -35,7 +35,7 @@ public class BlueWitchController : EntityController
         entity.SetCommand(cmd);
     }
 
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override void OnAttacked(HitInfo hitInfo)
     {
 
     }

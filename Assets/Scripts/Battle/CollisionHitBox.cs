@@ -27,7 +27,7 @@ public class CollisionHitBox : MonoBehaviour
             return;
         float diffX = target.transform.position.x - bodyEntity.transform.position.x;
         float directionX = Mathf.Abs(diffX) > Mathf.Epsilon ? Mathf.Sign(diffX) : -target.FacingDirection;
-        target.OnAttacked(new AttackInfo()
+        target.OnAttacked(new HitInfo()
         {
             attacker = bodyEntity,
             damage = 1,

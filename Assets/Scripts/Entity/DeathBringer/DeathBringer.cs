@@ -80,10 +80,10 @@ public class DeathBringer : Entity
         }
     }
 
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override void OnAttacked(HitInfo hitInfo)
     {
-        base.OnAttacked(attackInfo);
-        status.heath -= attackInfo.damage;
+        base.OnAttacked(hitInfo);
+        status.heath -= hitInfo.damage;
 
         if (Mathf.Abs(status.heath) <= Mathf.Epsilon)
         {

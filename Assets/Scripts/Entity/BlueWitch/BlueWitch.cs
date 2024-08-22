@@ -196,10 +196,10 @@ public class BlueWitch : Entity
         HorizontalMoveAndFlip(direction);
     }
 
-    public override void OnAttacked(AttackInfo attackInfo)
+    public override void OnAttacked(HitInfo hitInfo)
     {
-        base.OnAttacked(attackInfo);
-        status.heath -= attackInfo.damage;
+        base.OnAttacked(hitInfo);
+        status.heath -= hitInfo.damage;
         hitInvincibleTimer = hitInvincibleTime;
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
