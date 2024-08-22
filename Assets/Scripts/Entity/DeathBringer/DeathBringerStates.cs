@@ -149,6 +149,44 @@ public class DeathBringerAttack : DeathBringerState
     }
 }
 
+public class DeathBringerStun : DeathBringerState
+{
+    private float timer;
+    public DeathBringerStun(DeathBringer deathBringer, StateMachine<DeathBringerState> machine) : base(deathBringer, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        timer = entity.stunTime;
+        entity.animator.Play(DeathBringer.ANIM_IDLE);
+    }
+
+    public override bool Transition()
+    {
+        if (base.Transition())
+        {
+            return true;
+        }
+        if (IsEnd)
+        {
+            stateMachine.ChangeState(entity.idleState);
+        }
+        return IsEnd;
+    }
+
+    public override void Update()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+    }
+
+    private bool IsEnd => timer <= 0;
+}
+
 public class DeathBringerDeath : DeathBringerState
 {
     public DeathBringerDeath(DeathBringer deathBringer, StateMachine<DeathBringerState> machine) : base(deathBringer, machine)

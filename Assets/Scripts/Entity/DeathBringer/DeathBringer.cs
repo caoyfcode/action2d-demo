@@ -7,6 +7,7 @@ public class DeathBringer : Entity
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_DEATH = "Death";
     internal float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间
+    internal float stunTime = 0.3f;
 
     public HitBox hitBox;
 
@@ -25,6 +26,7 @@ public class DeathBringer : Entity
     internal DeathBringerIdle idleState;
     internal DeathBringerWalk walkState;
     internal DeathBringerAttack attackState;
+    internal DeathBringerStun stunState;
     internal DeathBringerDeath deathState;
     #endregion
 
@@ -35,6 +37,7 @@ public class DeathBringer : Entity
     public bool attackCancelable;
     internal float attackCoolDownTimer = 0;
     public CharacterStatus status;
+    public override bool IsInvincible => false;
 
     public void SetCommand(Command cmd)
     {
@@ -49,6 +52,7 @@ public class DeathBringer : Entity
         idleState = new DeathBringerIdle(this, stateMachine);
         walkState = new DeathBringerWalk(this, stateMachine);
         attackState = new DeathBringerAttack(this, stateMachine);
+        stunState = new DeathBringerStun(this, stateMachine);
         deathState = new DeathBringerDeath(this, stateMachine);
         stateMachine.Init(idleState);
     }
@@ -68,7 +72,7 @@ public class DeathBringer : Entity
 
     protected virtual void FixedUpdate()
     {
-        if (stateMachine.CurrentState == idleState || stateMachine.CurrentState == walkState)
+        if (stateMachine.CurrentState == idleState || stateMachine.CurrentState == walkState || stateMachine.CurrentState == stunState)
         {
             var velocity = rb.velocity;
             velocity.y -= gravity * Time.fixedDeltaTime;
@@ -80,15 +84,16 @@ public class DeathBringer : Entity
     {
         base.OnAttacked(attackInfo);
         status.heath -= attackInfo.damage;
+
         if (Mathf.Abs(status.heath) <= Mathf.Epsilon)
         {
             OnDeath();
         }
         else
         {
-            if (stateMachine.CurrentState == attackState && attackCancelable)
+            if (stateMachine.CurrentState != attackState || attackCancelable)
             {
-                stateMachine.ChangeState(idleState);
+                stateMachine.ChangeState(stunState);
             }
         }
     }

@@ -1,36 +1,41 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class DeathBringerController : EntityController
 {
+    public float forwardDetectPoint;
+    public float backwardDetectPoint;
+    public float detectOffsetY;
+    public float attackMinPoint;
+    public float attackMaxPoint;
+
     private DeathBringer entity;
     private Entity target = null;
     private Vector2 targetPosition;
     private float keepTargetTimer = 0f;
 
-    public Collider2D targetDetector;
-    private ContactFilter2D detectorFilter = new();
-    private Collider2D[] detectResults = new Collider2D[5];
-
     public override void Init()
     {
         entity = GetComponent<DeathBringer>();
-        detectorFilter.SetLayerMask(LayerMask.GetMask("Player"));
     }
 
     public override void UpdateCommand()
     {
         keepTargetTimer -= Time.deltaTime;
-        if (entity.isDead || entity.stateMachine.CurrentState == entity.attackState)
+        if (entity.isDead || entity.stateMachine.CurrentState == entity.attackState || entity.stateMachine.CurrentState == entity.stunState)
         {
             entity.SetCommand(new DeathBringer.Command());
             return;
         }
         var cmd = new DeathBringer.Command();
-        int num = targetDetector.OverlapCollider(detectorFilter, detectResults);
+        Vector3 back = transform.position + new Vector3(backwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
+        var castHit = Physics2D.Raycast(back, new Vector2(entity.FacingDirection, 0), forwardDetectPoint - backwardDetectPoint,
+            LayerMask.GetMask("Player"));
 
-        if (num == 0) // 未检测到有目标, 则继续走还是停下
+        if (castHit.collider == null) // 未检测到有目标, 则继续走还是停下
         {
             if (keepTargetTimer > 0)
             {
@@ -44,17 +49,9 @@ public class DeathBringerController : EntityController
         }
         else // 有目标, 计算前进还是攻击
         {
-            for (int i = 0; i < num; i++)
-            {
-                Entity t = detectResults[i].GetComponentInParent<Entity>();
-                if (t && t.CompareTag("Player"))
-                {
-                    SetTarget(t);
-                    break;
-                }
-            }
+            SetTarget(castHit.collider.GetComponentInParent<Entity>());
             cmd.moveX = CalcMoveDirection();
-            if (entity.hitBox.hitBox.bounds.Contains(targetPosition) && entity.attackCoolDownTimer <= 0)
+            if (cmd.moveX == 0 && entity.attackCoolDownTimer <= 0)
             {
                 cmd.attack = true;
                 target = null;
@@ -83,12 +80,31 @@ public class DeathBringerController : EntityController
 
     private float CalcMoveDirection()
     {
-        float distance = targetPosition.x - entity.transform.position.x;
-        if (Mathf.Abs(distance) <= 0.5f)
+        float diff = targetPosition.x - entity.transform.position.x;
+        float distance = diff * entity.FacingDirection;
+        if (distance >= attackMinPoint && distance <= attackMaxPoint)
         {
             return 0;
         }
 
-        return Mathf.Sign(distance);
+        return Mathf.Sign(diff);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (UnityEditor.Selection.activeGameObject != gameObject)
+            return;
+        var entity = GetComponent<DeathBringer>();
+        // 检测范围
+        Gizmos.color = Color.green;
+        Vector3 front = transform.position + new Vector3(forwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
+        Vector3 back = transform.position + new Vector3(backwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
+        Gizmos.DrawLine(back, front);
+        Gizmos.color = Color.red;
+        Vector3 max = transform.position + new Vector3(attackMaxPoint * entity.FacingDirection, detectOffsetY, 0);
+        Vector3 min = transform.position + new Vector3(attackMinPoint * entity.FacingDirection, detectOffsetY, 0);
+        Gizmos.DrawLine(min, max);
+    }
+#endif
 }
