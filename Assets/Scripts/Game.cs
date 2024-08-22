@@ -35,7 +35,15 @@ public class Game : MonoBehaviour
 
     public static void StartChangeLevel(Vector2Int levelIndex)
     {
-        instance.StartCoroutine(DarkScreen.WaitForLoading(instance.ChangeLevel(levelIndex)));
+        instance.InstanceStartChangeLevel(levelIndex);
+    }
+
+    void InstanceStartChangeLevel(Vector2Int levelIndex)
+    {
+        player.gameObject.SetActive(false);
+        Destroy(currentLevel.gameObject);
+        SetCurrentLevel(null);
+        StartCoroutine(DarkScreen.WaitForLoading(LoadLevel(levelIndex)));
     }
 
     void SetCurrentLevel(Level level)
@@ -53,14 +61,12 @@ public class Game : MonoBehaviour
         machineConfiner.InvalidateCache(); // 清除缓存
     }
 
-    IEnumerator ChangeLevel(Vector2Int levelIndex)
+    IEnumerator LoadLevel(Vector2Int levelIndex)
     {
-        Destroy(currentLevel.gameObject);
-        SetCurrentLevel(null);
-        player.gameObject.SetActive(false);
         string level = LevelPath[levelIndex];
         var request = Resources.LoadAsync(level);
         yield return request;
+        yield return new WaitForSeconds(1);
         GameObject prefab = request.asset as GameObject;
         GameObject obj = Instantiate(prefab);
         SetCurrentLevel(obj.GetComponent<Level>());
