@@ -297,6 +297,7 @@ public class BlueWitchDash : BlueWitchState
         }
 
         entity.stateControlInvincible = true;
+        entity.spawnAfterImage.Spawn = true;
     }
 
     public override bool Transition()
@@ -326,6 +327,7 @@ public class BlueWitchDash : BlueWitchState
     {
         timer = 0;
         entity.stateControlInvincible = false;
+        entity.spawnAfterImage.Spawn = false;
     }
 
     bool IsEnd => timer <= 0;

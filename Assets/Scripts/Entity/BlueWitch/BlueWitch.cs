@@ -26,6 +26,7 @@ public class BlueWitch : Entity
 
     public SummonAttack summonAttack;
     public SummonProjectile summonProjectile;
+    public SpawnAfterImage spawnAfterImage;
     public GameObject wallSlideCrow;
     public GameObject smokeRingPrefab;
 
