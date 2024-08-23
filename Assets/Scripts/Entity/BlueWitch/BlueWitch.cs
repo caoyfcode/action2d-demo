@@ -26,6 +26,7 @@ public class BlueWitch : Entity
 
     public SummonAttack summonAttack;
     public SummonProjectile summonProjectile;
+    public GameObject wallSlideCrow;
     public GameObject smokeRingPrefab;
 
     #region Command
@@ -143,6 +144,7 @@ public class BlueWitch : Entity
         dashState = new BlueWitchDash(this, stateMachine);
         wallSlideState = new BlueWitchWallSlide(this, stateMachine);
         stateMachine.Init(airFreeState);
+        wallSlideCrow.SetActive(false);
     }
 
     // Update is called once per frame

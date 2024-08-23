@@ -411,6 +411,7 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.velocity.x = 0;
         entity.velocity.y = -entity.wallSlideSpeed;
         entity.animator.Play(BlueWitch.ANIM_RUN);
+        entity.wallSlideCrow.SetActive(true);
     }
 
     public override bool Transition()
@@ -440,5 +441,11 @@ public class BlueWitchWallSlide : BlueWitchState
     {
         entity.velocity.x = 0;
         entity.velocity.y = -entity.wallSlideSpeed;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        entity.wallSlideCrow.SetActive(false);
     }
 }
