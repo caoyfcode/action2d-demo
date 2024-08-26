@@ -33,19 +33,6 @@ public class Game : MonoBehaviour
         SetCurrentLevel(currentLevel);
     }
 
-    public static void StartChangeLevel(Vector2Int levelIndex)
-    {
-        instance.InstanceStartChangeLevel(levelIndex);
-    }
-
-    void InstanceStartChangeLevel(Vector2Int levelIndex)
-    {
-        player.gameObject.SetActive(false);
-        Destroy(currentLevel.gameObject);
-        SetCurrentLevel(null);
-        StartCoroutine(DarkScreen.WaitForLoading(LoadLevel(levelIndex)));
-    }
-
     void SetCurrentLevel(Level level)
     {
         if (level != null)
@@ -61,12 +48,25 @@ public class Game : MonoBehaviour
         machineConfiner.InvalidateCache(); // 清除缓存
     }
 
+    public static void StartChangeLevel(Vector2Int levelIndex)
+    {
+        instance.InstanceStartChangeLevel(levelIndex);
+    }
+
+    void InstanceStartChangeLevel(Vector2Int levelIndex)
+    {
+        player.gameObject.SetActive(false);
+        StartCoroutine(DarkScreen.WaitForLoading(LoadLevel(levelIndex)));
+    }
+
     IEnumerator LoadLevel(Vector2Int levelIndex)
     {
         string level = LevelPath[levelIndex];
         var request = Resources.LoadAsync(level);
         yield return request;
         yield return new WaitForSeconds(1);
+        Destroy(currentLevel.gameObject);
+        SetCurrentLevel(null);
         GameObject prefab = request.asset as GameObject;
         GameObject obj = Instantiate(prefab);
         SetCurrentLevel(obj.GetComponent<Level>());
