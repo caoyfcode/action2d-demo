@@ -57,5 +57,6 @@ public class SummonAttack : Summon
         damage = 1,
         force = new Vector2(Game.Player.FacingDirection, 0),
         hitBox = hitBox.hitBox,
+        hitType = HitType.EntityAttack,
     };
 }

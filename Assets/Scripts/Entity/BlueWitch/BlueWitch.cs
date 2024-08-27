@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BlueWitch : Entity
 {
-    // TODO 添加顿帧、屏幕振动、受击无敌
+    // TODO 添加顿帧
     #region Constant Number
     internal float jumpSpeed = 12f;
     internal float airJumpSpeed = 12f;
@@ -202,6 +202,7 @@ public class BlueWitch : Entity
     public override void OnAttacked(HitInfo hitInfo)
     {
         base.OnAttacked(hitInfo);
+        Game.VirtualCameraController.StartShake();
         status.heath -= hitInfo.damage;
         hitInvincibleTimer = hitInvincibleTime;
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现

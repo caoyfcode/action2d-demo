@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
         {new Vector2Int(-100, 1), "SampleLevel_1"},
     };
     public static Level CurrentLevel => instance.currentLevel;
+    public static VirtualCameraController VirtualCameraController => instance.virtualCameraController;
 
     [SerializeField]
     BlueWitch player;
@@ -24,6 +25,8 @@ public class Game : MonoBehaviour
     DarkScreen darkScreen;
     [SerializeField]
     CinemachineConfiner2D machineConfiner;
+    [SerializeField]
+    VirtualCameraController virtualCameraController;
     [SerializeField]
     Level currentLevel;
 

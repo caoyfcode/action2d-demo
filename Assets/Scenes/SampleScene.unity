@@ -161,6 +161,7 @@ MonoBehaviour:
   cam: {fileID: 519420031}
   darkScreen: {fileID: 741692140}
   machineConfiner: {fileID: 1220107706}
+  virtualCameraController: {fileID: 1220107707}
   currentLevel: {fileID: 2076798158}
 --- !u!4 &441712842
 Transform:
@@ -388,6 +389,7 @@ GameObject:
   - component: {fileID: 1220107705}
   - component: {fileID: 1220107704}
   - component: {fileID: 1220107706}
+  - component: {fileID: 1220107707}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -464,7 +466,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BoundingShape2D: {fileID: 2076798157}
   m_Damping: 0.5
-  m_MaxWindowSize: -1
+  m_MaxWindowSize: 0
+--- !u!114 &1220107707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220107703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd18e0748249924ebcfc713c4bbbf1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vm: {fileID: 1220107704}
 --- !u!1 &1405416804
 GameObject:
   m_ObjectHideFlags: 3
@@ -476,6 +491,7 @@ GameObject:
   - component: {fileID: 1405416805}
   - component: {fileID: 1405416807}
   - component: {fileID: 1405416806}
+  - component: {fileID: 1405416808}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -553,6 +569,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1405416808
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405416804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &1703919377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9140382425955994235, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}
