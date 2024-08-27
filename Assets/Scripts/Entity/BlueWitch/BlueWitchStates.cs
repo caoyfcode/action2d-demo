@@ -288,7 +288,8 @@ public class BlueWitchDash : BlueWitchState
     {
         timer = entity.dashTime;
         entity.dashCoolDownTimer = entity.dashCoolDownTime;
-        entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
+        //entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
+        entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.velocity.y = 0;
         entity.velocity.x = entity.dashSpeed * entity.FacingDirection;
         if (!entity.isOnGround)
