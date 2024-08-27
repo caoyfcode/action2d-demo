@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BlueWitch : Entity
 {
-    // TODO 添加顿帧
     #region Constant Number
     internal float jumpSpeed = 12f;
     internal float airJumpSpeed = 12f;
@@ -197,6 +196,15 @@ public class BlueWitch : Entity
     {
         CurrentCommand.moveX = direction;
         HorizontalMoveAndFlip(direction);
+    }
+
+    public override void OnAttackSuccess(HitInfo hitInfo)
+    {
+        base.OnAttackSuccess(hitInfo);
+        if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
+        {
+           attackState.OnSuccess(hitInfo);
+        }
     }
 
     public override void OnAttacked(HitInfo hitInfo)

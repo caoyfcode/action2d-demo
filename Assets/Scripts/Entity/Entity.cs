@@ -111,6 +111,11 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public virtual void OnAttackSuccess(HitInfo hitInfo)
+    {
+        Debug.Log(gameObject.name + " attack success");
+    }
+
     public virtual void OnAttacked(HitInfo hitInfo)
     {
         Debug.Log(gameObject.name + " is attacked.");

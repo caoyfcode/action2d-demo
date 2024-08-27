@@ -337,6 +337,7 @@ public class BlueWitchAttack : BlueWitchState
 {
     private Summon currentSummon;
     private BlueWitch.AttackType currentType;
+    private float stopTimer = 0;
     public BlueWitchAttack(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
@@ -359,6 +360,7 @@ public class BlueWitchAttack : BlueWitchState
         {
             entity.AddAirAttackCount(currentType);
         }
+        stopTimer = 0f;
     }
 
     public override bool Transition()
@@ -387,6 +389,17 @@ public class BlueWitchAttack : BlueWitchState
 
     public override void Update()
     {
+        if (stopTimer > 0)
+        {
+            stopTimer -= Time.unscaledDeltaTime;
+            entity.animator.speed = 0.5f;
+            entity.summonAttack.animator.speed = 0.5f;
+        }
+        else
+        {
+            entity.animator.speed = 1f;
+            entity.summonAttack.animator.speed = 1;
+        }
         if (!currentSummon.isCancelable && entity.CurrentCommand.AttackType != BlueWitch.AttackType.None)
         {
             entity.attackBuffer = entity.CurrentCommand.AttackType;
@@ -396,6 +409,13 @@ public class BlueWitchAttack : BlueWitchState
     public override void Exit()
     {
         currentSummon.OnSummonEnd();
+        entity.animator.speed = 1f;
+        entity.summonAttack.animator.speed = 1;
+    }
+
+    public void OnSuccess(HitInfo hitInfo)
+    {
+        stopTimer = 0.2f;
     }
 }
 
