@@ -61,6 +61,7 @@ public class HitBox : MonoBehaviour
                         hitType = HitType.EntityAttack,
                     };
                 hitInfo.hurtBox = hitResults[i];
+                hitInfo.hitPoint = hitInfo.hurtBox.bounds.center;
                 hitInfo.attacker?.OnAttackSuccess(hitInfo);
                 target.OnAttacked(hitInfo);
             }

@@ -33,8 +33,9 @@ public class CollisionHitBox : MonoBehaviour
             damage = 1,
             force = new Vector2(directionX * 5, 0),
             hitBox = body,
-            hurtBox = hitResults[0],
             hitType = HitType.BodyCollision,
+            hurtBox = hitResults[0],
+            hitPoint = hitResults[0].bounds.center,
         });
     }
 }

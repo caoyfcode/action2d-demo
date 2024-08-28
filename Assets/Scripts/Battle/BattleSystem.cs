@@ -15,8 +15,11 @@ public class HitInfo
     public Vector2 force;
     // public float poiseDamage; // 削韧;架势伤害
     public Collider2D hitBox;
-    public Collider2D hurtBox;
     public HitType hitType = HitType.Unknown;
+
+    // 以下由 xxxHitBox 填写
+    public Collider2D hurtBox;
+    public Vector2 hitPoint;
 
     public HitInfo()
     {
