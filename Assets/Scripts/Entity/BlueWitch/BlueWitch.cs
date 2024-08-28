@@ -203,12 +203,6 @@ public class BlueWitch : Entity
         if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
         {
            attackState.OnSuccess(hitInfo);
-           var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);
-           obj.transform.position = hitInfo.hitPoint;
-           if (hitInfo.force.x < 0)
-           {
-               obj.transform.Rotate(180f, 0, 0f);
-           }
            Game.VirtualCameraController.StartShake(0.1f, 0.4f, 0.5f);
         }
     }

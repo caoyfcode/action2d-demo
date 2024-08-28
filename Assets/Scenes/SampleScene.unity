@@ -163,7 +163,7 @@ MonoBehaviour:
   machineConfiner: {fileID: 1220107706}
   virtualCameraController: {fileID: 1220107707}
   currentLevel: {fileID: 2076798158}
-  vfxManager:
+  vfxLoader:
     smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
     afterImagePrefab: {fileID: 7294156822734335267, guid: 06d5449147231154e98ef4fd0706cd7f, type: 3}
     bloodEffectPrefab: {fileID: 3661891618808958100, guid: 9d0bb4f066c1aca4f9b324b4a8284dfa, type: 3}

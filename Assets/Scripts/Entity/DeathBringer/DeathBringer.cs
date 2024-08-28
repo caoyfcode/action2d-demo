@@ -85,6 +85,13 @@ public class DeathBringer : Entity
         base.OnAttacked(hitInfo);
         status.heath -= hitInfo.damage;
 
+        var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);
+        obj.transform.position = hitInfo.hitPoint;
+        if (hitInfo.force.x < 0)
+        {
+            obj.transform.Rotate(180f, 0, 0f);
+        }
+
         if (status.heath <= Mathf.Epsilon)
         {
             OnDeath();
