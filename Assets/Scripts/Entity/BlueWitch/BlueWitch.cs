@@ -27,8 +27,6 @@ public class BlueWitch : Entity
     public SummonProjectile summonProjectile;
     public SpawnAfterImage spawnAfterImage;
     public GameObject wallSlideCrow;
-    public GameObject smokeRingPrefab;
-    public GameObject bloodEffectPrefab;
 
     #region Command
 
@@ -205,7 +203,7 @@ public class BlueWitch : Entity
         if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
         {
            attackState.OnSuccess(hitInfo);
-           var obj = Instantiate(bloodEffectPrefab);
+           var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);
            obj.transform.position = hitInfo.hitPoint;
            if (hitInfo.force.x < 0)
            {

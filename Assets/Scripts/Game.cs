@@ -2,7 +2,9 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+// 单例，提供公共变量的访问点以及一些游戏系统函数
 public class Game : MonoBehaviour
 {
     static Game instance; // 单例
@@ -16,6 +18,7 @@ public class Game : MonoBehaviour
     };
     public static Level CurrentLevel => instance.currentLevel;
     public static VirtualCameraController VirtualCameraController => instance.virtualCameraController;
+    public static VFXLoader VFXLoader => instance.vfxLoader;
 
     [SerializeField]
     BlueWitch player;
@@ -29,6 +32,8 @@ public class Game : MonoBehaviour
     VirtualCameraController virtualCameraController;
     [SerializeField]
     Level currentLevel;
+    [SerializeField]
+    VFXLoader vfxLoader;
 
     void Start()
     {

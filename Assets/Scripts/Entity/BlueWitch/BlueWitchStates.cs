@@ -225,7 +225,7 @@ public class BlueWitchAirFree : BlueWitchAirState
             entity.velocity.y = entity.airJumpSpeed;
             entity.airJumpCount++;
             entity.ResetAirAttackCount(); // 跳跃重置攻击
-            UnityEngine.Object.Instantiate(entity.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
+            UnityEngine.Object.Instantiate(Game.VFXLoader.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
         }
         return false;
     }
