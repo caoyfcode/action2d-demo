@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b61848ec4a68fb478c48d1bc3fa7838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  attacker: {fileID: 1188174684163306775}
   targetFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
+  hitBox: {fileID: 0}
 --- !u!114 &1188174684163306775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,5 +227,6 @@ MonoBehaviour:
   forceMove: 0
   isOnGround: 0
   isDead: 0
+  source: {fileID: 0}
   damage: 0
   hitBox: {fileID: 6226931671566889465}

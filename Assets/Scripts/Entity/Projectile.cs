@@ -1,6 +1,7 @@
 
 public class Projectile : Entity
 {
+    public Entity source;
     public float damage;
     public HitBox hitBox;
 
@@ -36,9 +37,11 @@ public class Projectile : Entity
 
     protected virtual HitInfo GenHitInfo() => new()
     {
-        attacker = hitBox.source,
+        projectileSource = source,
+        attacker = this,
         damage = damage,
         hitBox = hitBox.hitBox,
         force = rb.velocity.normalized,
+        hitType = HitType.Projectile,
     };
 }

@@ -8,6 +8,8 @@ public class HitInfo
         get;
         private set;
     }
+
+    public Entity projectileSource; // 若 attacker 是 projectile, 则此项为主人, 否则为 null
     public Entity attacker;
     public float damage;
     public Vector2 force;
@@ -22,22 +24,6 @@ public class HitInfo
         nextId++;
     }
 
-    public Vector2 HitPoint
-    {
-        get
-        {
-            var attackerBB = hitBox.bounds;
-            var attackedBB = hurtBox.bounds;
-            var overlapBB = new Bounds
-            {
-                min = Vector2.Max(attackedBB.min, attackedBB.min),
-                max = Vector2.Min(attackerBB.max, attackedBB.max),
-            };
-
-            return new Vector2(overlapBB.center.x, overlapBB.max.y);
-        }
-    }
-
 }
 
 public enum HitType
@@ -46,6 +32,7 @@ public enum HitType
     BodyCollision,
     Environment,
     EntityAttack,
+    Projectile,
 }
 
 // public enum DamageType

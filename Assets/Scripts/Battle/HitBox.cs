@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
-    public Entity source;
+    public Entity attacker;
     public ContactFilter2D targetFilter;
     public int maxHitNum = 5; // 同时碰撞的最多数量
 
@@ -52,11 +52,11 @@ public class HitBox : MonoBehaviour
                 attackedEntities.Add(target);
                 var hitInfo = genHitInfo != null
                     ? genHitInfo()
-                    : new HitInfo()
+                    : new HitInfo
                     {
-                        attacker = source,
+                        attacker = attacker,
                         damage = 0,
-                        force = new Vector2(source.FacingDirection, 0),
+                        force = new Vector2(attacker.FacingDirection, 0),
                         hitBox = hitBox,
                         hitType = HitType.EntityAttack,
                     };

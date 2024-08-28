@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b61848ec4a68fb478c48d1bc3fa7838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 9140382425955994235}
+  attacker: {fileID: 9140382425955994235}
   targetFilter:
     useTriggers: 0
     useLayerMask: 1
