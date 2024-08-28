@@ -85,7 +85,7 @@ public class DeathBringer : Entity
         base.OnAttacked(hitInfo);
         status.heath -= hitInfo.damage;
 
-        if (Mathf.Abs(status.heath) <= Mathf.Epsilon)
+        if (status.heath <= Mathf.Epsilon)
         {
             OnDeath();
         }
