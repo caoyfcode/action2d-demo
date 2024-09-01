@@ -43,6 +43,7 @@ public class Entity : MonoBehaviour
     internal bool isOnCeiling;
     internal bool isOnLeftWall = false;
     internal bool isOnRightWall = false;
+    internal bool isOverlapEnvironment = false;
     public bool isDead = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
@@ -51,6 +52,7 @@ public class Entity : MonoBehaviour
 
     protected ContactFilter2D envCastFilter;
     private RaycastHit2D[] castHits = new RaycastHit2D[5];
+    private Collider2D[] overlapHits = new Collider2D[5];
 
     protected virtual void Start()
     {
@@ -72,6 +74,7 @@ public class Entity : MonoBehaviour
         isOnCeiling = col.Cast(Vector2.up, envCastFilter, castHits, 0.1f) > 0;
         isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
         isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
+        isOverlapEnvironment = col.OverlapCollider(envCastFilter, overlapHits) > 0;
         float prev = forceMove > 0 ? 1 : -1;
         forceMove *= 1 - forceMoveDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
         if (prev * forceMove <= minForceMove) // 速度过小或反向, 则设置为 0

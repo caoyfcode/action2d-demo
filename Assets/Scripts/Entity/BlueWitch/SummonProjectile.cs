@@ -28,7 +28,7 @@ public class SummonProjectile : Summon
             projectile.velocity = (Game.Player.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
             projectile.damage = 0.5f;
             projectile.source = Game.Player;
-            projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy") | LayerMask.GetMask("Environment"));
+            projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
             projectOver = true;
         }
     }

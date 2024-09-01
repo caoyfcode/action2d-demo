@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class Projectile : Entity
 {
     public Entity source;
@@ -15,10 +17,16 @@ public class Projectile : Entity
     // 子类继续 override Update() 函数来编写路径
     protected override void Update()
     {
-        base.Update();
-        if (IsFacingWall)
+        if (isDead)
         {
             Destroy(gameObject);
+            return;
+        }
+        base.Update();
+        
+        if (isOverlapEnvironment)
+        {
+            OnDeath();
             return;
         }
         if (hitBox.genHitInfo == null)
@@ -30,7 +38,8 @@ public class Projectile : Entity
         hitBox.StartHit();
         if (hitBox.DoHit() > 0)
         {
-            Destroy(gameObject);
+            OnDeath();
+            return;
         }
         rb.velocity = velocity;
     }
@@ -44,4 +53,10 @@ public class Projectile : Entity
         force = rb.velocity.normalized,
         hitType = HitType.Projectile,
     };
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        rb.velocity = Vector2.zero;
+    }
 }
