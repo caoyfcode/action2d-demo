@@ -350,6 +350,7 @@ public class BlueWitchAttack : BlueWitchState
         {
             BlueWitch.AttackType.HeroKnight => entity.summonAttack,
             BlueWitch.AttackType.ProjectileBat => entity.summonProjectile,
+            BlueWitch.AttackType.DefendFireKnight => entity.summonDenfend,
             _ => entity.summonAttack
         };
         entity.attackBuffer = BlueWitch.AttackType.None;
@@ -362,6 +363,11 @@ public class BlueWitchAttack : BlueWitchState
             entity.AddAirAttackCount(currentType);
         }
         stopTimer = 0f;
+        if (currentType == BlueWitch.AttackType.DefendFireKnight)
+        {
+            entity.stateControlInvincible = true;
+        }
+        entity.CurrentCommand.TakeAttackType(); // 消耗掉输入的攻击指令
     }
 
     public override bool Transition()
@@ -401,6 +407,7 @@ public class BlueWitchAttack : BlueWitchState
             entity.animator.speed = 1f;
             entity.summonAttack.animator.speed = 1;
         }
+        // TODO 改为 shouldBuffer
         if (!currentSummon.isCancelable && entity.CurrentCommand.AttackType != BlueWitch.AttackType.None)
         {
             entity.attackBuffer = entity.CurrentCommand.AttackType;
@@ -412,6 +419,7 @@ public class BlueWitchAttack : BlueWitchState
         currentSummon.OnSummonEnd();
         entity.animator.speed = 1f;
         entity.summonAttack.animator.speed = 1;
+        entity.stateControlInvincible = false;
     }
 
     public void OnSuccess(HitInfo hitInfo)

@@ -25,6 +25,7 @@ public class BlueWitch : Entity
 
     public SummonAttack summonAttack;
     public SummonProjectile summonProjectile;
+    public SummonDefend summonDenfend;
     public SpawnAfterImage spawnAfterImage;
     public GameObject wallSlideCrow;
 
@@ -37,6 +38,7 @@ public class BlueWitch : Entity
         public bool dash = false;
         public bool attackProjectileBat = false;
         public bool attackHeroKnight = false;
+        public bool defendFireKnight = false;
         public AttackType AttackType
         {
             get
@@ -45,8 +47,18 @@ public class BlueWitch : Entity
                     return AttackType.HeroKnight;
                 if (attackProjectileBat)
                     return AttackType.ProjectileBat;
+                if (defendFireKnight)
+                    return AttackType.DefendFireKnight;
                 return AttackType.None;
             }
+        }
+        public AttackType TakeAttackType()
+        {
+            var ret = AttackType;
+            attackProjectileBat = false;
+            attackHeroKnight = false;
+            defendFireKnight = false;
+            return ret;
         }
     }
     internal Command CurrentCommand { get; private set; }
@@ -57,7 +69,8 @@ public class BlueWitch : Entity
     {
         None,
         HeroKnight,
-        ProjectileBat,
+        ProjectileBat, // TODO 改为 Archer
+        DefendFireKnight,
     }
     internal AttackType attackBuffer = AttackType.None;
     #endregion
@@ -87,6 +100,8 @@ public class BlueWitch : Entity
             case AttackType.HeroKnight:
                 return airAttackCount < maxAirAttackCount;
             case AttackType.ProjectileBat:
+                return true;
+            case AttackType.DefendFireKnight:
                 return true;
             default: // no attack command
                 return false;

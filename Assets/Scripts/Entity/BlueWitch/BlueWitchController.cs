@@ -29,7 +29,8 @@ public class BlueWitchController : EntityController
             holdJump = Input.GetButton("Jump"),
             attackHeroKnight = Input.GetButtonDown("Attack"),
             dash = Input.GetButtonDown("Dash"),
-            attackProjectileBat = Input.GetKeyDown(KeyCode.H),
+            attackProjectileBat = Input.GetKeyDown(KeyCode.U),
+            defendFireKnight = Input.GetKeyDown(KeyCode.H),
         };
 
         entity.SetCommand(cmd);

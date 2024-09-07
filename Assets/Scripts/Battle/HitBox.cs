@@ -45,6 +45,25 @@ public class HitBox : MonoBehaviour
         int num = 0;
         for (int i = 0; i < hitNum; i++)
         {
+            DefendBox defendBox = hitResults[i].GetComponent<DefendBox>();
+            if (defendBox && defendBox.isDefending)
+            {
+                var hitInfo = genHitInfo != null
+                    ? genHitInfo()
+                    : new HitInfo
+                    {
+                        attacker = attacker,
+                        damage = 0,
+                        force = new Vector2(attacker.FacingDirection, 0),
+                        hitBox = hitBox,
+                        hitType = HitType.EntityAttack,
+                    };
+                defendBox.OnAttacked(hitInfo);
+            }
+        }
+        for (int i = 0; i < hitNum; i++)
+        {
+            // TODO 改为 HurtBox 并删除 attackEntities
             Entity target = hitResults[i].GetComponentInParent<Entity>();
             if (target && !target.IsInvincible && !attackedEntities.Contains(target))
             {
