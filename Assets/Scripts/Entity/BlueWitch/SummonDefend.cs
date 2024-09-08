@@ -5,11 +5,21 @@ using UnityEngine;
 public class SummonDefend : Summon
 {
     public string animDefend = "Defend";
+    public string animFX = "DefendFX";
     public string animAttack = "SuperAttack";
     public DefendBox defendBox;
     public HitBox hitBox;
+    public SpriteRenderer defendFXSr;
     public bool isDefendBoxEnabled;
     public bool isHitBoxEnabled;
+    protected override bool ComponentsEnabled
+    {
+        set
+        {
+            base.ComponentsEnabled = value;
+            defendFXSr.enabled = value;
+        } 
+    }
 
     protected override void Update()
     {
@@ -53,7 +63,7 @@ public class SummonDefend : Summon
 
     void OnDefendSuccess(HitInfo hitInfo)
     {
-        animator.Play(animAttack);
+        animator.Play(animFX, -1, 0);
         hitBox.genHitInfo = GenHitInfo;
     }
 

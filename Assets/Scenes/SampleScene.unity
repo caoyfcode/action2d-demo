@@ -835,6 +835,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8437131861318150536, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.36
+      objectReference: {fileID: 0}
     - target: {fileID: 8724509926727482288, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}
       propertyPath: m_Name
       value: BlueWitch
