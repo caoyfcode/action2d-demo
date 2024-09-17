@@ -437,7 +437,7 @@ Transform:
   m_GameObject: {fileID: 2381992561304123511}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.69, y: 0, z: 0}
+  m_LocalPosition: {x: 0.69, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1375,8 +1375,8 @@ MonoBehaviour:
   status:
     maxHeath: 5
     heath: 5
-    maxMagic: 0
-    magic: 0
+    maxMagic: 5
+    magic: 5
     attack: 0
     defence: 0
     secondJumpAbility: 1

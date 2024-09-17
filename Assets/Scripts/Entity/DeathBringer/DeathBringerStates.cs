@@ -112,6 +112,7 @@ public class DeathBringerAttack : DeathBringerState
         entity.velocity.x = 0;
         entity.velocity.y = 0;
         entity.animator.Play(DeathBringer.ANIM_ATTACK);
+        entity.hitBox.genHitInfo = GenHitInfo;
     }
 
     public override bool Transition()
@@ -147,6 +148,15 @@ public class DeathBringerAttack : DeathBringerState
         entity.attackCoolDownTimer = entity.attackCoolDownTime;
         entity.hitBox.StopHit();
     }
+
+    private HitInfo GenHitInfo() => new()
+    {
+        attacker = entity,
+        damage = 1,
+        force = new Vector2(entity.FacingDirection, 0),
+        hitBox = entity.hitBox.hitBox,
+        hitType = HitType.EntityAttack,
+    };
 }
 
 public class DeathBringerStun : DeathBringerState
