@@ -6,58 +6,106 @@ using Random = UnityEngine.Random;
 
 public class DeathBringerController : EntityController
 {
+    // attackMinPoint < 0 attackMaxPoint > 0 可以避免左右横跳
     public float forwardDetectPoint;
     public float backwardDetectPoint;
     public float detectOffsetY;
     public float attackMinPoint;
     public float attackMaxPoint;
+    const float maxAttackWaitTime = 0.3f;
 
     private DeathBringer entity;
     private Entity target = null;
     private Vector2 targetPosition;
     private float keepTargetTimer = 0f;
+    private float attackWaitTimer = 0f;
+    private BehaviourTree behaviourTree;
 
     public override void Init()
     {
         entity = GetComponent<DeathBringer>();
+        behaviourTree = new BTBuilder()
+            .Sequence()
+                .Condition(DetectTartget)
+                .Fallback()
+                    .Condition(DetectTargetInRange)
+                    .Action(MoveToTarget)
+                .End()
+                .Action(AttackTarget)
+            .End()
+            .Build();
     }
 
     public override void UpdateCommand()
     {
         keepTargetTimer -= Time.deltaTime;
-        if (entity.isDead || entity.stateMachine.CurrentState == entity.attackState || entity.stateMachine.CurrentState == entity.stunState)
-        {
-            entity.SetCommand(new DeathBringer.Command());
-            return;
-        }
-        var cmd = new DeathBringer.Command();
+        attackWaitTimer -= Time.deltaTime;
+        behaviourTree.Update();
+    }
+
+    bool DetectTartget()
+    {
+        if (entity.isDead || entity.stateMachine.CurrentState == entity.attackState)
+            return false;
+        if (target != null && keepTargetTimer > 0)
+            return true;
         Vector3 back = transform.position + new Vector3(backwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
         var castHit = Physics2D.Raycast(back, new Vector2(entity.FacingDirection, 0), forwardDetectPoint - backwardDetectPoint,
             LayerMask.GetMask("Player"));
+        if (castHit.collider == null)
+        {
+            return false;
+        }
+        else
+        {
+            var target = castHit.collider.GetComponentInParent<Entity>();
+            if (target == null)
+                return false;
+            SetTarget(target);
+            return true;
+        }
+    }
 
-        if (castHit.collider == null) // 未检测到有目标, 则继续走还是停下
+    bool DetectTargetInRange()
+    {
+        return CalcMoveDirection() == 0;
+    }
+
+    BTNodeStatus MoveToTarget()
+    {
+        if ((entity.stateMachine.CurrentState != entity.idleState 
+            && entity.stateMachine.CurrentState != entity.walkState) 
+            || keepTargetTimer < 0)
         {
-            if (keepTargetTimer > 0)
-            {
-                cmd.moveX = CalcMoveDirection();
-            }
-            else
-            {
-                cmd.moveX = 0;
-            }
-            target = null;
+            return BTNodeStatus.Failure;
         }
-        else // 有目标, 计算前进还是攻击
+        var cmd = new DeathBringer.Command()
         {
-            SetTarget(castHit.collider.GetComponentInParent<Entity>());
-            cmd.moveX = CalcMoveDirection();
-            if (cmd.moveX == 0 && entity.attackCoolDownTimer <= 0)
-            {
-                cmd.attack = true;
-                target = null;
-            }
-        }
+            moveX = CalcMoveDirection()
+        };
         entity.SetCommand(cmd);
+        if (cmd.moveX == 0)
+            return BTNodeStatus.Success;
+        else
+            return BTNodeStatus.Running;
+    }
+
+    BTNodeStatus AttackTarget()
+    {
+        if (entity.stateMachine.CurrentState == entity.attackState)
+        { // 成功开始攻击
+            return BTNodeStatus.Success;
+        }
+        else if (!entity.isDead && entity.attackCoolDownTimer <= 0)
+        { // 尝试攻击
+            var cmd = new DeathBringer.Command()
+            {
+                attack = true,
+            };
+            entity.SetCommand(cmd);
+            return BTNodeStatus.Running;
+        }
+        return BTNodeStatus.Failure;
     }
 
 
@@ -82,12 +130,20 @@ public class DeathBringerController : EntityController
     {
         float diff = targetPosition.x - entity.transform.position.x;
         float distance = diff * entity.FacingDirection;
+        // attackMinPoint < 0 attackMaxPoint > 0 可以避免左右横跳
         if (distance >= attackMinPoint && distance <= attackMaxPoint)
         {
             return 0;
         }
 
-        return Mathf.Sign(diff);
+        if (distance < attackMinPoint)
+        {
+            return -entity.FacingDirection;
+        }
+        else
+        {
+            return entity.FacingDirection;
+        }
     }
 
 #if UNITY_EDITOR

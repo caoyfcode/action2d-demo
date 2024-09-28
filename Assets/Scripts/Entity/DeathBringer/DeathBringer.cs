@@ -59,6 +59,7 @@ public class DeathBringer : Entity
 
     protected override void Update()
     {
+        SetCommand(new Command());
         base.Update();
         velocity = rb.velocity;
         if (attackCoolDownTimer > 0)

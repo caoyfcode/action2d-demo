@@ -303,7 +303,7 @@ MonoBehaviour:
   forwardDetectPoint: 7.15
   backwardDetectPoint: -2.19
   detectOffsetY: -0.46
-  attackMinPoint: 0.52
+  attackMinPoint: -0.11
   attackMaxPoint: 3.66
 --- !u!1 &7260349971379907219
 GameObject:
