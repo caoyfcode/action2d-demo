@@ -157,7 +157,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
-  hitBox: {fileID: 0}
+  hitCollider: {fileID: 0}
 --- !u!1 &1238109578639638251
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +908,7 @@ SpriteRenderer:
   m_Size: {x: 12, y: 5.3333335}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6951307783493413059
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 9140382425955994235}
   isDefending: 0
-  defendBox: {fileID: 5298985234435682031}
+  defendCollider: {fileID: 5298985234435682031}
 --- !u!1 &7289159869975653917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
-  hitBox: {fileID: 6058447200763817851}
+  hitCollider: {fileID: 6058447200763817851}
 --- !u!1 &7527957393124862653
 GameObject:
   m_ObjectHideFlags: 0

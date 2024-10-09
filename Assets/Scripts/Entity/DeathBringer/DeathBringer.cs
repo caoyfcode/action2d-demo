@@ -8,6 +8,7 @@ public class DeathBringer : Entity
     internal const string ANIM_DEATH = "Death";
     internal float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间
     internal float stunTime = 0.3f;
+    float hitInvincibleTime = 0.2f;
 
     public HitBox hitBox;
 
@@ -36,8 +37,9 @@ public class DeathBringer : Entity
     public bool deathEnd = false;
     public bool attackCancelable;
     internal float attackCoolDownTimer = 0;
+    internal float hitInvincibleTimer = 0;
     public CharacterStatus status;
-    public override bool IsInvincible => false;
+    public override bool IsInvincible => hitInvincibleTimer > 0;
 
     public void SetCommand(Command cmd)
     {
@@ -66,6 +68,10 @@ public class DeathBringer : Entity
         {
             attackCoolDownTimer -= Time.deltaTime;
         }
+        if (hitInvincibleTimer > 0)
+        {
+            hitInvincibleTimer -= Time.deltaTime;
+        }
         stateMachine.Update();
         MergeVelocity();
         rb.velocity = velocity;
@@ -83,7 +89,12 @@ public class DeathBringer : Entity
 
     public override void OnAttacked(HitInfo hitInfo)
     {
+        if (IsInvincible)
+        {
+            return;
+        }
         base.OnAttacked(hitInfo);
+        hitInvincibleTimer = hitInvincibleTime;
         status.heath -= hitInfo.damage;
 
         var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);

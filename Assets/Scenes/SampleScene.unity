@@ -183,13 +183,13 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 64
+      m_Bits: 2112
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
-  hitBox: {fileID: 1855557601}
+  hitCollider: {fileID: 0}
 --- !u!1 &239214631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 1738701987}
   isDefending: 0
-  defendBox: {fileID: 1501971778}
+  defendCollider: {fileID: 0}
 --- !u!114 &1703919377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9140382425955994235, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}

@@ -229,4 +229,4 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
-  hitBox: {fileID: 8656169338008513485}
+  hitCollider: {fileID: 8656169338008513485}

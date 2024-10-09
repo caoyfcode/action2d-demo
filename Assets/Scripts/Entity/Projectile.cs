@@ -34,13 +34,8 @@ public class Projectile : Entity
             hitBox.genHitInfo = GenHitInfo;
         }
 
-        hitBox.hitBox = col;
-        hitBox.StartHit();
-        if (hitBox.DoHit() > 0)
-        {
-            OnDeath();
-            return;
-        }
+        hitBox.hitCollider = col;
+        hitBox.DoHit();
         rb.velocity = velocity;
     }
 
@@ -49,7 +44,7 @@ public class Projectile : Entity
         projectileSource = source,
         attacker = this,
         damage = damage,
-        hitBox = hitBox.hitBox,
+        hitBox = hitBox.hitCollider,
         force = rb.velocity.normalized,
         hitType = HitType.Projectile,
     };
@@ -58,5 +53,11 @@ public class Projectile : Entity
     {
         base.OnDeath();
         rb.velocity = Vector2.zero;
+    }
+
+    public override void OnAttackSuccess(HitInfo hitInfo)
+    {
+        base.OnAttackSuccess(hitInfo);
+        OnDeath();
     }
 }

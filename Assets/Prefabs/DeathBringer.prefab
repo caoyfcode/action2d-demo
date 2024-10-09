@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c2a0b6198adf847bee3570d7cafa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 7607521384447120489}
-  bodyEntity: {fileID: 4879109318323231696}
+  attacker: {fileID: 4879109318323231696}
   targetFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -60,6 +59,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  maxHitNum: 5
+  hitCollider: {fileID: 7607521384447120489}
 --- !u!1 &4833007323278468202
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,4 +417,4 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   maxHitNum: 5
-  hitBox: {fileID: 5575057430158882683}
+  hitCollider: {fileID: 5575057430158882683}

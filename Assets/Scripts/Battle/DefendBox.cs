@@ -9,7 +9,7 @@ public class DefendBox : MonoBehaviour
     public Entity entity;
     public bool isDefending;
 
-    public Collider2D defendBox;
+    public Collider2D defendCollider;
     internal Action<HitInfo> onSuccess;
 
     protected virtual void Start()

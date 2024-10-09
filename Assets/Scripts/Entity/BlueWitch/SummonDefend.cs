@@ -33,12 +33,7 @@ public class SummonDefend : Summon
         }
         if (isHitBoxEnabled)
         {
-            hitBox.StartHit();
             hitBox.DoHit();
-        }
-        else
-        {
-            hitBox.StopHit();
         }
     }
 
@@ -58,7 +53,6 @@ public class SummonDefend : Summon
         isDefendBoxEnabled = false;
         isHitBoxEnabled = false;
         defendBox.StopDefend();
-        hitBox.StopHit();
     }
 
     void OnDefendSuccess(HitInfo hitInfo)
@@ -72,7 +66,7 @@ public class SummonDefend : Summon
         attacker = Game.Player,
         damage = 4,
         force = new Vector2(Game.Player.FacingDirection, 0),
-        hitBox = hitBox.hitBox,
+        hitBox = hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };
 }

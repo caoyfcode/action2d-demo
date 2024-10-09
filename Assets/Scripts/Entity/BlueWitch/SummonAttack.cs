@@ -16,12 +16,7 @@ public class SummonAttack : Summon
 
         if (isHitBoxEnabled)
         {
-            hitBox.StartHit();
             hitBox.DoHit();
-        }
-        else
-        {
-            hitBox.StopHit();
         }
     }
 
@@ -33,7 +28,7 @@ public class SummonAttack : Summon
         }
         ComponentsEnabled = true;
         animator.Play(animNames[nextIndex]);
-        hitBox.hitBox = hitBoxes[nextIndex];
+        hitBox.hitCollider = hitBoxes[nextIndex];
         nextIndex = (nextIndex + 1) % animNames.Length;
         isCancelable = true;
         isEnd = false;
@@ -48,7 +43,6 @@ public class SummonAttack : Summon
     {
         base.OnSummonEnd();
         isHitBoxEnabled = false;
-        hitBox.StopHit();
     }
 
     private HitInfo GenHitInfo() => new()
@@ -56,7 +50,7 @@ public class SummonAttack : Summon
         attacker = Game.Player,
         damage = 1,
         force = new Vector2(Game.Player.FacingDirection, 0),
-        hitBox = hitBox.hitBox,
+        hitBox = hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };
 }

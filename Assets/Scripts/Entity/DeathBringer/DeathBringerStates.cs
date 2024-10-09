@@ -133,12 +133,7 @@ public class DeathBringerAttack : DeathBringerState
     {
         if (entity.hitBoxEnabled)
         {
-            entity.hitBox.StartHit();
             entity.hitBox.DoHit();
-        }
-        else
-        {
-            entity.hitBox.StopHit();
         }
     }
 
@@ -146,7 +141,6 @@ public class DeathBringerAttack : DeathBringerState
     {
         entity.hitBoxEnabled = false;
         entity.attackCoolDownTimer = entity.attackCoolDownTime;
-        entity.hitBox.StopHit();
     }
 
     private HitInfo GenHitInfo() => new()
@@ -154,7 +148,7 @@ public class DeathBringerAttack : DeathBringerState
         attacker = entity,
         damage = 1,
         force = new Vector2(entity.FacingDirection, 0),
-        hitBox = entity.hitBox.hitBox,
+        hitBox = entity.hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };
 }

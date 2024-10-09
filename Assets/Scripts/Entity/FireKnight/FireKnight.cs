@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FireKnight : Entity
 {
-    float hitInvincibleTime = 0.3f;
+    // 玩家的 SummonAttack 攻击生效时长为 11 帧, 12/60=0.183s
+    // 玩家的攻击前摇为 8 帧, 8/60=0.133s, 故无敌时间要超过 0.183s, 但短于 19/60=0.316s
+    float hitInvincibleTime = 0.2f;
     float rollSpeed = 10f;
     const string ANIM_IDLE = "Idle";
     const string ANIM_RUN = "Run";
@@ -138,7 +140,7 @@ public class FireKnight : Entity
     public override void OnAttacked(HitInfo hitInfo)
     {
         // 防御状态只有背后能受到攻击
-        if (stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection < 0)
+        if (IsInvincible || (stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection < 0))
         {
             return;
         }
@@ -319,7 +321,7 @@ public class FireKnight : Entity
             base.Enter();
             entity.animEnd = false;
             entity.animator.Play(ANIM_ROLL);
-            entity.hitBox.hitBox = entity.rollAttackCollider;
+            entity.hitBox.hitCollider = entity.rollAttackCollider;
         }
 
         public override bool Transition()
@@ -341,12 +343,7 @@ public class FireKnight : Entity
            entity.velocity.x = entity.FacingDirection * entity.rollSpeed;
            if (entity.hitBoxEnabled)
            {
-                entity.hitBox.StartHit();
                 entity.hitBox.DoHit();  
-           }
-           else
-           {
-                entity.hitBox.StopHit();
            }
         }
     }
@@ -389,7 +386,7 @@ public class FireKnight : Entity
                         break;
                 }
             }
-            entity.hitBox.hitBox = entity.GetHitCollider(attackType);
+            entity.hitBox.hitCollider = entity.GetHitCollider(attackType);
         }
 
         public override bool Transition()
@@ -421,12 +418,7 @@ public class FireKnight : Entity
             // TODO 添加 GenHitInfo
             if (entity.hitBoxEnabled)
             {
-                entity.hitBox.StartHit();
                 entity.hitBox.DoHit();
-            }
-            else
-            {
-                entity.hitBox.StopHit();
             }
         }
 

@@ -121,6 +121,11 @@ public class Entity : MonoBehaviour
 
     public virtual void OnAttacked(HitInfo hitInfo)
     {
+        // 继承者也要写这个判断
+        if (IsInvincible)
+        {
+            return;
+        }
         Debug.Log(gameObject.name + " is attacked.");
         if (hitFX)
         {
@@ -137,6 +142,7 @@ public class Entity : MonoBehaviour
         {
             controller.OnAttacked(hitInfo);
         }
+        hitInfo.attacker?.OnAttackSuccess(hitInfo);
     }
 
     public virtual void OnDeath()
