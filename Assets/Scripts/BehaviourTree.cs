@@ -10,7 +10,18 @@ public class BTBuilder
 
     public BehaviourTree Build()
     {
-        return new BehaviourTree(rootNode);
+        var tree = new BehaviourTree(rootNode);
+        rootNode = null;
+        parentNodeStack.Clear();
+        return tree;
+    }
+
+    public BTNode BuildNode()
+    {
+        var node = rootNode;
+        rootNode = null;
+        parentNodeStack.Clear();
+        return node;
     }
 
     // 放置自定义叶子结点或子树
@@ -61,6 +72,11 @@ public class BTBuilder
     public BTBuilder Condition(Func<bool> condition)
     {
         return Node(new BTCondition(condition));
+    }
+
+    public BTBuilder WaitUntil(Func<bool> condition, Action onActivate = null, Action onDeactivate = null)
+    {
+        return Node(new BTWaitUntil(condition, onActivate, onDeactivate));
     }
 
     public BTBuilder Inverter()
@@ -195,7 +211,7 @@ public abstract class BTDecorator : BTComposite
     }
 }
 
-# region Actions and Conditions
+# region Leaf Nodes
 public class BTAction : BTNode
 {
     private readonly Func<BTNodeStatus> action;
@@ -240,6 +256,38 @@ public class BTCondition : BTNode
     {
         bool result = condition?.Invoke() ?? true;
         return result ? BTNodeStatus.Success : BTNodeStatus.Failure;
+    }
+}
+
+public class BTWaitUntil : BTNode
+{
+    private readonly Func<bool> condition;
+    private readonly Action onActivate;
+    private readonly Action onDeactivate;
+
+    public BTWaitUntil(Func<bool> condition, Action onActivate = null, Action onDeactivate = null)
+    {
+        this.condition = condition;
+        this.onActivate = onActivate;
+        this.onDeactivate = onDeactivate;
+    }
+
+    public override BTNodeStatus OnExecute()
+    {
+        bool result = condition?.Invoke() ?? true;
+        return result ? BTNodeStatus.Success : BTNodeStatus.Running;
+    }
+
+    public override void OnActivate()
+    {
+        base.OnActivate();
+        onActivate?.Invoke();
+    }
+
+    public override void OnDeactivate()
+    {
+        base.OnDeactivate();
+        onDeactivate?.Invoke();
     }
 }
 #endregion
@@ -366,16 +414,22 @@ public class BTParallel : BTComposite
             {
                 failureCount++;
             }
-            if (successCount >= successNum)
-            {
-                return BTNodeStatus.Success;
-            }
-            else if (failureCount > Children.Count - successNum)
-            {
-            return BTNodeStatus.Failure;
-            }
+            
         }
-        return BTNodeStatus.Running;
+        // 放在最末尾而不是提前结束的原因是需要保证上一帧为 Running 的结点下一帧被执行到
+        // FIXME 现在仍然有部分无法退出的 bug
+        if (successCount + failureCount < Children.Count)
+        {
+            return BTNodeStatus.Running;
+        }
+        if (successCount >= successNum)
+        {
+            return BTNodeStatus.Success;
+        }
+        else
+        {
+            return BTNodeStatus.Failure;
+        }
     }
 }
 #endregion

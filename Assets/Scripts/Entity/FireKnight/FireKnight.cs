@@ -13,8 +13,8 @@ public class FireKnight : Entity
     const string ANIM_AIR_ATTACK = "AirAttack";
     const string ANIM_ROLL = "Roll";
     const string ANIM_ATTACK_1 = "Attack1";
-    const string ANIM_ATTACK_2_COMBO = "Attack2Combo";
-    const string ANIM_ATTACK_3_COMBO = "Attack3Combo";
+    const string ANIM_ATTACK_2 = "Attack2";
+    const string ANIM_ATTACK_3 = "Attack3";
     const string ANIM_SUPER_ATTACK = "SuperAttack";
     const string ANIM_DEFEND = "Defend";
     const string ANIM_TAKE_HIT = "TakeHit";
@@ -29,6 +29,15 @@ public class FireKnight : Entity
     public Collider2D attack3Collider;
     public Collider2D superAttackCollider;
     public Collider2D rollAttackCollider;
+    public Collider2D GetHitCollider(AttackType attackType) => attackType switch
+    {
+        AttackType.Attack1 => attack1Collider,
+        AttackType.Attack2 => attack2Collider,
+        AttackType.Attack3 => attack3Collider,
+        AttackType.AirAttack => airAttackCollider,
+        AttackType.SuperAttack => superAttackCollider,
+        _ => null,
+    };
 
     #region Command
     public class Command
@@ -36,19 +45,8 @@ public class FireKnight : Entity
         public Vector2 speed = Vector2.zero;
         public bool roll = false;
         public bool airAttack = false;
-        public int attackCombo = 0;
         public bool defend = false;
-        public AttackType AttackType
-        {
-            get
-            {
-                if (airAttack)
-                    return AttackType.AirAttack;
-                if (attackCombo > 0)
-                    return AttackType.AttackCombo;
-                return AttackType.None;
-            }
-        }
+        public AttackType attack = AttackType.None;
     }
     internal Command CurrentCommand { get; private set; }
     #endregion
@@ -58,8 +56,10 @@ public class FireKnight : Entity
     public enum AttackType
     {
         None,
+        Attack1,
+        Attack2,
+        Attack3,
         AirAttack,
-        AttackCombo,
         SuperAttack,
     }
     #endregion
@@ -67,6 +67,8 @@ public class FireKnight : Entity
     #region Status
     public bool hitBoxEnabled = false; // 任何攻击都使用此, 由动画设定
     public bool animEnd = false; // 只在需要的动画里设置
+    public bool animPreBreakable = false; // 前摇
+    public bool animPostBreakable = false; // 后摇
     internal int airAttackCount = 0;
     internal float hitInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
@@ -181,7 +183,12 @@ public class FireKnight : Entity
             stateMachine = machine;
         }
 
-        public virtual void Enter() {}
+        public virtual void Enter()
+        {
+            entity.animEnd = false;
+            entity.animPreBreakable = false;
+            entity.animPostBreakable = false;
+        }
         public virtual bool Transition()
         {
             if (entity.isDead && this != entity.deathState)
@@ -192,7 +199,12 @@ public class FireKnight : Entity
             return false;
         }
         public abstract void Update();
-        public virtual void Exit() {}
+        public virtual void Exit()
+        {
+            entity.animEnd = true;
+            entity.animPreBreakable = false;
+            entity.animPostBreakable = false;
+        }
     }
 
     public class GroundFreeState : State
@@ -218,7 +230,7 @@ public class FireKnight : Entity
                 stateMachine.ChangeState(entity.rollState);
                 return true;
             }
-            if (entity.CurrentCommand.attackCombo > 0)
+            if (entity.CurrentCommand.attack != AttackType.None)
             {
                 stateMachine.ChangeState(entity.attackState);
                 return true;
@@ -341,10 +353,7 @@ public class FireKnight : Entity
 
     public class AttackState : State
     {
-        AttackType attackType = AttackType.AttackCombo;
-        int totalCombo = 0;
-        int currentCombo = 0;
-        bool prevHitBoxEnabled = false;
+        AttackType attackType = AttackType.Attack1;
         public AttackState(FireKnight entity, StateMachine<State> machine) : base(entity, machine) 
         {
         }
@@ -353,8 +362,6 @@ public class FireKnight : Entity
         {
             base.Enter();
             entity.animEnd = false;
-            prevHitBoxEnabled = false;
-            currentCombo = 0;
             if (stateMachine.PrevState == entity.airFreeState)
             {
                 attackType = AttackType.AirAttack;
@@ -368,21 +375,21 @@ public class FireKnight : Entity
             }
             else
             {
-                attackType = AttackType.AttackCombo;
-                totalCombo = entity.CurrentCommand.attackCombo;
-                switch (totalCombo)
+                attackType = entity.CurrentCommand.attack;
+                switch (entity.CurrentCommand.attack)
                 {
-                    case 1:
+                    case AttackType.Attack1:
                         entity.animator.Play(ANIM_ATTACK_1);
                         break;
-                    case 2:
-                        entity.animator.Play(ANIM_ATTACK_2_COMBO);
+                    case AttackType.Attack2:
+                        entity.animator.Play(ANIM_ATTACK_2);
                         break;
-                    case 3:
-                        entity.animator.Play(ANIM_ATTACK_3_COMBO);
+                    case AttackType.Attack3:
+                        entity.animator.Play(ANIM_ATTACK_3);
                         break;
                 }
             }
+            entity.hitBox.hitBox = entity.GetHitCollider(attackType);
         }
 
         public override bool Transition()
@@ -396,41 +403,22 @@ public class FireKnight : Entity
                 stateMachine.ChangeState(entity.groundFreeState);
                 return true;
             }
+            if (entity.animPostBreakable && attackType == AttackType.Attack1 && entity.CurrentCommand.attack == AttackType.Attack2)
+            {
+                stateMachine.ChangeState(entity.attackState);
+                return true;
+            }
+            if (entity.animPostBreakable && attackType == AttackType.Attack2 && entity.CurrentCommand.attack == AttackType.Attack3)
+            {
+                stateMachine.ChangeState(entity.attackState);
+                return true;
+            }
             return false;
         }
 
         public override void Update()
         {
-            // TODO 分类别、数量控制移动
-            bool justEnableHitBox = !prevHitBoxEnabled && entity.hitBoxEnabled;
             // TODO 添加 GenHitInfo
-            if (justEnableHitBox)
-            {
-                currentCombo++;
-                switch (attackType)
-                {
-                    case AttackType.AirAttack:
-                        entity.hitBox.hitBox = entity.airAttackCollider;
-                        break;
-                    case AttackType.SuperAttack:
-                        entity.hitBox.hitBox = entity.superAttackCollider;
-                        break;
-                    case AttackType.AttackCombo:
-                        switch (currentCombo)
-                        {
-                            case 1:
-                                entity.hitBox.hitBox = entity.attack1Collider;
-                                break;
-                            case 2:
-                                entity.hitBox.hitBox = entity.attack2Collider;
-                                break;
-                            case 3:
-                                entity.hitBox.hitBox = entity.attack3Collider;
-                                break;
-                        }
-                        break;
-                }
-            }
             if (entity.hitBoxEnabled)
             {
                 entity.hitBox.StartHit();
@@ -440,14 +428,14 @@ public class FireKnight : Entity
             {
                 entity.hitBox.StopHit();
             }
-            prevHitBoxEnabled = entity.hitBoxEnabled;
         }
 
         public override void Exit()
         {
             base.Exit();
-            prevHitBoxEnabled = false;
         }
+
+        public AttackType AttackType => attackType;
     }
 
     public class DefendState : State

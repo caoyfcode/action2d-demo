@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 24872840}
   - component: {fileID: 24872841}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ MonoBehaviour:
   attacker: {fileID: 1738701987}
   targetFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
@@ -565,7 +565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 840476500}
   - component: {fileID: 840476501}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Attack3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,7 +648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 941912759}
   - component: {fileID: 941912760}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: AirAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1273,7 +1273,7 @@ Transform:
   m_GameObject: {fileID: 1738701981}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -29.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1387,6 +1387,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609bb204c741d474aaa7a1066d5ca103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardDetectPoint: 6.88
+  backwardDetectPoint: -1.17
+  detectOffsetY: -0.42
+  target: {fileID: 0}
+  targetPosition: {x: 0, y: 0}
 --- !u!114 &1738701987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,6 +1418,8 @@ MonoBehaviour:
   rollAttackCollider: {fileID: 1871102478}
   hitBoxEnabled: 0
   animEnd: 0
+  animPreBreakable: 0
+  animPostBreakable: 0
   status:
     maxHeath: 5
     heath: 5
@@ -1498,7 +1505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855557600}
   - component: {fileID: 1855557601}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Attack1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1580,7 +1587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1871102477}
   - component: {fileID: 1871102478}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: RollAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1631,7 +1638,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1663,7 +1670,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1924841662}
   - component: {fileID: 1924841663}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Attack2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1745,7 +1752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968385863}
   - component: {fileID: 1968385864}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: SuperAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
