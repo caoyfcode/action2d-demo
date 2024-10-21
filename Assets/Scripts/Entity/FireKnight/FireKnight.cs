@@ -42,6 +42,7 @@ public class FireKnight : Entity
     };
 
     #region Command
+    // TODO 将不同的 Command 拆分为单独的类，放在一个通用文件里, 在每个 Entity 处聚合一帧获取的所有 Command
     public class Command
     {
         public Vector2 speed = Vector2.zero;
@@ -75,7 +76,8 @@ public class FireKnight : Entity
     internal float hitInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
     
-    public CharacterStatus status;
+    // TODO 将其他可配置的常数放入 Status
+    public FireKnightStatus status;
     public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
     #endregion
 

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 
 public class BTBuilder
@@ -84,6 +86,16 @@ public class BTBuilder
         return Decorator(new BTInverter());
     }
 
+    public BTBuilder NeverFail()
+    {
+        return Decorator(new BTNeverFail());
+    }
+
+    public BTBuilder Probability(float probablity)
+    {
+        return Decorator(new BTProbablity(probablity));
+    }
+
     public BTBuilder Fallback()
     {
         return Composite(new BTFallback());
@@ -92,6 +104,11 @@ public class BTBuilder
     public BTBuilder Sequence()
     {
         return Composite(new BTSequence());
+    }
+
+    public BTBuilder RandomSelect()
+    {
+        return Composite(new BTRandomSelect());
     }
 
     public BTBuilder Parallel()
@@ -125,7 +142,7 @@ public enum BTNodeStatus
     Running,
 }
 
-public abstract class BTNode
+public abstract class BTNode : ICloneable
 {
     public BTNode Parent = null;
     public BTNodeStatus Status { get; protected set; } = BTNodeStatus.Success;
@@ -162,6 +179,8 @@ public abstract class BTNode
     public abstract BTNodeStatus OnExecute();
     public virtual void OnActivate() { }
     public virtual void OnDeactivate() { }
+
+    public abstract object Clone();
 }
 
 public abstract class BTComposite : BTNode
@@ -183,6 +202,11 @@ public abstract class BTComposite : BTNode
     {
         Children.Add(child);
         child.Parent = this;
+    }
+
+    public IEnumerable<BTNode> CloneChildren()
+    {
+        return Children.Select(child => (BTNode)child.Clone());
     }
 }
 
@@ -241,6 +265,11 @@ public class BTAction : BTNode
         base.OnDeactivate();
         onDeactivate?.Invoke();
     }
+
+    public override object Clone()
+    {
+        return new BTAction(action, onActivate, onDeactivate);
+    }
 }
 
 public class BTCondition : BTNode
@@ -256,6 +285,11 @@ public class BTCondition : BTNode
     {
         bool result = condition?.Invoke() ?? true;
         return result ? BTNodeStatus.Success : BTNodeStatus.Failure;
+    }
+
+    public override object Clone()
+    {
+        return new BTCondition(condition);
     }
 }
 
@@ -288,6 +322,11 @@ public class BTWaitUntil : BTNode
     {
         base.OnDeactivate();
         onDeactivate?.Invoke();
+    }
+
+    public override object Clone()
+    {
+        return new BTWaitUntil(condition, onActivate, onDeactivate);
     }
 }
 #endregion
@@ -322,6 +361,86 @@ public class BTInverter : BTDecorator
             return status;
         }
     }
+
+    public override object Clone()
+    {
+        return Children.Count > 0 ?  new BTInverter(Child.Clone() as BTNode) : new BTInverter();
+    }
+}
+
+public class BTNeverFail : BTDecorator
+{
+    public BTNeverFail() : base()
+    {
+    }
+    public BTNeverFail(BTNode child) : base(child)
+    {
+    }
+
+    public override BTNodeStatus OnExecute()
+    {
+        if (Children.Count == 0)
+        {
+            return BTNodeStatus.Success;
+        }
+        var status = Child.Execute();
+        if (status == BTNodeStatus.Running)
+        {
+            return BTNodeStatus.Running;
+        }
+        else
+        {
+            return BTNodeStatus.Success;
+        }
+    }
+
+    public override object Clone()
+    {
+        return Children.Count > 0 ?  new BTNeverFail(Child.Clone() as BTNode) : new BTNeverFail();
+    }
+}
+
+public class BTProbablity : BTDecorator
+{
+    private readonly float probability;
+
+    public BTProbablity(float probability) : base()
+    {
+        this.probability = probability;
+    }
+
+    public BTProbablity(BTNode child, float probability) : base(child)
+    {
+        this.probability = probability;
+    }
+
+    public override BTNodeStatus OnExecute()
+    {
+        if (Children.Count == 0)
+        {
+            return BTNodeStatus.Success;
+        }
+        if (Status == BTNodeStatus.Running)
+        {
+            return Child.Execute();
+        }
+        else
+        {
+            if (UnityEngine.Random.Range(0f, 1f) < probability)
+            {
+                return Child.Execute();
+            }
+            else
+            {
+                return BTNodeStatus.Success;
+            }
+        }
+    }
+
+    public override object Clone()
+    {
+        return Children.Count > 0 ? new BTProbablity(Child.Clone() as BTNode, probability) : new BTProbablity(probability);
+    }
 }
 #endregion
 
@@ -354,6 +473,11 @@ public class BTFallback : BTComposite
         }
         return BTNodeStatus.Failure;
     }
+
+    public override object Clone()
+    {
+        return new BTFallback(CloneChildren().ToArray());
+    }
 }
 
 public class BTSequence : BTComposite
@@ -384,6 +508,41 @@ public class BTSequence : BTComposite
         }
         return BTNodeStatus.Success;
     }
+
+    public override object Clone()
+    {
+        return new BTSequence(CloneChildren().ToArray());
+    }
+}
+
+public class BTRandomSelect : BTComposite
+{
+    public BTRandomSelect(params BTNode[] children) : base(children)
+    {
+    }
+
+    public override BTNodeStatus OnExecute()
+    {
+        if (Children.Count == 0)
+        {
+            return BTNodeStatus.Success;
+        }
+        if (Status == BTNodeStatus.Running)
+        {
+            return Children[runningChildIndex].Execute();
+        }
+        else
+        {
+            int index = UnityEngine.Random.Range(0, Children.Count);
+            runningChildIndex = index;
+            return Children[index].Execute();
+        }
+    }
+
+    public override object Clone()
+    {
+        return new BTRandomSelect(CloneChildren().ToArray());
+    }
 }
 
 public class BTParallel : BTComposite
@@ -402,22 +561,44 @@ public class BTParallel : BTComposite
         }
         int successCount = 0;
         int failureCount = 0;
-
-        foreach (var child in Children)
+        // 以下 if else 不可以合并
+        if (Status == BTNodeStatus.Running)
         {
-            var status = child.Execute();
-            if (status == BTNodeStatus.Success)
+            foreach (var child in Children)
             {
-                successCount++;
+                var status = child.Status switch
+                {
+                    BTNodeStatus.Running => child.Execute(),
+                    BTNodeStatus.Success => BTNodeStatus.Success,
+                    BTNodeStatus.Failure => BTNodeStatus.Failure,
+                };
+                if (status == BTNodeStatus.Success)
+                {
+                    successCount++;
+                }
+                else if (status == BTNodeStatus.Failure)
+                {
+                    failureCount++;
+                }
             }
-            else if (status == BTNodeStatus.Failure)
-            {
-                failureCount++;
-            }
-            
         }
-        // 放在最末尾而不是提前结束的原因是需要保证上一帧为 Running 的结点下一帧被执行到
-        // FIXME 现在仍然有部分无法退出的 bug
+        else
+        {
+            foreach (var child in Children)
+            {
+                var status = child.Execute();
+                if (status == BTNodeStatus.Success)
+                {
+                    successCount++;
+                }
+                else if (status == BTNodeStatus.Failure)
+                {
+                    failureCount++;
+                }
+                
+            }
+        }
+        
         if (successCount + failureCount < Children.Count)
         {
             return BTNodeStatus.Running;
@@ -430,6 +611,11 @@ public class BTParallel : BTComposite
         {
             return BTNodeStatus.Failure;
         }
+    }
+
+    public override object Clone()
+    {
+        return new BTParallel(successNum, CloneChildren().ToArray());
     }
 }
 #endregion

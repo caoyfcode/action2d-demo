@@ -1390,8 +1390,10 @@ MonoBehaviour:
   forwardDetectPoint: 6.88
   backwardDetectPoint: -1.17
   detectOffsetY: -0.42
+  airAttackTargetHeight: -29
   target: {fileID: 0}
   targetPosition: {x: 0, y: 0}
+  stage: 1
 --- !u!114 &1738701987
 MonoBehaviour:
   m_ObjectHideFlags: 0

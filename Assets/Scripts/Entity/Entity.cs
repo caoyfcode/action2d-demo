@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
 {
     #region Constant
     internal float horizontalMoveSpeed = 6f;
-    internal float gravity = 15f;
+    internal float gravity = 30f;
     internal float forceMoveDecay = 10f; // 水平衰减速度
     internal float attackForceMove = 5f; // 单位力施加到单位质量产生的速度
     internal float minForceMove = 0.1f; // 水平衰减的最小值, 到达此值设为 0
@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
     public float FacingDirection
     {
         get => _facingDirection;
-        protected set
+        set
         {
             if (value * _facingDirection < 0)
             {

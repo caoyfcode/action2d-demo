@@ -16,7 +16,7 @@ public class BlueWitch : Entity
     internal float wallSlideSpeed = 2f;
     internal float attackComboTime = 0.3f;
     internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
-    internal float hitInvincibleTime = 1f;
+    internal float hitInvincibleTime = 0.1f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
@@ -193,7 +193,7 @@ public class BlueWitch : Entity
             {
                 velocity.y -= gravity * Time.fixedDeltaTime;
             }
-            velocity.y -= gravity * Time.fixedDeltaTime;
+            // velocity.y -= gravity * Time.fixedDeltaTime;
             rb.velocity = velocity;
         }
     }
