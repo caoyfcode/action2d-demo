@@ -1257,6 +1257,7 @@ GameObject:
   - component: {fileID: 1738701985}
   - component: {fileID: 1738701987}
   - component: {fileID: 1738701986}
+  - component: {fileID: 1738701988}
   m_Layer: 8
   m_Name: FireKnight
   m_TagString: Untagged
@@ -1432,6 +1433,23 @@ MonoBehaviour:
     stage: 1
     attackComboCoolDownTime: 0.5
     airAttackCoolDownTime: 1.5
+--- !u!114 &1738701988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738701981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc661fc1da55d9e4bb8bfe3492da4e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashedSprite: {fileID: 239214633}
+  flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
+  flashDuration: 0.2
+  flashFXOnHit: 1
+  boodFXOnHit: 1
 --- !u!1 &1773654610
 GameObject:
   m_ObjectHideFlags: 0

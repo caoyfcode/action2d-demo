@@ -1351,6 +1351,8 @@ MonoBehaviour:
   flashedSprite: {fileID: 5749543971831427573}
   flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   flashDuration: 0.2
+  flashFXOnHit: 1
+  boodFXOnHit: 0
 --- !u!114 &9140382425955994235
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class Entity : MonoBehaviour
     internal Animator animator;
     protected Rigidbody2D rb;
     internal Collider2D col;
-    protected HitFlashFX hitFX;
+    protected HitFX hitFX;
     protected EntityController controller;
     #endregion
 
@@ -56,7 +56,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-        hitFX = GetComponent<HitFlashFX>();
+        hitFX = GetComponent<HitFX>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
@@ -129,7 +129,7 @@ public class Entity : MonoBehaviour
         Debug.Log(gameObject.name + " is attacked.");
         if (hitFX)
         {
-            hitFX.StartFlash();
+            hitFX.OnHit(hitInfo);
         }
         Vector2 deltaV = hitInfo.force * attackForceMove / rb.mass;
         forceMove += deltaV.x;

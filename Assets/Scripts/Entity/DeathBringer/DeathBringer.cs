@@ -8,7 +8,7 @@ public class DeathBringer : Entity
     internal const string ANIM_DEATH = "Death";
     internal float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间
     internal float stunTime = 0.3f;
-    float hitInvincibleTime = 0.2f;
+    float hitInvincibleTime = 0.3f;
 
     public HitBox hitBox;
 
@@ -49,7 +49,7 @@ public class DeathBringer : Entity
     protected override void Start()
     {
         base.Start();
-        hitFX = GetComponent<HitFlashFX>();
+        hitFX = GetComponent<HitFX>();
         stateMachine = new StateMachine<DeathBringerState>();
         idleState = new DeathBringerIdle(this, stateMachine);
         walkState = new DeathBringerWalk(this, stateMachine);
@@ -96,13 +96,6 @@ public class DeathBringer : Entity
         base.OnAttacked(hitInfo);
         hitInvincibleTimer = hitInvincibleTime;
         status.heath -= hitInfo.damage;
-
-        var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);
-        obj.transform.position = hitInfo.hitPoint;
-        if (hitInfo.force.x < 0)
-        {
-            obj.transform.Rotate(180f, 0, 0f);
-        }
 
         if (status.heath <= Mathf.Epsilon)
         {

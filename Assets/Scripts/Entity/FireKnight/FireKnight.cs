@@ -6,7 +6,8 @@ public class FireKnight : Entity
 {
     // 玩家的 SummonAttack 攻击生效时长为 11 帧, 12/60=0.183s
     // 玩家的攻击前摇为 8 帧, 8/60=0.133s, 故无敌时间要超过 0.183s, 但短于 19/60=0.316s
-    float hitInvincibleTime = 0.2f;
+    // TOOD 移入 status
+    float hitInvincibleTime = 0.3f;
     float rollSpeed = 10f;
     const string ANIM_IDLE = "Idle";
     const string ANIM_RUN = "Run";
@@ -149,13 +150,6 @@ public class FireKnight : Entity
         
         hitInvincibleTimer = hitInvincibleTime;
         status.heath -= hitInfo.damage;
-
-        var obj = Instantiate(Game.VFXLoader.bloodEffectPrefab);
-        obj.transform.position = hitInfo.hitPoint;
-        if (hitInfo.force.x < 0)
-        {
-            obj.transform.Rotate(180f, 0, 0f);
-        }
 
         if (status.heath <= Mathf.Epsilon)
         {
