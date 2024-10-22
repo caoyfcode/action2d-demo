@@ -14,7 +14,7 @@ public class FireKnightController : EntityController
     public float detectOffsetY;
 
     // checker
-    public float airAttackTargetHeight;
+    public float groundHeight;
 
 
     [SerializeField]
@@ -23,7 +23,10 @@ public class FireKnightController : EntityController
     private Vector2 targetPosition = Vector2.zero;
     private float keepTargetTimer = 0f;
     public Entity Target => keepTargetTimer > 0f ? target : null;
-    private float attackWaitTimer = 0f;
+    private float waitTimer = 0f;
+    // TODO 两个 cool down timer 移入 status
+    private float airAttackCoolDownTimer = 0f;
+    private float attackComboCoolDownTimer = 0f;
     private BehaviourTree behaviourTree;
 
 
@@ -36,32 +39,38 @@ public class FireKnightController : EntityController
                     .Condition(() => DetectTargetInAttackRange(AttackType.Attack1))
                     .Action(() => MoveToTargetForAttack(AttackType.Attack1))
                 .End()
-                .WaitUntil(() => attackWaitTimer <= 0f, () => attackWaitTimer = Random.Range(0.1f, 0.2f))
+                .WaitUntil(() => waitTimer <= 0f, () => waitTimer = Random.Range(0.1f, 0.2f))
                 .Action(() => StartAttack(AttackType.Attack1))
                 .WaitUntil(() => entity.animPostBreakable)
                 .NeverFail()
                     .Sequence()
                         .Condition(() => DetectTargetInAttackRange(AttackType.Attack2))
-                        .WaitUntil(() => attackWaitTimer <= 0f, () => attackWaitTimer = 0.1f)
+                        .WaitUntil(() => waitTimer <= 0f, () => waitTimer = 0.1f)
                         .Action(() => StartAttack(AttackType.Attack2))
                         .WaitUntil(() => entity.animPostBreakable)
                         // .Condition(() => entity.status.stage == 2) // 检测2阶段
-                        .WaitUntil(() => attackWaitTimer <= 0f, () => attackWaitTimer = 0.1f)
+                        .WaitUntil(() => waitTimer <= 0f, () => waitTimer = 0.1f)
                         .Action(FaceTarget) // 转向行动
                         .Action(() => StartAttack(AttackType.Attack3))
                     .End()
                 .End()
                 .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState)
-                .WaitUntil(() => attackWaitTimer <= 0f, () => attackWaitTimer = Random.Range(0.3f, 0.5f))
+                .WaitUntil(() => waitTimer <= 0f, () => waitTimer = Random.Range(0.3f, 0.5f))
             .End()
             .BuildNode();
         BTNode jumpAndAttack = new BTBuilder()
             .Sequence()
                 .Condition(TargetIsOnAir) // 目标是否在空中一定高度
-                .Action(JumpToAirTarget, ActivateJumpToAirTarget) // 跳跃与移动
-                .WaitUntil(() => attackWaitTimer <= 0f, () => attackWaitTimer = 0.1f)
-                .Action(() => StartAttack(AttackType.AirAttack))
-                .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState)
+                .Condition(() => entity.stateMachine.CurrentState == entity.groundFreeState)
+                .NeverFail()
+                    .Sequence()
+                        .Action(StartJump)
+                        .Action(WaitAirTop)
+                        .Action(() => StartAttack(AttackType.AirAttack))
+                        .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState)
+                    .End()
+                .End()
+                .Action(WaitAirToGround)
                 .WaitUntil(() => entity.isOnGround)
             .End()
             .BuildNode();
@@ -92,8 +101,14 @@ public class FireKnightController : EntityController
             .Sequence()
                 .Condition(DetectTarget)
                 .Fallback()
-                    .Node(jumpAndAttack)
-                    .Node(attackCombo)
+                    .Sequence()
+                        .Condition(() => airAttackCoolDownTimer <= 0f)
+                        .Node(jumpAndAttack)
+                    .End()
+                    .Sequence()
+                        .Condition(() => attackComboCoolDownTimer <= 0f)
+                        .Node(attackCombo)
+                    .End()
                 .End()
             .End()
             .Build();
@@ -128,9 +143,17 @@ public class FireKnightController : EntityController
         {
             keepTargetTimer -= Time.deltaTime;
         }
-        if (attackWaitTimer > 0f)
+        if (waitTimer > 0f)
         {
-            attackWaitTimer -= Time.deltaTime;
+            waitTimer -= Time.deltaTime;
+        }
+        if (airAttackCoolDownTimer > 0f)
+        {
+            airAttackCoolDownTimer -= Time.deltaTime;
+        }
+        if (attackComboCoolDownTimer > 0f)
+        {
+            attackComboCoolDownTimer -= Time.deltaTime;
         }
     }
 
@@ -225,16 +248,20 @@ public class FireKnightController : EntityController
         Debug.Log("Current attack state type is " + entity.attackState.AttackType);
         if (entity.stateMachine.CurrentState == entity.attackState && entity.attackState.AttackType == attackType)
         {
-            Debug.Log(BTNodeStatus.Success);
+            Debug.Log("Start Success " + attackType);
+            if (attackType == AttackType.Attack1)
+            {
+                attackComboCoolDownTimer = entity.status.attackComboCoolDownTime;
+            }
             return BTNodeStatus.Success;
         }
         if (!entity.isDead)
         {
             entity.SetCommand(new FireKnight.Command()
             {
-                attack = attackType
+                attack = attackType,
             });
-            Debug.Log(BTNodeStatus.Running);
+            Debug.Log("Starting attack is " + attackType);
             return BTNodeStatus.Running;
         }
         Debug.Log(BTNodeStatus.Failure);
@@ -245,41 +272,40 @@ public class FireKnightController : EntityController
     {
         if (!target)
             return false;
-        return target.col.bounds.min.y > airAttackTargetHeight;
+        return target.col.bounds.min.y > groundHeight + 2;
     }
 
-    float moveDirectionWhenJump = 0;
-    void ActivateJumpToAirTarget()
+    BTNodeStatus StartJump()
     {
-        var cmd = entity.CurrentCommand;
-        cmd.speed.y = entity.status.jumpSpeed;
-        entity.SetCommand(cmd);
-        if (!Target)
+        Debug.Log("StartJump");
+        if (entity.stateMachine.CurrentState == entity.airFreeState)
         {
-            moveDirectionWhenJump = 0;
+            airAttackCoolDownTimer = entity.status.airAttackCoolDownTime;
+            return BTNodeStatus.Success;
+        }
+        else if (entity.stateMachine.CurrentState == entity.groundFreeState)
+        {
+            var cmd = entity.CurrentCommand;
+            cmd.speed.y = entity.status.jumpSpeed;
+            entity.SetCommand(cmd);
+            if (Target)
+            {
+                FaceTarget();
+            }
+            return BTNodeStatus.Running;
         }
         else
         {
-            float diff = targetPosition.x - entity.transform.position.x;
-            if (diff > 0.5)
-            {
-                moveDirectionWhenJump = 1;
-            }
-            else if (diff < -0.5)
-            {
-                moveDirectionWhenJump = -1;
-            }
-            else
-            {
-                moveDirectionWhenJump = 0;
-            }
+            return BTNodeStatus.Failure;
         }
-        
     }
-    BTNodeStatus JumpToAirTarget()
+    BTNodeStatus WaitAirTop()
     {
-        if (DetectTargetInAttackRange(AttackType.AirAttack))
+        // 到达最高点攻击
+        Debug.Log("entity.velocity.y " + entity.velocity.y);
+        if (entity.velocity.y < 0)
         {
+            Debug.Log("velocity y < 0");
             return BTNodeStatus.Success;
         }
         else if (entity.stateMachine.CurrentState != entity.airFreeState)
@@ -289,10 +315,22 @@ public class FireKnightController : EntityController
         else
         {
             var cmd = entity.CurrentCommand;
-            cmd.speed.x = moveDirectionWhenJump * entity.horizontalMoveSpeed;
+            cmd.speed.x = entity.FacingDirection * entity.horizontalMoveSpeed;
             entity.SetCommand(cmd);
             return BTNodeStatus.Running;
         }
+    }
+
+    BTNodeStatus WaitAirToGround()
+    {
+        if (entity.stateMachine.CurrentState != entity.airFreeState)
+        {
+            return BTNodeStatus.Success;
+        }
+        var cmd = entity.CurrentCommand;
+        cmd.speed.x = entity.FacingDirection * entity.horizontalMoveSpeed;
+        entity.SetCommand(cmd);
+        return BTNodeStatus.Running;
     }
 
     void OnDrawGizmosSelected()

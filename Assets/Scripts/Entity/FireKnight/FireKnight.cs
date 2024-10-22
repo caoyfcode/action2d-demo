@@ -47,7 +47,6 @@ public class FireKnight : Entity
     {
         public Vector2 speed = Vector2.zero;
         public bool roll = false;
-        public bool airAttack = false;
         public bool defend = false;
         public AttackType attack = AttackType.None;
     }
@@ -280,12 +279,12 @@ public class FireKnight : Entity
             {
                 return true;
             }
-            if (entity.CurrentCommand.airAttack && entity.airAttackCount == 0)
+            if (entity.CurrentCommand.attack == AttackType.AirAttack && entity.airAttackCount == 0)
             {
                 stateMachine.ChangeState(entity.attackState);
                 return true;
             }
-            if (entity.isOnGround)
+            if (entity.isOnGround && entity.velocity.y <= 0)
             {
                 stateMachine.ChangeState(entity.groundFreeState);
                 return true;
@@ -366,6 +365,8 @@ public class FireKnight : Entity
                 attackType = AttackType.AirAttack;
                 entity.animator.Play(ANIM_AIR_ATTACK);
                 entity.airAttackCount++;
+                entity.velocity.x = 0;
+                entity.velocity.y = 0;
             }
             else if (stateMachine.PrevState == entity.defendState)
             {
