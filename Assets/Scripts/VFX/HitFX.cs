@@ -35,7 +35,7 @@ public class HitFX : MonoBehaviour
         obj.transform.position = position;
         if (hitDirection.x < 0)
         {
-            obj.transform.Rotate(180f, 0, 0f);
+            obj.transform.Rotate(0f, 180f, 0f);
         }
     }
 
