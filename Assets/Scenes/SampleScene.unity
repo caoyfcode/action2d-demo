@@ -730,6 +730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054944961}
   - component: {fileID: 1054944963}
+  - component: {fileID: 1054944964}
   - component: {fileID: 1054944962}
   m_Layer: 5
   m_Name: Manas
@@ -769,8 +770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76770a279fce3b4aa9c76c1e2382b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  valueBar: {fileID: 1054944964}
   childPrefab: {fileID: 5868153048824748419, guid: 82167d04cb3039241aafca11e3a25e69, type: 3}
-  value: 0
+  Value: 0
 --- !u!114 &1054944963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +799,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1054944964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054944960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb14f738b2f5794ea27626a5bf05fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 0
+  value: 0
 --- !u!1001 &1108677007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,6 +982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1243206414}
   - component: {fileID: 1243206415}
+  - component: {fileID: 1243206417}
   - component: {fileID: 1243206416}
   m_Layer: 5
   m_Name: Hearts
@@ -1031,7 +1048,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76770a279fce3b4aa9c76c1e2382b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  valueBar: {fileID: 1243206417}
   childPrefab: {fileID: 7576584271972714760, guid: a01aec643e088044cb9eaafa392653c3, type: 3}
+  Value: 0
+--- !u!114 &1243206417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243206413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb14f738b2f5794ea27626a5bf05fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 0
   value: 0
 --- !u!1 &1405416804
 GameObject:

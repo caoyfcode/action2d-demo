@@ -5,46 +5,40 @@ using UnityEngine.UI;
 
 public class StatusIconList : MonoBehaviour
 {
+    public ValueBar valueBar;
     public GameObject childPrefab;
     public int Total
     {
         set
         {
             UpdateChildCount(value);
+            valueBar.maxValue = value;
         }
-        get => transform.childCount;
+        get => (int)valueBar.maxValue;
     }
-    public float value;
-    private float movingValue;
-
-    // Start is called before the first frame update
-    void Start()
+    public float Value
     {
-        movingValue = value;
+        set
+        {
+            valueBar.value = value;
+        }
+        get => valueBar.value;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(value - movingValue) < Mathf.Epsilon)
-        {
-            movingValue = value;
-        }
-        else
-        {
-            movingValue += (value - movingValue) * Mathf.Clamp01(Time.deltaTime / 0.2f);
-        }
-        // FIXME: 子结点数量变化并不是即使的，而是要等到帧末, 因而可能导致问题
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount && i < Total; i++)
         {
             var child = transform.GetChild(i).GetComponent<StatusIcon>();
-            child.ratio = Mathf.Clamp01(value - i);
-            child.movingRatio = Mathf.Clamp01(movingValue - i);
+            child.outerRatio = Mathf.Clamp01(valueBar.OuterValue - i);
+            child.innerRatio = Mathf.Clamp01(valueBar.InnerValue - i);
         }
     }
 
     void UpdateChildCount(int num)
     {
+        // TODO 添加新增的动画
         int childCount = transform.childCount;
         if (childCount < num)
         {
@@ -55,7 +49,7 @@ public class StatusIconList : MonoBehaviour
         }
         else if (childCount > num)
         {
-            for (int i = childCount - 1; i >= num; i++)
+            for (int i = childCount - 1; i >= num; i--)
             {
                 var child = transform.GetChild(i);
                 Destroy(child.gameObject);

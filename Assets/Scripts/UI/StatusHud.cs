@@ -11,8 +11,8 @@ public class StatusHud : MonoBehaviour
     void Update()
     {
         heath.Total = (int)Game.Player.status.maxHeath;
-        heath.value = Game.Player.status.heath;
+        heath.Value = Game.Player.status.heath;
         magic.Total = (int)Game.Player.status.maxMagic;
-        magic.value = Game.Player.status.magic;
+        magic.Value = Game.Player.status.magic;
     }
 }
