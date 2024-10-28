@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Entity 类为所有实体的基类, 可以利用 velocity 改变速度
 // 必有: Animator, Rigidbody2D, Collider2D
@@ -6,6 +8,12 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(Collider2D))]
 public class Entity : MonoBehaviour
 {
+    #region Events
+    public UnityEvent<HitInfo> onAttacked;
+    public UnityEvent onDeath;
+    public UnityEvent<HitInfo> onAttackSuccess;
+    #endregion
+
     #region Constant
     internal float horizontalMoveSpeed = 6f;
     internal float gravity = 30f;
@@ -48,11 +56,13 @@ public class Entity : MonoBehaviour
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
     public virtual bool IsInvincible => false;
+    public virtual CharacterStatus CharacterStatus => null;
     #endregion
 
     protected ContactFilter2D envCastFilter;
     private RaycastHit2D[] castHits = new RaycastHit2D[5];
     private Collider2D[] overlapHits = new Collider2D[5];
+
 
     protected virtual void Start()
     {
@@ -114,11 +124,15 @@ public class Entity : MonoBehaviour
         }
     }
 
+   // TODO 改名未 HitSuccess
     public virtual void OnAttackSuccess(HitInfo hitInfo)
     {
         Debug.Log(gameObject.name + " attack success");
+        onAttackSuccess.Invoke(hitInfo);
     }
 
+    // TODO 改名为 TakeAttack/TakeHit
+    // onAttacked 事件要子类主动触发
     public virtual void OnAttacked(HitInfo hitInfo)
     {
         // 继承者也要写这个判断
@@ -138,18 +152,26 @@ public class Entity : MonoBehaviour
         vel.y += deltaV.y; // TIP: 竖直方向若处于持续设置为 0 的状态，则无法生效
         rb.velocity = vel;
         // velocity.y += deltaV.y;
+        
+        // TODO 将判断 controller 删除，改为 controller 自己注册 event
+        onAttacked.Invoke(hitInfo);
         if (controller)
         {
             controller.OnAttacked(hitInfo);
         }
-        hitInfo.attacker?.OnAttackSuccess(hitInfo);
+        if (hitInfo.attacker)
+        {
+            hitInfo.attacker.OnAttackSuccess(hitInfo);
+        }
     }
 
+    // TODO 改名为 Death
     public virtual void OnDeath()
     {
         Debug.Log(gameObject.name + " dies.");
         col.enabled = false;
         isDead = true;
+        onDeath.Invoke();
         if (controller)
         {
             controller.OnDeath();

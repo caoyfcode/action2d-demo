@@ -5,9 +5,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 // 单例，提供公共变量的访问点以及一些游戏系统函数
-public class Game : MonoBehaviour
+public class Game : SingletonBase<Game>
 {
-    static Game instance; // 单例
     public static BlueWitch Player => instance.player;
     public static Camera Camera => instance.cam;
     public static DarkScreen DarkScreen => instance.darkScreen;
@@ -19,6 +18,7 @@ public class Game : MonoBehaviour
     public static Level CurrentLevel => instance.currentLevel;
     public static VirtualCameraController VirtualCameraController => instance.virtualCameraController;
     public static VFXLoader VFXLoader => instance.vfxLoader;
+    public static BossSystem BossSystem => instance.bossSystem;
 
     [SerializeField]
     BlueWitch player;
@@ -34,10 +34,11 @@ public class Game : MonoBehaviour
     Level currentLevel;
     [SerializeField]
     VFXLoader vfxLoader;
+    [SerializeField]
+    BossSystem bossSystem;
 
     void Start()
     {
-        instance = this;
         SetCurrentLevel(currentLevel);
     }
 

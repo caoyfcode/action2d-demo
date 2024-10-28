@@ -1,0 +1,41 @@
+using System;
+using UnityEngine;
+
+public class BossSystem : MonoBehaviour
+{
+    public BossHeathBar bossHeathBar;
+    public Entity boss;
+    public bool bossFightStarted = false;
+
+
+    public void StartBossFight(Entity boss)
+    {
+        if (!bossFightStarted)
+        {
+            this.boss = boss;
+            bossFightStarted = true;
+            bossHeathBar.valueBar.maxValue = boss.CharacterStatus.maxHeath;
+            bossHeathBar.valueBar.value = boss.CharacterStatus.heath;
+            bossHeathBar.Shown = true;
+            boss.onDeath.AddListener(EndBossFight);
+        }
+    }
+
+    public void EndBossFight()
+    {
+        bossFightStarted = false;
+        bossHeathBar.Shown = false;
+        boss.onDeath.RemoveListener(EndBossFight);
+        boss = null;
+    }
+
+    void Update()
+    {
+        if (bossFightStarted && boss != null)
+        {
+            Debug.Log("Boss Health: " + boss.CharacterStatus.heath);
+            Debug.Log("Bar value: " + bossHeathBar.valueBar.value);
+            bossHeathBar.valueBar.value = boss.CharacterStatus.heath;
+        }
+    }
+}

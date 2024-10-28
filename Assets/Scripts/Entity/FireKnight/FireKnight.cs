@@ -79,6 +79,7 @@ public class FireKnight : Entity
     // TODO 将其他可配置的常数放入 Status
     public FireKnightStatus status;
     public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
+    public override CharacterStatus CharacterStatus => status; 
     #endregion
 
     #region StateMachine

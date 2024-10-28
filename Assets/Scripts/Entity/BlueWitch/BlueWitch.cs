@@ -224,6 +224,10 @@ public class BlueWitch : Entity
 
     public override void OnAttacked(HitInfo hitInfo)
     {
+        if (IsInvincible)
+        {
+            return;
+        }
         base.OnAttacked(hitInfo);
         Game.VirtualCameraController.StartShake();
         status.heath -= hitInfo.damage;

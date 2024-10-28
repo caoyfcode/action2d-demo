@@ -326,6 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 441712842}
   - component: {fileID: 441712841}
+  - component: {fileID: 441712843}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -355,6 +356,7 @@ MonoBehaviour:
     smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
     afterImagePrefab: {fileID: 7294156822734335267, guid: 06d5449147231154e98ef4fd0706cd7f, type: 3}
     bloodEffectPrefab: {fileID: 3661891618808958100, guid: 9d0bb4f066c1aca4f9b324b4a8284dfa, type: 3}
+  bossSystem: {fileID: 441712843}
 --- !u!4 &441712842
 Transform:
   m_ObjectHideFlags: 0
@@ -370,6 +372,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &441712843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441712840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f96b9ed15556f254cb29ea2f4c5bf2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossHeathBar: {fileID: 815702041}
+  boss: {fileID: 0}
+  bossFightStarted: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,6 +1649,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57efc31fc6e612b439f73765529e9c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAttacked:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttackSuccess:
+    m_PersistentCalls:
+      m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0

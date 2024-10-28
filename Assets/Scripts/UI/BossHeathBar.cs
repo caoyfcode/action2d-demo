@@ -9,7 +9,22 @@ public class BossHeathBar : MonoBehaviour
     public RectMask2D foregroundMask;
 
     public RectTransform contentRectTransform;
+    public bool Shown
+    {
+        set
+        {
+            gameObject.SetActive(value);
+        }
+        get
+        {
+            return gameObject.activeSelf;
+        }
+    }
 
+    void Start()
+    {
+        Shown = false;
+    }
 
     void Update()
     {

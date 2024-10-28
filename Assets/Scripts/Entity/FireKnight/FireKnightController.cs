@@ -133,8 +133,10 @@ public class FireKnightController : EntityController
         var cmd = new FireKnight.Command();
         entity.SetCommand(cmd);
         UpdateTimers();
-        behaviourTree.Update();
-        
+        if (!entity.isDead)
+        {
+            behaviourTree.Update();
+        }
     }
 
     void UpdateTimers()
@@ -178,6 +180,7 @@ public class FireKnightController : EntityController
                 return false;
             targetPosition = target.transform.position;
             keepTargetTimer = 2f;
+            Game.BossSystem.StartBossFight(entity);
             return true;
         }
     }
