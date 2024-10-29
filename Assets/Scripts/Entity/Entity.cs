@@ -76,6 +76,7 @@ public class Entity : MonoBehaviour
         {
             controller.Init();
         }
+        _facingDirection = transform.rotation.eulerAngles.y < 90 ? 1 : -1; // 向右为正
     }
 
     protected virtual void Update()

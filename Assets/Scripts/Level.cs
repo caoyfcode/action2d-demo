@@ -8,5 +8,15 @@ public class Level : MonoBehaviour
 {
     public string areaName = "";
     // Vector2Int levelIndex;
+    public GameObject Spawners;
+
+    void Start()
+    {
+        var spawners = GetComponentsInChildren<Spawner>();
+        foreach (var spawner in spawners)
+        {
+            spawner.Spawn(gameObject);
+        }
+    }
 
 }
