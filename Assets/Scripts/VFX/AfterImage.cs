@@ -8,24 +8,23 @@ public class AfterImage : MonoBehaviour
 {
     public SpriteRenderer sr;
     public Color color;
-    private float aliveTime = 0.2f;
     private float timer = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        timer = aliveTime;
-    }
 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-        color.a = Mathf.Clamp01(0.8f * timer / aliveTime);
-        sr.color = color;
+        // color.a = Mathf.Clamp01(0.8f * timer / aliveTime);
+        // sr.color = color;
         if (timer <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+   // 需要在第一次 Update 之前调用
+    public void SetAliveTime(float aliveTime)
+    {
+        timer = aliveTime;
     }
 }
