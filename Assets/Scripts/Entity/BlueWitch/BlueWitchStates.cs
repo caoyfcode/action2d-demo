@@ -349,7 +349,7 @@ public class BlueWitchAttack : BlueWitchState
         currentSummon = currentType switch
         {
             BlueWitch.AttackType.HeroKnight => entity.summonAttack,
-            BlueWitch.AttackType.ProjectileBat => entity.summonProjectile,
+            BlueWitch.AttackType.ArcaneArcher => entity.summonProjectile,
             BlueWitch.AttackType.DefendFireKnight => entity.summonDenfend,
             _ => entity.summonAttack
         };

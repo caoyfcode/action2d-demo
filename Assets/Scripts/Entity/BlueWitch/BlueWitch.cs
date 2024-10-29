@@ -16,7 +16,7 @@ public class BlueWitch : Entity
     internal float wallSlideSpeed = 2f;
     internal float attackComboTime = 0.3f;
     internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
-    internal float hitInvincibleTime = 0.1f;
+    internal float hitInvincibleTime = 0.5f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
@@ -36,7 +36,7 @@ public class BlueWitch : Entity
         public float moveX = 0;
         public bool holdJump = false, startJump = false;
         public bool dash = false;
-        public bool attackProjectileBat = false;
+        public bool attackArcaneArcher = false;
         public bool attackHeroKnight = false;
         public bool defendFireKnight = false;
         public AttackType AttackType
@@ -45,8 +45,8 @@ public class BlueWitch : Entity
             {
                 if (attackHeroKnight)
                     return AttackType.HeroKnight;
-                if (attackProjectileBat)
-                    return AttackType.ProjectileBat;
+                if (attackArcaneArcher)
+                    return AttackType.ArcaneArcher;
                 if (defendFireKnight)
                     return AttackType.DefendFireKnight;
                 return AttackType.None;
@@ -55,7 +55,7 @@ public class BlueWitch : Entity
         public AttackType TakeAttackType()
         {
             var ret = AttackType;
-            attackProjectileBat = false;
+            attackArcaneArcher = false;
             attackHeroKnight = false;
             defendFireKnight = false;
             return ret;
@@ -69,7 +69,7 @@ public class BlueWitch : Entity
     {
         None,
         HeroKnight,
-        ProjectileBat, // TODO 改为 Archer
+        ArcaneArcher,
         DefendFireKnight,
     }
     internal AttackType attackBuffer = AttackType.None;
@@ -99,7 +99,7 @@ public class BlueWitch : Entity
         {
             case AttackType.HeroKnight:
                 return airAttackCount < maxAirAttackCount;
-            case AttackType.ProjectileBat:
+            case AttackType.ArcaneArcher:
                 return true;
             case AttackType.DefendFireKnight:
                 return true;
