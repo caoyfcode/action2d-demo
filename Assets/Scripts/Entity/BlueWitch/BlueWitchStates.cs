@@ -74,7 +74,8 @@ public class BlueWitchGroundFree : BlueWitchState
         }
 
         // entity.velocity.y = 0;
-        entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
+        entity.velocity.x = entity.CurrentCommand.moveX * entity.horizontalMoveSpeed;
+        entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 }
 
@@ -116,7 +117,8 @@ public abstract class BlueWitchAirState : BlueWitchState
         shouldKeepDirection = true;
         keepDirectionTimer = entity.minKeepDirectionTime;
         keepDirection = entity.FacingDirection;
-        entity.HorizontalMoveAndFlip(MoveX);
+        entity.velocity.x = MoveX * entity.horizontalMoveSpeed;
+        entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 
     public override bool Transition()
@@ -166,7 +168,8 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             entity.animator.Play(BlueWitch.ANIM_IDLE);
         }
-        entity.HorizontalMoveAndFlip(MoveX);
+        entity.velocity.x = MoveX * entity.horizontalMoveSpeed;
+        entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 
     public override void Exit()

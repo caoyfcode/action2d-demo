@@ -30,7 +30,6 @@ public class BlueWitch : Entity
     public GameObject wallSlideCrow;
 
     #region Command
-    
     public class Command
     {
         public float moveX = 0;
@@ -224,7 +223,8 @@ public class BlueWitch : Entity
     public void ChangeInputDirectionAndFlip(float direction)
     {
         CurrentCommand.moveX = direction;
-        HorizontalMoveAndFlip(direction);
+        FacingDirection = direction;
+        velocity.x = direction * horizontalMoveSpeed;
     }
 
     public override void OnAttackSuccess(HitInfo hitInfo)

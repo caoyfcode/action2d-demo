@@ -15,6 +15,7 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Constant
+    // TODO 切换到每个实体自己的 status 变量内部
     internal float horizontalMoveSpeed = 6f;
     internal float gravity = 30f;
     internal float forceMoveDecay = 10f; // 水平衰减速度
@@ -112,17 +113,6 @@ public class Entity : MonoBehaviour
         {
             velocity.x = 0;
             forceMove = 0;
-        }
-    }
-
-    // TODO 删除，其功能利用修改 FacingDirecton 与修改 velocity 代替
-    public void HorizontalMoveAndFlip(float moveX)
-    {
-        velocity.x = 0;
-        if (moveX != 0)
-        {
-            FacingDirection = moveX > 0 ? 1 : -1;
-            velocity.x = moveX * horizontalMoveSpeed;
         }
     }
 

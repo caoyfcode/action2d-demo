@@ -96,7 +96,8 @@ public class DeathBringerWalk : DeathBringerState
 
     public override void Update()
     {
-        entity.HorizontalMoveAndFlip(entity.CurrentCommand.moveX);
+        entity.velocity.x = entity.CurrentCommand.moveX * entity.horizontalMoveSpeed;
+        entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 }
 

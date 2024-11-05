@@ -252,7 +252,7 @@ public class FireKnight : Entity
 
         public override void Update()
         {
-            entity.HorizontalMoveAndFlip(entity.CurrentCommand.speed.x);
+            entity.FacingDirection = entity.CurrentCommand.speed.x;
             entity.velocity.x = entity.CurrentCommand.speed.x;
             if (entity.CurrentCommand.speed.x != 0)
             {
@@ -292,7 +292,7 @@ public class FireKnight : Entity
 
         public override void Update()
         {
-            entity.HorizontalMoveAndFlip(entity.CurrentCommand.speed.x);
+            entity.FacingDirection = entity.CurrentCommand.speed.x;
             entity.velocity.x = entity.CurrentCommand.speed.x;
             if (entity.CurrentCommand.speed.y != 0)
             {
