@@ -115,6 +115,7 @@ public class Entity : MonoBehaviour
         }
     }
 
+    // TODO 删除，其功能利用修改 FacingDirecton 与修改 velocity 代替
     public void HorizontalMoveAndFlip(float moveX)
     {
         velocity.x = 0;

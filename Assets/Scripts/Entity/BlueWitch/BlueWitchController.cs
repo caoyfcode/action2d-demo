@@ -21,19 +21,14 @@ public class BlueWitchController : EntityController
             (false, true) => 1,
             _ => 0,
         };
-        var cmd = new BlueWitch.Command
-        {
-            // moveX = Input.GetAxis("Horizontal"),
-            moveX = moveX,
-            startJump = Input.GetButtonDown("Jump"),
-            holdJump = Input.GetButton("Jump"),
-            attackHeroKnight = Input.GetButtonDown("Attack"),
-            dash = Input.GetButtonDown("Dash"),
-            attackArcaneArcher = Input.GetKeyDown(KeyCode.U),
-            defendFireKnight = Input.GetKeyDown(KeyCode.H),
-        };
 
-        entity.SetCommand(cmd);
+        entity.CurrentCommand.moveX = moveX;
+        entity.CurrentCommand.startJump = Input.GetButtonDown("Jump");
+        entity.CurrentCommand.holdJump = Input.GetButton("Jump");
+        entity.CurrentCommand.attackHeroKnight = Input.GetButtonDown("Attack");
+        entity.CurrentCommand.dash = Input.GetButtonDown("Dash");
+        entity.CurrentCommand.attackArcaneArcher = Input.GetKeyDown(KeyCode.U);
+        entity.CurrentCommand.defendFireKnight = Input.GetKeyDown(KeyCode.H);
     }
 
     public override void OnAttacked(HitInfo hitInfo)

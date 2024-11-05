@@ -17,7 +17,8 @@ public class DeathBringer : Entity
     {
         public float moveX = 0;
         public bool attack = false;
-        public Vector2 forceMove = Vector2.zero;
+        public void MoveX(float moveX) => this.moveX = moveX;
+        public void Attack(bool attack=true) => this.attack = attack;
     }
     internal Command CurrentCommand {get; private set;}
     #endregion
@@ -41,13 +42,9 @@ public class DeathBringer : Entity
     public CharacterStatus status;
     public override bool IsInvincible => hitInvincibleTimer > 0;
 
-    public void SetCommand(Command cmd)
-    {
-        CurrentCommand = cmd;
-    }
-
     protected override void Start()
     {
+        CurrentCommand = new Command();
         base.Start();
         hitFX = GetComponent<HitFX>();
         stateMachine = new StateMachine<DeathBringerState>();
@@ -61,7 +58,6 @@ public class DeathBringer : Entity
 
     protected override void Update()
     {
-        SetCommand(new Command());
         base.Update();
         velocity = rb.velocity;
         if (attackCoolDownTimer > 0)

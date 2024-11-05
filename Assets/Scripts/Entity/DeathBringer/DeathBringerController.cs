@@ -79,12 +79,9 @@ public class DeathBringerController : EntityController
         {
             return BTNodeStatus.Failure;
         }
-        var cmd = new DeathBringer.Command()
-        {
-            moveX = CalcMoveDirection()
-        };
-        entity.SetCommand(cmd);
-        if (cmd.moveX == 0)
+        var moveX = CalcMoveDirection();
+        entity.CurrentCommand.MoveX(moveX);
+        if (moveX == 0)
             return BTNodeStatus.Success;
         else
             return BTNodeStatus.Running;
@@ -98,11 +95,7 @@ public class DeathBringerController : EntityController
         }
         else if (!entity.isDead && entity.attackCoolDownTimer <= 0)
         { // 尝试攻击
-            var cmd = new DeathBringer.Command()
-            {
-                attack = true,
-            };
-            entity.SetCommand(cmd);
+            entity.CurrentCommand.Attack();
             return BTNodeStatus.Running;
         }
         return BTNodeStatus.Failure;

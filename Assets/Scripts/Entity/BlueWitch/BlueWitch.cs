@@ -30,7 +30,7 @@ public class BlueWitch : Entity
     public GameObject wallSlideCrow;
 
     #region Command
-
+    
     public class Command
     {
         public float moveX = 0;
@@ -60,8 +60,27 @@ public class BlueWitch : Entity
             defendFireKnight = false;
             return ret;
         }
+
+        public void MoveX(float moveX) => this.moveX = moveX;
+        public void Jump(bool startJump, bool holdJump) => (this.startJump, this.holdJump) = (startJump, holdJump);
+        public void Dash(bool dash=true) => this.dash = dash;
+        public void Attack(AttackType attackType)
+        {
+            switch (attackType)
+            {
+                case AttackType.ArcaneArcher:
+                    attackArcaneArcher = true;
+                    break;
+                case AttackType.HeroKnight:
+                    attackHeroKnight = true;
+                    break;
+                case AttackType.DefendFireKnight:
+                    defendFireKnight = true;
+                    break;
+            }
+        }
     }
-    internal Command CurrentCommand { get; private set; }
+    public Command CurrentCommand { get; private set; }
     #endregion
 
     #region Attack Info
@@ -141,11 +160,6 @@ public class BlueWitch : Entity
     internal bool WallSlideCondition => status.wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
-    public void SetCommand(Command cmd)
-    {
-        CurrentCommand = cmd;
-    }
-
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -164,6 +178,7 @@ public class BlueWitch : Entity
     // Update is called once per frame
     protected override void Update()
     {
+        CurrentCommand = new Command();
         // 本帧的状态
         base.Update();
         velocity = rb.velocity;

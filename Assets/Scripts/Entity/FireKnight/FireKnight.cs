@@ -43,13 +43,19 @@ public class FireKnight : Entity
     };
 
     #region Command
-    // TODO 将不同的 Command 拆分为单独的类，放在一个通用文件里, 在每个 Entity 处聚合一帧获取的所有 Command
     public class Command
     {
         public Vector2 speed = Vector2.zero;
         public bool roll = false;
         public bool defend = false;
         public AttackType attack = AttackType.None;
+
+        public void Speed(float x, float y) => speed = new Vector2(x, y);
+        public void SpeedX(float x) => speed.x = x;
+        public void SpeedY(float y) => speed.y = y;
+        public void Roll(bool value= true) => roll = value;
+        public void Defend(bool value= true) => defend = value;
+        public void Attack(AttackType attackType) => attack = attackType;
     }
     internal Command CurrentCommand { get; private set; }
     #endregion
@@ -93,10 +99,6 @@ public class FireKnight : Entity
     internal DeathState deathState;
     #endregion
 
-    public void SetCommand(Command cmd)
-    {
-        CurrentCommand = cmd;
-    }
 
     protected override void Start()
     {
@@ -114,6 +116,7 @@ public class FireKnight : Entity
 
     protected override void Update()
     {
+        CurrentCommand = new Command();
         base.Update();
         velocity = rb.velocity;
         UpdateTimers();
