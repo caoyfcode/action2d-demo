@@ -53,9 +53,12 @@ public class Entity : MonoBehaviour
     internal bool isOnLeftWall = false;
     internal bool isOnRightWall = false;
     internal bool isOverlapEnvironment = false;
+    internal bool isOnLeftCliff = false;
+    internal bool isOnRightCliff = false;
     public bool isDead = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
+    public bool IsFacingCliff => FacingDirection > 0 ? isOnRightCliff : isOnLeftCliff;
     // Invincible 代表攻击不起作用，不仅仅是不扣血
     public virtual bool IsInvincible => false;
     public virtual CharacterStatus CharacterStatus => null;
@@ -88,6 +91,8 @@ public class Entity : MonoBehaviour
         isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
         isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
         isOverlapEnvironment = col.OverlapCollider(envCastFilter, overlapHits) > 0;
+        isOnLeftCliff = Physics2D.Raycast(col.bounds.min, Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
+        isOnRightCliff = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y), Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
         float prev = forceMove > 0 ? 1 : -1;
         forceMove *= 1 - forceMoveDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
         if (prev * forceMove <= minForceMove) // 速度过小或反向, 则设置为 0
