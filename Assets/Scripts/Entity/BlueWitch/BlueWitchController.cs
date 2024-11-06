@@ -30,14 +30,4 @@ public class BlueWitchController : EntityController
         entity.CurrentCommand.attackArcaneArcher = Input.GetKeyDown(KeyCode.U);
         entity.CurrentCommand.defendFireKnight = Input.GetKeyDown(KeyCode.H);
     }
-
-    public override void OnAttacked(HitInfo hitInfo)
-    {
-
-    }
-
-    public override void OnDeath()
-    {
-
-    }
 }

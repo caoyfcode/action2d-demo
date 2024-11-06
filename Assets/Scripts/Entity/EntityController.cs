@@ -8,6 +8,18 @@ public abstract class EntityController : MonoBehaviour
 {
     public abstract void Init();
     public abstract void UpdateCommand();
-    public abstract void OnAttacked(HitInfo hitInfo);
-    public abstract void OnDeath();
 }
+
+// TODO 之后改为下面方法所表示的
+// public interface IAgent
+// {
+//     void Init();
+//     void UpdateCommand();
+// }
+
+// public abstract class CharacterAgent<T> : MonoBehaviour, IAgent where T : Entity
+// {
+//     public T entity;
+//     public abstract void Init();
+//     public abstract void UpdateCommand();
+// }

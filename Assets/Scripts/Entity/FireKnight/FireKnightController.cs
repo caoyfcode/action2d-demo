@@ -33,6 +33,7 @@ public class FireKnightController : EntityController
     public override void Init()
     {
         entity = GetComponent<FireKnight>();
+        entity.onAttacked.AddListener(OnAttacked);
         BTNode attackCombo = new BTBuilder()
             .Sequence()
                 .Fallback()
@@ -114,12 +115,12 @@ public class FireKnightController : EntityController
             .Build();
     }
 
-    public override void OnAttacked(HitInfo hitInfo)
+    public void OnAttacked(HitInfo hitInfo)
     {
         entity.FacingDirection = Mathf.Sign(-hitInfo.force.x);
     }
 
-    public override void OnDeath()
+    public void OnDeath()
     {
         
     }

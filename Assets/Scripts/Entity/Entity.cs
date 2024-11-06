@@ -56,6 +56,7 @@ public class Entity : MonoBehaviour
     public bool isDead = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
+    // Invincible 代表攻击不起作用，不仅仅是不扣血
     public virtual bool IsInvincible => false;
     public virtual CharacterStatus CharacterStatus => null;
     #endregion
@@ -147,10 +148,6 @@ public class Entity : MonoBehaviour
         
         // TODO 将判断 controller 删除，改为 controller 自己注册 event
         onAttacked.Invoke(hitInfo);
-        if (controller)
-        {
-            controller.OnAttacked(hitInfo);
-        }
         if (hitInfo.attacker)
         {
             hitInfo.attacker.OnAttackSuccess(hitInfo);
@@ -164,9 +161,9 @@ public class Entity : MonoBehaviour
         col.enabled = false;
         isDead = true;
         onDeath.Invoke();
-        if (controller)
-        {
-            controller.OnDeath();
-        }
+        // if (controller)
+        // {
+        //     controller.OnDeath();
+        // }
     }
 }

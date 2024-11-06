@@ -24,6 +24,7 @@ public class DeathBringerController : EntityController
     public override void Init()
     {
         entity = GetComponent<DeathBringer>();
+        entity.onAttacked.AddListener(OnAttacked);
         behaviourTree = new BTBuilder()
             .Sequence()
                 .Condition(DetectTartget)
@@ -102,14 +103,9 @@ public class DeathBringerController : EntityController
     }
 
 
-    public override void OnAttacked(HitInfo hitInfo)
+    public void OnAttacked(HitInfo hitInfo)
     {
         entity.FacingDirection = Mathf.Sign(-hitInfo.force.x);
-    }
-
-    public override void OnDeath()
-    {
-
     }
 
     private void SetTarget(Entity t)
