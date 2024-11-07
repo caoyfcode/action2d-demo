@@ -1,8 +1,6 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class DeathBringerController : EntityController
 {
@@ -12,13 +10,11 @@ public class DeathBringerController : EntityController
     public float detectOffsetY;
     public float attackMinPoint;
     public float attackMaxPoint;
-    const float maxAttackWaitTime = 0.3f;
 
     private DeathBringer entity;
     private Entity target = null;
     private Vector2 targetPosition;
     private float keepTargetTimer = 0f;
-    private float attackWaitTimer = 0f;
     private BehaviourTree behaviourTree;
 
     public override void Init()
@@ -40,8 +36,8 @@ public class DeathBringerController : EntityController
     public override void UpdateCommand()
     {
         keepTargetTimer -= Time.deltaTime;
-        attackWaitTimer -= Time.deltaTime;
-        behaviourTree.Update();
+        if (!entity.isDead)
+            behaviourTree.Update();
     }
 
     bool DetectTartget()
@@ -81,7 +77,7 @@ public class DeathBringerController : EntityController
             return BTNodeStatus.Failure;
         }
         var moveX = CalcMoveDirection();
-        entity.CurrentCommand.MoveX(moveX);
+        entity.CurrentCommand.SpeedX(moveX * entity.data.horizontalMoveSpeed);
         if (moveX == 0)
             return BTNodeStatus.Success;
         else

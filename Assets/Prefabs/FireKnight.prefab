@@ -826,17 +826,20 @@ MonoBehaviour:
   animEnd: 0
   animPreBreakable: 0
   animPostBreakable: 0
-  status:
+  data:
     maxHeath: 5
     heath: 5
     maxMagic: 0
     magic: 0
     attack: 0
     defence: 0
-    jumpSpeed: 15
     stage: 1
+    jumpSpeed: 15
     attackComboCoolDownTime: 0.5
     airAttackCoolDownTime: 1.5
+    horizontalMoveSpeed: 6
+    hitInvincibleTime: 0.3
+    rollSpeed: 10
 --- !u!114 &101798979978288545
 MonoBehaviour:
   m_ObjectHideFlags: 0

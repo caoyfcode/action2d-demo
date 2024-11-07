@@ -6,40 +6,38 @@ public class DeathBringer : Entity
     internal const string ANIM_WALK = "Walk";
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_DEATH = "Death";
-    internal float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间
-    internal float stunTime = 0.3f;
-    float hitInvincibleTime = 0.3f;
 
     public HitBox hitBox;
 
     #region Command
     public class Command
     {
-        public float moveX = 0;
+        public float speedX = 0;
         public bool attack = false;
-        public void MoveX(float moveX) => this.moveX = moveX;
+        public void SpeedX(float speedX) => this.speedX = speedX;
         public void Attack(bool attack=true) => this.attack = attack;
     }
     internal Command CurrentCommand {get; private set;}
     #endregion
 
     #region State Machine
-    internal StateMachine<DeathBringerState> stateMachine;
-    internal DeathBringerIdle idleState;
-    internal DeathBringerWalk walkState;
-    internal DeathBringerAttack attackState;
-    internal DeathBringerStun stunState;
-    internal DeathBringerDeath deathState;
+    internal StateMachine<State> stateMachine;
+    internal IdleState idleState;
+    internal WalkState walkState;
+    internal AttackState attackState;
+    internal StunState stunState;
+    internal DeathState deathState;
     #endregion
 
     [Header("Status")]
     public bool hitBoxEnabled = false;
+    // TODO 合并为 animEnd, animPreBreakable, animPostBreakable
     public bool attackEnd = true;
     public bool deathEnd = false;
     public bool attackCancelable;
     internal float attackCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
-    public CharacterStatus status;
+    public DeathBringerData data;
     public override bool IsInvincible => hitInvincibleTimer > 0;
 
     protected override void Start()
@@ -47,12 +45,12 @@ public class DeathBringer : Entity
         CurrentCommand = new Command();
         base.Start();
         hitFX = GetComponent<HitFX>();
-        stateMachine = new StateMachine<DeathBringerState>();
-        idleState = new DeathBringerIdle(this, stateMachine);
-        walkState = new DeathBringerWalk(this, stateMachine);
-        attackState = new DeathBringerAttack(this, stateMachine);
-        stunState = new DeathBringerStun(this, stateMachine);
-        deathState = new DeathBringerDeath(this, stateMachine);
+        stateMachine = new StateMachine<State>();
+        idleState = new IdleState(this, stateMachine);
+        walkState = new WalkState(this, stateMachine);
+        attackState = new AttackState(this, stateMachine);
+        stunState = new StunState(this, stateMachine);
+        deathState = new DeathState(this, stateMachine);
         stateMachine.Init(idleState);
     }
 
@@ -90,10 +88,10 @@ public class DeathBringer : Entity
             return;
         }
         base.OnAttacked(hitInfo);
-        hitInvincibleTimer = hitInvincibleTime;
-        status.heath -= hitInfo.damage;
+        hitInvincibleTimer = data.hitInvincibleTime;
+        data.heath -= hitInfo.damage;
 
-        if (status.heath <= Mathf.Epsilon)
+        if (data.heath <= Mathf.Epsilon)
         {
             OnDeath();
         }
@@ -110,5 +108,222 @@ public class DeathBringer : Entity
     {
         base.OnDeath();
         stateMachine.ChangeState(deathState);
+    }
+
+    public abstract class State : IStateMachineState
+    {
+        protected DeathBringer entity;
+        protected StateMachine<State> stateMachine;
+
+        public State(DeathBringer deathBringer, StateMachine<State> machine)
+        {
+            entity = deathBringer;
+            stateMachine = machine;
+        }
+
+        public virtual void Enter() {}
+        public virtual bool Transition()
+        {
+            if (entity.isDead && this != entity.deathState)
+            {
+                stateMachine.ChangeState(entity.deathState);
+                return true;
+            }
+            return false;
+        }
+        public abstract void Update();
+        public virtual void Exit() {}
+    }
+
+    public class IdleState : State
+    {
+        public IdleState(DeathBringer deathBringer, StateMachine<State> machine) : base(deathBringer, machine)
+        {
+        }
+
+        public override void Enter()
+        {
+            entity.animator.Play(ANIM_IDLE);
+        }
+
+        public override bool Transition()
+        {
+            if (base.Transition())
+            {
+                return true;
+            }
+            if (entity.CurrentCommand.attack && entity.attackCoolDownTimer <= 0)
+            {
+                stateMachine.ChangeState(entity.attackState);
+                return true;
+            }
+            if (entity.CurrentCommand.speedX != 0)
+            {
+                stateMachine.ChangeState(entity.walkState);
+                return true;
+            }
+            return false;
+        }
+
+        public override void Update()
+        {
+            entity.velocity.x = 0;
+        }
+
+    }
+
+    public class WalkState : State
+    {
+        public WalkState(DeathBringer deathBringer, StateMachine<State> machine) : base(deathBringer, machine)
+        {
+        }
+
+        public override void Enter()
+        {
+            entity.animator.Play(ANIM_WALK);
+        }
+
+        public override bool Transition()
+        {
+            if (base.Transition())
+            {
+                return true;
+            }
+            if (entity.CurrentCommand.attack && entity.attackCoolDownTimer <= 0)
+            {
+                stateMachine.ChangeState(entity.attackState);
+                return true;
+            }
+            if (entity.CurrentCommand.speedX == 0)
+            {
+                stateMachine.ChangeState(entity.idleState);
+                return true;
+            }
+            return false;
+        }
+
+        public override void Update()
+        {
+            entity.velocity.x = entity.CurrentCommand.speedX;
+            entity.FacingDirection = entity.CurrentCommand.speedX;
+        }
+    }
+
+    public class AttackState : State
+    {
+        public AttackState(DeathBringer deathBringer, StateMachine<State> machine) : base(deathBringer, machine)
+        {
+        }
+
+        public override void Enter()
+        {
+            entity.attackEnd = false;
+            entity.velocity.x = 0;
+            entity.velocity.y = 0;
+            entity.animator.Play(ANIM_ATTACK);
+            entity.hitBox.genHitInfo = GenHitInfo;
+        }
+
+        public override bool Transition()
+        {
+            if (base.Transition())
+            {
+                return true;
+            }
+            if (entity.attackEnd)
+            {
+                stateMachine.ChangeState(entity.idleState);
+                return true;
+            }
+            return false;
+        }
+
+        public override void Update()
+        {
+            if (entity.hitBoxEnabled)
+            {
+                entity.hitBox.DoHit();
+            }
+        }
+
+        public override void Exit()
+        {
+            entity.hitBoxEnabled = false;
+            entity.attackCoolDownTimer = entity.data.attackCoolDownTime;
+        }
+
+        private HitInfo GenHitInfo() => new()
+        {
+            attacker = entity,
+            damage = 1,
+            force = new Vector2(entity.FacingDirection, 0),
+            hitBox = entity.hitBox.hitCollider,
+            hitType = HitType.EntityAttack,
+        };
+    }
+
+    public class StunState : State
+    {
+        private float timer;
+        public StunState(DeathBringer deathBringer, StateMachine<State> machine) : base(deathBringer, machine)
+        {
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            timer = entity.data.stunTime;
+            entity.animator.Play(ANIM_IDLE);
+        }
+
+        public override bool Transition()
+        {
+            if (base.Transition())
+            {
+                return true;
+            }
+            if (IsEnd)
+            {
+                stateMachine.ChangeState(entity.idleState);
+            }
+            return IsEnd;
+        }
+
+        public override void Update()
+        {
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+        }
+
+        private bool IsEnd => timer <= 0;
+    }
+
+    public class DeathState : State
+    {
+        public DeathState(DeathBringer deathBringer, StateMachine<State> machine) : base(deathBringer, machine)
+        {
+        }
+
+        public override void Enter()
+        {
+            entity.animator.Play(ANIM_DEATH);
+            entity.velocity.x = 0;
+            entity.velocity.y = 0;
+        }
+
+        public override bool Transition()
+        {
+            return false;
+        }
+
+        public override void Update() 
+        {
+            if (entity.deathEnd)
+            {
+                Destroy(entity.gameObject);
+            }
+        }
     }
 }

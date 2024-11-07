@@ -15,8 +15,6 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Constant
-    // TODO 切换到每个实体自己的 status 变量内部
-    internal float horizontalMoveSpeed = 6f;
     internal float gravity = 30f;
     internal float forceMoveDecay = 10f; // 水平衰减速度
     internal float attackForceMove = 5f; // 单位力施加到单位质量产生的速度
@@ -61,7 +59,7 @@ public class Entity : MonoBehaviour
     public bool IsFacingCliff => FacingDirection > 0 ? isOnRightCliff : isOnLeftCliff;
     // Invincible 代表攻击不起作用，不仅仅是不扣血
     public virtual bool IsInvincible => false;
-    public virtual CharacterStatus CharacterStatus => null;
+    public virtual CharacterData CharacterData => null;
     #endregion
 
     protected ContactFilter2D envCastFilter;

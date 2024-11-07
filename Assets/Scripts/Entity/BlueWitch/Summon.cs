@@ -61,6 +61,6 @@ public class Summon : MonoBehaviour
     {
         ComponentsEnabled = false;
         isEnd = true;
-        comboTimer = Game.Player.attackComboTime;
+        comboTimer = Game.Player.data.attackComboTime;
     }
 }

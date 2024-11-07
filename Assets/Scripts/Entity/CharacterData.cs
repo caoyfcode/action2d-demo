@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO 改名 Data 或 Property
 [Serializable]
-public class CharacterStatus
+public class CharacterData
 {
+    [Header("Common Data")]
     // 主角血量要取整, 敌人血量保持浮点数
     public float maxHeath;
     public float heath;

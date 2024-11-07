@@ -261,6 +261,8 @@ MonoBehaviour:
   flashedSprite: {fileID: 5058794679746376429}
   flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   flashDuration: 0.2
+  flashFXOnHit: 1
+  boodFXOnHit: 1
 --- !u!114 &4879109318323231696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +275,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aaecbc37a70d7041b707c6f4d7022e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAttacked:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttackSuccess:
+    m_PersistentCalls:
+      m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
@@ -282,13 +293,17 @@ MonoBehaviour:
   attackEnd: 1
   deathEnd: 0
   attackCancelable: 0
-  status:
+  data:
     maxHeath: 4
     heath: 4
     maxMagic: 0
     magic: 0
     attack: 0
     defence: 0
+    attackCoolDownTime: 1
+    stunTime: 0.3
+    hitInvincibleTime: 0.3
+    horizontalMoveSpeed: 6
 --- !u!114 &7559753241443075438
 MonoBehaviour:
   m_ObjectHideFlags: 0

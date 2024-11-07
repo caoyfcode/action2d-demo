@@ -74,7 +74,7 @@ public class BlueWitchGroundFree : BlueWitchState
         }
 
         // entity.velocity.y = 0;
-        entity.velocity.x = entity.CurrentCommand.moveX * entity.horizontalMoveSpeed;
+        entity.velocity.x = entity.CurrentCommand.moveX * entity.data.horizontalMoveSpeed;
         entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 }
@@ -115,9 +115,9 @@ public abstract class BlueWitchAirState : BlueWitchState
     public void KeepDirection()
     {
         shouldKeepDirection = true;
-        keepDirectionTimer = entity.minKeepDirectionTime;
+        keepDirectionTimer = entity.data.minKeepDirectionTime;
         keepDirection = entity.FacingDirection;
-        entity.velocity.x = MoveX * entity.horizontalMoveSpeed;
+        entity.velocity.x = MoveX * entity.data.horizontalMoveSpeed;
         entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 
@@ -168,7 +168,7 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             entity.animator.Play(BlueWitch.ANIM_IDLE);
         }
-        entity.velocity.x = MoveX * entity.horizontalMoveSpeed;
+        entity.velocity.x = MoveX * entity.data.horizontalMoveSpeed;
         entity.FacingDirection = entity.CurrentCommand.moveX;
     }
 
@@ -225,7 +225,7 @@ public class BlueWitchAirFree : BlueWitchAirState
         }
         if (entity.AirJumpCondition)
         {
-            entity.velocity.y = entity.airJumpSpeed;
+            entity.velocity.y = entity.data.airJumpSpeed;
             entity.airJumpCount++;
             entity.ResetAirAttackCount(); // 跳跃重置攻击
             UnityEngine.Object.Instantiate(Game.VFXLoader.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
@@ -245,9 +245,9 @@ public class BlueWitchHoldJump : BlueWitchAirState
     public override void Enter()
     {
         base.Enter();
-        timer = entity.maxJumpTime;
+        timer = entity.data.maxJumpTime;
         //entity.animator.Play(BlueWitch.ANIM_IDLE);
-        entity.velocity.y = entity.jumpSpeed;
+        entity.velocity.y = entity.data.jumpSpeed;
         entity.CurrentCommand.startJump = false; // 消耗掉 start jump
     }
 
@@ -267,7 +267,7 @@ public class BlueWitchHoldJump : BlueWitchAirState
     {
         base.Update();
         timer -= Time.deltaTime;
-        entity.velocity.y = entity.jumpSpeed;
+        entity.velocity.y = entity.data.jumpSpeed;
     }
 
     public override void Exit()
@@ -289,12 +289,12 @@ public class BlueWitchDash : BlueWitchState
 
     public override void Enter()
     {
-        timer = entity.dashTime;
-        entity.dashCoolDownTimer = entity.dashCoolDownTime;
+        timer = entity.data.dashTime;
+        entity.dashCoolDownTimer = entity.data.dashCoolDownTime;
         //entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
         entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.velocity.y = 0;
-        entity.velocity.x = entity.dashSpeed * entity.FacingDirection;
+        entity.velocity.x = entity.data.dashSpeed * entity.FacingDirection;
         if (!entity.isOnGround)
         {
             entity.airDashCount++;
@@ -323,7 +323,7 @@ public class BlueWitchDash : BlueWitchState
     {
         timer -= Time.deltaTime;
         entity.velocity.y = 0;
-        entity.velocity.x = entity.dashSpeed * entity.FacingDirection;
+        entity.velocity.x = entity.data.dashSpeed * entity.FacingDirection;
         // TODO 拖尾
     }
 
@@ -443,7 +443,7 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.ResetAirAttackCount();
         entity.airDashCount = 0;
         entity.velocity.x = 0;
-        entity.velocity.y = -entity.wallSlideSpeed;
+        entity.velocity.y = -entity.data.wallSlideSpeed;
         entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.wallSlideCrow.SetActive(true);
     }
@@ -474,7 +474,7 @@ public class BlueWitchWallSlide : BlueWitchState
     public override void Update()
     {
         entity.velocity.x = 0;
-        entity.velocity.y = -entity.wallSlideSpeed;
+        entity.velocity.y = -entity.data.wallSlideSpeed;
     }
 
     public override void Exit()

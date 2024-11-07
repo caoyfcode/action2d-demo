@@ -6,17 +6,18 @@ using UnityEngine;
 public class BlueWitch : Entity
 {
     #region Constant Number
-    internal float jumpSpeed = 12f;
-    internal float airJumpSpeed = 12f;
-    internal float maxJumpTime = 0.3f;
-    internal float minKeepDirectionTime = 0.15f; // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
-    internal float dashTime = 0.2f;
-    internal float dashSpeed = 18f;
-    internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
-    internal float wallSlideSpeed = 2f;
-    internal float attackComboTime = 0.3f;
-    internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
-    internal float hitInvincibleTime = 0.5f;
+    // internal float horizontalMoveSpeed = 6f;
+    // internal float jumpSpeed = 12f;
+    // internal float airJumpSpeed = 12f;
+    // internal float maxJumpTime = 0.3f;
+    // internal float minKeepDirectionTime = 0.15f; // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
+    // internal float dashTime = 0.2f;
+    // internal float dashSpeed = 18f;
+    // internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
+    // internal float wallSlideSpeed = 2f;
+    // internal float attackComboTime = 0.3f;
+    // internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
+    // internal float hitInvincibleTime = 0.5f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
@@ -100,7 +101,7 @@ public class BlueWitch : Entity
     internal float dashCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
-    public BlueWitchStatus status;
+    public BlueWitchData data;
     public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
     public void AddAirAttackCount(AttackType type)
     {
@@ -116,7 +117,7 @@ public class BlueWitch : Entity
         switch (type)
         {
             case AttackType.HeroKnight:
-                return airAttackCount < maxAirAttackCount;
+                return airAttackCount < data.maxAirAttackCount;
             case AttackType.ArcaneArcher:
                 return true;
             case AttackType.DefendFireKnight:
@@ -137,7 +138,7 @@ public class BlueWitch : Entity
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
-    internal bool DashCondition => status.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
+    internal bool DashCondition => data.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal AttackType CurrentAttack
     {
         get
@@ -155,8 +156,8 @@ public class BlueWitch : Entity
     }
     internal bool AttackCondition => CurrentAttack != AttackType.None;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
-    internal bool AirJumpCondition => status.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
-    internal bool WallSlideCondition => status.wallSlideAbility && !isOnGround && IsFacingWall;
+    internal bool AirJumpCondition => data.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
+    internal bool WallSlideCondition => data.wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
     // Start is called before the first frame update
@@ -192,9 +193,9 @@ public class BlueWitch : Entity
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
-            if (velocity.y > Mathf.Epsilon && velocity.y <= airJumpSpeed) // 向上跳跃时, 希望尽可能以高速达到高度
+            if (velocity.y > Mathf.Epsilon && velocity.y <= data.airJumpSpeed) // 向上跳跃时, 希望尽可能以高速达到高度
             {
-                if (velocity.y > airJumpSpeed / 2)
+                if (velocity.y > data.airJumpSpeed / 2)
                 {
                     velocity.y -= 0.5f * gravity * Time.fixedDeltaTime;
                 }
@@ -224,7 +225,7 @@ public class BlueWitch : Entity
     {
         CurrentCommand.moveX = direction;
         FacingDirection = direction;
-        velocity.x = direction * horizontalMoveSpeed;
+        velocity.x = direction * data.horizontalMoveSpeed;
     }
 
     public override void OnAttackSuccess(HitInfo hitInfo)
@@ -245,8 +246,8 @@ public class BlueWitch : Entity
         }
         base.OnAttacked(hitInfo);
         Game.VirtualCameraController.StartShake();
-        status.heath -= hitInfo.damage;
-        hitInvincibleTimer = hitInvincibleTime;
+        data.heath -= hitInfo.damage;
+        hitInvincibleTimer = data.hitInvincibleTime;
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
 }

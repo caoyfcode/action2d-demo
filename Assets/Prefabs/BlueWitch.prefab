@@ -1374,7 +1374,7 @@ MonoBehaviour:
   summonDenfend: {fileID: 5345660428818329874}
   spawnAfterImage: {fileID: 9119825104150118189}
   wallSlideCrow: {fileID: 3630276310687107848}
-  status:
+  data:
     maxHeath: 5
     heath: 5
     maxMagic: 5

@@ -6,9 +6,11 @@ public class FireKnight : Entity
 {
     // 玩家的 SummonAttack 攻击生效时长为 11 帧, 12/60=0.183s
     // 玩家的攻击前摇为 8 帧, 8/60=0.133s, 故无敌时间要超过 0.183s, 但短于 19/60=0.316s
+
     // TOOD 移入 status
-    float hitInvincibleTime = 0.3f;
-    float rollSpeed = 10f;
+    // internal float horizontalMoveSpeed = 6f;
+    // float hitInvincibleTime = 0.3f;
+    // float rollSpeed = 10f;
     const string ANIM_IDLE = "Idle";
     const string ANIM_RUN = "Run";
     const string ANIM_JUMP_UP = "JumpUp";
@@ -82,10 +84,9 @@ public class FireKnight : Entity
     internal float hitInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
     
-    // TODO 将其他可配置的常数放入 Status
-    public FireKnightStatus status;
+    public FireKnightData data;
     public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
-    public override CharacterStatus CharacterStatus => status; 
+    public override CharacterData CharacterData => data; 
     #endregion
 
     #region StateMachine
@@ -152,10 +153,10 @@ public class FireKnight : Entity
         }
         base.OnAttacked(hitInfo);
         
-        hitInvincibleTimer = hitInvincibleTime;
-        status.heath -= hitInfo.damage;
+        hitInvincibleTimer = data.hitInvincibleTime;
+        data.heath -= hitInfo.damage;
 
-        if (status.heath <= Mathf.Epsilon)
+        if (data.heath <= Mathf.Epsilon)
         {
             OnDeath();
         }
@@ -339,7 +340,7 @@ public class FireKnight : Entity
 
         public override void Update()
         {
-           entity.velocity.x = entity.FacingDirection * entity.rollSpeed;
+           entity.velocity.x = entity.FacingDirection * entity.data.rollSpeed;
            if (entity.hitBoxEnabled)
            {
                 entity.hitBox.DoHit();  

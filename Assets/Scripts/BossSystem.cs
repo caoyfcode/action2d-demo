@@ -14,8 +14,8 @@ public class BossSystem : MonoBehaviour
         {
             this.boss = boss;
             bossFightStarted = true;
-            bossHeathBar.valueBar.maxValue = boss.CharacterStatus.maxHeath;
-            bossHeathBar.valueBar.value = boss.CharacterStatus.heath;
+            bossHeathBar.valueBar.maxValue = boss.CharacterData.maxHeath;
+            bossHeathBar.valueBar.value = boss.CharacterData.heath;
             bossHeathBar.Shown = true;
             boss.onDeath.AddListener(EndBossFight);
         }
@@ -33,9 +33,9 @@ public class BossSystem : MonoBehaviour
     {
         if (bossFightStarted && boss != null)
         {
-            Debug.Log("Boss Health: " + boss.CharacterStatus.heath);
+            Debug.Log("Boss Health: " + boss.CharacterData.heath);
             Debug.Log("Bar value: " + bossHeathBar.valueBar.value);
-            bossHeathBar.valueBar.value = boss.CharacterStatus.heath;
+            bossHeathBar.valueBar.value = boss.CharacterData.heath;
         }
     }
 }
