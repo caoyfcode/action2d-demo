@@ -7,10 +7,11 @@ using UnityEngine;
 public class DefendBox : MonoBehaviour
 {
     public Entity entity;
-    public bool isDefending;
+    private bool isDefending;
 
     public Collider2D defendCollider;
-    internal Action<HitInfo> onSuccess;
+    public Action<HitInfo> onSuccess;
+    public Func<HitInfo, bool> defendCheck;
 
     protected virtual void Start()
     {
@@ -27,8 +28,13 @@ public class DefendBox : MonoBehaviour
         isDefending = false;
     }
 
-    public void OnAttacked(HitInfo hitInfo)
+    public void Defend(HitInfo hitInfo)
     {
         onSuccess?.Invoke(hitInfo);
+    }
+
+    public bool DefendCheck(HitInfo hitInfo)
+    {
+        return isDefending && (defendCheck?.Invoke(hitInfo) ?? true);
     }
 }

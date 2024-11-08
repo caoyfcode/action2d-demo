@@ -71,6 +71,11 @@ public class BTBuilder
         return Node(new BTAction(action, onActivate, onDeactivate));
     }
 
+    public BTBuilder Action(IEnumerable<BTNodeStatus> asyncAction, Action onActivate = null, Action onDeactivate = null)
+    {
+        return Node(new BTAction(asyncAction, onActivate, onDeactivate));
+    }
+
     public BTBuilder Condition(Func<bool> condition)
     {
         return Node(new BTCondition(condition));
@@ -238,7 +243,11 @@ public abstract class BTDecorator : BTComposite
 # region Leaf Nodes
 public class BTAction : BTNode
 {
+    enum ActionType { Sync, Async }
+    private readonly ActionType type;
     private readonly Func<BTNodeStatus> action;
+    private readonly IEnumerable<BTNodeStatus> asyncAction;
+    private IEnumerator<BTNodeStatus> actionEnumerator; // 不可以直接用 IEnumerator, 因为迭代器函数不支持 Reset
     private readonly Action onActivate;
     private readonly Action onDeactivate;
 
@@ -247,10 +256,21 @@ public class BTAction : BTNode
         this.action = action;
         this.onActivate = onActivate;
         this.onDeactivate = onDeactivate;
+        type = ActionType.Sync;
+    }
+
+    public BTAction(IEnumerable<BTNodeStatus> asyncAction, Action onActivate = null, Action onDeactivate = null)
+    {
+        this.asyncAction = asyncAction;
+        this.onActivate = onActivate;
+        this.onDeactivate = onDeactivate;
+        type = ActionType.Async;
     }
 
     public override BTNodeStatus OnExecute()
     {
+        if (type == ActionType.Async)
+            return actionEnumerator.MoveNext() ? actionEnumerator.Current : BTNodeStatus.Success;
         return action?.Invoke() ?? BTNodeStatus.Success;
     }
 
@@ -258,16 +278,24 @@ public class BTAction : BTNode
     {
         base.OnActivate();
         onActivate?.Invoke();
+        if (type == ActionType.Async)
+        {
+            actionEnumerator = asyncAction.GetEnumerator();
+        }
     }
 
     public override void OnDeactivate()
     {
         base.OnDeactivate();
         onDeactivate?.Invoke();
+        if (type == ActionType.Async)
+            actionEnumerator.Dispose();
     }
 
     public override object Clone()
     {
+        if (type == ActionType.Async)
+            return new BTAction(asyncAction, onActivate, onDeactivate);
         return new BTAction(action, onActivate, onDeactivate);
     }
 }

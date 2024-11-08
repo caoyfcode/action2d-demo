@@ -50,7 +50,7 @@ public class SummonAttack : Summon
         attacker = Game.Player,
         damage = 1,
         force = new Vector2(Game.Player.FacingDirection, 0),
-        hitBox = hitBox.hitCollider,
+        hitCollider = hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };
 }

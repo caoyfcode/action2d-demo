@@ -9,16 +9,16 @@ using UnityEngine.Events;
 public class Entity : MonoBehaviour
 {
     #region Events
-    public UnityEvent<HitInfo> onAttacked;
+    public UnityEvent<HitInfo> onTakeHit;
     public UnityEvent onDeath;
-    public UnityEvent<HitInfo> onAttackSuccess;
+    public UnityEvent<HitInfo> onHitSuccess;
     #endregion
 
     #region Constant
     internal float gravity = 30f;
-    internal float forceMoveDecay = 10f; // 水平衰减速度
-    internal float attackForceMove = 5f; // 单位力施加到单位质量产生的速度
-    internal float minForceMove = 0.1f; // 水平衰减的最小值, 到达此值设为 0
+    internal float forceSpeedDecay = 10f; // 水平衰减速度
+    internal float forceSpeed = 5f; // 单位力施加到单位质量产生的速度
+    internal float minForceSpeed = 0.1f; // 水平衰减的最小值, 到达此值设为 0
     #endregion
 
     #region Component
@@ -53,12 +53,12 @@ public class Entity : MonoBehaviour
     internal bool isOverlapEnvironment = false;
     internal bool isOnLeftCliff = false;
     internal bool isOnRightCliff = false;
-    public bool isDead = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
     public bool IsFacingCliff => FacingDirection > 0 ? isOnRightCliff : isOnLeftCliff;
+    public bool isDead = false;
     // Invincible 代表攻击不起作用，不仅仅是不扣血
-    public virtual bool IsInvincible => false;
+    public virtual bool IsInvincible => isDead;
     public virtual CharacterData CharacterData => null;
     #endregion
 
@@ -92,8 +92,8 @@ public class Entity : MonoBehaviour
         isOnLeftCliff = Physics2D.Raycast(col.bounds.min, Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
         isOnRightCliff = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y), Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
         float prev = forceMove > 0 ? 1 : -1;
-        forceMove *= 1 - forceMoveDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
-        if (prev * forceMove <= minForceMove) // 速度过小或反向, 则设置为 0
+        forceMove *= 1 - forceSpeedDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
+        if (prev * forceMove <= minForceSpeed) // 速度过小或反向, 则设置为 0
         {
             forceMove = 0;
         }
@@ -120,53 +120,40 @@ public class Entity : MonoBehaviour
         }
     }
 
-   // TODO 改名未 HitSuccess
-    public virtual void OnAttackSuccess(HitInfo hitInfo)
+    protected void AddForce(Vector2 force)
     {
-        Debug.Log(gameObject.name + " attack success");
-        onAttackSuccess.Invoke(hitInfo);
-    }
-
-    // TODO 改名为 TakeAttack/TakeHit
-    // onAttacked 事件要子类主动触发
-    public virtual void OnAttacked(HitInfo hitInfo)
-    {
-        // 继承者也要写这个判断
-        if (IsInvincible)
-        {
-            return;
-        }
-        Debug.Log(gameObject.name + " is attacked.");
-        if (hitFX)
-        {
-            hitFX.OnHit(hitInfo);
-        }
-        Vector2 deltaV = hitInfo.force * attackForceMove / rb.mass;
+        Vector2 deltaV = force * forceSpeed / rb.mass;
         forceMove += deltaV.x;
         var vel = rb.velocity;
         vel.x += deltaV.x;
         vel.y += deltaV.y; // TIP: 竖直方向若处于持续设置为 0 的状态，则无法生效
         rb.velocity = vel;
-        // velocity.y += deltaV.y;
-        
-        // TODO 将判断 controller 删除，改为 controller 自己注册 event
-        onAttacked.Invoke(hitInfo);
-        if (hitInfo.attacker)
-        {
-            hitInfo.attacker.OnAttackSuccess(hitInfo);
-        }
     }
 
-    // TODO 改名为 Death
-    public virtual void OnDeath()
+    public virtual void HitSuccess(HitInfo hitInfo)
+    {
+        Debug.Log(gameObject.name + " hits successfully.");
+        onHitSuccess.Invoke(hitInfo);
+    }
+
+    public virtual bool TakeHitCheck(HitInfo hitInfo) => !IsInvincible;
+
+    public virtual void TakeHit(HitInfo hitInfo)
+    {
+        Debug.Log(gameObject.name + " takes hit.");
+        if (hitFX)
+        {
+            hitFX.OnHit(hitInfo);
+        }
+        
+        onTakeHit.Invoke(hitInfo);
+    }
+
+    public virtual void Die()
     {
         Debug.Log(gameObject.name + " dies.");
         col.enabled = false;
         isDead = true;
         onDeath.Invoke();
-        // if (controller)
-        // {
-        //     controller.OnDeath();
-        // }
     }
 }

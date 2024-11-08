@@ -4,11 +4,11 @@ using UnityEngine;
 [Serializable]
 public class BlueWitchData : CharacterData
 {
-    [Header("Mutable Data")]
+    [Header("BlueWitch")]
     public bool secondJumpAbility = true;
     public bool dashAbility = true;
     public bool wallSlideAbility = true;
-    [Header("Immutable Data")]
+    [Header("BlueWitch Constant")]
     internal float horizontalMoveSpeed = 6f;
     internal float jumpSpeed = 12f;
     internal float airJumpSpeed = 12f;

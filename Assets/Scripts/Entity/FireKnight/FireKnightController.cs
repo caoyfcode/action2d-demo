@@ -24,7 +24,6 @@ public class FireKnightController : EntityController
     private float keepTargetTimer = 0f;
     public Entity Target => keepTargetTimer > 0f ? target : null;
     private float waitTimer = 0f;
-    // TODO 两个 cool down timer 移入 status
     private float airAttackCoolDownTimer = 0f;
     private float attackComboCoolDownTimer = 0f;
     private BehaviourTree behaviourTree;
@@ -33,7 +32,7 @@ public class FireKnightController : EntityController
     public override void Init()
     {
         entity = GetComponent<FireKnight>();
-        entity.onAttacked.AddListener(OnAttacked);
+        entity.onTakeHit.AddListener(OnAttacked);
         BTNode attackCombo = new BTBuilder()
             .Sequence()
                 .Fallback()

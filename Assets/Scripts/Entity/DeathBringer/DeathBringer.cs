@@ -38,7 +38,7 @@ public class DeathBringer : Entity
     internal float attackCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
     public DeathBringerData data;
-    public override bool IsInvincible => hitInvincibleTimer > 0;
+    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0;
 
     protected override void Start()
     {
@@ -81,19 +81,16 @@ public class DeathBringer : Entity
         }
     }
 
-    public override void OnAttacked(HitInfo hitInfo)
+    public override void TakeHit(HitInfo hitInfo)
     {
-        if (IsInvincible)
-        {
-            return;
-        }
-        base.OnAttacked(hitInfo);
+        base.TakeHit(hitInfo);
         hitInvincibleTimer = data.hitInvincibleTime;
         data.heath -= hitInfo.damage;
+        AddForce(hitInfo.force);
 
         if (data.heath <= Mathf.Epsilon)
         {
-            OnDeath();
+            Die();
         }
         else
         {
@@ -104,9 +101,9 @@ public class DeathBringer : Entity
         }
     }
 
-    public override void OnDeath()
+    public override void Die()
     {
-        base.OnDeath();
+        base.Die();
         stateMachine.ChangeState(deathState);
     }
 
@@ -257,7 +254,7 @@ public class DeathBringer : Entity
             attacker = entity,
             damage = 1,
             force = new Vector2(entity.FacingDirection, 0),
-            hitBox = entity.hitBox.hitCollider,
+            hitCollider = entity.hitBox.hitCollider,
             hitType = HitType.EntityAttack,
         };
     }

@@ -27,37 +27,39 @@ public class HitBox : MonoBehaviour
         for (int i = 0; i < hitNum; i++)
         {
             DefendBox defendBox = hitResults[i].GetComponent<DefendBox>();
-            if (defendBox && defendBox.isDefending)
+            var hitInfo = genHitInfoDefendBox?.Invoke(defendBox) ?? genHitInfo?.Invoke() ?? new HitInfo
             {
-                var hitInfo = genHitInfoDefendBox?.Invoke(defendBox) ?? genHitInfo?.Invoke() ?? new HitInfo
-                {
-                    attacker = attacker,
-                    damage = 0,
-                    force = new Vector2(attacker.FacingDirection, 0),
-                    hitBox = hitCollider,
-                    hitType = HitType.EntityAttack,
-                };
-                defendBox.OnAttacked(hitInfo);
+                attacker = attacker,
+                damage = 0,
+                force = new Vector2(attacker.FacingDirection, 0),
+                hitCollider = hitCollider,
+                hitType = HitType.EntityAttack,
+            };
+            hitInfo.hurtCollider = hitResults[i];
+            hitInfo.hitPoint = hitResults[i].bounds.center;
+            if (defendBox && defendBox.DefendCheck(hitInfo))
+            {
+                defendBox.Defend(hitInfo);
             }
         }
         for (int i = 0; i < hitNum; i++)
         {
-            // TODO 改为 HurtBox
             Entity target = hitResults[i].GetComponentInParent<Entity>();
-            if (target)
+            var hitInfo = genHitInfoEntity?.Invoke(target) ?? genHitInfo?.Invoke() ?? new HitInfo
+            {
+                attacker = attacker,
+                damage = 0,
+                force = new Vector2(attacker.FacingDirection, 0),
+                hitCollider = hitCollider,
+                hitType = HitType.EntityAttack,
+            };
+            hitInfo.hurtCollider = hitResults[i];
+            hitInfo.hitPoint = hitResults[i].bounds.center;
+            if (target && target.TakeHitCheck(hitInfo))
             {
                 num++;
-                var hitInfo = genHitInfoEntity?.Invoke(target) ?? genHitInfo?.Invoke() ?? new HitInfo
-                {
-                    attacker = attacker,
-                    damage = 0,
-                    force = new Vector2(attacker.FacingDirection, 0),
-                    hitBox = hitCollider,
-                    hitType = HitType.EntityAttack,
-                };
-                hitInfo.hurtBox = hitResults[i];
-                hitInfo.hitPoint = hitInfo.hurtBox.bounds.center;
-                target.OnAttacked(hitInfo);
+                target.TakeHit(hitInfo);
+                attacker.HitSuccess(hitInfo);
             }
         }
         return num;

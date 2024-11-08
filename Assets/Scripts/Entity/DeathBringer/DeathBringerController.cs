@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathBringerController : EntityController
@@ -20,7 +21,7 @@ public class DeathBringerController : EntityController
     public override void Init()
     {
         entity = GetComponent<DeathBringer>();
-        entity.onAttacked.AddListener(OnAttacked);
+        entity.onTakeHit.AddListener(OnAttacked);
         behaviourTree = new BTBuilder()
             .Sequence()
                 .Condition(DetectTartget)

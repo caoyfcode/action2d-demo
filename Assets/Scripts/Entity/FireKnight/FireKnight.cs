@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class FireKnight : Entity
 {
-    // 玩家的 SummonAttack 攻击生效时长为 11 帧, 12/60=0.183s
-    // 玩家的攻击前摇为 8 帧, 8/60=0.133s, 故无敌时间要超过 0.183s, 但短于 19/60=0.316s
-
-    // TOOD 移入 status
-    // internal float horizontalMoveSpeed = 6f;
-    // float hitInvincibleTime = 0.3f;
-    // float rollSpeed = 10f;
     const string ANIM_IDLE = "Idle";
     const string ANIM_RUN = "Run";
     const string ANIM_JUMP_UP = "JumpUp";
@@ -85,7 +78,7 @@ public class FireKnight : Entity
     internal bool stateControlInvincible = false;
     
     public FireKnightData data;
-    public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
+    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
     public override CharacterData CharacterData => data; 
     #endregion
 
@@ -144,21 +137,20 @@ public class FireKnight : Entity
         }
     }
 
-    public override void OnAttacked(HitInfo hitInfo)
+    // 防御状态只有背后能受到攻击
+    public override bool TakeHitCheck(HitInfo hitInfo) => base.TakeHitCheck(hitInfo) && !(stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection < 0);
+
+    public override void TakeHit(HitInfo hitInfo)
     {
-        // 防御状态只有背后能受到攻击
-        if (IsInvincible || (stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection < 0))
-        {
-            return;
-        }
-        base.OnAttacked(hitInfo);
+        base.TakeHit(hitInfo);
         
         hitInvincibleTimer = data.hitInvincibleTime;
         data.heath -= hitInfo.damage;
+        AddForce(hitInfo.force);
 
         if (data.heath <= Mathf.Epsilon)
         {
-            OnDeath();
+            Die();
         }
         else
         {
@@ -169,9 +161,9 @@ public class FireKnight : Entity
         }
     }
 
-    public override void OnDeath()
+    public override void Die()
     {
-        base.OnDeath();
+        base.Die();
         stateMachine.ChangeState(deathState);
     }
 
@@ -195,7 +187,7 @@ public class FireKnight : Entity
         {
             if (entity.isDead && this != entity.deathState)
             {
-                entity.OnDeath();
+                entity.Die();
                 return true;
             }
             return false;
@@ -446,6 +438,7 @@ public class FireKnight : Entity
             entity.animator.Play(ANIM_DEFEND);
             entity.defendBox.StartDefend();
             entity.defendBox.onSuccess = OnDefendSuccess;
+            entity.defendBox.defendCheck = DefendCheck;
         }
 
         public override bool Transition()
@@ -473,13 +466,17 @@ public class FireKnight : Entity
             entity.defendBox.StopDefend();
         }
 
+        bool DefendCheck(HitInfo hitInfo)
+        {
+            return hitInfo.force.x * entity.FacingDirection < 0;
+        }
+
         void OnDefendSuccess(HitInfo hitInfo)
         {
             if (hitInfo.force.x * entity.FacingDirection > 0)
             {
                 return;
             }
-            // TODO 播放打击特效
             stateMachine.ChangeState(entity.attackState);
         }
     }

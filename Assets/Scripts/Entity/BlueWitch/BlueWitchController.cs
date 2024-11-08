@@ -22,7 +22,7 @@ public class BlueWitchController : EntityController
             _ => 0,
         };
 
-        entity.CurrentCommand.moveX = moveX;
+        entity.CurrentCommand.speedX = moveX * entity.data.horizontalMoveSpeed;
         entity.CurrentCommand.startJump = Input.GetButtonDown("Jump");
         entity.CurrentCommand.holdJump = Input.GetButton("Jump");
         entity.CurrentCommand.attackHeroKnight = Input.GetButtonDown("Attack");

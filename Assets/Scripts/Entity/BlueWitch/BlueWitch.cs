@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,6 @@ using UnityEngine;
 public class BlueWitch : Entity
 {
     #region Constant Number
-    // internal float horizontalMoveSpeed = 6f;
-    // internal float jumpSpeed = 12f;
-    // internal float airJumpSpeed = 12f;
-    // internal float maxJumpTime = 0.3f;
-    // internal float minKeepDirectionTime = 0.15f; // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
-    // internal float dashTime = 0.2f;
-    // internal float dashSpeed = 18f;
-    // internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
-    // internal float wallSlideSpeed = 2f;
-    // internal float attackComboTime = 0.3f;
-    // internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
-    // internal float hitInvincibleTime = 0.5f;
     internal const string ANIM_IDLE = "Idle";
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
@@ -33,7 +22,7 @@ public class BlueWitch : Entity
     #region Command
     public class Command
     {
-        public float moveX = 0;
+        public float speedX = 0;
         public bool holdJump = false, startJump = false;
         public bool dash = false;
         public bool attackArcaneArcher = false;
@@ -61,7 +50,7 @@ public class BlueWitch : Entity
             return ret;
         }
 
-        public void MoveX(float moveX) => this.moveX = moveX;
+        public void SpeedX(float speedX) => this.speedX = speedX;
         public void Jump(bool startJump, bool holdJump) => (this.startJump, this.holdJump) = (startJump, holdJump);
         public void Dash(bool dash=true) => this.dash = dash;
         public void Attack(AttackType attackType)
@@ -126,7 +115,7 @@ public class BlueWitch : Entity
                 return false;
         }
     }
-    public override bool IsInvincible => hitInvincibleTimer > 0 || stateControlInvincible;
+    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
     #endregion
 
     #region StateMachine
@@ -223,14 +212,14 @@ public class BlueWitch : Entity
 
     public void ChangeInputDirectionAndFlip(float direction)
     {
-        CurrentCommand.moveX = direction;
+        CurrentCommand.speedX = direction * Math.Abs(CurrentCommand.speedX);
         FacingDirection = direction;
-        velocity.x = direction * data.horizontalMoveSpeed;
+        velocity.x = CurrentCommand.speedX;
     }
 
-    public override void OnAttackSuccess(HitInfo hitInfo)
+    public override void HitSuccess(HitInfo hitInfo)
     {
-        base.OnAttackSuccess(hitInfo);
+        base.HitSuccess(hitInfo);
         if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
         {
            attackState.OnSuccess(hitInfo);
@@ -238,16 +227,13 @@ public class BlueWitch : Entity
         }
     }
 
-    public override void OnAttacked(HitInfo hitInfo)
+    public override void TakeHit(HitInfo hitInfo)
     {
-        if (IsInvincible)
-        {
-            return;
-        }
-        base.OnAttacked(hitInfo);
+        base.TakeHit(hitInfo);
         Game.VirtualCameraController.StartShake();
         data.heath -= hitInfo.damage;
         hitInvincibleTimer = data.hitInvincibleTime;
+        AddForce(hitInfo.force);
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
 }

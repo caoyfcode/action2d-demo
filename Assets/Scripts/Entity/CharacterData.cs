@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 改名 Data 或 Property
 [Serializable]
 public class CharacterData
 {

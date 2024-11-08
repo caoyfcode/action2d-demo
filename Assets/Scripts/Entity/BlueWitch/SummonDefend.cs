@@ -43,6 +43,7 @@ public class SummonDefend : Summon
         animator.Play(animDefend);
         isDefendBoxEnabled = true;
         defendBox.onSuccess = OnDefendSuccess;
+        defendBox.defendCheck = (_) => true;
         isCancelable = false;
         isEnd = false;
     }
@@ -66,7 +67,7 @@ public class SummonDefend : Summon
         attacker = Game.Player,
         damage = 4,
         force = new Vector2(Game.Player.FacingDirection, 0),
-        hitBox = hitBox.hitCollider,
+        hitCollider = hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };
 }

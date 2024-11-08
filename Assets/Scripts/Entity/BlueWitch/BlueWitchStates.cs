@@ -64,7 +64,7 @@ public class BlueWitchGroundFree : BlueWitchState
 
     public override void Update()
     {
-        if (entity.CurrentCommand.moveX != 0)
+        if (entity.CurrentCommand.speedX != 0)
         {
             entity.animator.Play(BlueWitch.ANIM_RUN);
         }
@@ -74,8 +74,8 @@ public class BlueWitchGroundFree : BlueWitchState
         }
 
         // entity.velocity.y = 0;
-        entity.velocity.x = entity.CurrentCommand.moveX * entity.data.horizontalMoveSpeed;
-        entity.FacingDirection = entity.CurrentCommand.moveX;
+        entity.velocity.x = entity.CurrentCommand.speedX;
+        entity.FacingDirection = entity.CurrentCommand.speedX;
     }
 }
 
@@ -88,13 +88,13 @@ public abstract class BlueWitchAirState : BlueWitchState
     protected float keepDirection = 1f;
     protected bool shouldKeepDirection = false;
 
-    protected float MoveX
+    protected float SpeedX
     {
         get
         {
-            if (!shouldKeepDirection || (keepDirectionTimer <= 0 && entity.CurrentCommand.moveX * keepDirection < 0))
+            if (!shouldKeepDirection || (keepDirectionTimer <= 0 && entity.CurrentCommand.speedX * keepDirection < 0))
             { // 不需要 keep direction 或者超出 minKeepDirectionTime 且反向输入
-                return entity.CurrentCommand.moveX;
+                return entity.CurrentCommand.speedX;
             }
 
             return keepDirection;
@@ -117,8 +117,8 @@ public abstract class BlueWitchAirState : BlueWitchState
         shouldKeepDirection = true;
         keepDirectionTimer = entity.data.minKeepDirectionTime;
         keepDirection = entity.FacingDirection;
-        entity.velocity.x = MoveX * entity.data.horizontalMoveSpeed;
-        entity.FacingDirection = entity.CurrentCommand.moveX;
+        entity.velocity.x = SpeedX;
+        entity.FacingDirection = entity.CurrentCommand.speedX;
     }
 
     public override bool Transition()
@@ -132,7 +132,7 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             stateMachine.ChangeState(entity.attackState);
         }
-        else if (entity.WallSlideCondition && MoveX * entity.FacingDirection > 0 && !jumpFromWallFoot)
+        else if (entity.WallSlideCondition && SpeedX * entity.FacingDirection > 0 && !jumpFromWallFoot)
         {
             stateMachine.ChangeState(entity.wallSlideState);
         }
@@ -160,7 +160,7 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             keepDirectionTimer = 0;
         }
-        if (MoveX != 0)
+        if (SpeedX != 0)
         {
             entity.animator.Play(BlueWitch.ANIM_RUN);
         }
@@ -168,8 +168,8 @@ public abstract class BlueWitchAirState : BlueWitchState
         {
             entity.animator.Play(BlueWitch.ANIM_IDLE);
         }
-        entity.velocity.x = MoveX * entity.data.horizontalMoveSpeed;
-        entity.FacingDirection = entity.CurrentCommand.moveX;
+        entity.velocity.x = SpeedX;
+        entity.FacingDirection = entity.CurrentCommand.speedX;
     }
 
     public override void Exit()
@@ -324,7 +324,6 @@ public class BlueWitchDash : BlueWitchState
         timer -= Time.deltaTime;
         entity.velocity.y = 0;
         entity.velocity.x = entity.data.dashSpeed * entity.FacingDirection;
-        // TODO 拖尾
     }
 
     public override void Exit()
@@ -463,7 +462,7 @@ public class BlueWitchWallSlide : BlueWitchState
             entity.holdJumpState.KeepDirection();
             return true;
         }
-        if (entity.isOnGround || !entity.IsFacingWall || entity.CurrentCommand.moveX * entity.FacingDirection < 0)
+        if (entity.isOnGround || !entity.IsFacingWall || entity.CurrentCommand.speedX * entity.FacingDirection < 0)
         {
             stateMachine.ChangeState(entity.airFreeState);
             return true;

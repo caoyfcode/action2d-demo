@@ -29,9 +29,9 @@ public class CollisionHitBox : HitBox
             attacker = attacker,
             damage = 1,
             force = new Vector2(directionX * 5, 0),
-            hitBox = hitCollider,
+            hitCollider = hitCollider,
             hitType = HitType.BodyCollision,
-            hurtBox = hitResults[0],
+            hurtCollider = hitResults[0],
             hitPoint = hitResults[0].bounds.center,
         };
     }

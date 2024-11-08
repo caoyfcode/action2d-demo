@@ -26,7 +26,7 @@ public class Projectile : Entity
         
         if (isOverlapEnvironment)
         {
-            OnDeath();
+            Die();
             return;
         }
         if (hitBox.genHitInfo == null)
@@ -44,20 +44,20 @@ public class Projectile : Entity
         projectileSource = source,
         attacker = this,
         damage = damage,
-        hitBox = hitBox.hitCollider,
+        hitCollider = hitBox.hitCollider,
         force = rb.velocity.normalized,
         hitType = HitType.Projectile,
     };
 
-    public override void OnDeath()
+    public override void Die()
     {
-        base.OnDeath();
+        base.Die();
         rb.velocity = Vector2.zero;
     }
 
-    public override void OnAttackSuccess(HitInfo hitInfo)
+    public override void HitSuccess(HitInfo hitInfo)
     {
-        base.OnAttackSuccess(hitInfo);
-        OnDeath();
+        base.HitSuccess(hitInfo);
+        Die();
     }
 }
