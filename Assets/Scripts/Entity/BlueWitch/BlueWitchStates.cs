@@ -97,7 +97,7 @@ public abstract class BlueWitchAirState : BlueWitchState
                 return entity.CurrentCommand.speedX;
             }
 
-            return keepDirection;
+            return keepDirection * entity.data.horizontalMoveSpeed;
         }
     }
     public BlueWitchAirState(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
@@ -112,11 +112,11 @@ public abstract class BlueWitchAirState : BlueWitchState
     }
 
     // 在 WallSlideState 调用
-    public void KeepDirection()
+    public void KeepMoveDirection(float direction)
     {
         shouldKeepDirection = true;
         keepDirectionTimer = entity.data.minKeepDirectionTime;
-        keepDirection = entity.FacingDirection;
+        keepDirection = direction;
         entity.velocity.x = SpeedX;
         entity.FacingDirection = entity.CurrentCommand.speedX;
     }
@@ -219,7 +219,7 @@ public class BlueWitchAirFree : BlueWitchAirState
             stateMachine.ChangeState(entity.holdJumpState);
             if (entity.stateMachine.PrevState == entity.wallSlideState)
             {
-                entity.holdJumpState.KeepDirection();
+                entity.holdJumpState.KeepMoveDirection(-entity.FacingDirection);
             }
             return true;
         }
@@ -451,15 +451,16 @@ public class BlueWitchWallSlide : BlueWitchState
     {
         if (entity.DashCondition)
         {
-            entity.ChangeInputDirectionAndFlip(-entity.FacingDirection);
+            entity.ChangeInputDirection(-entity.FacingDirection);
+            entity.FacingDirection = -entity.FacingDirection;
             stateMachine.ChangeState(entity.dashState);
             return true;
         }
         if (entity.JumpCondition)
         {
-            entity.ChangeInputDirectionAndFlip(-entity.FacingDirection);
+            entity.ChangeInputDirection(-entity.FacingDirection);
             stateMachine.ChangeState(entity.holdJumpState);
-            entity.holdJumpState.KeepDirection();
+            entity.holdJumpState.KeepMoveDirection(-entity.FacingDirection);
             return true;
         }
         if (entity.isOnGround || !entity.IsFacingWall || entity.CurrentCommand.speedX * entity.FacingDirection < 0)

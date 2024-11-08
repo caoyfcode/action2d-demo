@@ -210,10 +210,9 @@ public class BlueWitch : Entity
             hitInvincibleTimer -= Time.deltaTime;
     }
 
-    public void ChangeInputDirectionAndFlip(float direction)
+    public void ChangeInputDirection(float direction)
     {
         CurrentCommand.speedX = direction * Math.Abs(CurrentCommand.speedX);
-        FacingDirection = direction;
         velocity.x = CurrentCommand.speedX;
     }
 
