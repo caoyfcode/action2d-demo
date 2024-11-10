@@ -14,7 +14,10 @@ public class Game : SingletonBase<Game>
     {
         {new Vector2Int(-100, 0), "SampleLevel_0"}, // 用 -100 是为了与正常场景区分开
         {new Vector2Int(-100, 1), "SampleLevel_1"},
+        {new Vector2Int(0, 0), "Level_00_00"},
+        {new Vector2Int(0, -1), "Level_00_m01"},
     };
+
     public static Level CurrentLevel => instance.currentLevel;
     public static VirtualCameraController VirtualCameraController => instance.virtualCameraController;
     public static VFXLoader VFXLoader => instance.vfxLoader;
@@ -27,9 +30,9 @@ public class Game : SingletonBase<Game>
     [SerializeField]
     DarkScreen darkScreen;
     [SerializeField]
-    CinemachineConfiner2D machineConfiner;
-    [SerializeField]
     VirtualCameraController virtualCameraController;
+    [SerializeField]
+    GameObject levelContainer;
     [SerializeField]
     Level currentLevel;
     [SerializeField]
@@ -39,7 +42,8 @@ public class Game : SingletonBase<Game>
 
     void Start()
     {
-        SetCurrentLevel(currentLevel);
+        Level level = levelContainer.GetComponentInChildren<Level>();
+        SetCurrentLevel(level);
     }
 
     void SetCurrentLevel(Level level)
@@ -47,16 +51,16 @@ public class Game : SingletonBase<Game>
         if (level != null)
         {
             currentLevel = level;
-            machineConfiner.m_BoundingShape2D = level.GetComponent<Collider2D>();
+            virtualCameraController.SetConfinerBound(level.bound);
         }
         else
         {
             currentLevel = null;
-            machineConfiner.m_BoundingShape2D = null;
+            virtualCameraController.SetConfinerBound(null);
         }
-        machineConfiner.InvalidateCache(); // 清除缓存
     }
 
+    // TODO 改名为 StartSwitchLevel
     public static void StartChangeLevel(Vector2Int levelIndex)
     {
         instance.InstanceStartChangeLevel(levelIndex);
@@ -73,11 +77,12 @@ public class Game : SingletonBase<Game>
         string level = LevelPath[levelIndex];
         var request = Resources.LoadAsync(level);
         yield return request;
-        yield return new WaitForSeconds(1);
+        // yield return new WaitForSeconds(1);
         Destroy(currentLevel.gameObject);
         SetCurrentLevel(null);
-        GameObject prefab = request.asset as GameObject;
+        GameObject prefab = request.asset as GameObject; // TODO 在删除场景时把此资源卸载
         GameObject obj = Instantiate(prefab);
+        obj.transform.SetParent(levelContainer.transform);
         SetCurrentLevel(obj.GetComponent<Level>());
         player.gameObject.SetActive(true);
     }

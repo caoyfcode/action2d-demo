@@ -124,7 +124,14 @@ public class FireKnight : Entity
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
-            velocity.y -= gravity * Time.fixedDeltaTime;
+            if (velocity.y <= 0)
+            {
+                velocity.y -= gravity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                velocity.y -= 1.5f * gravity * Time.fixedDeltaTime;
+            }
             rb.velocity = velocity;
         }
     }

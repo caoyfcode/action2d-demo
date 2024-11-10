@@ -8,11 +8,13 @@ public class VirtualCameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera vm;
     private CinemachineBasicMultiChannelPerlin perlin;
+    private CinemachineConfiner2D machineConfiner;
     private float shakeTimer = 0;
 
-    private void Start()
+    private void Awake()
     {
         perlin = vm.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        machineConfiner = vm.GetComponent<CinemachineConfiner2D>();
     }
 
     private void Update()
@@ -36,5 +38,12 @@ public class VirtualCameraController : MonoBehaviour
         shakeTimer = 0;
         perlin.m_AmplitudeGain = 0;
         perlin.m_FrequencyGain = 0;
+    }
+
+    // bounds 必须是 PolygonCollider2D 或 CompositeCollider2D 或者 null
+    public void SetConfinerBound(Collider2D bound)
+    {
+        machineConfiner.m_BoundingShape2D = bound;
+        machineConfiner.InvalidateCache();
     }
 }

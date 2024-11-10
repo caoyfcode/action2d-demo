@@ -8,7 +8,6 @@ public class Spawner : MonoBehaviour
     public GameObject spawnedObject;
     public bool spawned = false;
 
-
     public void Spawn(GameObject parent = null)
     {
         if (!spawned)
@@ -26,7 +25,8 @@ public class Spawner : MonoBehaviour
     {
         if (spawned)
         {
-            Destroy(spawnedObject);
+            if (spawnedObject != null)
+                Destroy(spawnedObject);
             spawned = false;
         }
     }
@@ -35,5 +35,10 @@ public class Spawner : MonoBehaviour
     {
         Despawn();
         Spawn();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        Despawn();
     }
 }

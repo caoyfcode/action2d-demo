@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using AttackType = FireKnight.AttackType;
 
-public class FireKnightController : EntityController
+public class FireKnightController : BossController
 {
     FireKnight entity;
 
@@ -16,22 +16,28 @@ public class FireKnightController : EntityController
     // checker
     public float groundHeight;
 
+    public bool bossFightStarted = false;
 
-    [SerializeField]
-    private Entity target = null;
-    [SerializeField]
-    private Vector2 targetPosition = Vector2.zero;
-    private float keepTargetTimer = 0f;
-    public Entity Target => keepTargetTimer > 0f ? target : null;
+
+    // [SerializeField]
+    // private Entity target = null;
+    // [SerializeField]
+    // private Vector2 targetPosition = Vector2.zero;
+    // private float keepTargetTimer = 0f;
+    // public Entity Target => bossFightStarted ? Game.Player : (keepTargetTimer > 0f ? target : null); // 用于区分作为boss和普通怪物的行为
     private float waitTimer = 0f;
     private float airAttackCoolDownTimer = 0f;
     private float attackComboCoolDownTimer = 0f;
     private BehaviourTree behaviourTree;
 
+    void Awake()
+    {
+        entity = GetComponent<FireKnight>();
+    }
+
 
     public override void Init()
     {
-        entity = GetComponent<FireKnight>();
         entity.onTakeHit.AddListener(OnAttacked);
         BTNode attackCombo = new BTBuilder()
             .Sequence()
@@ -65,7 +71,7 @@ public class FireKnightController : EntityController
                 .NeverFail()
                     .Sequence()
                         .Action(StartJump)
-                        .Action(WaitAirTop)
+                        .Action(WaitAirTopOrTarget())
                         .Action(() => StartAttack(AttackType.AirAttack))
                         .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState)
                     .End()
@@ -99,7 +105,7 @@ public class FireKnightController : EntityController
 
         behaviourTree = new BTBuilder()
             .Sequence()
-                .Condition(DetectTarget)
+                // .Condition(DetectTarget)
                 .Fallback()
                     .Sequence()
                         .Condition(() => airAttackCoolDownTimer <= 0f)
@@ -114,6 +120,17 @@ public class FireKnightController : EntityController
             .Build();
     }
 
+    public override void StartBossFight()
+    {
+        bossFightStarted = true;
+        Game.BossSystem.StartBossFight(entity);
+    }
+
+    public void OnDestroy()
+    {
+        Game.BossSystem.EndBossFight();
+    }
+
     public void OnAttacked(HitInfo hitInfo)
     {
         entity.FacingDirection = Mathf.Sign(-hitInfo.force.x);
@@ -126,10 +143,8 @@ public class FireKnightController : EntityController
 
     public override void UpdateCommand()
     {
-        if (Target)
-        {
-            targetPosition = target.transform.position;
-        }
+        if (!bossFightStarted || !Game.Player)
+            return;
         UpdateTimers();
         if (!entity.isDead)
         {
@@ -139,10 +154,10 @@ public class FireKnightController : EntityController
 
     void UpdateTimers()
     {
-        if (keepTargetTimer > 0f)
-        {
-            keepTargetTimer -= Time.deltaTime;
-        }
+        // if (keepTargetTimer > 0f)
+        // {
+        //     keepTargetTimer -= Time.deltaTime;
+        // }
         if (waitTimer > 0f)
         {
             waitTimer -= Time.deltaTime;
@@ -157,43 +172,47 @@ public class FireKnightController : EntityController
         }
     }
 
-    bool DetectTarget()
-    {
-        if (Target)
-        {
-            return true;
-        }
-        target = null;
-        Vector3 back = transform.position + new Vector3(backwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
-        var castHit = Physics2D.Raycast(back, new Vector2(entity.FacingDirection, 0), forwardDetectPoint - backwardDetectPoint,
-            LayerMask.GetMask("Player"));
-        if (castHit.collider == null)
-        {
-            return false;
-        }
-        else
-        {
-            target = castHit.collider.GetComponentInParent<Entity>();
-            if (target == null)
-                return false;
-            targetPosition = target.transform.position;
-            keepTargetTimer = 2f;
-            Game.BossSystem.StartBossFight(entity);
-            return true;
-        }
-    }
+    // bool DetectTarget()
+    // {
+    //     if (Target)
+    //     {
+    //         return true;
+    //     }
+    //     target = null;
+    //     Vector3 back = transform.position + new Vector3(backwardDetectPoint * entity.FacingDirection, detectOffsetY, 0);
+    //     var castHit = Physics2D.Raycast(back, new Vector2(entity.FacingDirection, 0), forwardDetectPoint - backwardDetectPoint,
+    //         LayerMask.GetMask("Player"));
+    //     if (castHit.collider == null)
+    //     {
+    //         return false;
+    //     }
+    //     else
+    //     {
+    //         target = castHit.collider.GetComponentInParent<Entity>();
+    //         if (target == null)
+    //             return false;
+    //         targetPosition = target.transform.position;
+    //         keepTargetTimer = 2f;
+    //         Game.BossSystem.StartBossFight(entity);
+    //         return true;
+    //     }
+    // }
 
     bool DetectTargetInAttackRange(AttackType attackType)
     {
         Debug.Log("DetectTargetInAttackRange");
+        if (!Game.Player)
+        {
+            return false;
+        }
         Collider2D hitCollider = entity.GetHitCollider(attackType);
-        if (hitCollider.IsTouching(target.col))
+        if (hitCollider.IsTouching(Game.Player.col))
         {
             Debug.Log(true);
             return true;
         }
         // 因为 Enemy 与 Player 无碰撞, 因而不使用 IsTouching
-        if (entity.col.bounds.Intersects(target.col.bounds))
+        if (entity.col.bounds.Intersects(Game.Player.col.bounds))
         {
             Debug.Log(true);
             return true;
@@ -205,7 +224,7 @@ public class FireKnightController : EntityController
     BTNodeStatus MoveToTargetForAttack(AttackType attackType)
     {
         Debug.Log("MoveToTargetForAttack");
-        if (!Target)
+        if (!Game.Player)
         {
             return BTNodeStatus.Failure;
         }
@@ -213,27 +232,45 @@ public class FireKnightController : EntityController
         {
             return BTNodeStatus.Success;
         }
-        float diff = targetPosition.x - entity.transform.position.x;
-        if (Mathf.Abs(diff) < Mathf.Epsilon)
-        {
-            diff = 0;
-        }
-        if (diff == 0)
-        {
-            return BTNodeStatus.Failure;
-        }
-        entity.CurrentCommand.Speed(Mathf.Sign(diff) * entity.data.horizontalMoveSpeed, 0f);
+        float speedX = CalcSpeedXToTarget();
+        entity.CurrentCommand.Speed(speedX, 0f);
         return BTNodeStatus.Running;
+    }
+
+    float CalcSpeedXToTarget()
+    {
+        if (!Game.Player)
+        {
+            return 0f;
+        }
+        float diff = Game.Player.transform.position.x - entity.transform.position.x;
+        if (diff > 0)
+        {
+            diff = Game.Player.col.bounds.min.x - entity.col.bounds.max.x;
+            if (diff < Game.Player.col.bounds.size.x)
+            {
+                diff = 0;
+            }
+        }
+        else
+        {
+            diff = Game.Player.col.bounds.max.x - entity.col.bounds.min.x;
+            if (diff > -Game.Player.col.bounds.size.x)
+            {
+                diff = 0;
+            }
+        }
+        return Mathf.Sign(diff) * entity.data.horizontalMoveSpeed;
     }
 
     BTNodeStatus FaceTarget()
     {
         Debug.Log("FaceTarget");
-        if (!Target)
+        if (!Game.Player)
         {
             return BTNodeStatus.Success;
         }
-        float diff = targetPosition.x - entity.transform.position.x;
+        float diff = Game.Player.transform.position.x - entity.transform.position.x;
         entity.FacingDirection = Mathf.Sign(diff);
         return BTNodeStatus.Success;
     }
@@ -264,9 +301,9 @@ public class FireKnightController : EntityController
 
     bool TargetIsOnAir()
     {
-        if (!target)
+        if (!Game.Player)
             return false;
-        return target.col.bounds.min.y > groundHeight + 2;
+        return Game.Player.col.bounds.min.y > entity.col.bounds.min.y + 0.5f;
     }
 
     BTNodeStatus StartJump()
@@ -280,7 +317,7 @@ public class FireKnightController : EntityController
         else if (entity.stateMachine.CurrentState == entity.groundFreeState)
         {
             entity.CurrentCommand.SpeedY(entity.data.jumpSpeed);
-            if (Target)
+            if (Game.Player)
             {
                 FaceTarget();
             }
@@ -293,7 +330,7 @@ public class FireKnightController : EntityController
     }
     BTNodeStatus WaitAirTop()
     {
-        // 到达最高点攻击
+        // 到达最高点
         Debug.Log("entity.velocity.y " + entity.velocity.y);
         if (entity.velocity.y < 0)
         {
@@ -308,6 +345,36 @@ public class FireKnightController : EntityController
         {
             entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.data.horizontalMoveSpeed);
             return BTNodeStatus.Running;
+        }
+    }
+
+    IEnumerable<BTNodeStatus> WaitAirTopOrTarget()
+    {
+        // 到达最高点或碰到主角攻击
+        while (true)
+        {
+            if (entity.velocity.y < 0)
+            {
+                yield return BTNodeStatus.Success;
+            }
+            else if (entity.stateMachine.CurrentState != entity.airFreeState)
+            {
+                yield return BTNodeStatus.Failure;
+            }
+            else if (Mathf.Abs(Game.Player.transform.position.y - entity.transform.position.y) < Mathf.Epsilon)
+            {
+                yield return BTNodeStatus.Success;
+            }
+            else
+            {
+                float speedX = CalcSpeedXToTarget();
+                if (speedX * entity.FacingDirection < 0)
+                {
+                    speedX = 0;
+                }
+                entity.CurrentCommand.SpeedX(speedX);
+                yield return BTNodeStatus.Running;
+            }
         }
     }
 

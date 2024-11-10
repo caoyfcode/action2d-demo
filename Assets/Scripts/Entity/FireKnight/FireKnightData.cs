@@ -7,7 +7,7 @@ public class FireKnightData : CharacterData
     [Header("FireKnight")]
     public int stage = 1;
     [Header("FireKnight Constant")]
-    public float jumpSpeed = 15f;
+    public float jumpSpeed = 20f;
     public float attackComboCoolDownTime = 0.5f;
     public float airAttackCoolDownTime = 1.5f;
     public float horizontalMoveSpeed = 6f;

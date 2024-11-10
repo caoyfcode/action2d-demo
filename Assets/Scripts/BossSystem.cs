@@ -23,10 +23,13 @@ public class BossSystem : MonoBehaviour
 
     public void EndBossFight()
     {
-        bossFightStarted = false;
-        bossHeathBar.Shown = false;
-        boss.onDeath.RemoveListener(EndBossFight);
-        boss = null;
+        if (bossFightStarted)
+        {
+            bossFightStarted = false;
+            bossHeathBar.Shown = false;
+            boss.onDeath.RemoveListener(EndBossFight);
+            boss = null;
+        }
     }
 
     void Update()

@@ -10,6 +10,11 @@ public abstract class EntityController : MonoBehaviour
     public abstract void UpdateCommand();
 }
 
+public abstract class BossController : EntityController
+{
+    public abstract void StartBossFight();
+}
+
 // TODO 之后改为下面方法所表示的
 // public interface IAgent
 // {
