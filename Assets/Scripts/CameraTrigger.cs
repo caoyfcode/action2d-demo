@@ -20,7 +20,7 @@ public class CameraTrigger : MonoBehaviour
         {
             if (triggerType == TriggerType.CameraBound)
             {
-                Game.VirtualCameraController.SetConfinerBound(triggerArea);
+                Game.CameraController.SetBound(triggerArea);
             }
         }
     }
@@ -31,7 +31,7 @@ public class CameraTrigger : MonoBehaviour
         {
             if (triggerType == TriggerType.CameraBound)
             {
-                Game.VirtualCameraController.SetConfinerBound(Game.CurrentLevel.bound);
+                Game.CameraController.SetBound(Game.CurrentLevel.bound);
             }
         }
     }

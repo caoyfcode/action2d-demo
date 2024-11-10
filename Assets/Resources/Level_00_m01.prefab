@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8206471627624460}
   - component: {fileID: 4743497249848491091}
-  - component: {fileID: 8171492444277214236}
   - component: {fileID: 6937838584562571829}
+  - component: {fileID: 8176897824888725722}
   m_Layer: 13
   m_Name: SpawnFireKnight
   m_TagString: Untagged
@@ -49,9 +49,23 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8209172396341373964, guid: b40b72faa422d8841bfbbe21d0ea50f0, type: 3}
   spawnedObject: {fileID: 0}
   spawned: 0
-  bossArea: {fileID: 8171492444277214236}
---- !u!60 &8171492444277214236
-PolygonCollider2D:
+--- !u!114 &6937838584562571829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607153361637832712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b6fba19efce8c49a7db4b9ce8c637d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerArea: {fileID: 8176897824888725722}
+  triggerType: 0
+  cameraPosition: {x: 0, y: 0}
+--- !u!61 &8176897824888725722
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -82,7 +96,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 2.657074, y: 1.0872555}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -92,28 +106,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 14.633146, y: 6.5318165}
-      - {x: -8.530821, y: 6.578806}
-      - {x: -8.560184, y: -4.428198}
-      - {x: 14.591224, y: -4.4484215}
-  m_UseDelaunayMesh: 0
---- !u!114 &6937838584562571829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607153361637832712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b6fba19efce8c49a7db4b9ce8c637d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerArea: {fileID: 8171492444277214236}
-  triggerType: 0
-  cameraPosition: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 21.103302, y: 10.231522}
+  m_EdgeRadius: 0
 --- !u!1 &5454396743985736089
 GameObject:
   m_ObjectHideFlags: 0
@@ -8915,8 +8910,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3999170560502227257}
-  - component: {fileID: 6398909502842031238}
   - component: {fileID: 2835093163963001932}
+  - component: {fileID: 8074627456390663191}
   m_Layer: 0
   m_Name: Level_00_m01
   m_TagString: Untagged
@@ -8943,8 +8938,23 @@ Transform:
   - {fileID: 2690094674877638242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &6398909502842031238
-PolygonCollider2D:
+--- !u!114 &2835093163963001932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749882688885457192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa1e16149420f24681f1e971eff65e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaName: 
+  Spawners: {fileID: 6056785279180103520}
+  bound: {fileID: 0}
+--- !u!61 &8074627456390663191
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8975,7 +8985,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -8.508215, y: -17.993622}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -8985,28 +8995,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 20.04888, y: -2}
-      - {x: -37.02642, y: -2.0036576}
-      - {x: -37.021362, y: -33.99667}
-      - {x: 20.038015, y: -34.009132}
-  m_UseDelaunayMesh: 0
---- !u!114 &2835093163963001932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7749882688885457192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fa1e16149420f24681f1e971eff65e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaName: 
-  Spawners: {fileID: 6056785279180103520}
-  bound: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 57.033985, y: 32.091446}
+  m_EdgeRadius: 0
 --- !u!1001 &5365396733558266343
 PrefabInstance:
   m_ObjectHideFlags: 0

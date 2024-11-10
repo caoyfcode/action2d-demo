@@ -1,4 +1,3 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +18,7 @@ public class Game : SingletonBase<Game>
     };
 
     public static Level CurrentLevel => instance.currentLevel;
-    public static VirtualCameraController VirtualCameraController => instance.virtualCameraController;
+    public static CameraController CameraController => instance.cameraController;
     public static VFXLoader VFXLoader => instance.vfxLoader;
     public static BossSystem BossSystem => instance.bossSystem;
 
@@ -30,7 +29,7 @@ public class Game : SingletonBase<Game>
     [SerializeField]
     DarkScreen darkScreen;
     [SerializeField]
-    VirtualCameraController virtualCameraController;
+    CameraController cameraController;
     [SerializeField]
     GameObject levelContainer;
     [SerializeField]
@@ -51,12 +50,12 @@ public class Game : SingletonBase<Game>
         if (level != null)
         {
             currentLevel = level;
-            virtualCameraController.SetConfinerBound(level.bound);
+            cameraController.SetBound(level.bound);
         }
         else
         {
             currentLevel = null;
-            virtualCameraController.SetConfinerBound(null);
+            cameraController.SetBound(null);
         }
     }
 
