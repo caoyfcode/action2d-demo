@@ -50,12 +50,10 @@ public class Game : SingletonBase<Game>
         if (level != null)
         {
             currentLevel = level;
-            cameraController.SetBound(level.bound);
         }
         else
         {
             currentLevel = null;
-            cameraController.SetBound(null);
         }
     }
 

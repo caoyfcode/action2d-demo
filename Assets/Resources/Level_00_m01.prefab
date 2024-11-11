@@ -8936,6 +8936,7 @@ Transform:
   - {fileID: 5833645515155184049}
   - {fileID: 8337770014998328887}
   - {fileID: 2690094674877638242}
+  - {fileID: 6444917854557413955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2835093163963001932
@@ -8953,6 +8954,7 @@ MonoBehaviour:
   areaName: 
   Spawners: {fileID: 6056785279180103520}
   bound: {fileID: 0}
+  roomsNode: {fileID: 0}
 --- !u!61 &8074627456390663191
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8998,6 +9000,97 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 57.033985, y: 32.091446}
   m_EdgeRadius: 0
+--- !u!1 &9221187743582718761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6444917854557413955}
+  - component: {fileID: 4964611716915843533}
+  m_Layer: 0
+  m_Name: Rooms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6444917854557413955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9221187743582718761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3999170560502227257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4964611716915843533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9221187743582718761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30112d3b8decd43b5bf051e67694b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pc2D: {fileID: 0}
+  _serializedAxis: 0
+  Rooms:
+  - ID: 
+    Dimensions:
+      serializedVersion: 2
+      x: -8.700005
+      y: -18.049994
+      width: 56.800007
+      height: 32.300007
+    TransitionDuration: 1
+    TransitionEaseType: 0
+    ScaleCameraToFit: 0
+    Zoom: 1
+    ZoomScale: 1
+    InternalID: 0
+  - ID: 
+    Dimensions:
+      serializedVersion: 2
+      x: -2.9999936
+      y: -28.799994
+      width: 20.999975
+      height: 10.800007
+    TransitionDuration: 1
+    TransitionEaseType: 0
+    ScaleCameraToFit: 0
+    Zoom: 1
+    ZoomScale: 1
+    InternalID: 0
+  UpdateInterval: 0.1
+  UseTargetsMidPoint: 1
+  TriggerTarget: {fileID: 0}
+  TransitionInstanlyOnStart: 1
+  RestoreOnRoomExit: 0
+  RestoreDuration: 1
+  RestoreEaseType: 0
+  AutomaticRoomActivation: 1
+  UseRelativePosition: 0
+  OnStartedTransition:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinishedTransition:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitedAllRooms:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &5365396733558266343
 PrefabInstance:
   m_ObjectHideFlags: 0
