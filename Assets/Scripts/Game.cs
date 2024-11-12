@@ -21,6 +21,21 @@ public class Game : SingletonBase<Game>
     public static CameraController CameraController => instance.cameraController;
     public static VFXLoader VFXLoader => instance.vfxLoader;
     public static BossSystem BossSystem => instance.bossSystem;
+    public static bool Pause
+    {
+        get => Time.timeScale == 0;
+        set
+        {
+            if (value)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+        }
+    }
 
     [SerializeField]
     BlueWitch player;
@@ -38,11 +53,20 @@ public class Game : SingletonBase<Game>
     VFXLoader vfxLoader;
     [SerializeField]
     BossSystem bossSystem;
+    public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
+    public bool debugPause = false;
+    private bool isLoadingLevel = false;
 
     void Start()
     {
         Level level = levelContainer.GetComponentInChildren<Level>();
         SetCurrentLevel(level);
+    }
+
+    void Update()
+    {
+        if (debugControlPause)
+            Pause = debugPause;
     }
 
     void SetCurrentLevel(Level level)
@@ -57,16 +81,20 @@ public class Game : SingletonBase<Game>
         }
     }
 
-    // TODO 改名为 StartSwitchLevel
-    public static void StartChangeLevel(Vector2Int levelIndex)
+    public static void PauseForSeconds(float seconds)
     {
-        instance.InstanceStartChangeLevel(levelIndex);
+        instance.StartCoroutine(instance.PauseForSecondsCoroutine(seconds));
     }
 
-    void InstanceStartChangeLevel(Vector2Int levelIndex)
+    public static void StartSwitchLevel(Vector2Int levelIndex)
     {
-        player.gameObject.SetActive(false);
-        StartCoroutine(DarkScreen.WaitForLoading(LoadLevel(levelIndex)));
+        if (instance.isLoadingLevel)
+        {
+            return;
+        }
+        instance.isLoadingLevel = true;
+        instance.player.gameObject.SetActive(false);
+        instance.StartCoroutine(DarkScreen.WaitForLoading(instance.LoadLevel(levelIndex)));
     }
 
     IEnumerator LoadLevel(Vector2Int levelIndex)
@@ -77,10 +105,19 @@ public class Game : SingletonBase<Game>
         // yield return new WaitForSeconds(1);
         Destroy(currentLevel.gameObject);
         SetCurrentLevel(null);
-        GameObject prefab = request.asset as GameObject; // TODO 在删除场景时把此资源卸载
+        GameObject prefab = request.asset as GameObject;
         GameObject obj = Instantiate(prefab);
         obj.transform.SetParent(levelContainer.transform);
         SetCurrentLevel(obj.GetComponent<Level>());
+        yield return Resources.UnloadUnusedAssets();
         player.gameObject.SetActive(true);
+        isLoadingLevel = false;
+    }
+
+    IEnumerator PauseForSecondsCoroutine(float seconds)
+    {
+        Pause = true;
+        yield return new WaitForSeconds(seconds);
+        Pause = false;
     }
 }

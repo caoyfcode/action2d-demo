@@ -208,6 +208,7 @@ MonoBehaviour:
     bloodEffectPrefab: {fileID: 3661891618808958100, guid: 9d0bb4f066c1aca4f9b324b4a8284dfa, type: 3}
     explosionPrefab: {fileID: 7682755277468068732, guid: 425a59d90162aa84e860cb1109a49c50, type: 3}
   bossSystem: {fileID: 441712843}
+  pauseCheckBox: 0
 --- !u!4 &441712842
 Transform:
   m_ObjectHideFlags: 0
@@ -1781,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 576043769695160053, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.5
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 576043769695160053, guid: 59df769ac1d26a44c88235e67e54a40e, type: 3}
       propertyPath: m_LocalPosition.z

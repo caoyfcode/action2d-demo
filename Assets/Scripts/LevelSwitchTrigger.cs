@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO 改名为 LevelSwitchTrigger
-public class LevelTransitionTrigger : MonoBehaviour
+public class LevelSwitchTrigger : MonoBehaviour
 {
     public Vector2Int targetLevelIndex;
     bool loading = false;
@@ -57,8 +56,8 @@ public class LevelTransitionTrigger : MonoBehaviour
                 }
                 break;
         }
-        Game.StartChangeLevel(targetLevelIndex);
-        Debug.Log("trigger enter");
+        Game.StartSwitchLevel(targetLevelIndex);
+        Debug.Log("switch trigger enter");
     }
 
 }
