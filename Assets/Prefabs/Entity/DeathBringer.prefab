@@ -121,7 +121,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,10 +259,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashedSprite: {fileID: 5058794679746376429}
-  flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   flashDuration: 0.2
-  flashFXOnHit: 1
-  boodFXOnHit: 1
+  bloodFXOffet: 0.1
 --- !u!114 &4879109318323231696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,19 +273,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aaecbc37a70d7041b707c6f4d7022e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onAttacked:
+  onTakeHit:
     m_PersistentCalls:
       m_Calls: []
   onDeath:
     m_PersistentCalls:
       m_Calls: []
-  onAttackSuccess:
+  onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
   isDead: 0
+  flashFXOnHit: 1
+  bloodFXOnHit: 1
+  explosionOnDestory: 1
+  darkSpriteOnDestory: 0
   hitBox: {fileID: 3319153082700948944}
   hitBoxEnabled: 0
   attackEnd: 1
