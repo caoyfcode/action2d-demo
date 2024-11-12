@@ -10,7 +10,7 @@ public class BossSystem : MonoBehaviour
 
     public void StartBossFight(Entity boss)
     {
-        if (!bossFightStarted)
+        if (!bossFightStarted && boss)
         {
             this.boss = boss;
             bossFightStarted = true;
@@ -27,7 +27,8 @@ public class BossSystem : MonoBehaviour
         {
             bossFightStarted = false;
             bossHeathBar.Shown = false;
-            boss.onDeath.RemoveListener(EndBossFight);
+            if (boss != null)
+                boss.onDeath.RemoveListener(EndBossFight);
             boss = null;
         }
     }

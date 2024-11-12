@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 5749543971831427573}
+  maxAliveTime: 0.25
+  spawnDuration: 0.04
+  totalTime: 0
 --- !u!1 &1126307468853297446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1005,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 9140382425955994235}
-  isDefending: 0
   defendCollider: {fileID: 5298985234435682031}
 --- !u!1 &7289159869975653917
 GameObject:
@@ -1351,8 +1353,7 @@ MonoBehaviour:
   flashedSprite: {fileID: 5749543971831427573}
   flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   flashDuration: 0.2
-  flashFXOnHit: 1
-  boodFXOnHit: 0
+  bloodFXOffet: 0.1
 --- !u!114 &9140382425955994235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,10 +1366,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4b5c46ab1c6dc48808661d7300b3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTakeHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onHitSuccess:
+    m_PersistentCalls:
+      m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
   isDead: 0
+  flashFXOnHit: 1
+  bloodFXOnHit: 0
+  explosionOnDestory: 0
+  darkSpriteOnDestory: 0
   summonAttack: {fileID: 5858170743173833713}
   summonProjectile: {fileID: 6366637222462344170}
   summonDenfend: {fileID: 5345660428818329874}

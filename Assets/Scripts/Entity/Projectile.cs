@@ -19,7 +19,7 @@ public class Projectile : Entity
     {
         if (isDead)
         {
-            Destroy(gameObject);
+            DestoryEntity();
             return;
         }
         base.Update();

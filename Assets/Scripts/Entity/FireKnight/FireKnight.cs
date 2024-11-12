@@ -542,7 +542,7 @@ public class FireKnight : Entity
         {
             if (entity.animEnd)
             {
-                Destroy(entity.gameObject);
+                entity.DestoryEntity();
             }
         }
     }

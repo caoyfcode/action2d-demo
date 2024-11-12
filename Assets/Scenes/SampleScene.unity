@@ -198,13 +198,16 @@ MonoBehaviour:
   player: {fileID: 1703919377}
   cam: {fileID: 519420031}
   darkScreen: {fileID: 741692140}
-  cameraController: {fileID: 0}
+  cameraController: {fileID: 519420038}
   levelContainer: {fileID: 1581350251}
   currentLevel: {fileID: 0}
   vfxLoader:
     smokeRingPrefab: {fileID: 3839691948665388262, guid: 88bd759b1ada07a4580f1c84a1522e3e, type: 3}
     afterImagePrefab: {fileID: 7294156822734335267, guid: 06d5449147231154e98ef4fd0706cd7f, type: 3}
+    whiteMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
     bloodEffectPrefab: {fileID: 3661891618808958100, guid: 9d0bb4f066c1aca4f9b324b4a8284dfa, type: 3}
+    explosionPrefab: {fileID: 7682755277468068732, guid: 425a59d90162aa84e860cb1109a49c50, type: 3}
+    darkBodyPrefab: {fileID: 6266954987440208574, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
   bossSystem: {fileID: 441712843}
 --- !u!4 &441712842
 Transform:
@@ -416,7 +419,7 @@ MonoBehaviour:
     TargetInfluenceH: 1
     TargetInfluenceV: 1
     TargetOffset: {x: 0, y: 1.6}
-  CenterTargetOnStart: 0
+  CenterTargetOnStart: 1
   Axis: 0
   UpdateType: 0
   FollowHorizontal: 1
@@ -1874,6 +1877,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e99c31783d282c47a167b6294557d88, type: 3}
+--- !u!1001 &4905602014907276613
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041708294405995290, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6266954987440208574, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
+      propertyPath: m_Name
+      value: DarkBody
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8c7e19b10909fb746bf2f41762c20459, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1884,3 +1944,4 @@ SceneRoots:
   - {fileID: 2109283302}
   - {fileID: 1773654613}
   - {fileID: 1581350252}
+  - {fileID: 4905602014907276613}

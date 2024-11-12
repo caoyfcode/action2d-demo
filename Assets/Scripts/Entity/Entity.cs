@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour
     internal Animator animator;
     protected Rigidbody2D rb;
     internal Collider2D col;
-    protected HitFX hitFX;
+    protected EntityFX entityFX;
     protected EntityController controller;
     #endregion
 
@@ -62,6 +62,14 @@ public class Entity : MonoBehaviour
     public virtual CharacterData CharacterData => null;
     #endregion
 
+    [Header("Effects")]
+    #region  Effects
+    public bool flashFXOnHit = true;
+    public bool bloodFXOnHit = true;
+    public bool explosionOnDestory = true;
+    public bool darkSpriteOnDestory = false;
+    #endregion
+
     protected ContactFilter2D envCastFilter;
     private RaycastHit2D[] castHits = new RaycastHit2D[5];
     private Collider2D[] overlapHits = new Collider2D[5];
@@ -69,7 +77,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-        hitFX = GetComponent<HitFX>();
+        entityFX = GetComponent<EntityFX>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
@@ -79,7 +87,7 @@ public class Entity : MonoBehaviour
         {
             controller.Init();
         }
-        _facingDirection = transform.rotation.eulerAngles.y < 90 ? 1 : -1; // 向右为正
+        _facingDirection = transform.right.x > 0 ? 1 : -1; // 向右为正
     }
 
     protected virtual void Update()
@@ -141,19 +149,36 @@ public class Entity : MonoBehaviour
     public virtual void TakeHit(HitInfo hitInfo)
     {
         Debug.Log(gameObject.name + " takes hit.");
-        if (hitFX)
+        if (entityFX)
         {
-            hitFX.OnHit(hitInfo);
+            if (flashFXOnHit)
+                entityFX.StartFlash();
+            if (bloodFXOnHit)
+                entityFX.StartBloodFX(hitInfo.hitPoint, hitInfo.force);
         }
         
         onTakeHit.Invoke(hitInfo);
     }
 
+    // 死亡, 子类一般重写此类进入死亡动画状态，在死亡状态机中真正Destroy
     public virtual void Die()
     {
         Debug.Log(gameObject.name + " dies.");
         col.enabled = false;
         isDead = true;
         onDeath.Invoke();
+    }
+
+    // TIP Entity 的删除不适用 Destory 函数，而是 DestoryEntity
+    public void DestoryEntity()
+    {
+        if (entityFX)
+        {   
+            if (explosionOnDestory)
+                entityFX.StartDeathFX(col.bounds.center);
+            if (darkSpriteOnDestory)
+                entityFX.GenDarkSprite();
+        }
+        Destroy(gameObject);
     }
 }

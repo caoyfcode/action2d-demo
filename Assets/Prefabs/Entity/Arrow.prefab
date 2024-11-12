@@ -194,10 +194,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98df406d200f04743965f1d6ea8ad8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTakeHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onHitSuccess:
+    m_PersistentCalls:
+      m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
   isDead: 0
+  flashFXOnHit: 0
+  bloodFXOnHit: 0
+  explosionOnDestory: 0
+  darkSpriteOnDestory: 0
   source: {fileID: 0}
   damage: 0
   hitBox: {fileID: 610458770059969157}

@@ -44,7 +44,7 @@ public class DeathBringer : Entity
     {
         CurrentCommand = new Command();
         base.Start();
-        hitFX = GetComponent<HitFX>();
+        entityFX = GetComponent<EntityFX>();
         stateMachine = new StateMachine<State>();
         idleState = new IdleState(this, stateMachine);
         walkState = new WalkState(this, stateMachine);
@@ -305,9 +305,10 @@ public class DeathBringer : Entity
 
         public override void Enter()
         {
-            entity.animator.Play(ANIM_DEATH);
+            entity.animator.Play(ANIM_IDLE);
             entity.velocity.x = 0;
             entity.velocity.y = 0;
+            entity.DestoryEntity();
         }
 
         public override bool Transition()
@@ -317,10 +318,10 @@ public class DeathBringer : Entity
 
         public override void Update() 
         {
-            if (entity.deathEnd)
-            {
-                Destroy(entity.gameObject);
-            }
+            // if (entity.deathEnd)
+            // {
+            //     Destroy(entity.gameObject);
+            // }
         }
     }
 }

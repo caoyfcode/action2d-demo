@@ -572,7 +572,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 257865710819754042}
-  isDefending: 0
   defendCollider: {fileID: 0}
 --- !u!1 &7624251746077166761
 GameObject:
@@ -801,19 +800,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57efc31fc6e612b439f73765529e9c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onAttacked:
+  onTakeHit:
     m_PersistentCalls:
       m_Calls: []
   onDeath:
     m_PersistentCalls:
       m_Calls: []
-  onAttackSuccess:
+  onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
   isDead: 0
+  flashFXOnHit: 1
+  bloodFXOnHit: 1
+  explosionOnDestory: 0
+  darkSpriteOnDestory: 1
   hitBox: {fileID: 5877902391193187052}
   defendBox: {fileID: 652016681702878054}
   airAttackCollider: {fileID: 7141523295523027284}
@@ -856,8 +859,7 @@ MonoBehaviour:
   backwardDetectPoint: -1.17
   detectOffsetY: -0.42
   groundHeight: -1
-  target: {fileID: 0}
-  targetPosition: {x: 0, y: 0}
+  bossFightStarted: 0
 --- !u!114 &3122916737541106426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,8 +875,7 @@ MonoBehaviour:
   flashedSprite: {fileID: 1689321070515601914}
   flashMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   flashDuration: 0.2
-  flashFXOnHit: 1
-  boodFXOnHit: 1
+  bloodFXOffet: 0.1
 --- !u!1 &8962970347132594562
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class Level : MonoBehaviour
         foreach (var spawner in spawners)
         {
             if (spawner is not BossSpawner)
-                spawner.Spawn(gameObject);
+                spawner.Spawn();
         }
     }
 

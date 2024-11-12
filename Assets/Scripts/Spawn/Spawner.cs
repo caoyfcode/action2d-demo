@@ -8,16 +8,13 @@ public class Spawner : MonoBehaviour
     public GameObject spawnedObject;
     public bool spawned = false;
 
-    public void Spawn(GameObject parent = null)
+    public void Spawn()
     {
         if (!spawned)
         {
             spawnedObject = Instantiate(enemyPrefab, transform.position, transform.rotation);
             spawned = true;
-            if (parent != null)
-            {
-                spawnedObject.transform.parent = parent.transform;
-            }
+            spawnedObject.transform.parent = transform;
         }
     }
 
