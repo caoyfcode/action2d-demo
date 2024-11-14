@@ -55,18 +55,23 @@ public class Game : SingletonBase<Game>
     BossSystem bossSystem;
     public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
     public bool debugPause = false;
+    public float debugShowFPS = 0f;
+    float debugShowFPSLastTime = 0f;
     private bool isLoadingLevel = false;
 
     void Start()
     {
         Level level = levelContainer.GetComponentInChildren<Level>();
         SetCurrentLevel(level);
+        // Application.targetFrameRate = 144;
     }
 
     void Update()
     {
         if (debugControlPause)
             Pause = debugPause;
+        debugShowFPS = 1 / (Time.realtimeSinceStartup - debugShowFPSLastTime);
+        debugShowFPSLastTime = Time.realtimeSinceStartup;
     }
 
     void SetCurrentLevel(Level level)

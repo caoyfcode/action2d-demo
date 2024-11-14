@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 
     public ProCamera2D proCamera2D;
     private ProCamera2DShake shakeExt;
-
+    // 相机 size 4.876439
 
     private void Awake()
     {
