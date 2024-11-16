@@ -1,0 +1,839 @@
+fileFormatVersion: 2
+guid: a411435dd38f2484c830d5a2adfdcc69
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 14, y: 14, z: 14, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cadd9d3b70cab34d94bd62ca5e82943
+      internalID: -1647048985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_1
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 10, z: 10, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 053dcbf928b30c24b8f67a1a1fc04ec5
+      internalID: 443429148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_2
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 14, y: 14, z: 14, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9983cf84ebc10614ba7a8bad7e622afb
+      internalID: -1783101341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_3
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1144ba9b19eb546a7736d44016b7ee
+      internalID: -1287093457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_4
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2662a562f3600bb45830a5ce9c8085b7
+      internalID: -682086915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_5
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c52f3794386b144588b1e58a139e1d3
+      internalID: 665225662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_6
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c49b8e9a9acf62f428c48ec3744b7195
+      internalID: 1556033424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_7
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 186
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fa46a4649c29334c92cb22b0ce20b1d
+      internalID: 1227771072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa22d3a397db704c83a53b53f206fc0
+      internalID: 2125641947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_9
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bd9a9276dbb0004fa0ff65eb39ea86b
+      internalID: -619064645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_10
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae6a8480cc7f01f4da2096c0f29d3402
+      internalID: 1084904464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_11
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95ee7d8f2bb483d4e9df431a6a192838
+      internalID: -362242185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_12
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f17c8759c9d0f5499c03761a1a1425f
+      internalID: 1652248368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_13
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbd4cf00a863c5c409697e02588c1c17
+      internalID: 357048382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_14
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91af554156c7ab343b19d80a193fa89b
+      internalID: 1216704358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_15
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 124
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c2bb9e3dbd364b4f893ccc6185a8ab2
+      internalID: 1171093178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa95c1e82c238bc4bb12b24629f34972
+      internalID: -1785932915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_17
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e89f0cb3b3044154bbd8d8d7b99631c5
+      internalID: 1150367729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_18
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ba2d9c107e4fd045932980c843e95ae
+      internalID: 367360341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_19
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05248e10fc541c44da8ba0bb7e6edd34
+      internalID: 1507814785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_20
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b650ff41def07e47991ceaa879e0686
+      internalID: 1679563530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_21
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e0633faac118574b80ecb59fb80293d
+      internalID: 52238892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_22
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55c81304143718d41ba1a0ae70334a45
+      internalID: 1615305450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_23
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 62
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30df7ccf6480fe54eae4f170b695035f
+      internalID: 1867495308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e83a9859bd933434c93ebadc24b49e7e
+      internalID: 710939091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_25
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bf0251d91b1b674dafb3c3cb98d2780
+      internalID: -1404028791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_26
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634bc984b097d8b42bf39d7b5600874a
+      internalID: 603898306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_27
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5065a25c2bcaa8647a2c60ffd4c7cbdb
+      internalID: -2107627139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_28
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f70d7388ee67b654d9c537b07aae4673
+      internalID: -429135949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_29
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c47ddd5e499f9ff4a8c113365e01a9bc
+      internalID: -520672161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_30
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf5a031980b4dad49aadb3394cf289eb
+      internalID: -1437785347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fantasy-ui-borders-transparent-border_31
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b7f2c897fa3a848a31940be669e0f4
+      internalID: -14944061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      fantasy-ui-borders-transparent-border_0: -1647048985
+      fantasy-ui-borders-transparent-border_1: 443429148
+      fantasy-ui-borders-transparent-border_10: 1084904464
+      fantasy-ui-borders-transparent-border_11: -362242185
+      fantasy-ui-borders-transparent-border_12: 1652248368
+      fantasy-ui-borders-transparent-border_13: 357048382
+      fantasy-ui-borders-transparent-border_14: 1216704358
+      fantasy-ui-borders-transparent-border_15: 1171093178
+      fantasy-ui-borders-transparent-border_16: -1785932915
+      fantasy-ui-borders-transparent-border_17: 1150367729
+      fantasy-ui-borders-transparent-border_18: 367360341
+      fantasy-ui-borders-transparent-border_19: 1507814785
+      fantasy-ui-borders-transparent-border_2: -1783101341
+      fantasy-ui-borders-transparent-border_20: 1679563530
+      fantasy-ui-borders-transparent-border_21: 52238892
+      fantasy-ui-borders-transparent-border_22: 1615305450
+      fantasy-ui-borders-transparent-border_23: 1867495308
+      fantasy-ui-borders-transparent-border_24: 710939091
+      fantasy-ui-borders-transparent-border_25: -1404028791
+      fantasy-ui-borders-transparent-border_26: 603898306
+      fantasy-ui-borders-transparent-border_27: -2107627139
+      fantasy-ui-borders-transparent-border_28: -429135949
+      fantasy-ui-borders-transparent-border_29: -520672161
+      fantasy-ui-borders-transparent-border_3: -1287093457
+      fantasy-ui-borders-transparent-border_30: -1437785347
+      fantasy-ui-borders-transparent-border_31: -14944061
+      fantasy-ui-borders-transparent-border_32: -1798841725
+      fantasy-ui-borders-transparent-border_33: 52558639
+      fantasy-ui-borders-transparent-border_34: -1540550290
+      fantasy-ui-borders-transparent-border_35: -1886685507
+      fantasy-ui-borders-transparent-border_36: 1077268851
+      fantasy-ui-borders-transparent-border_37: 1949803921
+      fantasy-ui-borders-transparent-border_38: -883534716
+      fantasy-ui-borders-transparent-border_39: -1210570019
+      fantasy-ui-borders-transparent-border_4: -682086915
+      fantasy-ui-borders-transparent-border_5: 665225662
+      fantasy-ui-borders-transparent-border_6: 1556033424
+      fantasy-ui-borders-transparent-border_7: 1227771072
+      fantasy-ui-borders-transparent-border_8: 2125641947
+      fantasy-ui-borders-transparent-border_9: -619064645
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
