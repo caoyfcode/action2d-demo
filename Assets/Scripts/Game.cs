@@ -8,7 +8,6 @@ public class Game : SingletonBase<Game>
 {
     public static BlueWitch Player => instance.player;
     public static Camera Camera => instance.cam;
-    public static DarkScreen DarkScreen => instance.darkScreen;
     public static Dictionary<Vector2Int, string> LevelPath = new()
     {
         {new Vector2Int(-100, 0), "SampleLevel_0"}, // 用 -100 是为了与正常场景区分开
@@ -99,7 +98,7 @@ public class Game : SingletonBase<Game>
         }
         instance.isLoadingLevel = true;
         instance.player.gameObject.SetActive(false);
-        instance.StartCoroutine(DarkScreen.WaitForLoading(instance.LoadLevel(levelIndex)));
+        instance.StartCoroutine(DarkScreen.instance.WaitForLoading(instance.LoadLevel(levelIndex)));
     }
 
     IEnumerator LoadLevel(Vector2Int levelIndex)

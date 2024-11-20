@@ -9,7 +9,7 @@ public class Checkpoint : MonoBehaviour
 
     void Start()
     {
-        hint.enabled = false;
+        hint.gameObject.SetActive(false);
     }
 
     void Update()
@@ -18,24 +18,23 @@ public class Checkpoint : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-                Game.Player.data.heath = Game.Player.data.maxHeath;
-                Game.Player.data.magic = Game.Player.data.maxMagic;
                 playerInCheckpoint = false;
-                hint.enabled = false;
+                hint.gameObject.SetActive(false);
+                UIManager.CheckpointMenu.Shown = true;
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        hint.enabled = true;
+        hint.gameObject.SetActive(true);
         playerInCheckpoint = true;
         Debug.Log("Player entered checkpoint.");
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        hint.enabled = false;
+        hint.gameObject.SetActive(false);
         playerInCheckpoint = false;
         Debug.Log("Player exited checkpoint.");
     }

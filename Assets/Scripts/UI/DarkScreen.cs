@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO 改为单例类而非在 Game 中引用, 因为此类需要在开始场景以及游戏场景中使用，Game只需要在游戏场景中使用
-public class DarkScreen : MonoBehaviour
+public class DarkScreen : SingletonBase<DarkScreen>
 {
     const string ANIM_FADEOUT = "FadeOut";
     public Animator animator;

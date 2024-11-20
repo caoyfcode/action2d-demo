@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BossSystem : MonoBehaviour
 {
-    public BossHeathBar bossHeathBar;
     public Entity boss;
     public bool bossFightStarted = false;
 
@@ -14,9 +13,9 @@ public class BossSystem : MonoBehaviour
         {
             this.boss = boss;
             bossFightStarted = true;
-            bossHeathBar.valueBar.maxValue = boss.CharacterData.maxHeath;
-            bossHeathBar.valueBar.value = boss.CharacterData.heath;
-            bossHeathBar.Shown = true;
+            UIManager.BossHeathBar.valueBar.maxValue = boss.CharacterData.maxHeath;
+            UIManager.BossHeathBar.valueBar.value = boss.CharacterData.heath;
+            UIManager.BossHeathBar.Shown = true;
             boss.onDeath.AddListener(EndBossFight);
         }
     }
@@ -26,7 +25,7 @@ public class BossSystem : MonoBehaviour
         if (bossFightStarted)
         {
             bossFightStarted = false;
-            bossHeathBar.Shown = false;
+            UIManager.BossHeathBar.Shown = false;
             if (boss != null)
                 boss.onDeath.RemoveListener(EndBossFight);
             boss = null;
@@ -38,8 +37,8 @@ public class BossSystem : MonoBehaviour
         if (bossFightStarted && boss != null)
         {
             Debug.Log("Boss Health: " + boss.CharacterData.heath);
-            Debug.Log("Bar value: " + bossHeathBar.valueBar.value);
-            bossHeathBar.valueBar.value = boss.CharacterData.heath;
+            Debug.Log("Bar value: " + UIManager.BossHeathBar.valueBar.value);
+            UIManager.BossHeathBar.valueBar.value = boss.CharacterData.heath;
         }
     }
 }

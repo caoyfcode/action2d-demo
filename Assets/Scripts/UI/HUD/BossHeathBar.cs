@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class BossHeathBar : MonoBehaviour
 {
     public ValueBar valueBar;
-    public RectMask2D innerMask;
-    public RectMask2D foregroundMask;
+    public RectTransform innerRectTransform;
+    public RectTransform foregroundRectTransform;
 
     public RectTransform contentRectTransform;
     public bool Shown
@@ -28,7 +28,7 @@ public class BossHeathBar : MonoBehaviour
 
     void Update()
     {
-        innerMask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, valueBar.InnerRatio * contentRectTransform.rect.width);
-        foregroundMask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, valueBar.OuterRatio * contentRectTransform.rect.width);
+        innerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, valueBar.InnerRatio * contentRectTransform.rect.width);
+        foregroundRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, valueBar.OuterRatio * contentRectTransform.rect.width);
     }
 }
