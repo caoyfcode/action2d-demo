@@ -106,7 +106,6 @@ public class Game : SingletonBase<Game>
         string level = LevelPath[levelIndex];
         var request = Resources.LoadAsync(level);
         yield return request;
-        // yield return new WaitForSeconds(1);
         Destroy(currentLevel.gameObject);
         SetCurrentLevel(null);
         GameObject prefab = request.asset as GameObject;
@@ -121,7 +120,12 @@ public class Game : SingletonBase<Game>
     IEnumerator PauseForSecondsCoroutine(float seconds)
     {
         Pause = true;
-        yield return new WaitForSeconds(seconds);
+        float elapsedTime = 0f;
+        while (elapsedTime < seconds)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
         Pause = false;
     }
 }

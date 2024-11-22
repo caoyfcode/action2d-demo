@@ -483,3 +483,35 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.wallSlideCrow.SetActive(false);
     }
 }
+
+public class BlueWitchMenu : BlueWitchState
+{
+    public BlueWitchMenu(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        entity.animator.Play(BlueWitch.ANIM_IDLE);
+        entity.airJumpCount = 0;
+        entity.airAttackCount = 0;
+        entity.airDashCount = 0;
+        entity.dashCoolDownTimer = 0;
+        entity.stateControlInvincible = true;
+    }
+
+    public override bool Transition()
+    {
+        return false;
+    }
+
+    public override void Update()
+    {
+        entity.velocity.x = 0;
+    }
+
+    public override void Exit() 
+    {
+        entity.stateControlInvincible = false;
+    }
+}

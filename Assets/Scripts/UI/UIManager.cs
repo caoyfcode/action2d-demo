@@ -19,10 +19,12 @@ public class UIManager : SingletonBase<UIManager>
     public CheckpointMenu checkpointMenu;
     // public InventoryMenu inventoryMenu;
     public TeleportMenu teleportMenu;
+    public PauseMenu pauseMenu;
 
     public bool debugControlShown;
     public bool debugCheckpointMenuShown;
     public bool debugTeleportMenuShown;
+    public bool debugPauseMenuShown;
 
     void Update()
     {
@@ -30,6 +32,12 @@ public class UIManager : SingletonBase<UIManager>
         {
             checkpointMenu.Shown = debugCheckpointMenuShown;
             teleportMenu.Shown = debugTeleportMenuShown;
+            pauseMenu.Shown = debugPauseMenuShown;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.Shown = !pauseMenu.Shown;
         }
     }
 }

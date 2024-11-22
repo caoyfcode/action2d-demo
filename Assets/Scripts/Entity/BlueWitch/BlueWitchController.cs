@@ -13,6 +13,10 @@ public class BlueWitchController : EntityController
 
     public override void UpdateCommand()
     {
+        if (entity.isDead || entity.stateMachine.CurrentState == entity.menuState || Game.Pause)
+        {
+            return;
+        }
         bool left = Input.GetKey(KeyCode.A);
         bool right = Input.GetKey(KeyCode.D);
         float moveX = (left, right) switch

@@ -8,7 +8,18 @@ public class TeleportMenu : MonoBehaviour
     public bool Shown
     {
         get { return gameObject.activeSelf; }
-        set { gameObject.SetActive(value); }
+        set
+        {
+            if (!gameObject.activeSelf && value)
+            {
+                Game.Player.stateMachine.ChangeState(Game.Player.menuState);
+            }
+            else if (gameObject.activeSelf && !value)
+            {
+                Game.Player.stateMachine.ChangeState(Game.Player.groundFreeState);
+            }
+            gameObject.SetActive(value);
+        }
     }
 
     public void Close()
