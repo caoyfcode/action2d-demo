@@ -9,7 +9,7 @@ public class DarkScreen : SingletonBase<DarkScreen>
     public Animator animator;
     public GameObject playerImage;
     public bool isFadeOutEnd;
-    public bool isEnd;
+    public bool isEnd; // 这个变量暂时没有用
     bool IsLoading
     {
         set
@@ -34,14 +34,15 @@ public class DarkScreen : SingletonBase<DarkScreen>
         if (!DarkScreenPlaying)
         {
             DarkScreenPlaying = true;
-            isEnd = false;
+            // isEnd = false;
             animator.Play(ANIM_FADEOUT, -1, 0);
             IsLoading = true;
             yield return new WaitUntil(() => isFadeOutEnd);
             yield return loadingCoroutine;
             IsLoading = false;
-            yield return new WaitWhile(() => isEnd);
-            DarkScreenPlaying = false;
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("FadeIn"));
+            // yield return new WaitWhile(() => isEnd);
+            DarkScreenPlaying = false; // 加载结束继续播放 FadeIn 动画，但是不等待结束了
         }
     }
 }

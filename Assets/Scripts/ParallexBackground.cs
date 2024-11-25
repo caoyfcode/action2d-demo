@@ -13,7 +13,7 @@ public class ParallexBackground : MonoBehaviour
         startY = transform.position.y;
     }
 
-    void Update()
+    void LateUpdate()
     {
        float factor = Mathf.Clamp01(transform.position.z / MAX_DEPTH);
         transform.position = new Vector3(

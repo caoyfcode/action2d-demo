@@ -97,7 +97,7 @@ public class Game : SingletonBase<Game>
             return;
         }
         instance.isLoadingLevel = true;
-        instance.player.gameObject.SetActive(false);
+        Pause = true;
         instance.StartCoroutine(DarkScreen.instance.WaitForLoading(instance.LoadLevel(levelIndex)));
     }
 
@@ -113,8 +113,9 @@ public class Game : SingletonBase<Game>
         obj.transform.SetParent(levelContainer.transform);
         SetCurrentLevel(obj.GetComponent<Level>());
         yield return Resources.UnloadUnusedAssets();
-        player.gameObject.SetActive(true);
         isLoadingLevel = false;
+        Pause = false;
+        cameraController.SetBoundariesIntantly();
     }
 
     IEnumerator PauseForSecondsCoroutine(float seconds)
@@ -127,5 +128,15 @@ public class Game : SingletonBase<Game>
             yield return null;
         }
         Pause = false;
+    }
+
+    IEnumerator WaitForRealSeconds(float seconds)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < seconds)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
     }
 }
