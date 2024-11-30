@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f014a6b4c4cb2439768c7f6dd8e211, type: 3}
+  m_Name: InputIconMap
+  m_EditorClassIdentifier: 
+  keyboardIconMap:
+  - name: 'Escape '
+    sprite: {fileID: 21300000, guid: fb58577992626b64797d37ce4f57ebd5, type: 3}
+  - name: ~
+    sprite: {fileID: 21300000, guid: 954618fe988d27e48882ca05398d1716, type: 3}
+  - name: 1
+    sprite: {fileID: 21300000, guid: 94390ca69f5eb644f8cd8bddc18a20b3, type: 3}
+  - name: 2
+    sprite: {fileID: 21300000, guid: 21f6e92771daeeb40b3b659c486c1763, type: 3}
+  - name: 3
+    sprite: {fileID: 21300000, guid: dfd0b4aa5a9e71b4f8a69654528a9ef5, type: 3}
+  - name: 4
+    sprite: {fileID: 21300000, guid: 9530a22ebcd233546b49622ece8b1299, type: 3}
+  - name: 5
+    sprite: {fileID: 21300000, guid: 28fcc1eaaf63bf74a8859237009b4f5a, type: 3}
+  - name: 6
+    sprite: {fileID: 21300000, guid: c2f3da78a6bafbb46aebdb5bec1fe49a, type: 3}
+  - name: 7
+    sprite: {fileID: 21300000, guid: d369bff121abbb34291ab293b2ac3a46, type: 3}
+  - name: 8
+    sprite: {fileID: 21300000, guid: cf2097b2f8d59af468e0a1f2167559ca, type: 3}
+  - name: 9
+    sprite: {fileID: 21300000, guid: 9f5a1a2b6bbb360478a6efdb5a8d289d, type: 3}
+  - name: 0
+    sprite: {fileID: 21300000, guid: c071dbaf491ba0b44b222a76e914566a, type: 3}
+  - name: '-'
+    sprite: {fileID: 21300000, guid: 85734d672534e4f45b2b553da20e8391, type: 3}
+  - name: +
+    sprite: {fileID: 21300000, guid: 083cae10ff16e194d9dfee2d29cca947, type: 3}
+  - name: Tab
+    sprite: {fileID: 21300000, guid: b2ce11f18f552d94d9965d57e2ce1a01, type: 3}
+  - name: Q
+    sprite: {fileID: 21300000, guid: 20dfeb10c9920a043b6c7597660cec80, type: 3}
+  - name: W
+    sprite: {fileID: 21300000, guid: 49a4db0a31cd3eb42a8c2bd9bf5c04eb, type: 3}
+  - name: E
+    sprite: {fileID: 21300000, guid: ce04e0bdaa5f0774ba3d85d8f3d99a8a, type: 3}
+  - name: R
+    sprite: {fileID: 21300000, guid: ff52f5e6db3ad0540b93a7cb10242ebe, type: 3}
+  - name: T
+    sprite: {fileID: 21300000, guid: a1e47a123fdf709449130fdae6205af3, type: 3}
+  - name: Y
+    sprite: {fileID: 21300000, guid: e3c442e92d6e30f42a8562b8baacc36c, type: 3}
+  - name: U
+    sprite: {fileID: 21300000, guid: 43d68f55342aa5e419e76f2b15c9d193, type: 3}
+  - name: I
+    sprite: {fileID: 21300000, guid: c98a4b0d94da55042a3f2c30ca937919, type: 3}
+  - name: O
+    sprite: {fileID: 21300000, guid: 1d7660f5c8409254b91c642b3e5bd40a, type: 3}
+  - name: P
+    sprite: {fileID: 21300000, guid: 5f71c613eb3f67544b69b9977772ae80, type: 3}
+  - name: '['
+    sprite: {fileID: 21300000, guid: 4bb8c5b891e73534c8e118212b8ce72e, type: 3}
+  - name: ']'
+    sprite: {fileID: 21300000, guid: 5c0cdf08d212ea64ea1015d0da54716c, type: 3}
+  - name: '|'
+    sprite: {fileID: 21300000, guid: 988d4e957c098de4a9ae111ca3303584, type: 3}
+  - name: Capslock
+    sprite: {fileID: 21300000, guid: 82f1010e86d6c3b47b0e125fe1a1847b, type: 3}
+  - name: A
+    sprite: {fileID: 21300000, guid: 7f0f54f2bad0b9e448903fe641620e7c, type: 3}
+  - name: S
+    sprite: {fileID: 21300000, guid: 49549c7f098a8154581ff99e2e656df8, type: 3}
+  - name: D
+    sprite: {fileID: 21300000, guid: ad648f4473c0a5c4b9258ea999f80513, type: 3}
+  - name: F
+    sprite: {fileID: 21300000, guid: e8c9d1615a7b39542b7310f0a9f035b2, type: 3}
+  - name: G
+    sprite: {fileID: 21300000, guid: 1e6ca00c594133c4b8f123add4430afb, type: 3}
+  - name: H
+    sprite: {fileID: 21300000, guid: 3100027c4ed69d24a9a61971186925b9, type: 3}
+  - name: J
+    sprite: {fileID: 21300000, guid: 45cf666370959bc40884cc877e3b2e38, type: 3}
+  - name: K
+    sprite: {fileID: 21300000, guid: 67922ecb7269887418fc3e1e1223fe43, type: 3}
+  - name: L
+    sprite: {fileID: 21300000, guid: a33a773b37bf33d4f8124e60e8b56d17, type: 3}
+  - name: ;
+    sprite: {fileID: 21300000, guid: afaafc11458c14e4187ba47e3babbd78, type: 3}
+  - name: ''''
+    sprite: {fileID: 21300000, guid: 5d35aa5f3adca2744bf5749783740adb, type: 3}
+  - name: Return
+    sprite: {fileID: 21300000, guid: f41ff7fa2b820644fb515a909bd101c5, type: 3}
+  - name: Shift
+    sprite: {fileID: 21300000, guid: 948d23f6f214a2c42a37db6240600411, type: 3}
+  - name: Z
+    sprite: {fileID: 21300000, guid: 065ddbaf1b32321489a7cf01290302bd, type: 3}
+  - name: X
+    sprite: {fileID: 21300000, guid: 76403c48ac02a2b49a8128186398eeac, type: 3}
+  - name: C
+    sprite: {fileID: 21300000, guid: 0760371be74e223498c53bcf08a4cf2c, type: 3}
+  - name: V
+    sprite: {fileID: 21300000, guid: 6992900409499ad4e9ec9324cd886ace, type: 3}
+  - name: B
+    sprite: {fileID: 21300000, guid: 7ff3cc0806873504e9abe0f569416163, type: 3}
+  - name: N
+    sprite: {fileID: 21300000, guid: 5fa4bdab58fa38949b914582559d97a8, type: 3}
+  - name: M
+    sprite: {fileID: 21300000, guid: d6cdc0bcc9d103b438e988fb0b08102a, type: 3}
+  - name: ','
+    sprite: {fileID: 21300000, guid: b3e3f088e116e2947bbe2f2d8e0548f0, type: 3}
+  - name: .
+    sprite: {fileID: 21300000, guid: 90f918ec7bc4574469b0f67c80ef513f, type: 3}
+  - name: /
+    sprite: {fileID: 21300000, guid: 4b7859ebe9d424742a4c598ee3ee876e, type: 3}
+  - name: Control
+    sprite: {fileID: 21300000, guid: 4986c0676338d7b4e8380bee15982643, type: 3}
+  - name: Alt
+    sprite: {fileID: 21300000, guid: 521102ad74769ab4c8541cf23c600ce4, type: 3}
+  - name: Space
+    sprite: {fileID: 21300000, guid: a92968369a587b44a9fd27949c391e37, type: 3}
+  - name: UpArrow
+    sprite: {fileID: 21300000, guid: 6bac3886f13168c44886c90ec87d2206, type: 3}
+  - name: DownArrow
+    sprite: {fileID: 21300000, guid: c6b5255febf152e449ba6b23bb7c368f, type: 3}
+  - name: LeftArrow
+    sprite: {fileID: 21300000, guid: ca020f45dd1ce8943bc7d7cf24946e4f, type: 3}
+  - name: RightArrow
+    sprite: {fileID: 21300000, guid: f3f9b95df496af4468784fb07944a15f, type: 3}
+  xboxIconMap:
+  - name: button_0
+    sprite: {fileID: 21300000, guid: 09a6e16ee2a31a640b94058652b33901, type: 3}
+  - name: button_1
+    sprite: {fileID: 21300000, guid: 408c2dfd652ea484d846fc96448a60be, type: 3}
+  - name: button_2
+    sprite: {fileID: 21300000, guid: 0aef4f48427dafc4e99a490b934c67f8, type: 3}
+  - name: button_3
+    sprite: {fileID: 21300000, guid: 6ed7a1170643d4b458b5b0880de5aff6, type: 3}
+  - name: button_4
+    sprite: {fileID: 21300000, guid: 67ab6f15279df174fa2f93b00159b199, type: 3}
+  - name: button_5
+    sprite: {fileID: 21300000, guid: f4abfa8113e7cb84eaa08ec7024a1386, type: 3}
+  - name: button_6
+    sprite: {fileID: 21300000, guid: 16004460c13253d4d9a0700a94d37688, type: 3}
+  - name: button_7
+    sprite: {fileID: 21300000, guid: fd44aa37d2389dc4a8e85c55220a215c, type: 3}
+  - name: left_stick
+    sprite: {fileID: 21300000, guid: 64bfb71440b1d0749b26a25ff6f8da1a, type: 3}
+  - name: right_stick
+    sprite: {fileID: 21300000, guid: 19fdb04ce8ff22142af105b4154401bc, type: 3}
+  - name: left_trigger
+    sprite: {fileID: 21300000, guid: eb01decb8c84daa4bace421e894e06b9, type: 3}
+  - name: right_trigger
+    sprite: {fileID: 21300000, guid: 727007f38c9d9054a8f5bd6abfde63cc, type: 3}
+  psIconMap: []
+  switchIconMap: []
+  invalidSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}

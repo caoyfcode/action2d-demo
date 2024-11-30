@@ -21,6 +21,19 @@ public class UIManager : SingletonBase<UIManager>
     public TeleportMenu teleportMenu;
     public PauseMenu pauseMenu;
 
+    public enum MenuType
+    {
+        None,
+        PauseMenu,
+        CheckpointMenu,
+        TeleportMenu,
+        InventoryMenu, // 与 MapMenu是合并的
+    }
+    public MenuType openingMenu = MenuType.None;
+
+    [Header("Input Icon")]
+    public InputIconMap inputIconMap;
+
     public bool debugControlShown;
     public bool debugCheckpointMenuShown;
     public bool debugTeleportMenuShown;
@@ -39,5 +52,20 @@ public class UIManager : SingletonBase<UIManager>
         {
             pauseMenu.Shown = !pauseMenu.Shown;
         }
+    }
+
+    public void OpenMenu(MenuType menuType)
+    {
+
+    }
+
+    public void CloseMenu(MenuType menuType)
+    {
+        
+    }
+
+    public void SwitchMenu(MenuType menuType)
+    {
+        
     }
 }
