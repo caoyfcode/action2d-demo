@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : Menu
 {
-    public bool Shown
+    public override bool Shown
     {
         get { return gameObject.activeSelf; }
         set 

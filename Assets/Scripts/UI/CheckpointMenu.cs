@@ -2,29 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckpointMenu : MonoBehaviour
+public class CheckpointMenu : Menu
 {
-    public bool Shown
-    {
-        get { return gameObject.activeSelf; }
-        set 
-        { 
-            if (!gameObject.activeSelf && value)
-            {
-                Game.Player.stateMachine.ChangeState(Game.Player.menuState);
-            }
-            else if (gameObject.activeSelf && !value)
-            {
-                Game.Player.stateMachine.ChangeState(Game.Player.groundFreeState);
-            }
-            gameObject.SetActive(value); 
-        }
-    }
 
     public void Heal()
     {
-        Game.Player.data.heath = Game.Player.data.maxHeath;
-        Game.Player.data.magic = Game.Player.data.maxMagic;
+        Game.Player.Heal();
         Shown = false;
     }
 

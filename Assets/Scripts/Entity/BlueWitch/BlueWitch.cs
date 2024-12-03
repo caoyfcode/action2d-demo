@@ -126,7 +126,6 @@ public class BlueWitch : Entity
     internal BlueWitchAttack attackState;
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
-    internal BlueWitchMenu menuState;
     // 状态转换条件中的通用部分
     internal bool DashCondition => data.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal AttackType CurrentAttack
@@ -161,7 +160,6 @@ public class BlueWitch : Entity
         attackState = new BlueWitchAttack(this, stateMachine);
         dashState = new BlueWitchDash(this, stateMachine);
         wallSlideState = new BlueWitchWallSlide(this, stateMachine);
-        menuState = new BlueWitchMenu(this, stateMachine);
         stateMachine.Init(airFreeState);
         wallSlideCrow.SetActive(false);
     }
@@ -181,7 +179,7 @@ public class BlueWitch : Entity
 
     protected virtual void FixedUpdate()
     {
-        if (stateMachine.CurrentState == airFreeState || stateMachine.CurrentState == menuState)
+        if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
             if (velocity.y > Mathf.Epsilon && velocity.y <= data.airJumpSpeed) // 向上跳跃时, 希望尽可能以高速达到高度
@@ -236,5 +234,16 @@ public class BlueWitch : Entity
         hitInvincibleTimer = data.hitInvincibleTime;
         AddForce(hitInfo.force);
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
+    }
+
+    public void Heal()
+    {
+        data.heath = data.maxHeath;
+        data.magic = data.maxMagic;
+        airJumpCount = 0;
+        airAttackCount = 0;
+        airDashCount = 0;
+        dashCoolDownTimer = 0;
+        stateControlInvincible = true;
     }
 }

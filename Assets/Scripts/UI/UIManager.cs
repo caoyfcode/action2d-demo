@@ -7,6 +7,7 @@ public class UIManager : SingletonBase<UIManager>
     public static BossHeathBar BossHeathBar => instance.bossHeathBar;
     public static CheckpointMenu CheckpointMenu => instance.checkpointMenu;
     public static TeleportMenu TeleportMenu => instance.teleportMenu;
+    public static bool MenuShown => instance.pauseMenu.Shown || instance.checkpointMenu.Shown || instance.teleportMenu.Shown || instance.inventoryMenu.Shown;
 
     [Header("HUD")]
     // public StatusIconList playerHeath;
@@ -20,16 +21,9 @@ public class UIManager : SingletonBase<UIManager>
     // public InventoryMenu inventoryMenu;
     public TeleportMenu teleportMenu;
     public PauseMenu pauseMenu;
+    public InventoryMenu inventoryMenu;
 
-    public enum MenuType
-    {
-        None,
-        PauseMenu,
-        CheckpointMenu,
-        TeleportMenu,
-        InventoryMenu, // 与 MapMenu是合并的
-    }
-    public MenuType openingMenu = MenuType.None;
+    
 
     [Header("Input Icon")]
     public InputIconMap inputIconMap;
@@ -52,20 +46,12 @@ public class UIManager : SingletonBase<UIManager>
         {
             pauseMenu.Shown = !pauseMenu.Shown;
         }
+
+        if (Input.GetKeyDown(KeyCode.P) && !pauseMenu.Shown)
+        {
+            inventoryMenu.Shown = !inventoryMenu.Shown;
+        }
     }
 
-    public void OpenMenu(MenuType menuType)
-    {
-
-    }
-
-    public void CloseMenu(MenuType menuType)
-    {
-        
-    }
-
-    public void SwitchMenu(MenuType menuType)
-    {
-        
-    }
+    
 }
