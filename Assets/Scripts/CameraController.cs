@@ -6,13 +6,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Vector2 offset = new(2, 1.6f);
+    public float forwardOffset = 2;
+    public float upwardOffset = 1.6f;
+    public float downwardOffset = 0.5f;
     public enum OffetType
     {
         None,
         Forward,
         Upward,
+        Downward,
         ForwardUpward,
+        ForwardDownward,
     }
     public OffetType offsetType = OffetType.ForwardUpward;
 
@@ -25,6 +29,20 @@ public class CameraController : MonoBehaviour
     {
         shakeExt = proCamera2D.GetComponent<ProCamera2DShake>();
         numericBoundaries = proCamera2D.GetComponent<ProCamera2DNumericBoundaries>();
+        offsetType = OffetType.ForwardUpward;
+    }
+
+    void Update()
+    {
+        // 到达边缘时降低镜头，直到不在边缘且在地面
+        if (Game.Player.IsFacingCliff)
+        {
+            offsetType = OffetType.ForwardDownward;
+        }
+        else if (Game.Player.isOnGround)
+        {
+            offsetType = OffetType.ForwardUpward;
+        }
     }
 
     private void LateUpdate()
@@ -36,16 +54,24 @@ public class CameraController : MonoBehaviour
                 target.TargetOffset = Vector2.zero;
                 break;
             case OffetType.Forward:
-                target.TargetOffset.x = offset.x * Game.Player.FacingDirection;
+                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
                 target.TargetOffset.y = 0;
                 break;
             case OffetType.Upward:
                 target.TargetOffset.x = 0;
-                target.TargetOffset.y = offset.y;
+                target.TargetOffset.y = upwardOffset;
+                break;
+            case OffetType.Downward:
+                target.TargetOffset.x = 0;
+                target.TargetOffset.y = -downwardOffset;
                 break;
             case OffetType.ForwardUpward:
-                target.TargetOffset.x = offset.x * Game.Player.FacingDirection;
-                target.TargetOffset.y = offset.y;
+                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
+                target.TargetOffset.y = upwardOffset;
+                break;
+            case OffetType.ForwardDownward:
+                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
+                target.TargetOffset.y = -downwardOffset;
                 break;
         }
         // target.TargetOffset.x = offset.x * Game.Player.FacingDirection;
@@ -57,7 +83,7 @@ public class CameraController : MonoBehaviour
         shakeExt.Shake(duration, force * 5f, vibration);
     }
 
-    public void SetBoundariesIntantly()
+    public void SetBoundariesInstantly()
     {
         ProCamera2DRooms rooms = FindAnyObjectByType<ProCamera2DRooms>();
         if (rooms == null)
@@ -85,5 +111,50 @@ public class CameraController : MonoBehaviour
             RightBoundary = room.Dimensions.x + room.Dimensions.width / 2
         };
         numericBoundaries.Settings = numericBoundariesSettings;
+    }
+
+    // 用来当某些房间过大时设置边界，在加载新 Level 后调用
+    // 不论 Room 是否设置了 ScaleCameraToFit, ProCamera2D 都会在房间过小时将相机缩小
+    // 设置了 ScaleCameraToFit, ProCamera2D 会在房间过大时将相机扩大
+    // 因而此函数相当于在 ScaleCameraToFit 为 false 时, 在房间过小时扩大房间，从而无需改变相机大小
+    // 其实是令 ScaleCameraToFit=false 在在房间过小时仍然起作用
+    public void FitRoomSize()
+    {
+        ProCamera2DRooms rooms = FindAnyObjectByType<ProCamera2DRooms>();
+        if (rooms == null)
+        {
+            Debug.LogError("No ProCamera2DRooms component found in the scene.");
+            return;
+        }
+        foreach (var room in rooms.Rooms)
+        {
+            if (room.ScaleCameraToFit)
+            {
+                break;
+            }
+            if (room.Dimensions.size.x < proCamera2D.ScreenSizeInWorldCoordinates.x)
+            {
+                // room.Dimensions.x = room.Dimensions.center.x - proCamera2D.ScreenSizeInWorldCoordinates.x / 2;
+                room.Dimensions.width = proCamera2D.ScreenSizeInWorldCoordinates.x;
+            }
+            if (room.Dimensions.size.y < proCamera2D.ScreenSizeInWorldCoordinates.y)
+            {
+                // room.Dimensions.y = room.Dimensions.center.y - proCamera2D.ScreenSizeInWorldCoordinates.y / 2;
+                room.Dimensions.height = proCamera2D.ScreenSizeInWorldCoordinates.y;
+            }
+        }
+    }
+
+    // 用于设置 Room 扩展切换 Room 依据的 transform
+    // 默认的是带有 offset 的, 而此游戏不希望有 offset
+    public void SetRoomTriggerTarget()
+    {
+        ProCamera2DRooms rooms = FindAnyObjectByType<ProCamera2DRooms>();
+        if (rooms == null)
+        {
+            Debug.LogError("No ProCamera2DRooms component found in the scene.");
+            return;
+        }
+        rooms.TriggerTarget = Game.Player.transform;
     }
 }

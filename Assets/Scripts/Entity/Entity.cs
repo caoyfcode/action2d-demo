@@ -51,7 +51,7 @@ public class Entity : MonoBehaviour
     internal bool isOnLeftWall = false;
     internal bool isOnRightWall = false;
     internal bool isOverlapEnvironment = false;
-    internal bool isOnLeftCliff = false;
+    internal bool isOnLeftCliff = false; // 悬崖检测距离并非贴着，而是距离为 1
     internal bool isOnRightCliff = false;
     // 之所以两边都检测是因为更新过程方向会变
     public bool IsFacingWall => FacingDirection > 0 ? isOnRightWall : isOnLeftWall;
@@ -97,8 +97,9 @@ public class Entity : MonoBehaviour
         isOnRightWall = col.Cast(Vector2.right, envCastFilter, castHits, 0.1f) > 0;
         isOnLeftWall = col.Cast(Vector2.left, envCastFilter, castHits, 0.1f) > 0;
         isOverlapEnvironment = col.OverlapCollider(envCastFilter, overlapHits) > 0;
-        isOnLeftCliff = Physics2D.Raycast(col.bounds.min, Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
-        isOnRightCliff = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y), Vector2.down, envCastFilter, castHits, 0.1f) == 0 && isOnGround;
+        // 悬崖条件: 在地面 && 朝向无地面 && 朝向无墙壁, 之所以检测墙壁是因为检测前方地面的起始点可能在墙壁内部
+        isOnLeftCliff = isOnGround && Physics2D.Raycast(new Vector2(col.bounds.min.x - 1, col.bounds.min.y), Vector2.down, envCastFilter, castHits, 0.5f) == 0 && Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), Vector2.left, envCastFilter, castHits, 1f) == 0;
+        isOnRightCliff = isOnGround && Physics2D.Raycast(new Vector2(col.bounds.max.x + 1, col.bounds.min.y), Vector2.down, envCastFilter, castHits, 0.5f) == 0 && Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.center.y), Vector2.right, envCastFilter, castHits, 1f) == 0;
         float prev = forceMove > 0 ? 1 : -1;
         forceMove *= 1 - forceSpeedDecay * Time.deltaTime; // delta_v = - k v delta_t / m => v' = v * (1 - kk * delta_t)
         if (prev * forceMove <= minForceSpeed) // 速度过小或反向, 则设置为 0

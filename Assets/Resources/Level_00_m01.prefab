@@ -27621,7 +27621,7 @@ MonoBehaviour:
     TransitionDuration: 1
     TransitionEaseType: 0
     ScaleCameraToFit: 0
-    Zoom: 1
+    Zoom: 0
     ZoomScale: 1
     InternalID: 0
   - ID: 
@@ -27630,15 +27630,15 @@ MonoBehaviour:
       x: -3.0318274
       y: -28.499996
       width: 21.999966
-      height: 11.000036
+      height: 11
     TransitionDuration: 1
     TransitionEaseType: 0
     ScaleCameraToFit: 0
-    Zoom: 1
+    Zoom: 0
     ZoomScale: 1
     InternalID: 0
   UpdateInterval: 0.1
-  UseTargetsMidPoint: 1
+  UseTargetsMidPoint: 0
   TriggerTarget: {fileID: 0}
   TransitionInstanlyOnStart: 1
   RestoreOnRoomExit: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 // 单例，提供公共变量的访问点以及一些游戏系统函数
+// TODO 重命名为 WorldManager, 并分离出 GameManager
 public class Game : SingletonBase<Game>
 {
     public static BlueWitch Player => instance.player;
@@ -62,6 +63,9 @@ public class Game : SingletonBase<Game>
     {
         Level level = levelContainer.GetComponentInChildren<Level>();
         SetCurrentLevel(level);
+        cameraController.FitRoomSize();
+        cameraController.SetRoomTriggerTarget();
+        cameraController.SetBoundariesInstantly();
         // Application.targetFrameRate = 144;
     }
 
@@ -115,7 +119,9 @@ public class Game : SingletonBase<Game>
         yield return Resources.UnloadUnusedAssets();
         isLoadingLevel = false;
         Pause = false;
-        cameraController.SetBoundariesIntantly();
+        cameraController.FitRoomSize();
+        cameraController.SetRoomTriggerTarget();
+        cameraController.SetBoundariesInstantly();
     }
 
     IEnumerator PauseForSecondsCoroutine(float seconds)

@@ -564,7 +564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b163fdb39aa739d4b9d273bfba6c21ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseWhenShown: 0
 --- !u!1001 &145415770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2215,7 +2214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0fa7c1fe063bd40aae3c7d68c4827a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseWhenShown: 0
   header: {fileID: 1271198387}
   mapHeader: {fileID: 382010241}
   inventoryHeader: {fileID: 1532507394}
@@ -2898,7 +2896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a497eca7e0b5b7a42bfbefb1b294b015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseWhenShown: 0
   attackConfig: {fileID: 251437407}
   attackTable: {fileID: 1239238838}
   itemTable: {fileID: 1787884157}
@@ -4447,7 +4444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb0b4c4d01da6b45a42c3cfd797ac1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseWhenShown: 0
 --- !u!1 &890118066
 GameObject:
   m_ObjectHideFlags: 0
@@ -9427,7 +9423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b206403a06cce1748af70deaa1c841d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseWhenShown: 0
 --- !u!1 &2019820789
 GameObject:
   m_ObjectHideFlags: 0
