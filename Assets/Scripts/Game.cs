@@ -15,6 +15,7 @@ public class Game : SingletonBase<Game>
         {new Vector2Int(-100, 1), "SampleLevel_1"},
         {new Vector2Int(0, 0), "Level_00_00"},
         {new Vector2Int(0, -1), "Level_00_m01"},
+        {new Vector2Int(1, 0), "Level_01_00"},
     };
 
     public static Level CurrentLevel => instance.currentLevel;
