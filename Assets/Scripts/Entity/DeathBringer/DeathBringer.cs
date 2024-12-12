@@ -219,6 +219,7 @@ public class DeathBringer : Entity
             entity.velocity.y = 0;
             entity.animator.Play(ANIM_ATTACK);
             entity.hitBox.genHitInfo = GenHitInfo;
+            entity.hitBox.PreDiscreteHit();
         }
 
         public override bool Transition()
@@ -247,6 +248,7 @@ public class DeathBringer : Entity
         {
             entity.hitBoxEnabled = false;
             entity.attackCoolDownTimer = entity.data.attackCoolDownTime;
+            entity.hitBox.PostDiscreteHit();
         }
 
         private HitInfo GenHitInfo() => new()

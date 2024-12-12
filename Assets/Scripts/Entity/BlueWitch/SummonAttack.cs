@@ -37,12 +37,14 @@ public class SummonAttack : Summon
         {
             hitBox.genHitInfo = GenHitInfo;
         }
+        hitBox.PreDiscreteHit();
     }
 
     public override void OnSummonEnd()
     {
         base.OnSummonEnd();
         isHitBoxEnabled = false;
+        hitBox.PostDiscreteHit();
     }
 
     private HitInfo GenHitInfo() => new()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -15,9 +16,30 @@ public class HitBox : MonoBehaviour
     internal Func<DefendBox, HitInfo> genHitInfoDefendBox = null;
     protected Collider2D[] hitResults;
 
+    public HitContinuousType hitContinuousType = HitContinuousType.Discrete;
+    protected HashSet<Entity> hurtEntities = new(); // 在离散类型攻击中
+
+    public enum HitContinuousType
+    {
+        Discrete, // 一次攻击
+        Continuous, // 持续性攻击
+    }
+
     protected virtual void Start()
     {
         hitResults = new Collider2D[maxHitNum];
+    }
+
+    // 离散情况需要手动调用
+    public void PreDiscreteHit()
+    {
+        hurtEntities.Clear();
+    }
+
+    // 离散情况需要手动调用
+    public void PostDiscreteHit()
+    {
+        hurtEntities.Clear();
     }
 
     public int DoHit()
@@ -27,6 +49,10 @@ public class HitBox : MonoBehaviour
         for (int i = 0; i < hitNum; i++)
         {
             DefendBox defendBox = hitResults[i].GetComponent<DefendBox>();
+            if (!defendBox)
+            {
+                continue;
+            }
             var hitInfo = genHitInfoDefendBox?.Invoke(defendBox) ?? genHitInfo?.Invoke() ?? new HitInfo
             {
                 attacker = attacker,
@@ -45,6 +71,10 @@ public class HitBox : MonoBehaviour
         for (int i = 0; i < hitNum; i++)
         {
             Entity target = hitResults[i].GetComponentInParent<Entity>();
+            if (!target || (hitContinuousType == HitContinuousType.Discrete && hurtEntities.Contains(target)))
+            {
+                continue;
+            }
             var hitInfo = genHitInfoEntity?.Invoke(target) ?? genHitInfo?.Invoke() ?? new HitInfo
             {
                 attacker = attacker,
@@ -58,6 +88,10 @@ public class HitBox : MonoBehaviour
             if (target && target.TakeHitCheck(hitInfo))
             {
                 num++;
+                if (hitContinuousType == HitContinuousType.Discrete)
+                {
+                    hurtEntities.Add(target);
+                }
                 target.TakeHit(hitInfo);
                 attacker.HitSuccess(hitInfo);
             }

@@ -5,7 +5,6 @@ using UnityEngine.Events;
 // Entity 类为所有实体的基类, 可以利用 velocity 改变速度
 // 必有: Animator, Rigidbody2D, Collider2D
 // 可选: HitFlashFX
-[RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(Collider2D))]
 public class Entity : MonoBehaviour
 {
     #region Events
@@ -75,13 +74,32 @@ public class Entity : MonoBehaviour
     private Collider2D[] overlapHits = new Collider2D[5];
 
 
+    protected virtual void Awake()
+    {
+        if (!entityFX)
+        {
+            entityFX = GetComponentInChildren<EntityFX>();
+        }
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+        if (!rb)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        if (!col)
+        {
+            col = GetComponent<Collider2D>();
+        }
+        if (!controller)
+        {
+            controller = GetComponent<EntityController>();
+        }
+    }
+
     protected virtual void Start()
     {
-        entityFX = GetComponent<EntityFX>();
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
-        controller = GetComponent<EntityController>();
         envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
         if (controller)
         {

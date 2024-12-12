@@ -243,3 +243,4 @@ MonoBehaviour:
     maxNormalAngle: 0
   maxHitNum: 5
   hitCollider: {fileID: 8656169338008513485}
+  hitContinuousType: 1

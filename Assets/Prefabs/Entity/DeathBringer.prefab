@@ -61,6 +61,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   maxHitNum: 5
   hitCollider: {fileID: 7607521384447120489}
+  hitContinuousType: 1
 --- !u!1 &4833007323278468202
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,3 +436,4 @@ MonoBehaviour:
     maxNormalAngle: 0
   maxHitNum: 5
   hitCollider: {fileID: 5575057430158882683}
+  hitContinuousType: 0

@@ -12,11 +12,13 @@ public class CollisionHitBox : HitBox
         base.Start();
         targetFilter.SetLayerMask(LayerMask.GetMask("Player"));
         genHitInfoEntity = GenHitInfoEntity;
+        hitContinuousType = HitContinuousType.Continuous;
     }
 
     // Update is called once per frame
     void Update()
     {
+        hitContinuousType = HitContinuousType.Continuous;
         DoHit();
     }
 
@@ -28,7 +30,7 @@ public class CollisionHitBox : HitBox
         {
             attacker = attacker,
             damage = 1,
-            force = new Vector2(directionX * 5, 0),
+            force = new Vector2(directionX * 3, 1),
             hitCollider = hitCollider,
             hitType = HitType.BodyCollision,
             hurtCollider = hitResults[0],

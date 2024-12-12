@@ -321,6 +321,7 @@ public class FireKnight : Entity
             entity.animEnd = false;
             entity.animator.Play(ANIM_ROLL);
             entity.hitBox.hitCollider = entity.rollAttackCollider;
+            entity.hitBox.PreDiscreteHit();
         }
 
         public override bool Transition()
@@ -344,6 +345,12 @@ public class FireKnight : Entity
            {
                 entity.hitBox.DoHit();  
            }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            entity.hitBox.PostDiscreteHit();
         }
     }
 
@@ -388,6 +395,7 @@ public class FireKnight : Entity
                 }
             }
             entity.hitBox.hitCollider = entity.GetHitCollider(attackType);
+            entity.hitBox.PreDiscreteHit();
         }
 
         public override bool Transition()
@@ -426,6 +434,7 @@ public class FireKnight : Entity
         public override void Exit()
         {
             base.Exit();
+            entity.hitBox.PostDiscreteHit();
         }
 
         public AttackType AttackType => attackType;
