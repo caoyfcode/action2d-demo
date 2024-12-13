@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using AttackType = FireKnight.AttackType;
 
-public class FireKnightController : BossController
+public class FireKnightController : EntityController
 {
     FireKnight entity;
 
@@ -120,15 +120,9 @@ public class FireKnightController : BossController
             .Build();
     }
 
-    public override void StartBossFight()
+    public override void OnStartBossFight()
     {
         bossFightStarted = true;
-        Game.BossSystem.StartBossFight(entity);
-    }
-
-    public void OnDestroy()
-    {
-        Game.BossSystem.EndBossFight();
     }
 
     public void OnAttacked(HitInfo hitInfo)

@@ -17,6 +17,7 @@ public class BossSystem : MonoBehaviour
             UIManager.BossHeathBar.valueBar.value = boss.CharacterData.heath;
             UIManager.BossHeathBar.Shown = true;
             boss.onDeath.AddListener(EndBossFight);
+            boss.controller.OnStartBossFight();
         }
     }
 

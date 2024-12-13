@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GolemController : BossController
+public class GolemController : EntityController
 {
     public override void Init()
     {
@@ -14,7 +14,7 @@ public class GolemController : BossController
         
     }
 
-    public override void StartBossFight()
+    public override void OnStartBossFight()
     {
         
     }

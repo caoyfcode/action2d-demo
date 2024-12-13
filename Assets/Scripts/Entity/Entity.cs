@@ -21,11 +21,11 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Component
-    internal Animator animator;
-    protected Rigidbody2D rb;
-    internal Collider2D col;
-    protected EntityFX entityFX;
-    protected EntityController controller;
+    public Animator animator;
+    public Rigidbody2D rb;
+    public Collider2D col;
+    public EntityFX entityFX;
+    public EntityController controller;
     #endregion
 
     #region Status

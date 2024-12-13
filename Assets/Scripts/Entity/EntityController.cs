@@ -8,11 +8,8 @@ public abstract class EntityController : MonoBehaviour
 {
     public abstract void Init();
     public abstract void UpdateCommand();
-}
-
-public abstract class BossController : EntityController
-{
-    public abstract void StartBossFight();
+    // 作为 boss 时有用
+    public virtual void OnStartBossFight() {}
 }
 
 // TODO 之后改为下面方法所表示的

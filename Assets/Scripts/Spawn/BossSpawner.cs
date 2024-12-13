@@ -10,7 +10,7 @@ public class BossSpawner : Spawner
         {
             //spawn boss
             Spawn();
-            spawnedObject.GetComponent<BossController>().StartBossFight();
+            Game.BossSystem.StartBossFight(spawnedObject.GetComponent<Entity>());
         }
     }
 }
