@@ -594,7 +594,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: USING_URP
+    Standalone: USING_URP;NODECANVAS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

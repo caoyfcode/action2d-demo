@@ -199,9 +199,12 @@ GameObject:
   - component: {fileID: 7903587465715712854}
   - component: {fileID: 7974246901922083450}
   - component: {fileID: 6554183719285312733}
-  - component: {fileID: 8560595661485969294}
   - component: {fileID: 8080252481847971575}
+  - component: {fileID: 8560595661485969294}
   - component: {fileID: 5725586549658837985}
+  - component: {fileID: 5504353644126494534}
+  - component: {fileID: 2764217977889560404}
+  - component: {fileID: 4967330523065081051}
   m_Layer: 8
   m_Name: Golem
   m_TagString: Untagged
@@ -274,7 +277,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!66 &6554183719285312733
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -308,7 +311,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -342,6 +345,21 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 3711257285501836753}
+--- !u!114 &8080252481847971575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711257285501836753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc661fc1da55d9e4bb8bfe3492da4e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashedSprite: {fileID: 4559209392664485987}
+  flashDuration: 0.2
+  bloodFXOffet: 0.1
 --- !u!114 &8560595661485969294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +381,11 @@ MonoBehaviour:
   onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+  entityFX: {fileID: 0}
+  controller: {fileID: 0}
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
@@ -371,21 +394,20 @@ MonoBehaviour:
   bloodFXOnHit: 0
   explosionOnDestory: 1
   darkSpriteOnDestory: 0
---- !u!114 &8080252481847971575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3711257285501836753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc661fc1da55d9e4bb8bfe3492da4e27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashedSprite: {fileID: 4559209392664485987}
-  flashDuration: 0.2
-  bloodFXOffet: 0.1
+  fsm: {fileID: 0}
+  hitBoxEnabled: 0
+  animEnd: 0
+  animPreBreakable: 0
+  animPostBreakable: 0
+  data:
+    maxHeath: 0
+    heath: 0
+    maxMagic: 0
+    magic: 0
+    attack: 0
+    defence: 0
+    stage: 1
+  stunTimer: 0
 --- !u!114 &5725586549658837985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +420,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa42eba11e7bc6498d02d5665556986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  behaviourTree: {fileID: 0}
+--- !u!114 &5504353644126494534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711257285501836753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7dbb6bbdf4ffb46ab7dd87ba8191e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|EnterFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|UpdateFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"executionMode":1,"actions":[]},"foldEnter":true,"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Free","_position":{"x":471.3353,"y":424.1943},"$type":"NodeCanvas.StateMachines.SuperActionState"}],"connections":[],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 3.31
+    _category: 
+    _comments: 
+    _translation: {x: -137.92151, y: -157.44524}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 3
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 4967330523065081051}
+--- !u!114 &2764217977889560404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711257285501836753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"_position":{"x":615.0,"y":260.2},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"0"},{"_condition":{"method":{"_baseInfo":"GolemController|CheckPlayerFar|System.Boolean","_paramsInfo":""},"parameters":[],"checkValue":{"_type":"System.Boolean","_value":{"$content":true,"$type":"System.Boolean"}},"$type":"NodeCanvas.Tasks.Conditions.CheckFunction_Multiplatform"},"_position":{"x":495.0,"y":409.0},"$type":"NodeCanvas.BehaviourTrees.ConditionalEvaluator","$id":"1"},{"_action":{"method":{"_baseInfo":"GolemController|FollowPlayer|NodeCanvas.Framework.Status","_paramsInfo":""},"parameters":[],"$type":"NodeCanvas.Tasks.Actions.ImplementedAction_Multiplatform"},"_position":{"x":489.0,"y":607.2},"$type":"NodeCanvas.BehaviourTrees.ActionNode","$id":"2"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 3.31
+    _category: 
+    _comments: 
+    _translation: {x: -169, y: -91}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 3
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 4967330523065081051}
+--- !u!114 &4967330523065081051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711257285501836753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
 --- !u!1 &3874008615377860822
 GameObject:
   m_ObjectHideFlags: 0

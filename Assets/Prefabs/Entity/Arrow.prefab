@@ -203,6 +203,11 @@ MonoBehaviour:
   onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+  entityFX: {fileID: 0}
+  controller: {fileID: 0}
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0

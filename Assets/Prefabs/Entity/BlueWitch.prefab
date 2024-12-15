@@ -161,6 +161,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   maxHitNum: 5
   hitCollider: {fileID: 0}
+  hitContinuousType: 0
 --- !u!1 &1238109578639638251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1120,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   maxHitNum: 5
   hitCollider: {fileID: 6058447200763817851}
+  hitContinuousType: 0
 --- !u!1 &7527957393124862653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1377,11 @@ MonoBehaviour:
   onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+  entityFX: {fileID: 0}
+  controller: {fileID: 0}
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
