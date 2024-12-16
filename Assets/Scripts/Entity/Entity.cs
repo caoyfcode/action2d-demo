@@ -147,13 +147,20 @@ public class Entity : MonoBehaviour
         }
     }
 
+    // 受击冲量实现, 分为水平与竖直两部分
+    // 竖直方向直接设置速度，速度受到重力的影响由各 Entity 独自解决
+    // 水平方向由于原本速度完全依赖于输入，
+    // 因而额外引入 forceMove 变量保存会衰减的部分速度, 需要在 Update 中手动将其与输入速度 Merge
     protected void AddForce(Vector2 force)
     {
         Vector2 deltaV = force * forceSpeed / rb.mass;
         forceMove += deltaV.x;
         var vel = rb.velocity;
-        vel.x += deltaV.x;
-        vel.y += deltaV.y; // TIP: 竖直方向若处于持续设置为 0 的状态，则无法生效
+        // 这里严格用 0 判断, 因为 ieee754 中严格的 0 作乘除法结果仍然是严格的 0
+        if (forceMove != 0)
+            vel.x = forceMove;
+        if (deltaV.y != 0)
+            vel.y = deltaV.y; // TIP: 竖直方向若处于持续设置为 0 的状态，则无法生效
         rb.velocity = vel;
     }
 

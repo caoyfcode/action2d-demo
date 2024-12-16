@@ -89,6 +89,7 @@ public class BlueWitch : Entity
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
+    internal float hitStunTimer = 0; // hitstun 用来表示受击后无法控制移动的状态，此时水平由 forceMove 控制, 竖直方向受到重力影响
     internal bool stateControlInvincible = false;
     public BlueWitchData data;
     public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
@@ -116,6 +117,7 @@ public class BlueWitch : Entity
         }
     }
     public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
+    public bool IsHitStun => hitStunTimer > 0 || forceMove != 0;
     #endregion
 
     #region StateMachine
@@ -182,7 +184,7 @@ public class BlueWitch : Entity
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
-            if (velocity.y > Mathf.Epsilon && velocity.y <= data.airJumpSpeed) // 向上跳跃时, 希望尽可能以高速达到高度
+            if (velocity.y > Mathf.Epsilon && velocity.y <= data.airJumpSpeed && !IsHitStun) // 向上跳跃时, 希望尽可能以高速达到高度
             {
                 if (velocity.y > data.airJumpSpeed / 2)
                 {
@@ -208,6 +210,8 @@ public class BlueWitch : Entity
             dashCoolDownTimer -= Time.deltaTime;
         if (hitInvincibleTimer > 0)
             hitInvincibleTimer -= Time.deltaTime;
+        if (hitStunTimer > 0)
+            hitStunTimer -= Time.deltaTime;
     }
 
     public void ChangeInputDirection(float direction)
@@ -232,6 +236,7 @@ public class BlueWitch : Entity
         Game.CameraController.StartShake(hitInfo.force, 0.2f, 10);
         data.heath -= hitInfo.damage;
         hitInvincibleTimer = data.hitInvincibleTime;
+        hitStunTimer = data.hitStunTime;
         AddForce(hitInfo.force);
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }

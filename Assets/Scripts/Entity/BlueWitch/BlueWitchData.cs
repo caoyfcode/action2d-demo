@@ -21,4 +21,5 @@ public class BlueWitchData : CharacterData
     internal float attackComboTime = 0.3f;
     internal int maxAirAttackCount = 2; // 依据召唤的替身攻击类型设置空中攻击次数
     internal float hitInvincibleTime = 0.5f;
+    internal float hitStunTime = 0.3f; // 短于受击无敌时间，因而只要受击一定可以硬直
 }
