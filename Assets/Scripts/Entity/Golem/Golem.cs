@@ -17,6 +17,8 @@ public class Golem : Entity
     const string ANIM_Stun = "Stun"; // 晕倒, 硬直状态
 
     const string FSM_FREE = "Free";
+    const string FSM_STUN = "Stun";
+    const string FMS_DEATH = "Death";
 
     public FSMOwner fsm;
 
@@ -40,6 +42,7 @@ public class Golem : Entity
     public bool animPreBreakable = false; // 前摇
     public bool animPostBreakable = false; // 后摇
     internal float hitInvincibleTimer = 0;
+    public float stunCounter = 0;
 
     public GolemData data;
     public override CharacterData CharacterData => data; 
@@ -68,7 +71,7 @@ public class Golem : Entity
 
     protected virtual void FixedUpdate()
     {
-        if (fsm.currentDeepStateName == FSM_FREE)
+        if (fsm.currentDeepStateName == FSM_FREE || fsm.currentDeepStateName == FSM_STUN)
         {
             var velocity = rb.velocity;
             velocity.y -= gravity * Time.fixedDeltaTime;
@@ -84,6 +87,35 @@ public class Golem : Entity
         {
             hitInvincibleTimer -= Time.deltaTime;
         }
+    }
+
+    public override void TakeHit(HitInfo hitInfo)
+    {
+        base.TakeHit(hitInfo);
+        
+        hitInvincibleTimer = data.hitInvincibleTime;
+        data.heath -= hitInfo.damage;
+        stunCounter++;
+        // AddForce(hitInfo.force);
+        if (stunCounter >= data.stunCount && fsm.currentDeepStateName != FSM_STUN)
+        {
+            fsm.TriggerState(FSM_STUN);
+            stunCounter = 0;
+        }
+
+        if (data.heath <= Mathf.Epsilon)
+        {
+            Die();
+        }
+        else
+        {
+        }
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        fsm.TriggerState(FMS_DEATH);
     }
 
     #region StateMachine Functions
@@ -107,10 +139,12 @@ public class Golem : Entity
     }
 
     public float stunTimer = 0f;
+    public bool StunEnd => stunTimer <= 0;
     public void EnterStun()
     {
         animator.Play(ANIM_Stun);
         stunTimer = data.stunTime;
+        velocity.x = 0;
     }
 
     public void UpdateStun()
@@ -119,14 +153,30 @@ public class Golem : Entity
         {
             stunTimer -= Time.deltaTime;
         }
-        else
-        {
-        }
+        velocity.x = 0;
+        stunCounter = 0;
     }
 
     public void ExitStun()
     {
-        
+        stunTimer = 0f;
+        stunCounter = 0;
+    }
+
+    public void EnterDeath()
+    {
+        animEnd = false;
+        animator.Play(ANIM_DEATH);
+        velocity.x = 0;
+        velocity.y = 0;
+    }
+
+    public void UpdateDeath()
+    {
+        if (animEnd)
+        {
+            DestoryEntity();
+        }
     }
     #endregion
 }

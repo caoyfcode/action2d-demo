@@ -392,16 +392,17 @@ MonoBehaviour:
   isDead: 0
   flashFXOnHit: 1
   bloodFXOnHit: 0
-  explosionOnDestory: 1
-  darkSpriteOnDestory: 0
+  explosionOnDestory: 0
+  darkSpriteOnDestory: 1
   fsm: {fileID: 0}
   hitBoxEnabled: 0
   animEnd: 0
   animPreBreakable: 0
   animPostBreakable: 0
+  stunCounter: 0
   data:
-    maxHeath: 0
-    heath: 0
+    maxHeath: 20
+    heath: 20
     maxMagic: 0
     magic: 0
     attack: 0
@@ -435,14 +436,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|EnterFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|UpdateFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"executionMode":1,"actions":[]},"foldEnter":true,"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Free","_position":{"x":471.3353,"y":424.1943},"$type":"NodeCanvas.StateMachines.SuperActionState"}],"connections":[],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|EnterFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|UpdateFree|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"executionMode":1,"actions":[]},"foldEnter":true,"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Free","_position":{"x":471.3353,"y":424.1943},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|EnterStun|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|UpdateStun|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|ExitStun|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"foldEnter":true,"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Stun","_position":{"x":708.2,"y":541.8},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|EnterDeath|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Golem|UpdateDeath|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"executionMode":1,"actions":[]},"foldEnter":true,"foldUpdate":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Death","_position":{"x":299.413,"y":614.9621},"$type":"NodeCanvas.StateMachines.SuperActionState"}],"connections":[{"_condition":{"method":{"_baseInfo":"Golem|get_StunEnd|System.Boolean","_paramsInfo":""},"checkValue":{"_type":"System.Boolean","_value":{"$content":true,"$type":"System.Boolean"}},"$type":"NodeCanvas.Tasks.Conditions.CheckProperty_Multiplatform"},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences: []
   _boundGraphSource:
     _version: 3.31
     _category: 
     _comments: 
-    _translation: {x: -137.92151, y: -157.44524}
-    _zoomFactor: 1
+    _translation: {x: 10, y: -94}
+    _zoomFactor: 0.557758
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
