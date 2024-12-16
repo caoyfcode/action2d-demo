@@ -16,11 +16,18 @@ public class Golem : Entity
     const string ANIM_Walk = "Walk";
     const string ANIM_Stun = "Stun"; // 晕倒, 硬直状态
 
-    const string FSM_FREE = "Free";
-    const string FSM_STUN = "Stun";
-    const string FMS_DEATH = "Death";
+    public const string FSM_FREE = "Free";
+    public const string FSM_STUN = "Stun";
+    public const string FSM_ATTACK_1 = "Attack1";
+    public const string FSM_ATTACK_2 = "Attack2";
+    public const string FSM_ATTACK_3 = "Attack3";
+    public const string FSM_DEATH = "Death";
 
     public FSMOwner fsm;
+    public HitBox hitBox;
+    public Collider2D attack1Collider;
+    public Collider2D attack2Collider;
+    public Collider2D attack3Collider;
 
     #region ControlState
     public class ControlState
@@ -115,7 +122,7 @@ public class Golem : Entity
     public override void Die()
     {
         base.Die();
-        fsm.TriggerState(FMS_DEATH);
+        fsm.TriggerState(FSM_DEATH);
     }
 
     #region StateMachine Functions
@@ -161,6 +168,68 @@ public class Golem : Entity
     {
         stunTimer = 0f;
         stunCounter = 0;
+    }
+
+    public void EnterAttack13(bool attack1=true)
+    {
+        animEnd = false;
+        animator.Play(attack1 ? ANIM_ATTACK_1 : ANIM_ATTACK_3);
+        velocity.x = 0;
+        velocity.y = 0;
+        hitBox.hitCollider = attack1 ? attack1Collider : attack3Collider;
+        hitBox.PreDiscreteHit();
+    }
+
+    public void UpdateAttack13()
+    {
+        if (hitBoxEnabled)
+        {
+            hitBox.DoHit();
+        }
+        velocity.x = 0;
+    }
+
+    public void ExitAttack13()
+    {
+        hitBox.hitCollider = null;
+        hitBox.PostDiscreteHit();
+    }
+
+    public float attack2SpeedY = 0;
+    public bool attack2Fall = false;
+    public void EnterAttack2()
+    {
+        animEnd = false;
+        animator.Play(ANIM_ATTACK_2);
+        velocity.x = 0;
+        velocity.y = 0;
+        hitBox.hitCollider = attack2Collider;
+        hitBox.PreDiscreteHit();
+        attack2Fall = false;
+        attack2SpeedY = 0;
+    }
+
+    public void UpdateAttack2()
+    {
+        if (hitBoxEnabled)
+        {
+            hitBox.DoHit();
+        }
+        if (!attack2Fall)
+        {
+            velocity.x = CurrentControl.speedX;
+        }
+        else
+        {
+            velocity.x = 0;
+        }
+        velocity.y = attack2SpeedY;
+    }
+
+    public void ExitAttack2()
+    {
+        hitBox.hitCollider = null;
+        hitBox.PostDiscreteHit();
     }
 
     public void EnterDeath()
