@@ -21,6 +21,8 @@ public class Golem : Entity
     public const string FSM_ATTACK_1 = "Attack1";
     public const string FSM_ATTACK_2 = "Attack2";
     public const string FSM_ATTACK_3 = "Attack3";
+    public const string FSM_JUMP = "Jump";
+    public const string FSM_LAND_ATTACK = "LandAttack";
     public const string FSM_DEATH = "Death";
 
     public FSMOwner fsm;
@@ -28,17 +30,12 @@ public class Golem : Entity
     public Collider2D attack1Collider;
     public Collider2D attack2Collider;
     public Collider2D attack3Collider;
+    public Collider2D landAttackCollider;
 
     #region ControlState
     public class ControlState
     {
         public float speedX = 0;
-        public bool startJump = false;
-        public bool jumping = false;
-        public bool land = false;
-        public bool attack1 = false;
-        public bool attack2 = false;
-        public bool attack3 = false;
     }
     public ControlState CurrentControl { get; private set; }
     #endregion
@@ -231,6 +228,102 @@ public class Golem : Entity
         hitBox.hitCollider = null;
         hitBox.PostDiscreteHit();
     }
+
+    public bool jumpGiveSpeed = false;
+    float jumpInitHeight = 0f;
+    bool JumpHighEnough => transform.position.y - jumpInitHeight > 4;
+    public void EnterJump()
+    {
+        animEnd = false;
+        animator.Play(ANIM_START_JUMP);
+        jumpInitHeight = transform.position.y;
+        jumpGiveSpeed = false;
+    }
+
+    public void UpdateJump()
+    {
+        if (animEnd)
+        {
+            animator.Play(ANIM_JUMPING);
+            animEnd = false;
+        }
+        if (jumpGiveSpeed)
+        {
+            velocity.x = CurrentControl.speedX;
+            if (JumpHighEnough)
+            {
+                if (velocity.y > 0)
+                {
+                    velocity.y -= 10 * gravity * Time.deltaTime;
+                }
+                else if (velocity.y < 0)
+                {
+                    velocity.y += gravity * Time.deltaTime;
+                }
+            }
+            else
+            {
+                velocity.y = 20;
+            }
+        }
+    }
+
+    public void ExitJump()
+    {
+        animEnd = false;
+        jumpGiveSpeed = false;
+    }
+
+    bool land = false;
+    public void EnterLandAttack()
+    {
+        animEnd = false;
+        animator.Play(ANIM_JUMPING);
+        land = false;
+        velocity.y = -30;
+        hitBox.hitCollider = landAttackCollider;
+        hitBox.PreDiscreteHit();
+        hitBox.genHitInfoEntity += GenLandAttackHitInfo;
+    }
+
+    public void UpdateLandAttack()
+    {
+        if (!isOnGround)
+        {
+            velocity.y = -30;
+        }
+        velocity.x = 0;
+        if (isOnGround && !land)
+        {
+            land = true;
+            animator.Play(ANIM_LAND);
+            // velocity.y = 0;
+            if (data.stage == 2)
+            {
+                // TODO 地波spawner发生地波攻击
+            }
+        }
+        if (hitBoxEnabled)
+        {
+            hitBox.DoHit();
+        }
+    }
+
+    public void ExitLandAttack()
+    {
+        hitBox.PostDiscreteHit();
+        velocity.y = 0;
+        hitBox.genHitInfoEntity -= GenLandAttackHitInfo;
+    }
+
+    HitInfo GenLandAttackHitInfo(Entity target) => new()
+    {
+        attacker = this,
+        damage = 0,
+        force = new Vector2(target.transform.position.x - transform.position.x > 0 ? 1 : -1, 0),
+        hitCollider = landAttackCollider,
+        hitType = HitType.EntityAttack,
+    };
 
     public void EnterDeath()
     {
