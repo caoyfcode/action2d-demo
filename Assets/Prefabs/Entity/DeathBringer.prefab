@@ -45,16 +45,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacker: {fileID: 4879109318323231696}
-  targetFilter:
+  defendFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 2048
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  targetFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
@@ -283,6 +297,11 @@ MonoBehaviour:
   onHitSuccess:
     m_PersistentCalls:
       m_Calls: []
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+  entityFX: {fileID: 0}
+  controller: {fileID: 0}
   velocity: {x: 0, y: 0}
   forceMove: 0
   isOnGround: 0
@@ -297,8 +316,8 @@ MonoBehaviour:
   deathEnd: 0
   attackCancelable: 0
   data:
-    maxHeath: 4
-    heath: 4
+    maxHealth: 5
+    health: 5
     maxMagic: 0
     magic: 0
     attack: 0
@@ -420,6 +439,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacker: {fileID: 4879109318323231696}
+  defendFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 2048
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   targetFilter:
     useTriggers: 0
     useLayerMask: 1
@@ -429,7 +462,7 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 2112
+      m_Bits: 64
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0

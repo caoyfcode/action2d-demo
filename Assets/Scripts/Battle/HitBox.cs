@@ -7,6 +7,7 @@ using UnityEngine;
 public class HitBox : MonoBehaviour
 {
     public Entity attacker;
+    public ContactFilter2D defendFilter;
     public ContactFilter2D targetFilter;
     public int maxHitNum = 5; // 同时碰撞的最多数量
 
@@ -44,9 +45,8 @@ public class HitBox : MonoBehaviour
 
     public int DoHit()
     {
-        int hitNum = hitCollider.OverlapCollider(targetFilter, hitResults);
-        int num = 0;
-        for (int i = 0; i < hitNum; i++)
+        int defendtNum = hitCollider.OverlapCollider(defendFilter, hitResults);
+        for (int i = 0; i < defendtNum; i++)
         {
             DefendBox defendBox = hitResults[i].GetComponent<DefendBox>();
             if (!defendBox)
@@ -68,6 +68,8 @@ public class HitBox : MonoBehaviour
                 defendBox.Defend(hitInfo);
             }
         }
+        int hitNum = hitCollider.OverlapCollider(targetFilter, hitResults);
+        int num = 0;
         for (int i = 0; i < hitNum; i++)
         {
             Entity target = hitResults[i].GetComponentInParent<Entity>();

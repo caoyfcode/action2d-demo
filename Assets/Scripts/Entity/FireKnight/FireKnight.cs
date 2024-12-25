@@ -152,10 +152,10 @@ public class FireKnight : Entity
         base.TakeHit(hitInfo);
         
         hitInvincibleTimer = data.hitInvincibleTime;
-        data.heath -= hitInfo.damage;
+        data.health -= hitInfo.damage;
         AddForce(hitInfo.force);
 
-        if (data.heath <= Mathf.Epsilon)
+        if (data.health <= Mathf.Epsilon)
         {
             Die();
         }

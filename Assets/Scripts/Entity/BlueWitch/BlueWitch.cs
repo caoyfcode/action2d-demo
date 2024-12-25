@@ -234,7 +234,7 @@ public class BlueWitch : Entity
     {
         base.TakeHit(hitInfo);
         Game.CameraController.StartShake(hitInfo.force, 0.2f, 10);
-        data.heath -= hitInfo.damage;
+        data.health -= hitInfo.damage;
         hitInvincibleTimer = data.hitInvincibleTime;
         hitStunTimer = data.hitStunTime;
         AddForce(hitInfo.force);
@@ -243,7 +243,7 @@ public class BlueWitch : Entity
 
     public void Heal()
     {
-        data.heath = data.maxHeath;
+        data.health = data.maxHealth;
         data.magic = data.maxMagic;
         airJumpCount = 0;
         airAttackCount = 0;

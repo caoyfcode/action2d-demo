@@ -48,6 +48,13 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8209172396341373964, guid: b40b72faa422d8841bfbbe21d0ea50f0, type: 3}
   spawnedObject: {fileID: 0}
   spawned: 0
+  roomCollider: {fileID: 0}
+  room:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!61 &8176897824888725722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9078,7 +9085,7 @@ GameObject:
   - component: {fileID: 3887533573843329563}
   - component: {fileID: 7343216536330834913}
   m_Layer: 13
-  m_Name: SpawnFireKnight (1)
+  m_Name: SpawnGolem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9114,6 +9121,13 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3711257285501836753, guid: a5d106556f30f2141b8d0db5bd45cdcb, type: 3}
   spawnedObject: {fileID: 0}
   spawned: 0
+  roomCollider: {fileID: 7343216536330834913}
+  room:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!61 &7343216536330834913
 BoxCollider2D:
   m_ObjectHideFlags: 0

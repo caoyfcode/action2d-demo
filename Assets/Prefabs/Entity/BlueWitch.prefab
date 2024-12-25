@@ -1396,8 +1396,8 @@ MonoBehaviour:
   spawnAfterImage: {fileID: 9119825104150118189}
   wallSlideCrow: {fileID: 3630276310687107848}
   data:
-    maxHeath: 5
-    heath: 5
+    maxHealth: 5
+    health: 5
     maxMagic: 5
     magic: 5
     attack: 0

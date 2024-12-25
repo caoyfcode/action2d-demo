@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NodeCanvas.StateMachines;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Golem : Entity
@@ -98,7 +99,7 @@ public class Golem : Entity
         base.TakeHit(hitInfo);
         
         hitInvincibleTimer = data.hitInvincibleTime;
-        data.heath -= hitInfo.damage;
+        data.health -= hitInfo.damage;
         stunCounter++;
         // AddForce(hitInfo.force);
         if (stunCounter >= data.stunCount && fsm.currentDeepStateName != FSM_STUN)
@@ -107,7 +108,7 @@ public class Golem : Entity
             stunCounter = 0;
         }
 
-        if (data.heath <= Mathf.Epsilon)
+        if (data.health <= Mathf.Epsilon)
         {
             Die();
         }
@@ -193,7 +194,6 @@ public class Golem : Entity
     }
 
     public float attack2SpeedY = 0;
-    public bool attack2Fall = false;
     public void EnterAttack2()
     {
         animEnd = false;
@@ -202,7 +202,6 @@ public class Golem : Entity
         velocity.y = 0;
         hitBox.hitCollider = attack2Collider;
         hitBox.PreDiscreteHit();
-        attack2Fall = false;
         attack2SpeedY = 0;
     }
 
@@ -212,7 +211,8 @@ public class Golem : Entity
         {
             hitBox.DoHit();
         }
-        if (!attack2Fall)
+        velocity.y = attack2SpeedY;
+        if (velocity.y > 0)
         {
             velocity.x = CurrentControl.speedX;
         }
@@ -220,7 +220,6 @@ public class Golem : Entity
         {
             velocity.x = 0;
         }
-        velocity.y = attack2SpeedY;
     }
 
     public void ExitAttack2()

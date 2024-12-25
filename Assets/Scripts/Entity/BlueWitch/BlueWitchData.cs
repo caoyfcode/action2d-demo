@@ -9,13 +9,13 @@ public class BlueWitchData : CharacterData
     public bool dashAbility = true;
     public bool wallSlideAbility = true;
     [Header("BlueWitch Constant")]
-    internal float horizontalMoveSpeed = 6f;
+    internal float horizontalMoveSpeed = 8f;
     internal float jumpSpeed = 12f;
     internal float airJumpSpeed = 12f;
-    internal float maxJumpTime = 0.3f;
+    internal float maxJumpTime = 0.35f;
     internal float minKeepDirectionTime = 0.15f; // 爬墙跳后 keepDirection, 直到到达最小保持时间且输入反向或跳跃结束
     internal float dashTime = 0.2f;
-    internal float dashSpeed = 18f;
+    internal float dashSpeed = 25f;
     internal float dashCoolDownTime = 0.5f; // 0.2+0.3 相邻两次 dash 的冷却时间
     internal float wallSlideSpeed = 2f;
     internal float attackComboTime = 0.3f;

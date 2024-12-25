@@ -10,7 +10,6 @@ public class CollisionHitBox : HitBox
     protected override void Start()
     {
         base.Start();
-        targetFilter.SetLayerMask(LayerMask.GetMask("Player") | LayerMask.GetMask("PlayerDefend"));
         genHitInfoEntity = GenHitInfoEntity;
         hitContinuousType = HitContinuousType.Continuous;
     }

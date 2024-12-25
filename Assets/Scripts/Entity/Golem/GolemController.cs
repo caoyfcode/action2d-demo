@@ -8,7 +8,9 @@ public class GolemController : EntityController
 {
     public Golem entity;
     public BehaviourTreeOwner behaviourTree;
+    public Rect bossRoom;
     float jumpLandAttackCoolDown = 0;
+    float attackCoolDown = 0;
 
 
     void Awake()
@@ -25,14 +27,25 @@ public class GolemController : EntityController
 
     public override void UpdateCommand()
     {
+        if (entity.data.stage == 1 && entity.data.health < entity.data.maxHealth / 2)
+        {
+            entity.data.stage = 2;
+        }
         behaviourTree.Tick();
         if (jumpLandAttackCoolDown > 0)
             jumpLandAttackCoolDown -= Time.deltaTime;
+        if (attackCoolDown > 0)
+            attackCoolDown -= Time.deltaTime;
     }
 
     public override void OnStartBossFight()
     {
         
+    }
+
+    public override void SetBossRoom(Rect room)
+    {
+        bossRoom = room;
     }
 
     #region Behaviour Tree Functions
@@ -42,16 +55,21 @@ public class GolemController : EntityController
         return Mathf.Abs(Game.Player.transform.position.x - entity.transform.position.x) > distance;
     }
 
+    // 2 for ground fllow, 0.5 for air follow
     public Status FollowPlayerNormal(float distance=2f) => FollowPlayer(distance, 1f);
 
-    // 2 for ground fllow, 0.5 for air follow
     // 参数多于 1 个，不能直接用于行为树
     public Status FollowPlayer(float distance=2f, float speedScale=1f)
     {
         float diff = Game.Player.transform.position.x - entity.transform.position.x;
         if (Mathf.Abs(diff) < distance)
             return Status.Success;
-        entity.CurrentControl.speedX = speedScale * entity.data.moveSpeed * (diff > 0 ? 1 : -1);
+        float moveDirection = diff > 0 ? 1 : -1;
+        if (moveDirection < 0 && entity.transform.position.x - bossRoom.xMin < 2 * distance)
+            return Status.Success;
+        if (moveDirection > 0 && bossRoom.xMax - entity.transform.position.x < 2 * distance)
+            return Status.Success;
+        entity.CurrentControl.speedX = speedScale * entity.data.moveSpeed * moveDirection;
         return Status.Running;
     }
 
@@ -63,7 +81,7 @@ public class GolemController : EntityController
 
     public bool CheckCanAttack()
     {
-        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN;
+        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN && attackCoolDown <= 0;
     }
 
     public Status StartAttack(int index)
@@ -76,7 +94,10 @@ public class GolemController : EntityController
         };
         var newState = entity.fsm.TriggerState(name);
         if (newState.name == name)
+        {
+            attackCoolDown = entity.data.attackCoolDownTime;
             return Status.Success;
+        }
         return Status.Failure;
     }
 
@@ -88,9 +109,20 @@ public class GolemController : EntityController
             3 => Golem.FSM_ATTACK_3,
             _ => "",
         };
+        if (index == 2 && entity.fsm.currentDeepStateName == Golem.FSM_ATTACK_2)
+        {
+            if (entity.FacingDirection * (Game.Player.transform.position.x - entity.transform.position.x) > 2)
+            {
+                entity.CurrentControl.speedX = entity.data.moveSpeed * entity.FacingDirection;
+            }
+        } 
         return entity.fsm.currentDeepStateName == name ? Status.Running : Status.Success;
     }
 
+    public bool CheckCanJumpLandAttack()
+    {
+        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN && jumpLandAttackCoolDown <= 0;
+    }
     float airAimPlayerTime = 0f;
     float airNearPlayerTime = 0f;
     public Status StartJump()
@@ -99,10 +131,12 @@ public class GolemController : EntityController
         airNearPlayerTime = 0;
         var newState = entity.fsm.TriggerState(Golem.FSM_JUMP);
         if (newState.name == Golem.FSM_JUMP)
+        {
+            jumpLandAttackCoolDown = entity.data.jumpLandAttackCoolDownTime;
             return Status.Success;
+        }
         return Status.Failure;
     }
-
     public Status AirAimPlayer()
     {
         airAimPlayerTime += Time.deltaTime;
@@ -115,15 +149,13 @@ public class GolemController : EntityController
             airNearPlayerTime += Time.deltaTime;
         }
 
-        // 瞄准到了足够长时间或者timeout, 结束瞄准状态
-        if (airNearPlayerTime >= 0.2f || airAimPlayerTime >= 1f)
+        if (airNearPlayerTime >= 0.2f || airAimPlayerTime >= 1)
         {
             return Status.Success;
         }
         FollowPlayer(0.5f, 2);
         return Status.Running;
     }
-
     public Status StartLand()
     {
         var newState = entity.fsm.TriggerState(Golem.FSM_LAND_ATTACK);

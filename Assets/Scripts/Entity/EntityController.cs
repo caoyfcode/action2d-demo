@@ -10,6 +10,7 @@ public abstract class EntityController : MonoBehaviour
     public abstract void UpdateCommand();
     // 作为 boss 时有用
     public virtual void OnStartBossFight() {}
+    public virtual void SetBossRoom(Rect room) {}
 }
 
 // TODO 之后改为下面方法所表示的
