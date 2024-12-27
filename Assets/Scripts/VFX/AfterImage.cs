@@ -7,15 +7,16 @@ using UnityEngine;
 public class AfterImage : MonoBehaviour
 {
     public SpriteRenderer sr;
-    public Color color;
     private float timer = 0;
+    private float aliveTime = 0f;
 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-        // color.a = Mathf.Clamp01(0.8f * timer / aliveTime);
-        // sr.color = color;
+        Color color = sr.color;
+        color.a = Mathf.Clamp01(timer / aliveTime);
+        sr.color = color;
         if (timer <= 0)
         {
             Destroy(gameObject);
@@ -26,5 +27,6 @@ public class AfterImage : MonoBehaviour
     public void SetAliveTime(float aliveTime)
     {
         timer = aliveTime;
+        this.aliveTime = aliveTime;
     }
 }

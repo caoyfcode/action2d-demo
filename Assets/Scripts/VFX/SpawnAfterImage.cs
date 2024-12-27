@@ -7,8 +7,8 @@ public class SpawnAfterImage : MonoBehaviour
 {
     public SpriteRenderer source;
     private float timer = 0;
-    public float maxAliveTime = 0.25f;
-    public float spawnDuration = 0.04f;
+    public float maxAliveTime = 0.2f;
+    public float spawnDuration = 0.015f;
     private bool _spawn = false;
     public bool Spawn
     {
@@ -27,26 +27,20 @@ public class SpawnAfterImage : MonoBehaviour
     }
     public float totalTime;
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!_spawn)
             return;
-        timer -= Time.fixedDeltaTime;
-        totalTime += Time.fixedDeltaTime;
+        timer -= Time.deltaTime;
+        totalTime += Time.deltaTime;
         if (timer <= 0)
         {
             timer = spawnDuration;
             var obj = Instantiate(Game.VFXLoader.afterImagePrefab, transform.position, transform.rotation);
             var afterImage = obj.GetComponent<AfterImage>();
             afterImage.sr.sprite = source.sprite;
+            afterImage.sr.renderingLayerMask = source.renderingLayerMask;
             afterImage.SetAliveTime(maxAliveTime - totalTime);
         }
-    }
-
-    public void SpawnOne()
-    {
-        var obj = Instantiate(Game.VFXLoader.afterImagePrefab, transform.position, transform.rotation);
-        var afterImage = obj.GetComponent<AfterImage>();
-        afterImage.sr.sprite = source.sprite;
     }
 }
