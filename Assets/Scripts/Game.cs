@@ -11,8 +11,6 @@ public class Game : SingletonBase<Game>
     public static Camera Camera => instance.cam;
     public static Dictionary<Vector2Int, string> LevelPath = new()
     {
-        {new Vector2Int(-100, 0), "SampleLevel_0"}, // 用 -100 是为了与正常场景区分开
-        {new Vector2Int(-100, 1), "SampleLevel_1"},
         {new Vector2Int(0, 0), "Level_00_00"},
         {new Vector2Int(0, -1), "Level_00_m01"},
         {new Vector2Int(1, 0), "Level_01_00"},
