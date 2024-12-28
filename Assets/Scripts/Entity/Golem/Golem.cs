@@ -14,8 +14,9 @@ public class Golem : Entity
     const string ANIM_START_JUMP = "StartJump";
     const string ANIM_JUMPING = "Jumping";
     const string ANIM_LAND = "Land";
-    const string ANIM_Walk = "Walk";
-    const string ANIM_Stun = "Stun"; // 晕倒, 硬直状态
+    const string ANIM_WALK = "Walk";
+    const string ANIM_STUN = "Stun"; // 晕倒, 硬直状态
+    const string ANIM_SPRINT = "Sprint";
 
     public const string FSM_FREE = "Free";
     public const string FSM_STUN = "Stun";
@@ -23,6 +24,7 @@ public class Golem : Entity
     public const string FSM_ATTACK_2 = "Attack2";
     public const string FSM_ATTACK_3 = "Attack3";
     public const string FSM_JUMP = "Jump";
+    public const string FSM_SPRINT = "Sprint";
     public const string FSM_LAND_ATTACK = "LandAttack";
     public const string FSM_DEATH = "Death";
 
@@ -32,13 +34,15 @@ public class Golem : Entity
     public Collider2D attack2Collider;
     public Collider2D attack3Collider;
     public Collider2D landAttackCollider;
+    public HitBox sprintHitBox;
+    public SpawnAfterImage spawnAfterImage;
 
     #region ControlState
     public class ControlState
     {
         public float speedX = 0;
     }
-    public ControlState CurrentControl { get; private set; }
+    public ControlState CurrentControl { get; private set; } = new();
     #endregion
 
     #region Status
@@ -126,6 +130,7 @@ public class Golem : Entity
     #region StateMachine Functions
     public void EnterFree()
     {
+        velocity.y = 0;
     }
 
     public void UpdateFree()
@@ -137,7 +142,7 @@ public class Golem : Entity
         }
         else
         {
-            animator.Play(ANIM_Walk);
+            animator.Play(ANIM_WALK);
             FacingDirection = CurrentControl.speedX;
             velocity.x = CurrentControl.speedX;
         }
@@ -147,9 +152,10 @@ public class Golem : Entity
     public bool StunEnd => stunTimer <= 0;
     public void EnterStun()
     {
-        animator.Play(ANIM_Stun);
+        animator.Play(ANIM_STUN);
         stunTimer = data.stunTime;
         velocity.x = 0;
+        velocity.y = 0;
     }
 
     public void UpdateStun()
@@ -324,6 +330,32 @@ public class Golem : Entity
         hitType = HitType.EntityAttack,
     };
 
+    public void EnterSprint()
+    {
+        sprintHitBox.hitContinuousType = HitBox.HitContinuousType.Continuous;
+        animator.Play(ANIM_SPRINT);
+    }
+
+    public void UpdateSprint()
+    {
+        sprintHitBox.DoHit();
+        velocity.y = 0;
+        velocity.x = CurrentControl.speedX;
+        if (velocity.x != 0 && !spawnAfterImage.Spawn)
+        {
+            spawnAfterImage.Spawn = true;
+        }
+        else if (velocity.x == 0 && spawnAfterImage.Spawn)
+        {
+            spawnAfterImage.Spawn = false;
+        }
+    }
+
+    public void ExitSprint()
+    {
+        spawnAfterImage.Spawn = false;
+    }
+
     public void EnterDeath()
     {
         animEnd = false;
@@ -334,6 +366,8 @@ public class Golem : Entity
 
     public void UpdateDeath()
     {
+        velocity.x = 0;
+        velocity.y = 0;
         if (animEnd)
         {
             DestoryEntity();

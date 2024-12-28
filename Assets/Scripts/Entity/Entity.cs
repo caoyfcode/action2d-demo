@@ -72,6 +72,7 @@ public class Entity : MonoBehaviour
     protected ContactFilter2D envCastFilter;
     private RaycastHit2D[] castHits = new RaycastHit2D[5];
     private Collider2D[] overlapHits = new Collider2D[5];
+    private bool isFirstFrame = true;
 
 
     protected virtual void Awake()
@@ -96,16 +97,17 @@ public class Entity : MonoBehaviour
         {
             controller = GetComponent<EntityController>();
         }
+        envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
+        _facingDirection = transform.right.x > 0 ? 1 : -1; // 向右为正
     }
 
     protected virtual void Start()
     {
-        envCastFilter.SetLayerMask(LayerMask.GetMask("Environment"));
         if (controller)
         {
             controller.Init();
         }
-        _facingDirection = transform.right.x > 0 ? 1 : -1; // 向右为正
+        isFirstFrame = true;
     }
 
     protected virtual void Update()
@@ -125,10 +127,11 @@ public class Entity : MonoBehaviour
             forceMove = 0;
         }
 
-        if (controller)
+        if (controller && !isFirstFrame && !isDead)
         {
             controller.UpdateCommand();
         }
+        isFirstFrame = false;
     }
 
     // 在 Update 末设置 rigidbody 速度前调用

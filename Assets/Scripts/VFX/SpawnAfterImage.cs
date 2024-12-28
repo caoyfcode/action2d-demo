@@ -9,6 +9,7 @@ public class SpawnAfterImage : MonoBehaviour
     private float timer = 0;
     public float maxAliveTime = 0.2f;
     public float spawnDuration = 0.015f;
+    public AliveTimeType aliveTimeType = AliveTimeType.FirstMaxTime;
     private bool _spawn = false;
     public bool Spawn
     {
@@ -26,6 +27,11 @@ public class SpawnAfterImage : MonoBehaviour
         }
     }
     public float totalTime;
+    public enum AliveTimeType
+    {
+        FirstMaxTime,
+        AllMaxTime,
+    }
 
     private void Update()
     {
@@ -40,7 +46,10 @@ public class SpawnAfterImage : MonoBehaviour
             var afterImage = obj.GetComponent<AfterImage>();
             afterImage.sr.sprite = source.sprite;
             afterImage.sr.renderingLayerMask = source.renderingLayerMask;
-            afterImage.SetAliveTime(maxAliveTime - totalTime);
+            if (aliveTimeType == AliveTimeType.FirstMaxTime)
+                afterImage.SetAliveTime(maxAliveTime - totalTime);
+            else
+                afterImage.SetAliveTime(maxAliveTime);
         }
     }
 }

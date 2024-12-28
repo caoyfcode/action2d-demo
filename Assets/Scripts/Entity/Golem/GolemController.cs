@@ -36,6 +36,8 @@ public class GolemController : EntityController
             jumpLandAttackCoolDown -= Time.deltaTime;
         if (attackCoolDown > 0)
             attackCoolDown -= Time.deltaTime;
+        if (sprintCoolDown > 0)
+            sprintCoolDown -= Time.deltaTime;
     }
 
     public override void OnStartBossFight()
@@ -170,6 +172,56 @@ public class GolemController : EntityController
     }
 
     public bool RandomBool(float p) => Random.Range(0f, 1f) < p;
+
+
+    float sprintCoolDown = 0;
+    public bool CheckCanSprint()
+    {
+        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN && sprintCoolDown <= 0 && entity.data.stage == 2;
+    }
+    public Status FlipFacingDirection()
+    {
+        entity.FacingDirection *= -1;
+        return Status.Success;
+    }
+    float sprintTimer = 0;
+    public Status StartSprint()
+    {
+        var newState = entity.fsm.TriggerState(Golem.FSM_SPRINT);
+        if (newState.name == Golem.FSM_SPRINT)
+        {
+            sprintTimer = entity.data.maxSprintTime;
+            sprintCoolDown = entity.data.sprintCoolDownTime;
+            return Status.Success;
+        }
+        Debug.LogError("Failed to start sprint");    
+        return Status.Failure;
+    }
+
+    public Status GiveSprintSpeedToEnd()
+    {
+        if (entity.fsm.currentDeepStateName != Golem.FSM_SPRINT)
+        {
+            return Status.Success;
+        }
+        sprintTimer -= Time.deltaTime;
+        if ((entity.FacingDirection < 0 && entity.transform.position.x - bossRoom.xMin < 1) ||
+            (entity.FacingDirection > 0 && bossRoom.xMax - entity.transform.position.x < 1) ||
+            sprintTimer <= 0)
+        {
+            entity.CurrentControl.speedX = 0;
+            if (entity.fsm.TriggerState(Golem.FSM_FREE).name == Golem.FSM_FREE)
+            {
+                return Status.Success;
+            }
+            return Status.Running;
+        }
+        else
+        {
+            entity.CurrentControl.speedX = entity.data.sprintSpeed * entity.FacingDirection;
+            return Status.Running;
+        }
+    }
 
     #endregion
 }
