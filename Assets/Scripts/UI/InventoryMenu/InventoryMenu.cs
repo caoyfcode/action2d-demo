@@ -8,6 +8,7 @@ public class InventoryMenu : Menu
     public ItemBox mapHeader;
     public ItemBox inventoryHeader;
     public ItemBox questHeader;
+    public InventoryMap map;
     public Inventory inventory;
     public int selectedMenu = 1; // 0: Map, 1: Inventory, 2: Quest
     
@@ -39,18 +40,21 @@ public class InventoryMenu : Menu
                 mapHeader.selected = true;
                 inventoryHeader.selected = false;
                 questHeader.selected = false;
+                map.Shown = true;
                 inventory.Shown = false;
                 break;
             case 1:
                 mapHeader.selected = false;
                 inventoryHeader.selected = true;
                 questHeader.selected = false;
+                map.Shown = false;
                 inventory.Shown = true;
                 break;
             case 2:
                 mapHeader.selected = false;
                 inventoryHeader.selected = false;
                 questHeader.selected = true;
+                map.Shown = false;
                 inventory.Shown = false;
                 break;
             default:
