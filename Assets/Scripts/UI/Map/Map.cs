@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    public MapData mapData;
     public GameObject mapPiecePrefab;
     public float resetScale = 5f;
     private Dictionary<Vector2Int, MapPiece> piceces = new();
@@ -22,15 +21,14 @@ public class Map : MonoBehaviour
     {
         if (piceces.Count == 0)
         {
-            foreach (var piece in mapData.mapPieceDataList)
+            foreach (var level in Game.instance.levelData.levelDataList)
             {
-                var obj = Instantiate(mapPiecePrefab, new Vector3(piece.mapRect.x, piece.mapRect.y, 0), Quaternion.identity, transform);
+                var obj = Instantiate(mapPiecePrefab, transform);
                 var comp = obj.GetComponent<MapPiece>();
-                comp.backRectTransform.sizeDelta = new Vector2(piece.mapRect.width, piece.mapRect.height);
-                // comp.foreRectTransform.sizeDelta = new Vector2(piece.mapRect.width, piece.mapRect.height);
-                comp.foreground.sprite = piece.sprite;
-                comp.backRectTransform.localPosition = new Vector3(piece.mapRect.x, piece.mapRect.y, 0);
-                piceces.Add(piece.index, comp);
+                comp.backRectTransform.sizeDelta = new Vector2(level.rect.width, level.rect.height);
+                comp.foreground.sprite = level.mapSprite;
+                comp.backRectTransform.localPosition = new Vector3(level.rect.x, level.rect.y, 0);
+                piceces.Add(level.index, comp);
             }
         }
         ResetScale();
@@ -47,16 +45,18 @@ public class Map : MonoBehaviour
 
     public Vector2 CenterPosition
     {
-        get => -transform.position;
-        set => transform.position = -value;
+        get => -transform.localPosition / Scale;
+        set => transform.localPosition = -value * Scale;
     }
 
+    // 移动速度单位为屏幕像素
     public void Move(Vector2 direction, float speed=moveSpeed)
     {
         direction.Normalize();
-        CenterPosition += speed * Time.deltaTime * direction;
+        CenterPosition += speed / Scale * Time.deltaTime * direction;
     }
 
+    // 移动速度单位为地图中单位1
     public void MoveTo(Vector2 targetPos)
     {
         Vector2 diff = targetPos - CenterPosition;
@@ -66,9 +66,10 @@ public class Map : MonoBehaviour
         }
         else
         {
-            Move(diff.normalized, Mathf.Clamp01(diff.magnitude / 1000) * (maxMoveSpeed - moveSpeed) + moveSpeed);
+            Move(diff.normalized, Scale * (Mathf.Clamp01(diff.magnitude / 1000) * (maxMoveSpeed - moveSpeed) + moveSpeed));
         }
     }
+
 
     public void ChangeScale(float scaleSpeed)
     {

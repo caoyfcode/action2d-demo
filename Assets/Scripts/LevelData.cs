@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MapData", menuName = "ScriptableObject/LevelData", order = 3)]
+[CreateAssetMenu(fileName = "MapData", menuName = "ScriptableObject/LevelData", order = 2)]
 public class LevelData : ScriptableObject
 {
-    // TODO 所有 Data 类放入单独目录, Level 类中加入 index
-
     [System.Serializable]
     public class Data
     {
@@ -17,9 +16,9 @@ public class LevelData : ScriptableObject
         [Tooltip("(x, y) 中心点坐标, (W, H) 地图宽高, 用于地图绘制")]
         public Rect rect;
         [Tooltip("地图块的 Sprite, 用于地图绘制")]
-        public Sprite sprite;
+        public Sprite mapSprite;
         public bool hasCheckpoint;
-        public Vector2 chheckpointPosition;
+        public Vector2 checkpointPosition;
         public string checkpointName = "默认名称";
     }
 
@@ -32,30 +31,40 @@ public class LevelData : ScriptableObject
 
     public List<Data> levelDataList = new();
     [System.NonSerialized]
-    public Dictionary<Vector2Int, Data> levelData = new();
+    public Dictionary<Vector2Int, Data> levelDataMap = new();
     [System.NonSerialized]
     public List<CheckpointData> checkpointList = new();
 
 
     void OnEnable()
     {
+        levelDataMap.Clear();
         foreach (var item in levelDataList)
         {
-            levelData.Add(item.index, item);
+            levelDataMap.Add(item.index, item);
             if (item.hasCheckpoint)
             {
                 checkpointList.Add(new CheckpointData
                 {
                     index = item.index,
                     name = item.checkpointName,
-                    position = item.chheckpointPosition
+                    position = item.checkpointPosition
                 });
             }
         }
     }
 
-    public string GetReourcePath(Vector2Int index)
+    public string GetResourcePath(Vector2Int index)
     {
-        return "";
+        return levelDataMap.ContainsKey(index) ? levelDataMap[index].resourcePath : null;
+    }
+
+    public Vector2 GetCheckpointPosition(Vector2Int index)
+    {
+        if (levelDataMap.ContainsKey(index) && levelDataMap[index].hasCheckpoint)
+        {
+            return levelDataMap[index].checkpointPosition;
+        }
+        return Vector2.zero;
     }
 }

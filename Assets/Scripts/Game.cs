@@ -9,12 +9,6 @@ public class Game : SingletonBase<Game>
 {
     public static BlueWitch Player => instance.player;
     public static Camera Camera => instance.cam;
-    public static Dictionary<Vector2Int, string> LevelPath = new()
-    {
-        {new Vector2Int(0, 0), "Level_00_00"},
-        {new Vector2Int(0, -1), "Level_00_m01"},
-        {new Vector2Int(1, 0), "Level_01_00"},
-    };
 
     public static Level CurrentLevel => instance.currentLevel;
     public static CameraController CameraController => instance.cameraController;
@@ -52,6 +46,7 @@ public class Game : SingletonBase<Game>
     VFXLoader vfxLoader;
     [SerializeField]
     BossSystem bossSystem;
+    public LevelData levelData;
     public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
     public bool debugPause = false;
     public float debugShowFPS = 0f;
@@ -106,16 +101,23 @@ public class Game : SingletonBase<Game>
 
     IEnumerator LoadLevel(Vector2Int levelIndex)
     {
-        string level = LevelPath[levelIndex];
-        var request = Resources.LoadAsync(level);
-        yield return request;
-        Destroy(currentLevel.gameObject);
-        SetCurrentLevel(null);
-        GameObject prefab = request.asset as GameObject;
-        GameObject obj = Instantiate(prefab);
-        obj.transform.SetParent(levelContainer.transform);
-        SetCurrentLevel(obj.GetComponent<Level>());
-        yield return Resources.UnloadUnusedAssets();
+        string level = levelData.GetResourcePath(levelIndex);
+        if (level != null)
+        {
+            var request = Resources.LoadAsync(level);
+            yield return request;
+            Destroy(currentLevel.gameObject);
+            SetCurrentLevel(null);
+            GameObject prefab = request.asset as GameObject;
+            GameObject obj = Instantiate(prefab);
+            obj.transform.SetParent(levelContainer.transform);
+            SetCurrentLevel(obj.GetComponent<Level>());
+            yield return Resources.UnloadUnusedAssets();
+        }
+        else
+        {
+            Debug.LogError("Level not found: " + levelIndex);
+        }
         isLoadingLevel = false;
         Pause = false;
         cameraController.FitRoomSize();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryMap : Menu
 {
-    public Map mapTotal;
+    public Map map;
 
     void Update()
     {
@@ -26,7 +26,7 @@ public class InventoryMap : Menu
             _ => 0
         };
         var move = new Vector2(moveX, moveY);
-        mapTotal.Move(move);
+        map.Move(move);
 
         bool scaleBig = Input.GetKey(KeyCode.K);
         bool scaleSmall = Input.GetKey(KeyCode.J);
@@ -36,6 +36,6 @@ public class InventoryMap : Menu
             (false, true) => -1f,
             _ => 0
         };
-        mapTotal.ChangeScale(scaleAdd * 2);
+        map.ChangeScale(scaleAdd * 2);
     }
 }
