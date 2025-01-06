@@ -13,149 +13,150 @@ MonoBehaviour:
   m_Name: InputIconMap
   m_EditorClassIdentifier: 
   keyboardIconMap:
-  - name: 'Escape '
-    sprite: {fileID: 21300000, guid: fb58577992626b64797d37ce4f57ebd5, type: 3}
+  - name: 'escape '
+    sprite: {fileID: 21300000, guid: 57466e808c6b2d84cb7d2918d010fb6e, type: 3}
   - name: ~
-    sprite: {fileID: 21300000, guid: 954618fe988d27e48882ca05398d1716, type: 3}
+    sprite: {fileID: 21300000, guid: 1555c011dffbf384d843a0478bc2f30e, type: 3}
   - name: 1
-    sprite: {fileID: 21300000, guid: 94390ca69f5eb644f8cd8bddc18a20b3, type: 3}
+    sprite: {fileID: 21300000, guid: b107f11f32300ba46bb768c7da33e02c, type: 3}
   - name: 2
-    sprite: {fileID: 21300000, guid: 21f6e92771daeeb40b3b659c486c1763, type: 3}
+    sprite: {fileID: 21300000, guid: 36211f112cbd93d41a3b658c75dc7268, type: 3}
   - name: 3
-    sprite: {fileID: 21300000, guid: dfd0b4aa5a9e71b4f8a69654528a9ef5, type: 3}
+    sprite: {fileID: 21300000, guid: 10d799b42e633424ebdfad74c6b1fb2d, type: 3}
   - name: 4
-    sprite: {fileID: 21300000, guid: 9530a22ebcd233546b49622ece8b1299, type: 3}
+    sprite: {fileID: 21300000, guid: 958d35c79acc6524e85d9ad4a206844c, type: 3}
   - name: 5
-    sprite: {fileID: 21300000, guid: 28fcc1eaaf63bf74a8859237009b4f5a, type: 3}
+    sprite: {fileID: 21300000, guid: 7aede797d5588cd4f8f1f63f1f497ab1, type: 3}
   - name: 6
-    sprite: {fileID: 21300000, guid: c2f3da78a6bafbb46aebdb5bec1fe49a, type: 3}
+    sprite: {fileID: 21300000, guid: 6b46527298c652042914264d32f4339d, type: 3}
   - name: 7
-    sprite: {fileID: 21300000, guid: d369bff121abbb34291ab293b2ac3a46, type: 3}
+    sprite: {fileID: 21300000, guid: 0c083e33738f0a8428a31dc3cc59f79e, type: 3}
   - name: 8
-    sprite: {fileID: 21300000, guid: cf2097b2f8d59af468e0a1f2167559ca, type: 3}
+    sprite: {fileID: 21300000, guid: 763312252678099409845113851e51ff, type: 3}
   - name: 9
-    sprite: {fileID: 21300000, guid: 9f5a1a2b6bbb360478a6efdb5a8d289d, type: 3}
+    sprite: {fileID: 21300000, guid: 409e8fcdf4372f14ebde092f2cbefe4b, type: 3}
   - name: 0
-    sprite: {fileID: 21300000, guid: c071dbaf491ba0b44b222a76e914566a, type: 3}
+    sprite: {fileID: 21300000, guid: f1b3086ab4f6fd340baae15d49a8973a, type: 3}
   - name: '-'
-    sprite: {fileID: 21300000, guid: 85734d672534e4f45b2b553da20e8391, type: 3}
+    sprite: {fileID: 21300000, guid: 21e1e06c1c6da9b47b64194307bbf3d7, type: 3}
   - name: +
-    sprite: {fileID: 21300000, guid: 083cae10ff16e194d9dfee2d29cca947, type: 3}
-  - name: Tab
-    sprite: {fileID: 21300000, guid: b2ce11f18f552d94d9965d57e2ce1a01, type: 3}
-  - name: Q
-    sprite: {fileID: 21300000, guid: 20dfeb10c9920a043b6c7597660cec80, type: 3}
-  - name: W
-    sprite: {fileID: 21300000, guid: 49a4db0a31cd3eb42a8c2bd9bf5c04eb, type: 3}
-  - name: E
-    sprite: {fileID: 21300000, guid: ce04e0bdaa5f0774ba3d85d8f3d99a8a, type: 3}
-  - name: R
-    sprite: {fileID: 21300000, guid: ff52f5e6db3ad0540b93a7cb10242ebe, type: 3}
-  - name: T
-    sprite: {fileID: 21300000, guid: a1e47a123fdf709449130fdae6205af3, type: 3}
-  - name: Y
-    sprite: {fileID: 21300000, guid: e3c442e92d6e30f42a8562b8baacc36c, type: 3}
-  - name: U
-    sprite: {fileID: 21300000, guid: 43d68f55342aa5e419e76f2b15c9d193, type: 3}
-  - name: I
-    sprite: {fileID: 21300000, guid: c98a4b0d94da55042a3f2c30ca937919, type: 3}
-  - name: O
-    sprite: {fileID: 21300000, guid: 1d7660f5c8409254b91c642b3e5bd40a, type: 3}
-  - name: P
-    sprite: {fileID: 21300000, guid: 5f71c613eb3f67544b69b9977772ae80, type: 3}
+    sprite: {fileID: 21300000, guid: 36965e55894e7b643814656816c3df2e, type: 3}
+  - name: backspace
+    sprite: {fileID: 21300000, guid: 86e647a666c2b9a4abe54a91c3aaf41f, type: 3}
+  - name: tab
+    sprite: {fileID: 21300000, guid: def1efe2b2c97eb42806c86c99bdf358, type: 3}
+  - name: q
+    sprite: {fileID: 21300000, guid: 8aa2568f18c7d9c4ca3528fa3712b82e, type: 3}
+  - name: w
+    sprite: {fileID: 21300000, guid: 7a17bc40e55cab24c9212bf24b259468, type: 3}
+  - name: e
+    sprite: {fileID: 21300000, guid: 88ae100bd6b68c04c857fc0152cf66c4, type: 3}
+  - name: r
+    sprite: {fileID: 21300000, guid: 311f07efad9c53745bb7a0ccaf9a2200, type: 3}
+  - name: t
+    sprite: {fileID: 21300000, guid: ff70f983d9e2ee643a30badec40b658c, type: 3}
+  - name: y
+    sprite: {fileID: 21300000, guid: 8de63a364b50f794280e605a6609a1f8, type: 3}
+  - name: u
+    sprite: {fileID: 21300000, guid: 214214f934b2c1545b432498e831e927, type: 3}
+  - name: i
+    sprite: {fileID: 21300000, guid: 705845c1a611eaa468f7d44a177e2628, type: 3}
+  - name: o
+    sprite: {fileID: 21300000, guid: 3e8a8247c9ef19946a702734505a7440, type: 3}
+  - name: p
+    sprite: {fileID: 21300000, guid: 709d941cf7cb4724f82d8832f3b372f2, type: 3}
   - name: '['
-    sprite: {fileID: 21300000, guid: 4bb8c5b891e73534c8e118212b8ce72e, type: 3}
+    sprite: {fileID: 21300000, guid: 7e8e897e3b9cd8f498bf250bbf1a91bd, type: 3}
   - name: ']'
-    sprite: {fileID: 21300000, guid: 5c0cdf08d212ea64ea1015d0da54716c, type: 3}
-  - name: '|'
-    sprite: {fileID: 21300000, guid: 988d4e957c098de4a9ae111ca3303584, type: 3}
-  - name: Capslock
-    sprite: {fileID: 21300000, guid: 82f1010e86d6c3b47b0e125fe1a1847b, type: 3}
-  - name: A
-    sprite: {fileID: 21300000, guid: 7f0f54f2bad0b9e448903fe641620e7c, type: 3}
-  - name: S
-    sprite: {fileID: 21300000, guid: 49549c7f098a8154581ff99e2e656df8, type: 3}
-  - name: D
-    sprite: {fileID: 21300000, guid: ad648f4473c0a5c4b9258ea999f80513, type: 3}
-  - name: F
-    sprite: {fileID: 21300000, guid: e8c9d1615a7b39542b7310f0a9f035b2, type: 3}
-  - name: G
-    sprite: {fileID: 21300000, guid: 1e6ca00c594133c4b8f123add4430afb, type: 3}
-  - name: H
-    sprite: {fileID: 21300000, guid: 3100027c4ed69d24a9a61971186925b9, type: 3}
-  - name: J
-    sprite: {fileID: 21300000, guid: 45cf666370959bc40884cc877e3b2e38, type: 3}
-  - name: K
-    sprite: {fileID: 21300000, guid: 67922ecb7269887418fc3e1e1223fe43, type: 3}
-  - name: L
-    sprite: {fileID: 21300000, guid: a33a773b37bf33d4f8124e60e8b56d17, type: 3}
+    sprite: {fileID: 21300000, guid: 38053998c7d92904d92d8a1e19c211e4, type: 3}
+  - name: capslock
+    sprite: {fileID: 21300000, guid: 01f8547f8229ade489aa04e45c663b57, type: 3}
+  - name: a
+    sprite: {fileID: 21300000, guid: cafd9b9409114154c85387306f225dfe, type: 3}
+  - name: s
+    sprite: {fileID: 21300000, guid: 67e6a7f73c3cd9a45b4fd71c48a015c8, type: 3}
+  - name: d
+    sprite: {fileID: 21300000, guid: 231cf561eb92b9c4eb43d0948ce65c20, type: 3}
+  - name: f
+    sprite: {fileID: 21300000, guid: 3d0ccc77a4ac94f40a9cc6c96c76252d, type: 3}
+  - name: g
+    sprite: {fileID: 21300000, guid: 8c19124d88eb6b647871e0ccfe86b602, type: 3}
+  - name: h
+    sprite: {fileID: 21300000, guid: 750f8799e8088b4448567aae45567a9b, type: 3}
+  - name: j
+    sprite: {fileID: 21300000, guid: ef2090739e57d504993ad93191489ba0, type: 3}
+  - name: k
+    sprite: {fileID: 21300000, guid: 48284589e7a79ab4eb3d2b5611f1dbe9, type: 3}
+  - name: l
+    sprite: {fileID: 21300000, guid: c5cf625be699b6741bb8f0b41727cc8b, type: 3}
   - name: ;
-    sprite: {fileID: 21300000, guid: afaafc11458c14e4187ba47e3babbd78, type: 3}
+    sprite: {fileID: 21300000, guid: 74ac593dc1badcb4b828b4a2cc7c7959, type: 3}
   - name: ''''
-    sprite: {fileID: 21300000, guid: 5d35aa5f3adca2744bf5749783740adb, type: 3}
-  - name: Return
-    sprite: {fileID: 21300000, guid: f41ff7fa2b820644fb515a909bd101c5, type: 3}
-  - name: Shift
-    sprite: {fileID: 21300000, guid: 948d23f6f214a2c42a37db6240600411, type: 3}
+    sprite: {fileID: 21300000, guid: 5c17e995f84d3254cac8f5eaff4ff5b0, type: 3}
+  - name: enter
+    sprite: {fileID: 21300000, guid: 5454aa7bdcce66f46a68e5caf79aa315, type: 3}
+  - name: shift
+    sprite: {fileID: 21300000, guid: cfe6083f697b69b499a3c1de339d63c0, type: 3}
   - name: Z
-    sprite: {fileID: 21300000, guid: 065ddbaf1b32321489a7cf01290302bd, type: 3}
+    sprite: {fileID: 21300000, guid: 19bcc3cd49bea6c4dbd5a7eb5684ab36, type: 3}
   - name: X
-    sprite: {fileID: 21300000, guid: 76403c48ac02a2b49a8128186398eeac, type: 3}
+    sprite: {fileID: 21300000, guid: 499040b714edb184495dfa51fa6ce7b9, type: 3}
   - name: C
-    sprite: {fileID: 21300000, guid: 0760371be74e223498c53bcf08a4cf2c, type: 3}
+    sprite: {fileID: 21300000, guid: d917e95c27f9afa47b1b701ad550066f, type: 3}
   - name: V
-    sprite: {fileID: 21300000, guid: 6992900409499ad4e9ec9324cd886ace, type: 3}
+    sprite: {fileID: 21300000, guid: 7994028411fffbf4db7c97c442c1df46, type: 3}
   - name: B
-    sprite: {fileID: 21300000, guid: 7ff3cc0806873504e9abe0f569416163, type: 3}
+    sprite: {fileID: 21300000, guid: 52f5ea66c5a65914bb3c0f3b113614fc, type: 3}
   - name: N
-    sprite: {fileID: 21300000, guid: 5fa4bdab58fa38949b914582559d97a8, type: 3}
+    sprite: {fileID: 21300000, guid: 5fdc4b98266e10d4888989bc97f700e1, type: 3}
   - name: M
-    sprite: {fileID: 21300000, guid: d6cdc0bcc9d103b438e988fb0b08102a, type: 3}
+    sprite: {fileID: 21300000, guid: 00251528876886646bfccb83f8a6623d, type: 3}
   - name: ','
-    sprite: {fileID: 21300000, guid: b3e3f088e116e2947bbe2f2d8e0548f0, type: 3}
+    sprite: {fileID: 21300000, guid: 719bd73da9135b647abba64cad899796, type: 3}
   - name: .
-    sprite: {fileID: 21300000, guid: 90f918ec7bc4574469b0f67c80ef513f, type: 3}
+    sprite: {fileID: 21300000, guid: ed32679e758956140bbc0087c6c29da6, type: 3}
   - name: /
-    sprite: {fileID: 21300000, guid: 4b7859ebe9d424742a4c598ee3ee876e, type: 3}
-  - name: Control
-    sprite: {fileID: 21300000, guid: 4986c0676338d7b4e8380bee15982643, type: 3}
-  - name: Alt
-    sprite: {fileID: 21300000, guid: 521102ad74769ab4c8541cf23c600ce4, type: 3}
-  - name: Space
-    sprite: {fileID: 21300000, guid: a92968369a587b44a9fd27949c391e37, type: 3}
-  - name: UpArrow
-    sprite: {fileID: 21300000, guid: 6bac3886f13168c44886c90ec87d2206, type: 3}
-  - name: DownArrow
-    sprite: {fileID: 21300000, guid: c6b5255febf152e449ba6b23bb7c368f, type: 3}
-  - name: LeftArrow
-    sprite: {fileID: 21300000, guid: ca020f45dd1ce8943bc7d7cf24946e4f, type: 3}
-  - name: RightArrow
-    sprite: {fileID: 21300000, guid: f3f9b95df496af4468784fb07944a15f, type: 3}
+    sprite: {fileID: 21300000, guid: 1ffb644efd1f0ae42be5e58d43494889, type: 3}
+  - name: ctrl
+    sprite: {fileID: 21300000, guid: 9fbe31fc0c6767c49beb9dbd96ff52c2, type: 3}
+  - name: alt
+    sprite: {fileID: 21300000, guid: 04694e440bd20b8449e7d246b49f16fb, type: 3}
+  - name: space
+    sprite: {fileID: 21300000, guid: 5a19eb2c3e9618242a62172846dc7955, type: 3}
+  - name: up
+    sprite: {fileID: 21300000, guid: 28575c81fb940a743aee4bfcd3c73803, type: 3}
+  - name: down
+    sprite: {fileID: 21300000, guid: 9bce74b8728883f4b98b1e4552d49453, type: 3}
+  - name: left
+    sprite: {fileID: 21300000, guid: 333f34ae9eb23b44eb08328c0b1ba868, type: 3}
+  - name: right
+    sprite: {fileID: 21300000, guid: 907ac2d11da641b4ab331baf29a8c0fe, type: 3}
   xboxIconMap:
   - name: button_0
-    sprite: {fileID: 21300000, guid: 09a6e16ee2a31a640b94058652b33901, type: 3}
+    sprite: {fileID: 21300000, guid: 13f36c32fae176e4abced97e1cea8d3e, type: 3}
   - name: button_1
-    sprite: {fileID: 21300000, guid: 408c2dfd652ea484d846fc96448a60be, type: 3}
+    sprite: {fileID: 21300000, guid: f0f1ab21debb81f42bcd0248c8c9319a, type: 3}
   - name: button_2
-    sprite: {fileID: 21300000, guid: 0aef4f48427dafc4e99a490b934c67f8, type: 3}
+    sprite: {fileID: 21300000, guid: bb77ca6d9ce56ea4e9318b8e7f043afb, type: 3}
   - name: button_3
-    sprite: {fileID: 21300000, guid: 6ed7a1170643d4b458b5b0880de5aff6, type: 3}
+    sprite: {fileID: 21300000, guid: d286bc2b555eb094aaf7f145ecc00bb6, type: 3}
   - name: button_4
-    sprite: {fileID: 21300000, guid: 67ab6f15279df174fa2f93b00159b199, type: 3}
+    sprite: {fileID: 21300000, guid: 8d0619e52620268428bc34748a9884c4, type: 3}
   - name: button_5
-    sprite: {fileID: 21300000, guid: f4abfa8113e7cb84eaa08ec7024a1386, type: 3}
+    sprite: {fileID: 21300000, guid: 9d4dbd29fc74e0648a16d7762f9c85ea, type: 3}
   - name: button_6
-    sprite: {fileID: 21300000, guid: 16004460c13253d4d9a0700a94d37688, type: 3}
+    sprite: {fileID: 21300000, guid: 11fba443552bb2447bc71caa9456bc04, type: 3}
   - name: button_7
-    sprite: {fileID: 21300000, guid: fd44aa37d2389dc4a8e85c55220a215c, type: 3}
+    sprite: {fileID: 21300000, guid: f2a36c267bc7ef54b9c3a23d6b7f50c7, type: 3}
   - name: left_stick
-    sprite: {fileID: 21300000, guid: 64bfb71440b1d0749b26a25ff6f8da1a, type: 3}
+    sprite: {fileID: 21300000, guid: 4f62a07925444aa44b4f1e568ad729ee, type: 3}
   - name: right_stick
-    sprite: {fileID: 21300000, guid: 19fdb04ce8ff22142af105b4154401bc, type: 3}
+    sprite: {fileID: 21300000, guid: 399e7704217317f47b849291d762acaf, type: 3}
   - name: left_trigger
-    sprite: {fileID: 21300000, guid: eb01decb8c84daa4bace421e894e06b9, type: 3}
+    sprite: {fileID: 21300000, guid: 7ada48e0200cc254d9eb570d02c467cb, type: 3}
   - name: right_trigger
-    sprite: {fileID: 21300000, guid: 727007f38c9d9054a8f5bd6abfde63cc, type: 3}
+    sprite: {fileID: 21300000, guid: 974b99b0a44ea5a44947745c4b0fce84, type: 3}
+  - name: dpad
+    sprite: {fileID: 21300000, guid: b80f6e85413496145a856c7c71170b7c, type: 3}
   psIconMap: []
   switchIconMap: []
-  invalidSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
