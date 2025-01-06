@@ -46,6 +46,7 @@ public class SummonDefend : Summon
         defendBox.defendCheck = (_) => true;
         isCancelable = false;
         isEnd = false;
+        hitBox.PreDiscreteHit();
     }
 
     public override void OnSummonEnd()
@@ -60,6 +61,7 @@ public class SummonDefend : Summon
     {
         animator.Play(animFX, -1, 0);
         hitBox.genHitInfo = GenHitInfo;
+        hitBox.PostDiscreteHit();
     }
 
     private HitInfo GenHitInfo() => new()
