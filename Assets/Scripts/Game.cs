@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -88,23 +89,33 @@ public class Game : SingletonBase<Game>
         instance.StartCoroutine(instance.PauseForSecondsCoroutine(seconds));
     }
 
-    public static void StartSwitchLevel(Vector2Int levelIndex)
+    // TODO 添加
+    public static void Teleport(Vector2Int levelIndex, Vector2 position)
     {
-        if (instance.isLoadingLevel)
-        {
-            return;
-        }
-        instance.isLoadingLevel = true;
         Pause = true;
-        instance.StartCoroutine(DarkScreen.instance.WaitForLoading(instance.LoadLevel(levelIndex)));
+        DarkScreen.instance.DarkScreenWait(InvokeCoroutine(() => Player.transform.position = position));
+        if (CurrentLevel.levelIndex != levelIndex)
+        {
+            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelIndex));
+        }
     }
 
+    
+    public static IEnumerator InvokeCoroutine(Action action)
+    {
+        action();
+        yield break;
+    }
+
+    // 为了不发生冲突, 此协程只能通过 DarkScreen 启动
     IEnumerator LoadLevel(Vector2Int levelIndex)
     {
-        string level = levelData.GetResourcePath(levelIndex);
-        if (level != null)
+        Pause = true;
+        string levelPath = levelData.GetResourcePath(levelIndex);
+        if (levelPath != null && !isLoadingLevel)
         {
-            var request = Resources.LoadAsync(level);
+            isLoadingLevel = true;
+            var request = Resources.LoadAsync(levelPath);
             yield return request;
             Destroy(currentLevel.gameObject);
             SetCurrentLevel(null);
@@ -128,22 +139,7 @@ public class Game : SingletonBase<Game>
     IEnumerator PauseForSecondsCoroutine(float seconds)
     {
         Pause = true;
-        float elapsedTime = 0f;
-        while (elapsedTime < seconds)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            yield return null;
-        }
+        yield return new WaitForSecondsRealtime(seconds);
         Pause = false;
-    }
-
-    IEnumerator WaitForRealSeconds(float seconds)
-    {
-        float elapsedTime = 0f;
-        while (elapsedTime < seconds)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            yield return null;
-        }
     }
 }

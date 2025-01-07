@@ -18,6 +18,16 @@ public class TeleportMenu : Menu
         Shown = false;
     }
 
+    // 每当 SetActive 或是初始时
+    void Awake()
+    {
+        if (listNode.transform.childCount > 0)
+        {
+            InitSelection();
+        }
+    }
+
+    // 第一次打卡时初始化列表
     void Start()
     {
         if (listNode.transform.childCount == 0)
@@ -29,6 +39,7 @@ public class TeleportMenu : Menu
                 textComp.text = checkpoint.name;
                 levelIds.Add(checkpoint.index);
             }
+            InitSelection();
         }
     }
 
@@ -43,11 +54,33 @@ public class TeleportMenu : Menu
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            // TODO Teleport to selectedId
+            Vector2Int targetLevelId = levelIds[selectedId];
+            if (targetLevelId != Game.CurrentLevel.levelIndex)
+            {
+                Game.Teleport(targetLevelId, Game.instance.levelData.GetCheckpointPosition(targetLevelId));
+            }
+            Shown = false;
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
             Shown = false;
+        }
+    }
+
+    void InitSelection()
+    {
+        int prevSelected = selectedId;
+        selectedId = levelIds.IndexOf(Game.CurrentLevel.levelIndex);
+        if (prevSelected != selectedId)
+        {
+            if (prevSelected >= 0 && prevSelected < listNode.transform.childCount)
+            {
+                listNode.transform.GetChild(prevSelected).GetComponent<ItemBox>().SetSelectedInstantly(false);
+            }
+            if (selectedId >= 0 && selectedId < listNode.transform.childCount)
+            {
+                listNode.transform.GetChild(selectedId).GetComponent<ItemBox>().SetSelectedInstantly(true);
+            }
         }
     }
 

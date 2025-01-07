@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1910fc719a1374ca2b62a7dfed34c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  light2D: {fileID: 0}
+  col: {fileID: 0}
   targetLevelIndex: {x: 0, y: 0}
   teleportType: 0
   teleportPositions: []

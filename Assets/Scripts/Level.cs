@@ -6,7 +6,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public string areaName = "";
-    // Vector2Int levelIndex;
+    public Vector2Int levelIndex;
     public GameObject Spawners;
 
 

@@ -23,41 +23,40 @@ public class LevelSwitchTrigger : MonoBehaviour
         if (!loading)
         {
             loading = true;
-
         }
+        Vector3 targetPosition = Game.Player.transform.position;
         switch (teleportType)
         {
             case TeleportType.None:
                 break;
             case TeleportType.RelativePosition:
-                Game.Player.transform.position = Game.Player.transform.position + (Vector3)teleportPositions[0];
+                targetPosition = Game.Player.transform.position + (Vector3)teleportPositions[0];
                 break;
             case TeleportType.AbsolutePosition:
-                Game.Player.transform.position = teleportPositions[0];
+                targetPosition = teleportPositions[0];
                 break;
             case TeleportType.RelativePositionByFacing:
                 if (Game.Player.FacingDirection > 0)
                 {
-                    Game.Player.transform.position = Game.Player.transform.position + (Vector3)teleportPositions[0];
+                    targetPosition = Game.Player.transform.position + (Vector3)teleportPositions[0];
                 }
                 else
                 {
-                    Game.Player.transform.position = Game.Player.transform.position + (Vector3)teleportPositions[1];
+                    targetPosition = Game.Player.transform.position + (Vector3)teleportPositions[1];
                 }
                 break;
             case TeleportType.AbsolutePositionByFacing:
                 if (Game.Player.FacingDirection > 0)
                 {
-                    Game.Player.transform.position = teleportPositions[0];
+                    targetPosition = teleportPositions[0];
                 }
                 else
                 {
-                    Game.Player.transform.position = teleportPositions[1];
+                    targetPosition = teleportPositions[1];
                 }
                 break;
         }
-        Game.StartSwitchLevel(targetLevelIndex);
-        Debug.Log("switch trigger enter");
+        Game.Teleport(targetLevelIndex, targetPosition);
     }
 
 }

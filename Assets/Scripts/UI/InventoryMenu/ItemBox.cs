@@ -44,4 +44,25 @@ public class ItemBox : MonoBehaviour
         }
         border.color = targetColor;
     }
+
+    public void SetSelectedInstantly(bool selected)
+    {
+        this.selected = selected;
+        Color targetColor = Color.white;
+        if (!selected)
+        {
+            switch (unSelectedShape)
+            {
+                case UnSelectedShape.NoBorder:
+                    targetColor.a = 0f;
+                    break;
+                case UnSelectedShape.DarkBorder:
+                    targetColor.r = 0.5f;
+                    targetColor.g = 0.5f;
+                    targetColor.b = 0.5f;
+                    break;
+            }
+        }
+        border.color = targetColor;
+    }
 }

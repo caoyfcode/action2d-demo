@@ -29,13 +29,17 @@ public class Checkpoint : MonoBehaviour
     {
         hint.gameObject.SetActive(true);
         playerInCheckpoint = true;
-        Debug.Log("Player entered checkpoint.");
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         hint.gameObject.SetActive(false);
         playerInCheckpoint = false;
-        Debug.Log("Player exited checkpoint.");
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        hint.gameObject.SetActive(true);
+        playerInCheckpoint = true;
     }
 }

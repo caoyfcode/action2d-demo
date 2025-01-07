@@ -10,7 +10,7 @@ public class DarkScreen : SingletonBase<DarkScreen>
     public GameObject playerImage;
     public bool isFadeOutEnd;
     public bool isEnd; // 这个变量暂时没有用
-    bool IsLoading
+    bool Anim_IsLoading
     {
         set
         {
@@ -18,31 +18,59 @@ public class DarkScreen : SingletonBase<DarkScreen>
         }
     }
     public bool DarkScreenPlaying;
+    private Queue<IEnumerator> waitQueue = new();
 
     private void Start()
     {
         isEnd = false;
         isFadeOutEnd = false;
-        IsLoading = false;
+        Anim_IsLoading = false;
         DarkScreenPlaying = false;
         playerImage.SetActive(false);
     }
 
     // TODO 改为在一个队列中添加任务, 在协程中直到任务耗尽，在Update中如果不在加载中并且队列不为空，则开始加载
-    public IEnumerator WaitForLoading(IEnumerator loadingCoroutine)
+    // public IEnumerator WaitForLoading(IEnumerator loadingCoroutine)
+    // {
+    //     if (!DarkScreenPlaying)
+    //     {
+    //         DarkScreenPlaying = true;
+    //         // isEnd = false;
+    //         animator.Play(ANIM_FADEOUT, -1, 0);
+    //         Anim_IsLoading = true;
+    //         yield return new WaitUntil(() => isFadeOutEnd);
+    //         yield return loadingCoroutine;
+    //         Anim_IsLoading = false;
+    //         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("FadeIn"));
+    //         // yield return new WaitWhile(() => isEnd);
+    //         DarkScreenPlaying = false; // 加载结束继续播放 FadeIn 动画，但是不等待结束了
+    //     }
+    // }
+
+    void Update()
     {
-        if (!DarkScreenPlaying)
+        if (!DarkScreenPlaying && waitQueue.Count > 0)
         {
-            DarkScreenPlaying = true;
-            // isEnd = false;
-            animator.Play(ANIM_FADEOUT, -1, 0);
-            IsLoading = true;
-            yield return new WaitUntil(() => isFadeOutEnd);
-            yield return loadingCoroutine;
-            IsLoading = false;
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("FadeIn"));
-            // yield return new WaitWhile(() => isEnd);
-            DarkScreenPlaying = false; // 加载结束继续播放 FadeIn 动画，但是不等待结束了
+            StartCoroutine(WaitCoroutine());
         }
+    }
+
+    public void DarkScreenWait(IEnumerator wait)
+    {
+        waitQueue.Enqueue(wait);
+    }
+
+    IEnumerator WaitCoroutine()
+    {
+        DarkScreenPlaying = true;
+        animator.Play(ANIM_FADEOUT, -1, 0);
+        Anim_IsLoading = true;
+        yield return new WaitUntil(() => isFadeOutEnd);
+        while (waitQueue.Count > 0)
+        {
+            yield return waitQueue.Dequeue();
+        }
+        Anim_IsLoading = false;
+        DarkScreenPlaying = false; // 加载结束继续播放 FadeIn 动画，但是不等待结束
     }
 }
