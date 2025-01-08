@@ -13,7 +13,7 @@ public class BlueWitchController : EntityController
 
     public override void UpdateCommand()
     {
-        if (entity.isDead || UIManager.MenuShown || Game.Pause)
+        if (entity.isDead || UIManager.MenuShown || GameManager.Pause)
         {
             return;
         }

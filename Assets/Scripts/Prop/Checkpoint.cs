@@ -14,8 +14,9 @@ public class Checkpoint : MonoBehaviour
 
     void Update()
     {
-        if (playerInCheckpoint)
+        if (playerInCheckpoint && !UIManager.MenuShown)
         {
+            hint.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.W))
             {
                 playerInCheckpoint = false;
@@ -23,23 +24,24 @@ public class Checkpoint : MonoBehaviour
                 UIManager.CheckpointMenu.Shown = true;
             }
         }
+        else
+        {
+            hint.gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        hint.gameObject.SetActive(true);
         playerInCheckpoint = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        hint.gameObject.SetActive(false);
         playerInCheckpoint = false;
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        hint.gameObject.SetActive(true);
         playerInCheckpoint = true;
     }
 }

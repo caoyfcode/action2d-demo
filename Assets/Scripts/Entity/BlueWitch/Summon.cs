@@ -10,6 +10,9 @@ public class Summon : MonoBehaviour
     public SpriteRenderer sr;
     public Animator animator;
 
+    [HideInInspector]
+    public BlueWitch player;
+
     #region Status
     public bool isEnd = false;
     public bool isCancelable = true;
@@ -25,6 +28,11 @@ public class Summon : MonoBehaviour
             animator.enabled = value;
             sr.enabled = value;
         }
+    }
+
+    protected virtual void Awake()
+    {
+        player = GetComponentInParent<BlueWitch>();
     }
 
     protected virtual void Start()
@@ -61,6 +69,6 @@ public class Summon : MonoBehaviour
     {
         ComponentsEnabled = false;
         isEnd = true;
-        comboTimer = Game.Player.data.attackComboTime;
+        comboTimer = player.data.attackComboTime;
     }
 }

@@ -49,9 +49,9 @@ public class SummonAttack : Summon
 
     private HitInfo GenHitInfo() => new()
     {
-        attacker = Game.Player,
+        attacker = player,
         damage = 1,
-        force = new Vector2(Game.Player.FacingDirection, 0),
+        force = new Vector2(player.FacingDirection, 0),
         hitCollider = hitBox.hitCollider,
         hitType = HitType.EntityAttack,
     };

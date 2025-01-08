@@ -7,7 +7,7 @@ public class CheckpointMenu : Menu
 
     public void Heal()
     {
-        Game.Player.Heal();
+        WorldManager.Player.Heal();
         Shown = false;
     }
 

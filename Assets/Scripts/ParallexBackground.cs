@@ -17,8 +17,8 @@ public class ParallexBackground : MonoBehaviour
     {
        float factor = Mathf.Clamp01(transform.position.z / MAX_DEPTH);
         transform.position = new Vector3(
-            factor * (Game.Camera.transform.position.x - startX) + startX,
-            factor * (Game.Camera.transform.position.y - startY) + startY,
+            factor * (WorldManager.Camera.transform.position.x - startX) + startX,
+            factor * (WorldManager.Camera.transform.position.y - startY) + startY,
             transform.position.z
         );
     }

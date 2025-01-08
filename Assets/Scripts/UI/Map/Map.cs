@@ -21,7 +21,7 @@ public class Map : MonoBehaviour
     {
         if (piceces.Count == 0)
         {
-            foreach (var level in Game.instance.levelData.levelDataList)
+            foreach (var level in WorldManager.instance.levelData.levelDataList)
             {
                 var obj = Instantiate(mapPiecePrefab, transform);
                 var comp = obj.GetComponent<MapPiece>();

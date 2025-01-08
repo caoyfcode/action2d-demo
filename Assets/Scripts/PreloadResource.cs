@@ -2,8 +2,9 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class VFXLoader
+public class PreloadResource : SingletonBase<PreloadResource>
 {
+
     public GameObject smokeRingPrefab;
     public GameObject afterImagePrefab;
     public Material whiteMaterial;

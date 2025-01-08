@@ -226,14 +226,14 @@ public class BlueWitch : Entity
         if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
         {
             attackState.OnSuccess(hitInfo);
-            Game.CameraController.StartShake(hitInfo.force, 0.1f, 10);
+            WorldManager.CameraController.StartShake(hitInfo.force, 0.1f, 10);
         }
     }
 
     public override void TakeHit(HitInfo hitInfo)
     {
         base.TakeHit(hitInfo);
-        Game.CameraController.StartShake(hitInfo.force, 0.2f, 10);
+        WorldManager.CameraController.StartShake(hitInfo.force, 0.2f, 10);
         data.health -= hitInfo.damage;
         hitInvincibleTimer = data.hitInvincibleTime;
         hitStunTimer = data.hitStunTime;

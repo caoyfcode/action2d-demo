@@ -32,7 +32,7 @@ public class TeleportMenu : Menu
     {
         if (listNode.transform.childCount == 0)
         {
-            foreach (var checkpoint in Game.instance.levelData.checkpointList)
+            foreach (var checkpoint in WorldManager.instance.levelData.checkpointList)
             {
                 var obj = Instantiate(itemPrefab, listNode.transform);
                 var textComp = obj.GetComponentInChildren<Text>();
@@ -55,13 +55,13 @@ public class TeleportMenu : Menu
         if (Input.GetKeyDown(KeyCode.K))
         {
             Vector2Int targetLevelId = levelIds[selectedId];
-            if (targetLevelId != Game.CurrentLevel.levelIndex)
+            if (targetLevelId != WorldManager.CurrentLevel.levelIndex)
             {
-                Game.Teleport(targetLevelId, Game.instance.levelData.GetCheckpointPosition(targetLevelId));
+                WorldManager.Teleport(targetLevelId, WorldManager.instance.levelData.GetCheckpointPosition(targetLevelId));
             }
             Shown = false;
         }
-        if (Input.GetKeyDown(KeyCode.J))
+        else if (Input.GetKeyDown(KeyCode.J))
         {
             Shown = false;
         }
@@ -70,7 +70,7 @@ public class TeleportMenu : Menu
     void InitSelection()
     {
         int prevSelected = selectedId;
-        selectedId = levelIds.IndexOf(Game.CurrentLevel.levelIndex);
+        selectedId = levelIds.IndexOf(WorldManager.CurrentLevel.levelIndex);
         if (prevSelected != selectedId)
         {
             if (prevSelected >= 0 && prevSelected < listNode.transform.childCount)
@@ -130,6 +130,6 @@ public class TeleportMenu : Menu
         {
             return;
         }
-        map.MoveTo(Game.instance.levelData.GetCheckpointPosition(levelIds[selectedId]));
+        map.MoveTo(WorldManager.instance.levelData.GetCheckpointPosition(levelIds[selectedId]));
     }
 }

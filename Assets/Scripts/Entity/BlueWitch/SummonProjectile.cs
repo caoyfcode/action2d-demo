@@ -20,17 +20,17 @@ public class SummonProjectile : Summon
     protected override void Update()
     {
         base.Update();
-        if (startProject && !projectOver && Game.Player.data.magic > 0.1f)
+        if (startProject && !projectOver && player.data.magic > 0.1f)
         {
             GameObject obj = Instantiate(projectilePrefab);
             obj.transform.position = projectPoint.transform.position;
             Projectile projectile = obj.GetComponent<Projectile>();
-            projectile.velocity = (Game.Player.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
+            projectile.velocity = (player.FacingDirection > 0 ? new Vector2(1, 0) : new Vector2(-1, 0)) * 30;
             projectile.damage = 0.5f;
-            projectile.source = Game.Player;
+            projectile.source = player;
             projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
             projectOver = true;
-            Game.Player.data.magic -= 0.1f;
+            player.data.magic -= 0.1f;
         }
     }
 }

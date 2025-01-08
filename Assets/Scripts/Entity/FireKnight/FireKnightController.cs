@@ -137,7 +137,7 @@ public class FireKnightController : EntityController
 
     public override void UpdateCommand()
     {
-        if (!bossFightStarted || !Game.Player)
+        if (!bossFightStarted || !WorldManager.Player)
             return;
         UpdateTimers();
         if (!entity.isDead)
@@ -195,18 +195,18 @@ public class FireKnightController : EntityController
     bool DetectTargetInAttackRange(AttackType attackType)
     {
         Debug.Log("DetectTargetInAttackRange");
-        if (!Game.Player)
+        if (!WorldManager.Player)
         {
             return false;
         }
         Collider2D hitCollider = entity.GetHitCollider(attackType);
-        if (hitCollider.IsTouching(Game.Player.col))
+        if (hitCollider.IsTouching(WorldManager.Player.col))
         {
             Debug.Log(true);
             return true;
         }
         // 因为 Enemy 与 Player 无碰撞, 因而不使用 IsTouching
-        if (entity.col.bounds.Intersects(Game.Player.col.bounds))
+        if (entity.col.bounds.Intersects(WorldManager.Player.col.bounds))
         {
             Debug.Log(true);
             return true;
@@ -218,7 +218,7 @@ public class FireKnightController : EntityController
     BTNodeStatus MoveToTargetForAttack(AttackType attackType)
     {
         Debug.Log("MoveToTargetForAttack");
-        if (!Game.Player)
+        if (!WorldManager.Player)
         {
             return BTNodeStatus.Failure;
         }
@@ -233,23 +233,23 @@ public class FireKnightController : EntityController
 
     float CalcSpeedXToTarget()
     {
-        if (!Game.Player)
+        if (!WorldManager.Player)
         {
             return 0f;
         }
-        float diff = Game.Player.transform.position.x - entity.transform.position.x;
+        float diff = WorldManager.Player.transform.position.x - entity.transform.position.x;
         if (diff > 0)
         {
-            diff = Game.Player.col.bounds.min.x - entity.col.bounds.max.x;
-            if (diff < Game.Player.col.bounds.size.x)
+            diff = WorldManager.Player.col.bounds.min.x - entity.col.bounds.max.x;
+            if (diff < WorldManager.Player.col.bounds.size.x)
             {
                 diff = 0;
             }
         }
         else
         {
-            diff = Game.Player.col.bounds.max.x - entity.col.bounds.min.x;
-            if (diff > -Game.Player.col.bounds.size.x)
+            diff = WorldManager.Player.col.bounds.max.x - entity.col.bounds.min.x;
+            if (diff > -WorldManager.Player.col.bounds.size.x)
             {
                 diff = 0;
             }
@@ -260,11 +260,11 @@ public class FireKnightController : EntityController
     BTNodeStatus FaceTarget()
     {
         Debug.Log("FaceTarget");
-        if (!Game.Player)
+        if (!WorldManager.Player)
         {
             return BTNodeStatus.Success;
         }
-        float diff = Game.Player.transform.position.x - entity.transform.position.x;
+        float diff = WorldManager.Player.transform.position.x - entity.transform.position.x;
         entity.FacingDirection = Mathf.Sign(diff);
         return BTNodeStatus.Success;
     }
@@ -295,9 +295,9 @@ public class FireKnightController : EntityController
 
     bool TargetIsOnAir()
     {
-        if (!Game.Player)
+        if (!WorldManager.Player)
             return false;
-        return Game.Player.col.bounds.min.y > entity.col.bounds.min.y + 0.5f;
+        return WorldManager.Player.col.bounds.min.y > entity.col.bounds.min.y + 0.5f;
     }
 
     BTNodeStatus StartJump()
@@ -311,7 +311,7 @@ public class FireKnightController : EntityController
         else if (entity.stateMachine.CurrentState == entity.groundFreeState)
         {
             entity.CurrentCommand.SpeedY(entity.data.jumpSpeed);
-            if (Game.Player)
+            if (WorldManager.Player)
             {
                 FaceTarget();
             }
@@ -355,7 +355,7 @@ public class FireKnightController : EntityController
             {
                 yield return BTNodeStatus.Failure;
             }
-            else if (Mathf.Abs(Game.Player.transform.position.y - entity.transform.position.y) < Mathf.Epsilon)
+            else if (Mathf.Abs(WorldManager.Player.transform.position.y - entity.transform.position.y) < Mathf.Epsilon)
             {
                 yield return BTNodeStatus.Success;
             }

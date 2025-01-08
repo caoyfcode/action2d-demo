@@ -11,11 +11,11 @@ public class PauseMenu : Menu
         { 
             if (!gameObject.activeSelf && value)
             {
-                Game.Pause = true;
+                GameManager.Pause = true;
             }
             else if (gameObject.activeSelf && !value)
             {
-                Game.Pause = false;
+                GameManager.Pause = false;
             }
             gameObject.SetActive(value); 
         }

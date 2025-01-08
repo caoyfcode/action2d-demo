@@ -54,7 +54,7 @@ public class GolemController : EntityController
 
     public bool CheckPlayerFar(float distance=3f)
     {
-        return Mathf.Abs(Game.Player.transform.position.x - entity.transform.position.x) > distance;
+        return Mathf.Abs(WorldManager.Player.transform.position.x - entity.transform.position.x) > distance;
     }
 
     // 2 for ground fllow, 0.5 for air follow
@@ -63,7 +63,7 @@ public class GolemController : EntityController
     // 参数多于 1 个，不能直接用于行为树
     public Status FollowPlayer(float distance=2f, float speedScale=1f)
     {
-        float diff = Game.Player.transform.position.x - entity.transform.position.x;
+        float diff = WorldManager.Player.transform.position.x - entity.transform.position.x;
         if (Mathf.Abs(diff) < distance)
             return Status.Success;
         float moveDirection = diff > 0 ? 1 : -1;
@@ -77,7 +77,7 @@ public class GolemController : EntityController
 
     public Status FacePlayer()
     {
-        entity.FacingDirection = Game.Player.transform.position.x - entity.transform.position.x > 0 ? 1 : -1;
+        entity.FacingDirection = WorldManager.Player.transform.position.x - entity.transform.position.x > 0 ? 1 : -1;
         return Status.Success;
     }
 
@@ -113,7 +113,7 @@ public class GolemController : EntityController
         };
         if (index == 2 && entity.fsm.currentDeepStateName == Golem.FSM_ATTACK_2)
         {
-            if (entity.FacingDirection * (Game.Player.transform.position.x - entity.transform.position.x) > 2)
+            if (entity.FacingDirection * (WorldManager.Player.transform.position.x - entity.transform.position.x) > 2)
             {
                 entity.CurrentControl.speedX = entity.data.moveSpeed * entity.FacingDirection;
             }

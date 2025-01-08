@@ -35,11 +35,11 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // 到达边缘时降低镜头，直到不在边缘且在地面
-        if (Game.Player.IsFacingCliff)
+        if (WorldManager.Player.IsFacingCliff)
         {
             offsetType = OffetType.ForwardDownward;
         }
-        else if (Game.Player.isOnGround)
+        else if (WorldManager.Player.isOnGround)
         {
             offsetType = OffetType.ForwardUpward;
         }
@@ -47,14 +47,14 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        var target = proCamera2D.GetCameraTarget(Game.Player.transform);
+        var target = proCamera2D.GetCameraTarget(WorldManager.Player.transform);
         switch (offsetType)
         {
             case OffetType.None:
                 target.TargetOffset = Vector2.zero;
                 break;
             case OffetType.Forward:
-                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
+                target.TargetOffset.x = forwardOffset * WorldManager.Player.FacingDirection;
                 target.TargetOffset.y = 0;
                 break;
             case OffetType.Upward:
@@ -66,16 +66,14 @@ public class CameraController : MonoBehaviour
                 target.TargetOffset.y = -downwardOffset;
                 break;
             case OffetType.ForwardUpward:
-                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
+                target.TargetOffset.x = forwardOffset * WorldManager.Player.FacingDirection;
                 target.TargetOffset.y = upwardOffset;
                 break;
             case OffetType.ForwardDownward:
-                target.TargetOffset.x = forwardOffset * Game.Player.FacingDirection;
+                target.TargetOffset.x = forwardOffset * WorldManager.Player.FacingDirection;
                 target.TargetOffset.y = -downwardOffset;
                 break;
         }
-        // target.TargetOffset.x = offset.x * Game.Player.FacingDirection;
-        // target.TargetOffset.y = offset.y;
     }
 
     public void StartShake(Vector2 force, float duration = 0.25f, int vibration = 10)
@@ -83,7 +81,7 @@ public class CameraController : MonoBehaviour
         shakeExt.Shake(duration, force * 5f, vibration);
     }
 
-    public void SetBoundariesInstantly()
+    public void SetBoundariesAndMoveInstantly()
     {
         ProCamera2DRooms rooms = FindAnyObjectByType<ProCamera2DRooms>();
         if (rooms == null)
@@ -91,7 +89,7 @@ public class CameraController : MonoBehaviour
             Debug.LogError("No ProCamera2DRooms component found in the scene.");
             return;
         }
-        var index = rooms.ComputeCurrentRoom(Game.Player.transform.position);
+        var index = rooms.ComputeCurrentRoom(WorldManager.Player.transform.position);
         if (index < 0 || index >= rooms.Rooms.Count)
         {
             Debug.LogError("Invalid room index.");
@@ -111,6 +109,7 @@ public class CameraController : MonoBehaviour
             RightBoundary = room.Dimensions.x + room.Dimensions.width / 2
         };
         numericBoundaries.Settings = numericBoundariesSettings;
+        proCamera2D.CenterOnTargets();
     }
 
     // 用来当某些房间过大时设置边界，在加载新 Level 后调用
@@ -155,6 +154,6 @@ public class CameraController : MonoBehaviour
             Debug.LogError("No ProCamera2DRooms component found in the scene.");
             return;
         }
-        rooms.TriggerTarget = Game.Player.transform;
+        rooms.TriggerTarget = WorldManager.Player.transform;
     }
 }

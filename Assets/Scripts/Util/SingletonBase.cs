@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class SingletonBase<T>: MonoBehaviour where T : MonoBehaviour
 {
-    public static T instance {get; private set;}
+    public static T instance {get; private set;} = null;
 
 
     protected virtual void Awake()
     {
-        instance = GetComponent<T>();
+        if (instance == null)
+            instance = GetComponent<T>();
+        else
+            Destroy(gameObject);
     }
 }

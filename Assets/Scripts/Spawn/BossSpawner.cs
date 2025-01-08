@@ -26,7 +26,7 @@ public class BossSpawner : Spawner
         {
             //spawn boss
             Spawn();
-            Game.BossSystem.StartBossFight(
+            WorldManager.instance.bossSystem.StartBossFight(
                 spawnedObject.GetComponent<Entity>(),
                 room
             );

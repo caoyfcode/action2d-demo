@@ -42,7 +42,7 @@ public class SpawnAfterImage : MonoBehaviour
         if (timer <= 0)
         {
             timer = spawnDuration;
-            var obj = Instantiate(Game.VFXLoader.afterImagePrefab, transform.position, transform.rotation);
+            var obj = Instantiate(PreloadResource.instance.afterImagePrefab, transform.position, transform.rotation);
             var afterImage = obj.GetComponent<AfterImage>();
             afterImage.sr.sprite = source.sprite;
             afterImage.sr.renderingLayerMask = source.renderingLayerMask;
