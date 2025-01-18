@@ -2,46 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class Checkpoint : Interactive
 {
-    public Canvas hint;
-    public bool playerInCheckpoint = false;
-
-    void Start()
-    {
-        hint.gameObject.SetActive(false);
-    }
-
     void Update()
     {
-        if (playerInCheckpoint && !UIManager.MenuShown)
+        if (playerIn && !UIManager.MenuShown)
         {
-            hint.gameObject.SetActive(true);
+            HintShown = true;
             if (Input.GetKeyDown(KeyCode.W))
             {
-                playerInCheckpoint = false;
+                HintShown = false;
                 hint.gameObject.SetActive(false);
                 UIManager.CheckpointMenu.Shown = true;
             }
         }
         else
         {
-            hint.gameObject.SetActive(false);
+            HintShown = false;
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        playerInCheckpoint = true;
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        playerInCheckpoint = false;
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        playerInCheckpoint = true;
     }
 }

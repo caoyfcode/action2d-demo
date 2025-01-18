@@ -14,6 +14,7 @@ public class UIManager : SingletonBase<UIManager>
     // public StatusIconList playerMagic;
     public BossHeathBar bossHeathBar;
     public StatusHud playerStatusHud;
+    public PickupHud pickupHud;
     
     [Header("Menus")]
     // public PauseMenu pauseMenu;
@@ -42,14 +43,40 @@ public class UIManager : SingletonBase<UIManager>
             pauseMenu.Shown = debugPauseMenuShown;
         }
 
+        /// TODO 添加 UI Shown Selector 枚举, 用 None, ... 来表示这些互斥的 UI 显示状态
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenu.Shown = !pauseMenu.Shown;
+            if (!MenuShown)
+            {
+                pauseMenu.Shown = true;
+            }
+            else if (pauseMenu.Shown)
+            {
+                pauseMenu.Shown = false;
+            }
+            else if (checkpointMenu.Shown)
+            {
+                checkpointMenu.Shown = false;
+            }
+            else if (teleportMenu.Shown)
+            {
+                teleportMenu.Shown = false;
+            }
+            else if (inventoryMenu.Shown)
+            {
+                inventoryMenu.Shown = false;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.P) && !pauseMenu.Shown)
+        else if (Input.GetKeyDown(KeyCode.P))
         {
-            inventoryMenu.Shown = !inventoryMenu.Shown;
+            if (!MenuShown)
+            {
+                inventoryMenu.Shown = true;
+            }
+            else if (inventoryMenu.Shown)
+            {
+                inventoryMenu.Shown = false;
+            }
         }
     }
 

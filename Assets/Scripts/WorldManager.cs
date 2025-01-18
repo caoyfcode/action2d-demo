@@ -17,6 +17,7 @@ public class WorldManager : SingletonBase<WorldManager>
     public BossSystem bossSystem;
 
     public LevelData levelData;
+    public ItemData itemData;
 
     public Level currentLevel;
 
