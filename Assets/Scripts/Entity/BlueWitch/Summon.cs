@@ -69,6 +69,6 @@ public class Summon : MonoBehaviour
     {
         ComponentsEnabled = false;
         isEnd = true;
-        comboTimer = player.data.attackComboTime;
+        comboTimer = player.info.attackComboTime;
     }
 }

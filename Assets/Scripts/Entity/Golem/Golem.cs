@@ -53,8 +53,8 @@ public class Golem : Entity
     internal float hitInvincibleTimer = 0;
     public float stunCounter = 0;
 
-    public GolemData data;
-    public override CharacterData CharacterData => data; 
+    public GolemInfo info;
+    public override CharacterInfo CharacterInfo => info; 
     public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0;
     #endregion
 
@@ -102,17 +102,17 @@ public class Golem : Entity
     {
         base.TakeHit(hitInfo);
         
-        hitInvincibleTimer = data.hitInvincibleTime;
-        data.health -= hitInfo.damage;
+        hitInvincibleTimer = info.hitInvincibleTime;
+        info.health -= hitInfo.damage;
         stunCounter++;
         // AddForce(hitInfo.force);
-        if (stunCounter >= data.stunCount && fsm.currentDeepStateName != FSM_STUN)
+        if (stunCounter >= info.stunCount && fsm.currentDeepStateName != FSM_STUN)
         {
             fsm.TriggerState(FSM_STUN);
             stunCounter = 0;
         }
 
-        if (data.health <= Mathf.Epsilon)
+        if (info.health <= Mathf.Epsilon)
         {
             Die();
         }
@@ -153,7 +153,7 @@ public class Golem : Entity
     public void EnterStun()
     {
         animator.Play(ANIM_STUN);
-        stunTimer = data.stunTime;
+        stunTimer = info.stunTime;
         velocity.x = 0;
         velocity.y = 0;
     }
@@ -303,7 +303,7 @@ public class Golem : Entity
             land = true;
             animator.Play(ANIM_LAND);
             // velocity.y = 0;
-            if (data.stage == 2)
+            if (info.stage == 2)
             {
                 // TODO 地波spawner发生地波攻击
             }

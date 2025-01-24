@@ -12,9 +12,9 @@ public class StatusHud : MonoBehaviour
     {
         if (WorldManager.Player == null)
             return;
-        heath.Total = (int)WorldManager.Player.data.maxHealth;
-        heath.Value = WorldManager.Player.data.health;
-        magic.Total = (int)WorldManager.Player.data.maxMagic;
-        magic.Value = WorldManager.Player.data.magic;
+        heath.Total = (int)WorldManager.Player.info.maxHealth;
+        heath.Value = WorldManager.Player.info.health;
+        magic.Total = (int)WorldManager.Player.info.maxMagic;
+        magic.Value = WorldManager.Player.info.magic;
     }
 }

@@ -27,9 +27,9 @@ public class GolemController : EntityController
 
     public override void UpdateCommand()
     {
-        if (entity.data.stage == 1 && entity.data.health < entity.data.maxHealth / 2)
+        if (entity.info.stage == 1 && entity.info.health < entity.info.maxHealth / 2)
         {
-            entity.data.stage = 2;
+            entity.info.stage = 2;
         }
         behaviourTree.Tick();
         if (jumpLandAttackCoolDown > 0)
@@ -71,7 +71,7 @@ public class GolemController : EntityController
             return Status.Success;
         if (moveDirection > 0 && bossRoom.xMax - entity.transform.position.x < 2 * distance)
             return Status.Success;
-        entity.CurrentControl.speedX = speedScale * entity.data.moveSpeed * moveDirection;
+        entity.CurrentControl.speedX = speedScale * entity.info.moveSpeed * moveDirection;
         return Status.Running;
     }
 
@@ -97,7 +97,7 @@ public class GolemController : EntityController
         var newState = entity.fsm.TriggerState(name);
         if (newState.name == name)
         {
-            attackCoolDown = entity.data.attackCoolDownTime;
+            attackCoolDown = entity.info.attackCoolDownTime;
             return Status.Success;
         }
         return Status.Failure;
@@ -115,7 +115,7 @@ public class GolemController : EntityController
         {
             if (entity.FacingDirection * (WorldManager.Player.transform.position.x - entity.transform.position.x) > 2)
             {
-                entity.CurrentControl.speedX = entity.data.moveSpeed * entity.FacingDirection;
+                entity.CurrentControl.speedX = entity.info.moveSpeed * entity.FacingDirection;
             }
         } 
         return entity.fsm.currentDeepStateName == name ? Status.Running : Status.Success;
@@ -134,7 +134,7 @@ public class GolemController : EntityController
         var newState = entity.fsm.TriggerState(Golem.FSM_JUMP);
         if (newState.name == Golem.FSM_JUMP)
         {
-            jumpLandAttackCoolDown = entity.data.jumpLandAttackCoolDownTime;
+            jumpLandAttackCoolDown = entity.info.jumpLandAttackCoolDownTime;
             return Status.Success;
         }
         return Status.Failure;
@@ -177,7 +177,7 @@ public class GolemController : EntityController
     float sprintCoolDown = 0;
     public bool CheckCanSprint()
     {
-        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN && sprintCoolDown <= 0 && entity.data.stage == 2;
+        return !entity.isDead && entity.fsm.currentDeepStateName != Golem.FSM_STUN && sprintCoolDown <= 0 && entity.info.stage == 2;
     }
     public Status FlipFacingDirection()
     {
@@ -190,8 +190,8 @@ public class GolemController : EntityController
         var newState = entity.fsm.TriggerState(Golem.FSM_SPRINT);
         if (newState.name == Golem.FSM_SPRINT)
         {
-            sprintTimer = entity.data.maxSprintTime;
-            sprintCoolDown = entity.data.sprintCoolDownTime;
+            sprintTimer = entity.info.maxSprintTime;
+            sprintCoolDown = entity.info.sprintCoolDownTime;
             return Status.Success;
         }
         Debug.LogError("Failed to start sprint");    
@@ -218,7 +218,7 @@ public class GolemController : EntityController
         }
         else
         {
-            entity.CurrentControl.speedX = entity.data.sprintSpeed * entity.FacingDirection;
+            entity.CurrentControl.speedX = entity.info.sprintSpeed * entity.FacingDirection;
             return Status.Running;
         }
     }

@@ -77,9 +77,9 @@ public class FireKnight : Entity
     internal float hitInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
     
-    public FireKnightData data;
+    public FireKnightInfo info;
     public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
-    public override CharacterData CharacterData => data; 
+    public override CharacterInfo CharacterInfo => info; 
     #endregion
 
     #region StateMachine
@@ -151,11 +151,11 @@ public class FireKnight : Entity
     {
         base.TakeHit(hitInfo);
         
-        hitInvincibleTimer = data.hitInvincibleTime;
-        data.health -= hitInfo.damage;
+        hitInvincibleTimer = info.hitInvincibleTime;
+        info.health -= hitInfo.damage;
         AddForce(hitInfo.force);
 
-        if (data.health <= Mathf.Epsilon)
+        if (info.health <= Mathf.Epsilon)
         {
             Die();
         }
@@ -340,7 +340,7 @@ public class FireKnight : Entity
 
         public override void Update()
         {
-           entity.velocity.x = entity.FacingDirection * entity.data.rollSpeed;
+           entity.velocity.x = entity.FacingDirection * entity.info.rollSpeed;
            if (entity.hitBoxEnabled)
            {
                 entity.hitBox.DoHit();  

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class BlueWitchData : CharacterData
+public class BlueWitchInfo : CharacterInfo
 {
     [Header("BlueWitch")]
     public bool secondJumpAbility = true;

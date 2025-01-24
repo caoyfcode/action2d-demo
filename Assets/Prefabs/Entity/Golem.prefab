@@ -564,7 +564,7 @@ MonoBehaviour:
   animPreBreakable: 0
   animPostBreakable: 0
   stunCounter: 0
-  data:
+  info:
     maxHealth: 30
     health: 30
     maxMagic: 0

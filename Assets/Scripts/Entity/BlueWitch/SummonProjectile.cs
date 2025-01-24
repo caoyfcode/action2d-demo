@@ -20,7 +20,7 @@ public class SummonProjectile : Summon
     protected override void Update()
     {
         base.Update();
-        if (startProject && !projectOver && player.data.magic > 0.1f)
+        if (startProject && !projectOver && player.info.magic > 0.1f)
         {
             GameObject obj = Instantiate(projectilePrefab);
             obj.transform.position = projectPoint.transform.position;
@@ -30,7 +30,7 @@ public class SummonProjectile : Summon
             projectile.source = player;
             projectile.hitBox.targetFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
             projectOver = true;
-            player.data.magic -= 0.1f;
+            player.info.magic -= 0.1f;
         }
     }
 }

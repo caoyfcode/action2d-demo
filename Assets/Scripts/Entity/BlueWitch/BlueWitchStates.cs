@@ -97,7 +97,7 @@ public abstract class BlueWitchAirState : BlueWitchState
                 return entity.CurrentCommand.speedX;
             }
 
-            return keepDirection * entity.data.horizontalMoveSpeed;
+            return keepDirection * entity.info.horizontalMoveSpeed;
         }
     }
     public BlueWitchAirState(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
@@ -115,7 +115,7 @@ public abstract class BlueWitchAirState : BlueWitchState
     public void KeepMoveDirection(float direction)
     {
         shouldKeepDirection = true;
-        keepDirectionTimer = entity.data.minKeepDirectionTime;
+        keepDirectionTimer = entity.info.minKeepDirectionTime;
         keepDirection = direction;
         entity.velocity.x = SpeedX;
         entity.FacingDirection = entity.CurrentCommand.speedX;
@@ -225,7 +225,7 @@ public class BlueWitchAirFree : BlueWitchAirState
         }
         if (entity.AirJumpCondition)
         {
-            entity.velocity.y = entity.data.airJumpSpeed;
+            entity.velocity.y = entity.info.airJumpSpeed;
             entity.airJumpCount++;
             entity.ResetAirAttackCount(); // 跳跃重置攻击
             UnityEngine.Object.Instantiate(PreloadResource.instance.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
@@ -245,9 +245,9 @@ public class BlueWitchHoldJump : BlueWitchAirState
     public override void Enter()
     {
         base.Enter();
-        timer = entity.data.maxJumpTime;
+        timer = entity.info.maxJumpTime;
         //entity.animator.Play(BlueWitch.ANIM_IDLE);
-        entity.velocity.y = entity.data.jumpSpeed;
+        entity.velocity.y = entity.info.jumpSpeed;
         entity.CurrentCommand.startJump = false; // 消耗掉 start jump
     }
 
@@ -267,7 +267,7 @@ public class BlueWitchHoldJump : BlueWitchAirState
     {
         base.Update();
         timer -= Time.deltaTime;
-        entity.velocity.y = entity.data.jumpSpeed;
+        entity.velocity.y = entity.info.jumpSpeed;
     }
 
     public override void Exit()
@@ -289,12 +289,12 @@ public class BlueWitchDash : BlueWitchState
 
     public override void Enter()
     {
-        timer = entity.data.dashTime;
-        entity.dashCoolDownTimer = entity.data.dashCoolDownTime;
+        timer = entity.info.dashTime;
+        entity.dashCoolDownTimer = entity.info.dashCoolDownTime;
         //entity.animator.Play(BlueWitch.ANIM_ATTACK, -1, 0);
         entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.velocity.y = 0;
-        entity.velocity.x = entity.data.dashSpeed * entity.FacingDirection;
+        entity.velocity.x = entity.info.dashSpeed * entity.FacingDirection;
         if (!entity.isOnGround)
         {
             entity.airDashCount++;
@@ -323,7 +323,7 @@ public class BlueWitchDash : BlueWitchState
     {
         timer -= Time.deltaTime;
         entity.velocity.y = 0;
-        entity.velocity.x = entity.data.dashSpeed * entity.FacingDirection;
+        entity.velocity.x = entity.info.dashSpeed * entity.FacingDirection;
     }
 
     public override void Exit()
@@ -442,7 +442,7 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.ResetAirAttackCount();
         entity.airDashCount = 0;
         entity.velocity.x = 0;
-        entity.velocity.y = -entity.data.wallSlideSpeed;
+        entity.velocity.y = -entity.info.wallSlideSpeed;
         entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.wallSlideCrow.SetActive(true);
     }
@@ -474,7 +474,7 @@ public class BlueWitchWallSlide : BlueWitchState
     public override void Update()
     {
         entity.velocity.x = 0;
-        entity.velocity.y = -entity.data.wallSlideSpeed;
+        entity.velocity.y = -entity.info.wallSlideSpeed;
     }
 
     public override void Exit()

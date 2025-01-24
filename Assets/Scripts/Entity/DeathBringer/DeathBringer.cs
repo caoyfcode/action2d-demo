@@ -37,7 +37,7 @@ public class DeathBringer : Entity
     public bool attackCancelable;
     internal float attackCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
-    public DeathBringerData data;
+    public DeathBringerInfo info;
     public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0;
 
     protected override void Start()
@@ -84,11 +84,11 @@ public class DeathBringer : Entity
     public override void TakeHit(HitInfo hitInfo)
     {
         base.TakeHit(hitInfo);
-        hitInvincibleTimer = data.hitInvincibleTime;
-        data.health -= hitInfo.damage;
+        hitInvincibleTimer = info.hitInvincibleTime;
+        info.health -= hitInfo.damage;
         AddForce(hitInfo.force);
 
-        if (data.health <= Mathf.Epsilon)
+        if (info.health <= Mathf.Epsilon)
         {
             Die();
         }
@@ -247,7 +247,7 @@ public class DeathBringer : Entity
         public override void Exit()
         {
             entity.hitBoxEnabled = false;
-            entity.attackCoolDownTimer = entity.data.attackCoolDownTime;
+            entity.attackCoolDownTimer = entity.info.attackCoolDownTime;
             entity.hitBox.PostDiscreteHit();
         }
 
@@ -271,7 +271,7 @@ public class DeathBringer : Entity
         public override void Enter()
         {
             base.Enter();
-            timer = entity.data.stunTime;
+            timer = entity.info.stunTime;
             entity.animator.Play(ANIM_IDLE);
         }
 

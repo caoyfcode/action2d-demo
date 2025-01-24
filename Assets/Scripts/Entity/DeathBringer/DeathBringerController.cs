@@ -78,7 +78,7 @@ public class DeathBringerController : EntityController
             return BTNodeStatus.Failure;
         }
         var moveX = CalcMoveDirection();
-        entity.CurrentCommand.SpeedX(moveX * entity.data.horizontalMoveSpeed);
+        entity.CurrentCommand.SpeedX(moveX * entity.info.horizontalMoveSpeed);
         if (moveX == 0)
             return BTNodeStatus.Success;
         else

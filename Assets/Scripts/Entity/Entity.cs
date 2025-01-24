@@ -58,7 +58,7 @@ public class Entity : MonoBehaviour
     public bool isDead = false;
     // Invincible 代表攻击不起作用，不仅仅是不扣血
     public virtual bool IsInvincible => isDead;
-    public virtual CharacterData CharacterData => null;
+    public virtual CharacterInfo CharacterInfo => null;
     #endregion
 
     [Header("Effects")]

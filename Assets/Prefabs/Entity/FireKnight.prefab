@@ -849,7 +849,7 @@ MonoBehaviour:
   animEnd: 0
   animPreBreakable: 0
   animPostBreakable: 0
-  data:
+  info:
     maxHealth: 5
     health: 5
     maxMagic: 0

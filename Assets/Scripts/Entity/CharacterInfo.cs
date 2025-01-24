@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class CharacterData
+public class CharacterInfo
 {
-    [Header("Common Data")]
+    [Header("Common")]
     // 主角血量要取整, 敌人血量保持浮点数
     public float maxHealth;
     public float health;

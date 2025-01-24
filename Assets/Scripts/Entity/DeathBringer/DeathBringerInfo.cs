@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class DeathBringerData : CharacterData
+public class DeathBringerInfo : CharacterInfo
 {
     [Header("DeathBringer Constant")]
     public float attackCoolDownTime = 1f; // 攻击结束后下一次攻击需要的时间

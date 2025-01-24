@@ -91,7 +91,7 @@ public class BlueWitch : Entity
     internal float hitInvincibleTimer = 0;
     internal float hitStunTimer = 0; // hitstun 用来表示受击后无法控制移动的状态，此时水平由 forceMove 控制, 竖直方向受到重力影响
     internal bool stateControlInvincible = false;
-    public BlueWitchData data;
+    public BlueWitchInfo info;
     public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
     public void AddAirAttackCount(AttackType type)
     {
@@ -107,7 +107,7 @@ public class BlueWitch : Entity
         switch (type)
         {
             case AttackType.HeroKnight:
-                return airAttackCount < data.maxAirAttackCount;
+                return airAttackCount < info.maxAirAttackCount;
             case AttackType.ArcaneArcher:
                 return true;
             case AttackType.DefendFireKnight:
@@ -129,7 +129,7 @@ public class BlueWitch : Entity
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
     // 状态转换条件中的通用部分
-    internal bool DashCondition => data.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
+    internal bool DashCondition => info.dashAbility && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal AttackType CurrentAttack
     {
         get
@@ -147,8 +147,8 @@ public class BlueWitch : Entity
     }
     internal bool AttackCondition => CurrentAttack != AttackType.None;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
-    internal bool AirJumpCondition => data.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
-    internal bool WallSlideCondition => data.wallSlideAbility && !isOnGround && IsFacingWall;
+    internal bool AirJumpCondition => info.secondJumpAbility && airJumpCount <= 0 && JumpCondition;
+    internal bool WallSlideCondition => info.wallSlideAbility && !isOnGround && IsFacingWall;
     #endregion
 
     // Start is called before the first frame update
@@ -184,9 +184,9 @@ public class BlueWitch : Entity
         if (stateMachine.CurrentState == airFreeState)
         {
             var velocity = rb.velocity;
-            if (velocity.y > Mathf.Epsilon && velocity.y <= data.airJumpSpeed && !IsHitStun) // 向上跳跃时, 希望尽可能以高速达到高度
+            if (velocity.y > Mathf.Epsilon && velocity.y <= info.airJumpSpeed && !IsHitStun) // 向上跳跃时, 希望尽可能以高速达到高度
             {
-                if (velocity.y > data.airJumpSpeed / 2)
+                if (velocity.y > info.airJumpSpeed / 2)
                 {
                     velocity.y -= 0.5f * gravity * Time.fixedDeltaTime;
                 }
@@ -234,17 +234,17 @@ public class BlueWitch : Entity
     {
         base.TakeHit(hitInfo);
         WorldManager.CameraController.StartShake(hitInfo.force, 0.2f, 10);
-        data.health -= hitInfo.damage;
-        hitInvincibleTimer = data.hitInvincibleTime;
-        hitStunTimer = data.hitStunTime;
+        info.health -= hitInfo.damage;
+        hitInvincibleTimer = info.hitInvincibleTime;
+        hitStunTimer = info.hitStunTime;
         AddForce(hitInfo.force);
         // TODO 死亡后重新加载, 与主动坐火刷新同时实现
     }
 
     public void Heal()
     {
-        data.health = data.maxHealth;
-        data.magic = data.maxMagic;
+        info.health = info.maxHealth;
+        info.magic = info.maxMagic;
         airJumpCount = 0;
         airAttackCount = 0;
         airDashCount = 0;

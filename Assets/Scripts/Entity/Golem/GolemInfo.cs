@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class GolemData : CharacterData
+public class GolemInfo : CharacterInfo
 {
     [Header("Golem")]
     public int stage = 1;
-    [Header("Constant")]
+    [Header("Golem Constant")]
     internal float jumpSpeed = 5f;
     internal float moveSpeed = 5f;
     internal float hitInvincibleTime = 0.3f;

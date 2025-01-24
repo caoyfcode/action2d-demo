@@ -96,7 +96,7 @@ public class FireKnightController : EntityController
             .BuildNode();
         BTNode rollAttack = new BTBuilder()
             .Sequence()
-                .Condition(() => entity.data.stage == 2) // 检测2阶段
+                .Condition(() => entity.info.stage == 2) // 检测2阶段
                 .Condition(() => true) // 距离检测
                 .Action(() => BTNodeStatus.Success) // 调整方向
                 .Action(() => BTNodeStatus.Running) // 执行翻滚斩
@@ -254,7 +254,7 @@ public class FireKnightController : EntityController
                 diff = 0;
             }
         }
-        return Mathf.Sign(diff) * entity.data.horizontalMoveSpeed;
+        return Mathf.Sign(diff) * entity.info.horizontalMoveSpeed;
     }
 
     BTNodeStatus FaceTarget()
@@ -279,7 +279,7 @@ public class FireKnightController : EntityController
             Debug.Log("Start Success " + attackType);
             if (attackType == AttackType.Attack1)
             {
-                attackComboCoolDownTimer = entity.data.attackComboCoolDownTime;
+                attackComboCoolDownTimer = entity.info.attackComboCoolDownTime;
             }
             return BTNodeStatus.Success;
         }
@@ -305,12 +305,12 @@ public class FireKnightController : EntityController
         Debug.Log("StartJump");
         if (entity.stateMachine.CurrentState == entity.airFreeState)
         {
-            airAttackCoolDownTimer = entity.data.airAttackCoolDownTime;
+            airAttackCoolDownTimer = entity.info.airAttackCoolDownTime;
             return BTNodeStatus.Success;
         }
         else if (entity.stateMachine.CurrentState == entity.groundFreeState)
         {
-            entity.CurrentCommand.SpeedY(entity.data.jumpSpeed);
+            entity.CurrentCommand.SpeedY(entity.info.jumpSpeed);
             if (WorldManager.Player)
             {
                 FaceTarget();
@@ -337,7 +337,7 @@ public class FireKnightController : EntityController
         }
         else
         {
-            entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.data.horizontalMoveSpeed);
+            entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.info.horizontalMoveSpeed);
             return BTNodeStatus.Running;
         }
     }
@@ -378,7 +378,7 @@ public class FireKnightController : EntityController
         {
             return BTNodeStatus.Success;
         }
-        entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.data.horizontalMoveSpeed);
+        entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.info.horizontalMoveSpeed);
         return BTNodeStatus.Running;
     }
 

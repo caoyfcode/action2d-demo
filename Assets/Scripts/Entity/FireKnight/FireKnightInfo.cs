@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class FireKnightData : CharacterData
+public class FireKnightInfo : CharacterInfo
 {
     [Header("FireKnight")]
     public int stage = 1;
