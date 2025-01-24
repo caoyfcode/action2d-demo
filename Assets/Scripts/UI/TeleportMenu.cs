@@ -57,7 +57,8 @@ public class TeleportMenu : Menu
             Vector2Int targetLevelId = levelIds[selectedId];
             if (targetLevelId != WorldManager.CurrentLevel.levelIndex)
             {
-                WorldManager.Teleport(targetLevelId, WorldManager.instance.levelData.GetCheckpointPosition(targetLevelId));
+                // WorldManager.Teleport(targetLevelId, WorldManager.instance.levelData.GetCheckpointPosition(targetLevelId));
+                WorldManager.TeleportCheckpoint(targetLevelId);
             }
             Shown = false;
         }

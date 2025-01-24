@@ -34,6 +34,9 @@ public class DarkScreen : SingletonBase<DarkScreen>
     {
         if (!DarkScreenPlaying && waitQueue.Count > 0)
         {
+            DarkScreenPlaying = true;
+            animator.Play(ANIM_FADEOUT, -1, 0);
+            Anim_IsLoading = true;
             StartCoroutine(WaitCoroutine());
         }
     }
@@ -50,9 +53,9 @@ public class DarkScreen : SingletonBase<DarkScreen>
 
     IEnumerator WaitCoroutine()
     {
-        DarkScreenPlaying = true;
-        animator.Play(ANIM_FADEOUT, -1, 0);
-        Anim_IsLoading = true;
+        // DarkScreenPlaying = true;
+        // animator.Play(ANIM_FADEOUT, -1, 0);
+        // Anim_IsLoading = true;
         yield return new WaitUntil(() => isFadeOutEnd);
         while (waitQueue.Count > 0)
         {

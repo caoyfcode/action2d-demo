@@ -25,6 +25,15 @@ public class WorldManager : SingletonBase<WorldManager>
 
     void Start()
     {
+        // TODO 在完成主场景后将
+        if (DataManager.instance.CheckSaveSlotExits(0))
+        {
+            DataManager.instance.LoadSaveSlot(0);
+        }
+        else
+        {
+            DataManager.instance.InitSaveSlot(0);
+        }
         // Game.instance.isMainMenuScene = false;
         Level level = levelContainer.GetComponentInChildren<Level>();
         if (level != null)
@@ -34,10 +43,21 @@ public class WorldManager : SingletonBase<WorldManager>
             cameraController.SetRoomTriggerTarget();
             cameraController.SetBoundariesAndMoveInstantly();
         }
-        else
-        {
-            Teleport(new(0, 0), levelData.GetCheckpointPosition(new(0, 0)));
-        }
+        // else
+        // {
+        //     Teleport(new(0, 0));
+        // }
+        TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
+    }
+
+    public static void TeleportCheckpoint(Vector2Int levelIndex, bool save=true)
+    {
+        Teleport(levelIndex, instance.levelData.GetCheckpointPosition(levelIndex));
+        if (save)
+            DarkScreen.instance.DarkScreenWait(() => {
+                DataManager.instance.PlayerData.checkpoint = levelIndex;
+                DataManager.instance.SaveCurrentSlot();
+            });
     }
 
     public static void Teleport(Vector2Int levelIndex, Vector2 position)
@@ -79,4 +99,15 @@ public class WorldManager : SingletonBase<WorldManager>
         cameraController.SetRoomTriggerTarget();
         cameraController.SetBoundariesAndMoveInstantly();
     }
+
+    // [Serializable]
+    // public class Preload
+    // {
+    //     public LevelData levelData;
+    //     public ItemData itemData;
+    //     public GameObject smokeRingPrefab;
+    //     public GameObject afterImagePrefab;
+    //     public GameObject bloodEffectPrefab;
+    //     public GameObject explosionPrefab;
+    // }
 }

@@ -63,4 +63,11 @@ public class GameManager : SingletonBase<GameManager>
         yield return new WaitForSecondsRealtime(seconds);
         Pause = false;
     }
+
+    // [Serializable]
+    // public class GamePreload
+    // {
+    //     public InputIconMap inputIconMap;
+    //     public Material whiteMaterial;
+    // }
 }
