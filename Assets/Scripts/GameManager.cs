@@ -26,6 +26,8 @@ public class GameManager : SingletonBase<GameManager>
 
     public static bool IsMainMenuScene => MainMenu.instance != null;
 
+    public GamePreload gamePreload;
+
     public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
     public bool debugPause = false;
     public float debugShowFPS = 0f;
@@ -75,10 +77,10 @@ public class GameManager : SingletonBase<GameManager>
         Pause = false;
     }
 
-    // [Serializable]
-    // public class GamePreload
-    // {
-    //     public InputIconMap inputIconMap;
-    //     public Material whiteMaterial;
-    // }
+    [Serializable]
+    public class GamePreload
+    {
+        public InputIconMap inputIconMap;
+        public Material whiteMaterial;
+    }
 }

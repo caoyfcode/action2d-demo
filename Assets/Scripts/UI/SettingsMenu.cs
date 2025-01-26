@@ -4,15 +4,88 @@ using UnityEngine;
 
 public class SettingsMenu : Menu
 {
-    // Start is called before the first frame update
-    void Start()
+    public override bool Shown
     {
-        
+        get { return gameObject.activeSelf; }
+        set 
+        { 
+            if (!gameObject.activeSelf && value)
+            {
+                GameManager.Pause = true;
+            }
+            else if (gameObject.activeSelf && !value)
+            {
+                GameManager.Pause = false;
+            }
+            gameObject.SetActive(value); 
+        }
     }
 
-    // Update is called once per frame
+    public ItemBox gameSettingHeader; // 0
+    public ItemBox volumeSettingHeader; // 1
+    public ItemBox graphicsSettingHeader; // 2
+    public ItemBox controllerSettingHeader; // 3
+    public ItemBox keyboardSettingHeader; // 4
+
+    private List<ItemBox> headers = new();
+
+    public int selected = 0;
+
+    void Awake()
+    {
+        if (headers.Count != 0)
+            headers.Clear();
+        headers.Add(gameSettingHeader);
+        headers.Add(volumeSettingHeader);
+        headers.Add(graphicsSettingHeader);
+        headers.Add(controllerSettingHeader);
+        headers.Add(keyboardSettingHeader);
+        selected = 0;
+    }
+
+    void OnEnable()
+    {
+        if (headers.Count == 0)
+        {
+            headers.Add(gameSettingHeader);
+            headers.Add(volumeSettingHeader);
+            headers.Add(graphicsSettingHeader);
+            headers.Add(controllerSettingHeader);
+            headers.Add(keyboardSettingHeader);
+            selected = 0;
+        }
+        HandleShownMenu();
+    }
+
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q) && selected >= 1)
+        {
+            selected -= 1;
+            HandleShownMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && selected <= headers.Count - 2)
+        {
+            selected += 1;
+            HandleShownMenu();
+        }
+    }
+
+    void HandleShownMenu()
+    {
+        if (selected >= 0 && selected < headers.Count)
+        {
+            for (int i = 0; i < headers.Count; i++)
+            {
+                if (i == selected)
+                {
+                    headers[i].selected = true;
+                }
+                else
+                {
+                    headers[i].selected = false;
+                }
+            }
+        }
     }
 }

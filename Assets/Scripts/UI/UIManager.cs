@@ -7,7 +7,7 @@ public class UIManager : SingletonBase<UIManager>
     public static BossHeathBar BossHeathBar => instance.bossHeathBar;
     public static CheckpointMenu CheckpointMenu => instance.checkpointMenu;
     public static TeleportMenu TeleportMenu => instance.teleportMenu;
-    public static bool MenuShown => instance.pauseMenu.Shown || instance.checkpointMenu.Shown || instance.teleportMenu.Shown || instance.inventoryMenu.Shown;
+    public static bool MenuShown => instance.pauseMenu.Shown || instance.checkpointMenu.Shown || instance.teleportMenu.Shown || instance.inventoryMenu.Shown || instance.settingsMenu.Shown;
 
     [Header("HUD")]
     // public StatusIconList playerHeath;
@@ -23,11 +23,7 @@ public class UIManager : SingletonBase<UIManager>
     public TeleportMenu teleportMenu;
     public PauseMenu pauseMenu;
     public InventoryMenu inventoryMenu;
-
-    
-
-    [Header("Input Icon")]
-    public InputIconMap inputIconMap;
+    public SettingsMenu settingsMenu;
 
     public bool debugControlShown;
     public bool debugCheckpointMenuShown;
@@ -65,6 +61,10 @@ public class UIManager : SingletonBase<UIManager>
             else if (inventoryMenu.Shown)
             {
                 inventoryMenu.Shown = false;
+            }
+            else if (settingsMenu.Shown)
+            {
+                settingsMenu.Shown = false;
             }
         }
         else if (Input.GetKeyDown(KeyCode.P))

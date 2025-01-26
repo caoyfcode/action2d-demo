@@ -30,12 +30,11 @@ public class PauseMenu : Menu
     public void Settings()
     {
         Shown = false;
-        // TODO: Open settings menu
+        UIManager.instance.settingsMenu.Shown = true;
     }
 
     public void Exit()
     {
-        // GameManager.ExitGame();
-        SceneManager.LoadScene("MainMenu");
+        DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("MainMenu"));
     }
 }

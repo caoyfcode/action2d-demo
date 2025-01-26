@@ -15,10 +15,10 @@ public class InputIcon : MonoBehaviour
     {
         iconImage.sprite = inputType switch
         {
-            GameInput.InputType.Keyoard => UIManager.instance.inputIconMap.GetKeyboardIcon(inputName),
-            GameInput.InputType.XboxController => UIManager.instance.inputIconMap.GetXboxIcon(inputName),
-            GameInput.InputType.PsController => UIManager.instance.inputIconMap.GetPsIcon(inputName),
-            GameInput.InputType.SwitchController => UIManager.instance.inputIconMap.GetSwitchIcon(inputName),
+            GameInput.InputType.Keyoard => GameManager.instance.gamePreload.inputIconMap.GetKeyboardIcon(inputName),
+            GameInput.InputType.XboxController => GameManager.instance.gamePreload.inputIconMap.GetXboxIcon(inputName),
+            GameInput.InputType.PsController => GameManager.instance.gamePreload.inputIconMap.GetPsIcon(inputName),
+            GameInput.InputType.SwitchController => GameManager.instance.gamePreload.inputIconMap.GetSwitchIcon(inputName),
         };
     }
 }

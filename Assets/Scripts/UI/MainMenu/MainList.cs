@@ -41,6 +41,7 @@ public class MainList : Menu
                     break;
                 case 1:
                     // open settings
+                    MainMenu.instance.OpenSettingsMenu();
                     break;
                 case 2:
                     ExitGame();
