@@ -18,7 +18,8 @@ public class DarkScreen : SingletonBase<DarkScreen>
         }
     }
     public bool DarkScreenPlaying;
-    private Queue<IEnumerator> waitQueue = new();
+    private Queue<object> waitQueue = new();
+
 
     protected override void Awake()
     {
@@ -30,9 +31,23 @@ public class DarkScreen : SingletonBase<DarkScreen>
         playerImage.SetActive(false);
     }
 
-    void Update()
+    // void Update()
+    // {
+    //     // 若仅仅依靠 DarkScreen 中的代码启动，则在 watQueue 的最后一个中若调用了 DarkScreen
+    //     // 则不会继续进入队列了，
+    //     if (!DarkScreenPlaying && waitQueue.Count > 0)
+    //     {
+    //         DarkScreenPlaying = true;
+    //         animator.Play(ANIM_FADEOUT, -1, 0);
+    //         Anim_IsLoading = true;
+    //         StartCoroutine(WaitCoroutine());
+    //     }
+    // }
+
+    public void DarkScreenWait(IEnumerator wait)
     {
-        if (!DarkScreenPlaying && waitQueue.Count > 0)
+        waitQueue.Enqueue(wait);
+        if (!DarkScreenPlaying && waitQueue.Count == 1)
         {
             DarkScreenPlaying = true;
             animator.Play(ANIM_FADEOUT, -1, 0);
@@ -41,14 +56,28 @@ public class DarkScreen : SingletonBase<DarkScreen>
         }
     }
 
-    public void DarkScreenWait(IEnumerator wait)
-    {
-        waitQueue.Enqueue(wait);
-    }
-
     public void DarkScreenWait(Action action)
     {
         waitQueue.Enqueue(ActionCoroutine(action));
+        if (!DarkScreenPlaying && waitQueue.Count == 1)
+        {
+            DarkScreenPlaying = true;
+            animator.Play(ANIM_FADEOUT, -1, 0);
+            Anim_IsLoading = true;
+            StartCoroutine(WaitCoroutine());
+        }
+    }
+
+    public void DarkScreenWait(AsyncOperation operation)
+    {
+        waitQueue.Enqueue(operation);
+        if (!DarkScreenPlaying && waitQueue.Count == 1)
+        {
+            DarkScreenPlaying = true;
+            animator.Play(ANIM_FADEOUT, -1, 0);
+            Anim_IsLoading = true;
+            StartCoroutine(WaitCoroutine());
+        }
     }
 
     IEnumerator WaitCoroutine()

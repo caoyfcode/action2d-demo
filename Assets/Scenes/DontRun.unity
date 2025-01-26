@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level_01_00
       objectReference: {fileID: 0}
+    - target: {fileID: 2495629814759526438, guid: 53f6f4411adfde44282a0a0112bf2fbf, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2495629814759526438, guid: 53f6f4411adfde44282a0a0112bf2fbf, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6287328023275098885, guid: 53f6f4411adfde44282a0a0112bf2fbf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -193,6 +201,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1202531345}
     m_Modifications:
+    - target: {fileID: 2162347385978118200, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162347385978118200, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3999170560502227257, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -244,6 +260,14 @@ PrefabInstance:
     - target: {fileID: 7749882688885457192, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_Name
       value: Level_00_m01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879166650450829006, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879166650450829006, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -297,6 +321,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1202531345}
     m_Modifications:
+    - target: {fileID: 1438779681894523815, guid: 29aaa794ba53e0d4aaefeab80135ea43, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438779681894523815, guid: 29aaa794ba53e0d4aaefeab80135ea43, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3999170560502227257, guid: 29aaa794ba53e0d4aaefeab80135ea43, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

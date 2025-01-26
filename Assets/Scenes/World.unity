@@ -657,11 +657,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2162347385978118200, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 2162347385978118200, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3999170560502227257, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -705,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462484391820284761, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_ColliderPaths.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6462484391820284761, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.size
@@ -2237,11 +2237,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6499222437596626215, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 6499222437596626215, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_Name
@@ -2249,15 +2249,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879166650450829006, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8879166650450829006, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 9146610796095627487, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_TileColorArray.Array.size
@@ -13462,7 +13462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &875757160
 Transform:
   m_ObjectHideFlags: 0
@@ -13505,6 +13505,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd585a7b48fff7847a414ccaf6acfdfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveSlot:
+    player:
+      maxHealth: 0
+      maxMagic: 0
+      money: 0
+      ability:
+        attack: 0
+        defend: 0
+        arrow: 0
+        dash: 0
+        doubleJump: 0
+        wallSlide: 0
+      checkpoint: {x: 0, y: 0}
+      controlConfig:
+        attack1: 
+        attack2: 
+        attack3: 
+      inventory: []
+    boss: []
+    checkpoint: []
+    level: []
+  settings:
+    game:
+      fps: 60
+    volume:
+      totalVolume: 1
+      backgroundVolume: 1
+      effectVolume: 1
+    graphics:
+      resolution: 1920x1080
+    keyboard:
+      uiSwitchLeft: Q
+      uiSwitchRight: E
+      up: W
+      down: S
+      left: A
+      right: D
+      inventory: P
+      attack1: J
+      attack2: H
+      attack3: U
+      jump: K
+      dash: L
+      heal: R
+      hook: F
+      fastMap: TAB
+    controller:
+      uiSwitchLeft: button_4
+      uiSwitchRight: button_5
+      up: left_stick
+      down: left_stick
+      left: left_stick
+      right: left_stick
+      inventory: button_6
+      attack1: button_2
+      attack2: button_3
+      attack3: button_1
+      jump: button_0
+      dash: right_trigger
+      heal: button_5
+      hook: left_trigger
+      fastMap: button_4
 --- !u!1 &877650400
 GameObject:
   m_ObjectHideFlags: 0
@@ -18421,6 +18483,10 @@ PrefabInstance:
     - target: {fileID: 1821491102331862612, guid: 6e99c31783d282c47a167b6294557d88, type: 3}
       propertyPath: m_Name
       value: DarkScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821491102331862612, guid: 6e99c31783d282c47a167b6294557d88, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7519021366995681113, guid: 6e99c31783d282c47a167b6294557d88, type: 3}
       propertyPath: m_Pivot.x

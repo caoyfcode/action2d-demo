@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 // 单例，提供公共变量的访问点以及一些游戏系统函数
@@ -22,6 +23,8 @@ public class GameManager : SingletonBase<GameManager>
             }
         }
     }
+
+    public static bool IsMainMenuScene => MainMenu.instance != null;
 
     public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
     public bool debugPause = false;
@@ -50,6 +53,14 @@ public class GameManager : SingletonBase<GameManager>
         debugShowFPSLastTime = Time.realtimeSinceStartup;
     }
 
+    public static void ExitGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
+    }
 
     public static void PauseForSeconds(float seconds)
     {
