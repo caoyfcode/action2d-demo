@@ -22,79 +22,16 @@ public class PauseMenu : Menu
         }
     }
 
-    public ItemBox resume;
-    public ItemBox settings;
-    public ItemBox exit;
-    private ItemBox GetItem(int index) => index switch {
-        0 => resume,
-        1 => settings,
-        2 => exit,
-        _ => null
-    };
-    public int selected = -1;
+    public SelectGroup selectGroup;
 
     void Update()
     {
-        UpdateSelection();
-        HandleInput();
-    }
-
-    void UpdateSelection()
-    {
         bool up = Input.GetKeyDown(KeyCode.W);
         bool down = Input.GetKeyDown(KeyCode.S);
-        int prevSelected = selected;
-        if (down && !up)
-        {
-            if (selected < 2)
-            {
-                selected++;
-            }
-            else
-            {
-                selected = 0;
-            }
-        }
-        else if (up && !down)
-        {
-            if (selected > 0)
-            {
-                selected--;
-            }
-            else
-            {
-                selected = 2;
-            }
-        }
-        if (prevSelected != selected)
-        {
-            if (prevSelected >= 0 && prevSelected < 3)
-            {
-                GetItem(prevSelected).selected = false;
-            }
-            if (selected >= 0 && selected < 3)
-            {
-                GetItem(selected).selected = true;
-            }
-        }
-    }
-
-    void HandleInput()
-    {
+        selectGroup.UpdateSelection(down, up);
         if (Input.GetKeyDown(KeyCode.K))
         {
-            switch (selected)
-            {
-                case 0:
-                    Resume();
-                    break;
-                case 1:
-                    Settings();
-                    break;
-                case 2:
-                    Exit();
-                    break;
-            }
+            selectGroup.InvokeAction();
         }
     }
 

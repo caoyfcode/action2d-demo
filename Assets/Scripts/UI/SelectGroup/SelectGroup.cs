@@ -3,53 +3,119 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SelectGroup : MonoBehaviour
+[System.Serializable]
+public class SelectGroup
 {
-    public int selected = -1; // 初始时什么也不显示
-    public UnityEvent close;
-
-    // Update is called once per frame
-    void Update()
+    [System.Serializable]
+    public class ItemActionPair
     {
-        var items = GetComponentsInChildren<SelectItem>();
+        public ItemBox item;
+        public UnityEvent action;
+    }
 
-        if (Input.GetKeyDown(KeyCode.W))
+    public List<ItemActionPair> itemActions;
+    public int selected = -1; // 初始时什么也不选中
+
+    public void UpdateSelection(bool inc, bool dec)
+    {
+        int prevSelected = selected;
+        if (inc && !dec)
         {
-            selected--;
-            if (selected < 0)
+            if (selected < itemActions.Count - 1)
             {
-                selected = items.Length - 1;
+                selected++;
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            selected++;
-            if (selected > items.Length - 1)
+            else
             {
                 selected = 0;
             }
         }
-
-        for (int i = 0; i < items.Length; i++)
+        else if (!inc && dec)
         {
-            items[i].selected = selected == i;
+            if (selected > 0)
+            {
+                selected--;
+            }
+            else
+            {
+                selected = itemActions.Count - 1;
+            }
         }
-        
-        // 取消
-        if (Input.GetKeyDown(KeyCode.J))
+        // else 即使 selected 无意义，也不改变
+        if (prevSelected != selected)
         {
-            Close();
+            if (prevSelected >= 0 && prevSelected < itemActions.Count)
+            {
+                itemActions[prevSelected].item.selected = false;
+            }
+            if (selected >= 0 && selected < itemActions.Count)
+            {
+                itemActions[selected].item.selected = true;
+            }
         }
     }
 
-    public void Close()
+    public void InvokeAction()
     {
-        selected = -1; // 重置
-        var items = GetComponentsInChildren<SelectItem>();
-        foreach (var item in items)
+        if (selected >= 0 && selected < itemActions.Count)
         {
-            item.ImmediateSelcted(false);
+            itemActions[selected].action?.Invoke();
         }
-        close?.Invoke();
     }
+
+    public void SetSelectedInstantly(int selected)
+    {
+        this.selected = selected;
+        for (int i = 0; i < itemActions.Count; i++)
+        {
+            itemActions[i].item.SetSelectedInstantly(i == selected);
+        }
+    }
+
+    // public UnityEvent close;
+
+    // Update is called once per frame
+    // void Update()
+    // {
+    //     var items = GetComponentsInChildren<SelectItem>();
+
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         selected--;
+    //         if (selected < 0)
+    //         {
+    //             selected = items.Length - 1;
+    //         }
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         selected++;
+    //         if (selected > items.Length - 1)
+    //         {
+    //             selected = 0;
+    //         }
+    //     }
+
+    //     for (int i = 0; i < items.Length; i++)
+    //     {
+    //         items[i].selected = selected == i;
+    //     }
+        
+    //     // 取消
+    //     if (Input.GetKeyDown(KeyCode.J))
+    //     {
+    //         Close();
+    //     }
+    // }
+
+    // public void Close()
+    // {
+    //     selected = -1; // 重置
+    //     var items = GetComponentsInChildren<SelectItem>();
+    //     foreach (var item in items)
+    //     {
+    //         item.ImmediateSelcted(false);
+    //     }
+    //     close?.Invoke();
+    // }
 }

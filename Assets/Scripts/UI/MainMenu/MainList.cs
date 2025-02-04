@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainList : Menu
 {
+    public SelectGroup selectGroup;
+
     public int selectedId = 0; // 0: start, 1: settigns, 2: exit
     public ItemBox start;
     public ItemBox settings;
@@ -19,87 +21,33 @@ public class MainList : Menu
 
     void Awake()
     {
-        selectedId = 0;
-        start.selected = true;
+        selectGroup.SetSelectedInstantly(0); // start
     }
-
 
     void Update()
     {
-        UpdateSelection();
-        HandleInput();
-    }
-
-    void HandleInput()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            switch (selectedId)
-            {
-                case 0:
-                    StartGame();
-                    break;
-                case 1:
-                    // open settings
-                    MainMenu.instance.OpenSettingsMenu();
-                    break;
-                case 2:
-                    ExitGame();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    void UpdateSelection()
-    {
         bool up = Input.GetKeyDown(KeyCode.W);
         bool down = Input.GetKeyDown(KeyCode.S);
-        int prevSelected = selectedId;
-        if (down && !up)
+        selectGroup.UpdateSelection(down, up);
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            if (selectedId < 2)
-            {
-                selectedId += 1;
-            }
-            else
-            {
-                selectedId = 0;
-            }
-        }
-        else if (up && !down)
-        {
-            if (selectedId > 0)
-            {
-                selectedId -= 1;
-            }
-            else
-            {
-                selectedId = 2;
-            }
-        }
-        if (prevSelected != selectedId)
-        {
-            if (prevSelected >= 0 && prevSelected < 3)
-            {
-                GetItem(prevSelected).selected = false;
-            }
-            if (selectedId >= 0 && selectedId < 3)
-            {
-                GetItem(selectedId).selected = true;
-            }
+            selectGroup.InvokeAction();
         }
     }
 
-    void StartGame()
+    public void StartGame()
     {
         // TODO 打开存档列表
         DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("World"));
         // TODO DataManager 加载数据
     }
 
-    void ExitGame()
+    public void OpenSettingsMenu()
+    {
+        MainMenu.instance.OpenSettingsMenu();
+    }
+
+    public void ExitGame()
     {
         GameManager.ExitGame();
     }

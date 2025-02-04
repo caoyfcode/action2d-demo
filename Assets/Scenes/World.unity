@@ -13487,11 +13487,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb0b4c4d01da6b45a42c3cfd797ac1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heal: {fileID: 668544844}
-  teleport: {fileID: 1760172236}
-  upgrade: {fileID: 1786522078}
-  leave: {fileID: 802601110}
-  selected: -1
+  selectGroup:
+    itemActions:
+    - item: {fileID: 668544844}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 877650404}
+            m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
+            m_MethodName: Heal
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 1760172236}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 877650404}
+            m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
+            m_MethodName: Teleport
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 1786522078}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 877650404}
+            m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
+            m_MethodName: Upgrade
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 802601110}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 877650404}
+            m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
+            m_MethodName: Leave
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    selected: -1
 --- !u!1 &890118066
 GameObject:
   m_ObjectHideFlags: 0
@@ -17898,10 +17960,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b206403a06cce1748af70deaa1c841d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resume: {fileID: 1541757945}
-  settings: {fileID: 250543327}
-  exit: {fileID: 1820271451}
-  selected: -1
+  selectGroup:
+    itemActions:
+    - item: {fileID: 1541757945}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2003282225}
+            m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+            m_MethodName: Resume
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 250543327}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2003282225}
+            m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+            m_MethodName: Settings
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 1820271451}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2003282225}
+            m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+            m_MethodName: Exit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    selected: -1
 --- !u!1 &2019820789
 GameObject:
   m_ObjectHideFlags: 0

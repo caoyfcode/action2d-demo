@@ -1334,6 +1334,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c0470324d7c8a4fbfc0fe36a4a63c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectGroup:
+    itemActions:
+    - item: {fileID: 254988640}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1247974033}
+            m_TargetAssemblyTypeName: MainList, Assembly-CSharp
+            m_MethodName: StartGame
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 441380173}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1247974033}
+            m_TargetAssemblyTypeName: MainList, Assembly-CSharp
+            m_MethodName: OpenSettingsMenu
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - item: {fileID: 912243617}
+      action:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1247974033}
+            m_TargetAssemblyTypeName: MainList, Assembly-CSharp
+            m_MethodName: ExitGame
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    selected: -1
   selectedId: 0
   start: {fileID: 254988640}
   settings: {fileID: 441380173}
