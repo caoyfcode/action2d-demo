@@ -10006,7 +10006,7 @@ GameObject:
   - component: {fileID: 250543323}
   - component: {fileID: 250543326}
   - component: {fileID: 250543325}
-  - component: {fileID: 250543324}
+  - component: {fileID: 250543327}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -10034,35 +10034,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -105}
   m_SizeDelta: {x: 250, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &250543324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250543322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  border: {fileID: 250543325}
-  selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2003282225}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Settings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &250543325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10101,6 +10072,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250543322}
   m_CullTransparentMesh: 1
+--- !u!114 &250543327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250543322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  border: {fileID: 250543325}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
+  selected: 0
 --- !u!1 &251437407
 GameObject:
   m_ObjectHideFlags: 0
@@ -10644,7 +10631,6 @@ MonoBehaviour:
   pauseMenu: {fileID: 2003282225}
   inventoryMenu: {fileID: 518993932}
   settingsMenu: {fileID: 1364549207}
-  inputIconMap: {fileID: 11400000, guid: 616b32beadbcb744eacff794cb3ec4d4, type: 2}
   debugControlShown: 0
   debugCheckpointMenuShown: 0
   debugTeleportMenuShown: 0
@@ -12275,26 +12261,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 668544840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 668544842}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
   selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 877650404}
-        m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
-        m_MethodName: Heal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &673544439
 GameObject:
   m_ObjectHideFlags: 0
@@ -12306,7 +12279,6 @@ GameObject:
   - component: {fileID: 673544440}
   - component: {fileID: 673544441}
   - component: {fileID: 673544442}
-  - component: {fileID: 673544443}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -12377,34 +12349,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &673544443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673544439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4599fae764f91684290a01e574b224c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selected: -1
-  close:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 877650404}
-        m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
-        m_MethodName: Leave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &682250102
 GameObject:
   m_ObjectHideFlags: 0
@@ -12950,26 +12894,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 802601106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 802601108}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
   selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 673544443}
-        m_TargetAssemblyTypeName: SelectGroup, Assembly-CSharp
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &815702038
 GameObject:
   m_ObjectHideFlags: 0
@@ -13049,7 +12980,6 @@ GameObject:
   m_Component:
   - component: {fileID: 830282003}
   - component: {fileID: 830282005}
-  - component: {fileID: 830282006}
   m_Layer: 5
   m_Name: 'List '
   m_TagString: Untagged
@@ -13105,34 +13035,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &830282006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830282002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4599fae764f91684290a01e574b224c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selected: -1
-  close:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2003282225}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Exit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &840345036
 GameObject:
   m_ObjectHideFlags: 0
@@ -13585,6 +13487,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb0b4c4d01da6b45a42c3cfd797ac1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heal: {fileID: 668544844}
+  teleport: {fileID: 1760172236}
+  upgrade: {fileID: 1786522078}
+  leave: {fileID: 802601110}
+  selected: -1
 --- !u!1 &890118066
 GameObject:
   m_ObjectHideFlags: 0
@@ -15508,7 +15415,7 @@ GameObject:
   - component: {fileID: 1541757941}
   - component: {fileID: 1541757944}
   - component: {fileID: 1541757943}
-  - component: {fileID: 1541757942}
+  - component: {fileID: 1541757945}
   m_Layer: 5
   m_Name: Resume
   m_TagString: Untagged
@@ -15536,35 +15443,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -35}
   m_SizeDelta: {x: 250, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1541757942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541757940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  border: {fileID: 1541757943}
-  selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2003282225}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1541757943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15603,6 +15481,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541757940}
   m_CullTransparentMesh: 1
+--- !u!114 &1541757945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541757940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  border: {fileID: 1541757943}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
+  selected: 0
 --- !u!1 &1545779705
 GameObject:
   m_ObjectHideFlags: 0
@@ -16449,26 +16343,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760172232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 1760172234}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
   selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 877650404}
-        m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
-        m_MethodName: Teleport
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1761018325
 GameObject:
   m_ObjectHideFlags: 0
@@ -16777,26 +16658,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786522074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 1786522076}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
   selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 877650404}
-        m_TargetAssemblyTypeName: CheckpointMenu, Assembly-CSharp
-        m_MethodName: Upgrade
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1787884157
 GameObject:
   m_ObjectHideFlags: 0
@@ -17028,7 +16896,7 @@ GameObject:
   - component: {fileID: 1820271447}
   - component: {fileID: 1820271450}
   - component: {fileID: 1820271449}
-  - component: {fileID: 1820271448}
+  - component: {fileID: 1820271451}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -17056,35 +16924,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -175}
   m_SizeDelta: {x: 250, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1820271448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820271446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ea7ecbc4b2b44b9a0dc17e22e5eb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  border: {fileID: 1820271449}
-  selected: 0
-  confirm:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2003282225}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Exit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1820271449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17123,6 +16962,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820271446}
   m_CullTransparentMesh: 1
+--- !u!114 &1820271451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820271446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a092cbc19074ed54f970d36a4c8bf2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  border: {fileID: 1820271449}
+  itemImage: {fileID: 0}
+  unSelectedShape: 0
+  selected: 0
 --- !u!1 &1835065679
 GameObject:
   m_ObjectHideFlags: 0
@@ -18043,6 +17898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b206403a06cce1748af70deaa1c841d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resume: {fileID: 1541757945}
+  settings: {fileID: 250543327}
+  exit: {fileID: 1820271451}
+  selected: -1
 --- !u!1 &2019820789
 GameObject:
   m_ObjectHideFlags: 0
