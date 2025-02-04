@@ -9,7 +9,7 @@ public class SelectGroup
     [System.Serializable]
     public class ItemActionPair
     {
-        public ItemBox item;
+        public SelectItem item;
         public UnityEvent action;
     }
 

@@ -5,11 +5,11 @@ using UnityEngine;
 public class InventoryMenu : Menu
 {
     public GameObject header;
-    public ItemBox mapHeader;
-    public ItemBox inventoryHeader;
-    public ItemBox questHeader;
+    public SelectItem mapHeader;
+    public SelectItem inventoryHeader;
+    public SelectItem questHeader;
     public InventoryMap map;
-    public Inventory inventory;
+    public InventoryUI inventory;
     public int selectedMenu = 1; // 0: Map, 1: Inventory, 2: Quest
     
 

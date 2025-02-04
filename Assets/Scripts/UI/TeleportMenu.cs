@@ -76,11 +76,11 @@ public class TeleportMenu : Menu
         {
             if (prevSelected >= 0 && prevSelected < listNode.transform.childCount)
             {
-                listNode.transform.GetChild(prevSelected).GetComponent<ItemBox>().SetSelectedInstantly(false);
+                listNode.transform.GetChild(prevSelected).GetComponent<SelectItem>().SetSelectedInstantly(false);
             }
             if (selectedId >= 0 && selectedId < listNode.transform.childCount)
             {
-                listNode.transform.GetChild(selectedId).GetComponent<ItemBox>().SetSelectedInstantly(true);
+                listNode.transform.GetChild(selectedId).GetComponent<SelectItem>().SetSelectedInstantly(true);
             }
         }
     }
@@ -116,11 +116,11 @@ public class TeleportMenu : Menu
         {
             if (prevSelected >= 0 && prevSelected < listNode.transform.childCount)
             {
-                listNode.transform.GetChild(prevSelected).GetComponent<ItemBox>().selected = false;
+                listNode.transform.GetChild(prevSelected).GetComponent<SelectItem>().selected = false;
             }
             if (selectedId >= 0 && selectedId < listNode.transform.childCount)
             {
-                listNode.transform.GetChild(selectedId).GetComponent<ItemBox>().selected = true;
+                listNode.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
             }
         }
     }

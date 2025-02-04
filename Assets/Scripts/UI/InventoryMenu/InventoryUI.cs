@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : Menu
+public class InventoryUI : Menu
 {
     public enum SelectedTable
     {
@@ -19,12 +19,6 @@ public class Inventory : Menu
 
     public SelectedTable selectedTable = SelectedTable.None;
     public int selectedId = -1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -216,7 +210,7 @@ public class Inventory : Menu
                 SelectedTable.Item => itemTable,
                 _ => attackConfig,
             };
-            pervTable.transform.GetChild(prevSelected).GetComponent<ItemBox>().selected = false;
+            pervTable.transform.GetChild(prevSelected).GetComponent<SelectItem>().selected = false;
         }
         // 新选项存在且与旧选项不同时，选中新选项
         if (selectedTable != SelectedTable.None &&
@@ -228,7 +222,7 @@ public class Inventory : Menu
                 SelectedTable.Item => itemTable,
                 _ => attackConfig,
             };
-            table.transform.GetChild(selectedId).GetComponent<ItemBox>().selected = true;
+            table.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
             ChangeDescription();
         }
     }

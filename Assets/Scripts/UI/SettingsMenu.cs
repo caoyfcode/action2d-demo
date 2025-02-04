@@ -21,13 +21,13 @@ public class SettingsMenu : Menu
         }
     }
 
-    public ItemBox gameSettingHeader; // 0
-    public ItemBox volumeSettingHeader; // 1
-    public ItemBox graphicsSettingHeader; // 2
-    public ItemBox controllerSettingHeader; // 3
-    public ItemBox keyboardSettingHeader; // 4
+    public SelectItem gameSettingHeader; // 0
+    public SelectItem volumeSettingHeader; // 1
+    public SelectItem graphicsSettingHeader; // 2
+    public SelectItem controllerSettingHeader; // 3
+    public SelectItem keyboardSettingHeader; // 4
 
-    private List<ItemBox> headers = new();
+    private List<SelectItem> headers = new();
 
     public int selected = 0;
 

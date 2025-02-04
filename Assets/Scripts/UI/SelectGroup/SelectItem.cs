@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 96x96 大小的单个物品
-public class ItemBox : MonoBehaviour
+public class SelectItem : MonoBehaviour
 {
     public enum UnSelectedShape
     {
@@ -13,12 +12,11 @@ public class ItemBox : MonoBehaviour
     }
 
     public Image border;
-    public Image itemImage; // TODO 暂不显示
 
     public UnSelectedShape unSelectedShape = UnSelectedShape.NoBorder;
     public bool selected = false;
 
-    void Update()
+    protected virtual void Update()
     {
         Color targetColor = Color.white;
         if (!selected)
