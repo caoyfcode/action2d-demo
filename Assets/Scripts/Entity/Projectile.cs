@@ -6,12 +6,14 @@ public class Projectile : Entity
     public Entity source;
     public float damage;
     public HitBox hitBox;
+    public AudioSource startSFX;
 
     protected override void Start()
     {
         base.Start();
         FacingDirection = velocity.x;
         rb.velocity = velocity;
+        startSFX.Play();
     }
 
     // 子类继续 override Update() 函数来编写路径
