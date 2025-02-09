@@ -8,6 +8,7 @@ public class SoundManager : SingletonBase<SoundManager>
     public AudioClip uiSelectionClip;
     public AudioClip uiConfirmClip;
 
+    public AudioSource backgroundMusic; // background music
     public AudioSource uiSoundEffect; // ui and interactive ui
     // environment sound effect
     // attack/hit sound effect
@@ -29,5 +30,11 @@ public class SoundManager : SingletonBase<SoundManager>
     public void PlayUIConfirm()
     {
         PlayUISoundEffect(uiConfirmClip);
+    }
+
+    public void PlayBackgroundMusic(AudioClip clip)
+    {
+        backgroundMusic.clip = clip;
+        backgroundMusic.Play();
     }
 }
