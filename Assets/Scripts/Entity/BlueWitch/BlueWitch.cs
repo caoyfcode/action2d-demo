@@ -19,6 +19,8 @@ public class BlueWitch : Entity
     public SpawnAfterImage spawnAfterImage;
     public GameObject wallSlideCrow;
 
+    public AudioSource runSFX;
+
     #region Command
     public class Command
     {

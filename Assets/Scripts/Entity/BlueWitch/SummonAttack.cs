@@ -8,6 +8,9 @@ public class SummonAttack : Summon
     public Collider2D[] hitBoxes;
     public HitBox hitBox;
     public bool isHitBoxEnabled = false;
+    public AudioSource attackSFX;
+    public AudioSource attackHitSFX;
+    private bool prevIsHitBoxEnabled = false;
 
     // Update is called once per frame
     protected override void Update()
@@ -16,8 +19,20 @@ public class SummonAttack : Summon
 
         if (isHitBoxEnabled)
         {
-            hitBox.DoHit();
+            int hitMum = hitBox.DoHit();
+            if (!prevIsHitBoxEnabled)
+            {
+                attackSFX.pitch = Random.Range(0.8f, 1.2f);
+                attackSFX.Play();
+            }
+            if (hitMum > 0)
+            {
+                attackHitSFX.pitch = Random.Range(0.8f, 1.2f);
+                attackHitSFX.Play();
+                attackSFX.Stop();
+            }
         }
+        prevIsHitBoxEnabled = isHitBoxEnabled;
     }
 
     public override void StartSummon()

@@ -1,24 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!243 &-7828720531840619494
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EnvSFX
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 60ea25256bb887a4b87bc96e4ad1cd0b
-  m_Children: []
-  m_Volume: 064228e9d1d577a438cae2f9f39dbe5a
-  m_Pitch: 015660df45a6a324a9e08e5bbfe94564
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: -2282173622409925238}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
 --- !u!244 &-6085729915415088314
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -85,20 +66,6 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &-2282173622409925238
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 1a5ba17db5f2f8740b945764a56e0fe1
-  m_EffectName: Attenuation
-  m_MixLevel: 4666b6aa27ace0d4ba6f3a1860083847
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!244 &-1776181700000419679
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -119,7 +86,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HitSFX
+  m_Name: WorldSFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: a1bf76b132eb38d4485d91f43d1d3437
   m_Children: []
@@ -156,7 +123,6 @@ AudioMixerController:
     - 59434afc6d469214990e138c7b423d97
     - a1bf76b132eb38d4485d91f43d1d3437
     - d47c513e7638aca4c995b3838b6d46ed
-    - 60ea25256bb887a4b87bc96e4ad1cd0b
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -236,7 +202,6 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -5883060553272659321}
   - {fileID: -1139414106778254685}
-  - {fileID: -7828720531840619494}
   m_Volume: 8a70531c379248d449580e0c4dda67e5
   m_Pitch: 0791fa341858b114cbb3668a88ce0e3b
   m_Send: 00000000000000000000000000000000

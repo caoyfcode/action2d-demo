@@ -22,6 +22,9 @@ public abstract class BlueWitchState : IStateMachineState
 
 public class BlueWitchGroundFree : BlueWitchState
 {
+    const float RUN_SFX_INTERVAL = 0.3f;
+    float runSfxTimer = 0;
+
     public BlueWitchGroundFree(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
@@ -31,6 +34,7 @@ public class BlueWitchGroundFree : BlueWitchState
         entity.airJumpCount = 0;
         entity.ResetAirAttackCount();
         entity.airDashCount = 0;
+        runSfxTimer = 0;
     }
 
     public override bool Transition()
@@ -76,6 +80,21 @@ public class BlueWitchGroundFree : BlueWitchState
         // entity.velocity.y = 0;
         entity.velocity.x = entity.CurrentCommand.speedX;
         entity.FacingDirection = entity.CurrentCommand.speedX;
+
+        if (entity.CurrentCommand.speedX != 0)
+        {
+            if (runSfxTimer <= 0)
+            {
+                entity.runSFX.Play();
+                runSfxTimer = RUN_SFX_INTERVAL;
+            }
+            runSfxTimer -= Time.deltaTime;
+        }
+        else
+        {
+            runSfxTimer = 0;
+            entity.runSFX.Stop();
+        }
     }
 }
 
