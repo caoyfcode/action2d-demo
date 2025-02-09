@@ -24,11 +24,13 @@ public class InventoryMenu : Menu
         {
             selectedMenu -= 1;
             HandleShownMenu();
+            SoundManager.instance.PlayUISelection();
         }
         else if (Input.GetKeyDown(KeyCode.E) && selectedMenu <= 1)
         {
             selectedMenu += 1;
             HandleShownMenu();
+            SoundManager.instance.PlayUISelection();
         }
     }
 

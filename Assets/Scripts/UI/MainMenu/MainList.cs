@@ -7,18 +7,6 @@ public class MainList : Menu
 {
     public SelectGroup selectGroup;
 
-    public int selectedId = 0; // 0: start, 1: settigns, 2: exit
-    public SelectItem start;
-    public SelectItem settings;
-    public SelectItem exit;
-
-    private SelectItem GetItem(int index) => index switch {
-        0 => start,
-        1 => settings,
-        2 => exit,
-        _ => null,
-    };
-
     void Awake()
     {
         selectGroup.SetSelectedInstantly(0); // start

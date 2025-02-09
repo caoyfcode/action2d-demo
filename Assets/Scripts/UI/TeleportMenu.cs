@@ -61,10 +61,12 @@ public class TeleportMenu : Menu
                 WorldManager.TeleportCheckpoint(targetLevelId);
             }
             Shown = false;
+            SoundManager.instance.PlayUIConfirm();
         }
         else if (Input.GetKeyDown(KeyCode.J))
         {
             Shown = false;
+            SoundManager.instance.PlayUIConfirm();
         }
     }
 
@@ -121,6 +123,7 @@ public class TeleportMenu : Menu
             if (selectedId >= 0 && selectedId < listNode.transform.childCount)
             {
                 listNode.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
+                SoundManager.instance.PlayUISelection();
             }
         }
     }

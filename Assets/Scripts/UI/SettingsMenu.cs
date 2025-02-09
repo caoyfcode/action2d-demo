@@ -63,11 +63,13 @@ public class SettingsMenu : Menu
         {
             selected -= 1;
             HandleShownMenu();
+            SoundManager.instance.PlayUISelection();
         }
         else if (Input.GetKeyDown(KeyCode.E) && selected <= headers.Count - 2)
         {
             selected += 1;
             HandleShownMenu();
+            SoundManager.instance.PlayUISelection();
         }
     }
 

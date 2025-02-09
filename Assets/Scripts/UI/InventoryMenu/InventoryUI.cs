@@ -33,14 +33,17 @@ public class InventoryUI : Menu
             if (Input.GetKeyDown(KeyCode.J))
             {
                 // TODO 设置 J 为 selectedId 的技能
+                SoundManager.instance.PlayUIConfirm();
             }
             if (Input.GetKeyDown(KeyCode.H))
             {
                 // TODO 设置 H 为 selectedId 的技能
+                SoundManager.instance.PlayUIConfirm();
             }
             if (Input.GetKeyDown(KeyCode.U))
             {
                 // TODO 设置 U 为 selectedId 的技能
+                SoundManager.instance.PlayUIConfirm();
             }
         }
     }
@@ -224,6 +227,7 @@ public class InventoryUI : Menu
             };
             table.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
             ChangeDescription();
+            SoundManager.instance.PlayUISelection();
         }
     }
 }

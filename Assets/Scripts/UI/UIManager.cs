@@ -45,26 +45,32 @@ public class UIManager : SingletonBase<UIManager>
             if (!MenuShown)
             {
                 pauseMenu.Shown = true;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (pauseMenu.Shown)
             {
                 pauseMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (checkpointMenu.Shown)
             {
                 checkpointMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (teleportMenu.Shown)
             {
                 teleportMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (inventoryMenu.Shown)
             {
                 inventoryMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (settingsMenu.Shown)
             {
                 settingsMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
         }
         else if (Input.GetKeyDown(KeyCode.P))
@@ -72,10 +78,12 @@ public class UIManager : SingletonBase<UIManager>
             if (!MenuShown)
             {
                 inventoryMenu.Shown = true;
+                SoundManager.instance.PlayUIConfirm();
             }
             else if (inventoryMenu.Shown)
             {
                 inventoryMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
             }
         }
     }
