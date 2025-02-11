@@ -20,6 +20,11 @@ public class MainMenu : SingletonBase<MainMenu>
         settingsMenu.Shown = false;
     }
 
+    void Start()
+    {
+        SoundManager.instance.PlayBackgroundMusic(SoundManager.instance.mainMenuMusic);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && settingsMenu.Shown)

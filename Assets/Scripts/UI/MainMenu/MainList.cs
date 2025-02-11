@@ -27,6 +27,7 @@ public class MainList : Menu
     {
         // TODO 打开存档列表
         DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("World"));
+        SoundManager.instance.StopBackgroundMusic();
         // TODO DataManager 加载数据
     }
 

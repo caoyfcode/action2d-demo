@@ -49,5 +49,6 @@ public class PauseMenu : Menu
     public void Exit()
     {
         DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("MainMenu"));
+        SoundManager.instance.StopBackgroundMusic();
     }
 }

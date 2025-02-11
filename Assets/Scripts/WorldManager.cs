@@ -63,6 +63,7 @@ public class WorldManager : SingletonBase<WorldManager>
     public static void Teleport(Vector2Int levelIndex, Vector2 position)
     {
         GameManager.Pause = true;
+        SoundManager.instance.StopBackgroundMusic();
         DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
         if (!instance.currentLevel || instance.currentLevel.levelIndex != levelIndex)
         {
@@ -98,6 +99,10 @@ public class WorldManager : SingletonBase<WorldManager>
         cameraController.FitRoomSize();
         cameraController.SetRoomTriggerTarget();
         cameraController.SetBoundariesAndMoveInstantly();
+        if (currentLevel && currentLevel.bgm != null)
+        {
+            SoundManager.instance.PlayBackgroundMusic(currentLevel.bgm);
+        }
     }
 
     // [Serializable]

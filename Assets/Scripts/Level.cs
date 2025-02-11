@@ -7,6 +7,7 @@ public class Level : MonoBehaviour
 {
     public string areaName = "";
     public Vector2Int levelIndex;
+    public AudioClip bgm;
     public GameObject Spawners;
 
 

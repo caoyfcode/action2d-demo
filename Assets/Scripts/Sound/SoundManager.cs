@@ -7,6 +7,7 @@ public class SoundManager : SingletonBase<SoundManager>
 
     public AudioClip uiSelectionClip;
     public AudioClip uiConfirmClip;
+    public AudioClip mainMenuMusic;
 
     public AudioSource backgroundMusic; // background music
     public AudioSource uiSoundEffect; // ui and interactive ui
@@ -36,5 +37,15 @@ public class SoundManager : SingletonBase<SoundManager>
     {
         backgroundMusic.clip = clip;
         backgroundMusic.Play();
+    }
+
+    public void PlayBackgroundMusic()
+    {
+        backgroundMusic.Play();
+    }
+
+    public void StopBackgroundMusic()
+    {
+        backgroundMusic.Stop();
     }
 }

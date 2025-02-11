@@ -1637,6 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiSelectionClip: {fileID: 8300000, guid: 52607b7fef3dc914a90130a6ed3fc4a3, type: 3}
   uiConfirmClip: {fileID: 8300000, guid: ac39e00f051dc7149aeba0d1290a56f1, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: 59a16b18b5c50a24baa9e0aeab5bfaee, type: 3}
   backgroundMusic: {fileID: 1374647025}
   uiSoundEffect: {fileID: 2091210565}
 --- !u!1 &1656111824
@@ -1926,6 +1927,7 @@ MonoBehaviour:
   gamePreload:
     inputIconMap: {fileID: 11400000, guid: 616b32beadbcb744eacff794cb3ec4d4, type: 2}
     whiteMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
+  pauseTimer: 0
   debugControlPause: 0
   debugPause: 0
   debugShowFPS: 0
