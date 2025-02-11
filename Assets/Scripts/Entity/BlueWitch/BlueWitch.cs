@@ -229,8 +229,8 @@ public class BlueWitch : Entity
         base.HitSuccess(hitInfo);
         if (hitInfo.hitType == HitType.EntityAttack && stateMachine.CurrentState == attackState)
         {
-            attackState.OnSuccess(hitInfo);
             WorldManager.CameraController.StartShake(hitInfo.force, 0.1f, 10);
+
         }
     }
 

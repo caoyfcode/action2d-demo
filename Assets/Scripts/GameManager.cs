@@ -28,6 +28,7 @@ public class GameManager : SingletonBase<GameManager>
 
     public GamePreload gamePreload;
 
+    public float pauseTimer = 0f;
     public bool debugControlPause = false; // 手动在 Inspector 里勾选，用于调试
     public bool debugPause = false;
     public float debugShowFPS = 0f;
@@ -53,6 +54,17 @@ public class GameManager : SingletonBase<GameManager>
             Pause = debugPause;
         debugShowFPS = 1 / (Time.realtimeSinceStartup - debugShowFPSLastTime);
         debugShowFPSLastTime = Time.realtimeSinceStartup;
+
+        // PauseForSecons 使用
+        if (pauseTimer > 0)
+        {
+            Pause = true;
+            pauseTimer -= Time.unscaledDeltaTime;
+            if (pauseTimer <= 0)
+            {
+                Pause = false;
+            }
+        }
     }
 
     public static void ExitGame()
@@ -66,15 +78,8 @@ public class GameManager : SingletonBase<GameManager>
 
     public static void PauseForSeconds(float seconds)
     {
-        instance.StartCoroutine(instance.PauseForSecondsCoroutine(seconds));
-    }
-
-
-    IEnumerator PauseForSecondsCoroutine(float seconds)
-    {
+        instance.pauseTimer = seconds;
         Pause = true;
-        yield return new WaitForSecondsRealtime(seconds);
-        Pause = false;
     }
 
     [Serializable]

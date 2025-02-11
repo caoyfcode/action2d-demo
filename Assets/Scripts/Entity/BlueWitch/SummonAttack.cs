@@ -30,6 +30,7 @@ public class SummonAttack : Summon
                 attackHitSFX.pitch = Random.Range(0.8f, 1.2f);
                 attackHitSFX.Play();
                 attackSFX.Stop();
+                GameManager.PauseForSeconds(0.1f);
             }
         }
         prevIsHitBoxEnabled = isHitBoxEnabled;

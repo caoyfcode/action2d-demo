@@ -44,9 +44,11 @@ public class SummonDefend : Summon
             if (!prevIsHitBoxEnabled)
             {
                 defendAttackSFX.Play();
+                GameManager.PauseForSeconds(0.1f);
             }
             if (hitNum > 0)
             {
+                GameManager.PauseForSeconds(0.1f);
                 defendAttackSFX.Stop();
                 hitSFX.Play();
             }
@@ -80,6 +82,7 @@ public class SummonDefend : Summon
         hitBox.genHitInfo = GenHitInfo;
         hitBox.PostDiscreteHit();
         defendSFX.Play();
+        GameManager.PauseForSeconds(0.1f);
     }
 
     private HitInfo GenHitInfo() => new()

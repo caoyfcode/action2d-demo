@@ -349,7 +349,6 @@ public class BlueWitchAttack : BlueWitchState
 {
     private Summon currentSummon;
     private BlueWitch.AttackType currentType;
-    private float stopTimer = 0;
     public BlueWitchAttack(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
     {
     }
@@ -373,7 +372,6 @@ public class BlueWitchAttack : BlueWitchState
         {
             entity.AddAirAttackCount(currentType);
         }
-        stopTimer = 0f;
         if (currentType == BlueWitch.AttackType.DefendFireKnight)
         {
             entity.stateControlInvincible = true;
@@ -407,17 +405,6 @@ public class BlueWitchAttack : BlueWitchState
 
     public override void Update()
     {
-        if (stopTimer > 0)
-        {
-            stopTimer -= Time.unscaledDeltaTime;
-            entity.animator.speed = 0.5f;
-            entity.summonAttack.animator.speed = 0.5f;
-        }
-        else
-        {
-            entity.animator.speed = 1f;
-            entity.summonAttack.animator.speed = 1;
-        }
         // TODO 改为 shouldBuffer
         if (!currentSummon.isCancelable && entity.CurrentCommand.AttackType != BlueWitch.AttackType.None)
         {
@@ -431,11 +418,6 @@ public class BlueWitchAttack : BlueWitchState
         entity.animator.speed = 1f;
         entity.summonAttack.animator.speed = 1;
         entity.stateControlInvincible = false;
-    }
-
-    public void OnSuccess(HitInfo hitInfo)
-    {
-        stopTimer = 0.2f;
     }
 }
 
