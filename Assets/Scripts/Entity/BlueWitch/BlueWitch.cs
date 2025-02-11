@@ -22,6 +22,7 @@ public class BlueWitch : Entity
     public AudioSource jumpSFX;
     public AudioSource landingSFX;
     public AudioSource dashSFX;
+    public AudioSource enterWallSFX;
 
     #region Command
     public class Command

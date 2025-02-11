@@ -436,6 +436,7 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.velocity.y = -entity.info.wallSlideSpeed;
         entity.animator.Play(BlueWitch.ANIM_RUN);
         entity.wallSlideCrow.SetActive(true);
+        entity.enterWallSFX.Play();
     }
 
     public override bool Transition()
