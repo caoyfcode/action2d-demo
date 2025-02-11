@@ -10,8 +10,15 @@ public class SummonDefend : Summon
     public DefendBox defendBox;
     public HitBox hitBox;
     public SpriteRenderer defendFXSr;
+
+    public AudioSource defendSFX;
+    public AudioSource defendAttackSFX;
+    public AudioSource hitSFX;
+
     public bool isDefendBoxEnabled;
     public bool isHitBoxEnabled;
+    private bool prevIsHitBoxEnabled;
+
     protected override bool ComponentsEnabled
     {
         set
@@ -33,8 +40,18 @@ public class SummonDefend : Summon
         }
         if (isHitBoxEnabled)
         {
-            hitBox.DoHit();
+            int hitNum = hitBox.DoHit();
+            if (!prevIsHitBoxEnabled)
+            {
+                defendAttackSFX.Play();
+            }
+            if (hitNum > 0)
+            {
+                defendAttackSFX.Stop();
+                hitSFX.Play();
+            }
         }
+        prevIsHitBoxEnabled = isHitBoxEnabled;
     }
 
     public override void StartSummon()
@@ -62,6 +79,7 @@ public class SummonDefend : Summon
         animator.Play(animFX, -1, 0);
         hitBox.genHitInfo = GenHitInfo;
         hitBox.PostDiscreteHit();
+        defendSFX.Play();
     }
 
     private HitInfo GenHitInfo() => new()
