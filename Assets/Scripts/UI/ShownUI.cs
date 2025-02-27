@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// TDOD 改为 UIBase 或 ShownUI
-public abstract class Menu : MonoBehaviour
+// 所有可隐藏的UI都继承这个类
+public abstract class ShownUI : MonoBehaviour
 {
     public virtual bool Shown
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TeleportMenu : Menu
+public class TeleportMenu : ShownUI
 {
     public GameObject itemPrefab;
 

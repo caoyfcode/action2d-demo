@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : Menu
+public class PauseMenu : ShownUI
 {
     public override bool Shown
     {

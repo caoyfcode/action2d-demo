@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckpointMenu : Menu
+public class CheckpointMenu : ShownUI
 {
     public SelectGroup selectGroup;
 

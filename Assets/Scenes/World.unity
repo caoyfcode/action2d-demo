@@ -10926,7 +10926,7 @@ GameObject:
   - component: {fileID: 448217751}
   - component: {fileID: 448217752}
   m_Layer: 5
-  m_Name: MapMenu
+  m_Name: MapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12017,7 +12017,7 @@ GameObject:
   - component: {fileID: 604521405}
   - component: {fileID: 604521406}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13180,6 +13180,7 @@ MonoBehaviour:
   gamePreload:
     inputIconMap: {fileID: 0}
     whiteMaterial: {fileID: 0}
+  pauseTimer: 0
   debugControlPause: 0
   debugPause: 0
   debugShowFPS: 0

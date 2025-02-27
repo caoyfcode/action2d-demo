@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsMenu : Menu
+public class SettingsMenu : ShownUI
 {
     public override bool Shown
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainList : Menu
+public class MainList : ShownUI
 {
     public SelectGroup selectGroup;
 

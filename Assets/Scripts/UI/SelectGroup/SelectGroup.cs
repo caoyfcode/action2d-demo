@@ -6,6 +6,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public class SelectGroup
 {
+    // TODO 支持 MxN 的 Grid, UpdateSelection 就改为 UpdateSelection(int horizontal, int vertical=0)， 并支持不同的 WrapMode
+
     [System.Serializable]
     public class ItemActionPair
     {

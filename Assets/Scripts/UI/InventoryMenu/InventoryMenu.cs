@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryMenu : Menu
+public class InventoryMenu : ShownUI
 {
     public GameObject header;
     public SelectItem mapHeader;
     public SelectItem inventoryHeader;
     public SelectItem questHeader;
-    public InventoryMap map;
+    public MapUI map;
     public InventoryUI inventory;
     public int selectedMenu = 1; // 0: Map, 1: Inventory, 2: Quest
     

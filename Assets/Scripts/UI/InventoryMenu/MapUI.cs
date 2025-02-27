@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryMap : Menu
+public class MapUI : ShownUI
 {
     public Map map;
 
