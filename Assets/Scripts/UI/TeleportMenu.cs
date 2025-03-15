@@ -52,7 +52,7 @@ public class TeleportMenu : ShownUI
 
     void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (GameInputManager.UiConfirm)
         {
             Vector2Int targetLevelId = levelIds[selectedId];
             if (targetLevelId != WorldManager.CurrentLevel.levelIndex)
@@ -63,7 +63,7 @@ public class TeleportMenu : ShownUI
             Shown = false;
             SoundManager.instance.PlayUIConfirm();
         }
-        else if (Input.GetKeyDown(KeyCode.J))
+        else if (GameInputManager.UiCancel)
         {
             Shown = false;
             SoundManager.instance.PlayUIConfirm();
@@ -89,8 +89,8 @@ public class TeleportMenu : ShownUI
 
     void UpdateSelection()
     {
-        bool up = Input.GetKeyDown(KeyCode.W);
-        bool down = Input.GetKeyDown(KeyCode.S);
+        bool up = GameInputManager.MoveTrigger.y > 0;
+        bool down = GameInputManager.MoveTrigger.y < 0;
         int prevSelected = selectedId;
         if (down && !up)
         {

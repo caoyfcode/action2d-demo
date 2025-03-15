@@ -8,17 +8,17 @@ public class InputIcon : MonoBehaviour
 
     public Image iconImage;
     public string inputName;
-    public GameInput.InputType inputType; // just for test
+    public GameInputManager.InputType inputType; // just for test
 
     // Start is called before the first frame update
     void Start()
     {
         iconImage.sprite = inputType switch
         {
-            GameInput.InputType.Keyoard => GameManager.instance.gamePreload.inputIconMap.GetKeyboardIcon(inputName),
-            GameInput.InputType.XboxController => GameManager.instance.gamePreload.inputIconMap.GetXboxIcon(inputName),
-            GameInput.InputType.PsController => GameManager.instance.gamePreload.inputIconMap.GetPsIcon(inputName),
-            GameInput.InputType.SwitchController => GameManager.instance.gamePreload.inputIconMap.GetSwitchIcon(inputName),
+            GameInputManager.InputType.Keyoard => GameManager.instance.gamePreload.inputIconMap.GetKeyboardIcon(inputName),
+            GameInputManager.InputType.XboxController => GameManager.instance.gamePreload.inputIconMap.GetXboxIcon(inputName),
+            GameInputManager.InputType.PsController => GameManager.instance.gamePreload.inputIconMap.GetPsIcon(inputName),
+            GameInputManager.InputType.SwitchController => GameManager.instance.gamePreload.inputIconMap.GetSwitchIcon(inputName),
         };
     }
 }

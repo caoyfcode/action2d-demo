@@ -27,7 +27,7 @@ public class MainMenu : SingletonBase<MainMenu>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && settingsMenu.Shown)
+        if (GameInputManager.UiCancel && settingsMenu.Shown)
         {
             CloseSettingsMenu();
             SoundManager.instance.PlayUIConfirm();

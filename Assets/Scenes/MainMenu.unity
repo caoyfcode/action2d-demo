@@ -610,7 +610,7 @@ GameObject:
   m_Component:
   - component: {fileID: 524936540}
   - component: {fileID: 524936539}
-  - component: {fileID: 524936538}
+  - component: {fileID: 524936541}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -618,26 +618,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &524936538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524936537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &524936539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,6 +648,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &524936541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524936537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &725871666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,6 +1743,7 @@ GameObject:
   - component: {fileID: 2014398373}
   - component: {fileID: 2014398374}
   - component: {fileID: 2014398375}
+  - component: {fileID: 2014398376}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1818,38 +1829,126 @@ MonoBehaviour:
       effectVolume: 1
     graphics:
       resolution: 1920x1080
-    keyboard:
-      uiSwitchLeft: Q
-      uiSwitchRight: E
-      up: W
-      down: S
-      left: A
-      right: D
-      inventory: P
-      attack1: J
-      attack2: H
-      attack3: U
-      jump: K
-      dash: L
-      heal: R
-      hook: F
-      fastMap: TAB
-    controller:
-      uiSwitchLeft: button_4
-      uiSwitchRight: button_5
-      up: left_stick
-      down: left_stick
-      left: left_stick
-      right: left_stick
-      inventory: button_6
-      attack1: button_2
-      attack2: button_3
-      attack3: button_1
-      jump: button_0
-      dash: right_trigger
-      heal: button_5
-      hook: left_trigger
-      fastMap: button_4
+--- !u!114 &2014398376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014398372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9abed9511eee7d4fb5f68902be431f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentInputType: 0
+  horizontal: 0
+  vertical: 0
+  actionMap:
+    m_Name: Action Map
+    m_Id: 741caf07-db85-4b01-8371-bdb7ff8756eb
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  uiSwitch:
+    m_Name: Ui Switch
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: decbc2b0-fc4e-4843-80ef-4cbfa973e96d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  move:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c613c783-6286-4ccf-bffa-ad6d162d19d7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  inventory:
+    m_Name: Inventory
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1ce079a3-57a2-4222-9eaf-058baf4b26aa
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  pause:
+    m_Name: Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3d1abeac-e7c3-44b6-909f-9e863792d165
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  attack1:
+    m_Name: Attack 1
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5644fa08-b8fe-4c42-8e70-8b65576cad1b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  attack2:
+    m_Name: Attack 2
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c51f7cb5-e673-490e-bdbd-15ca337a3a97
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  attack3:
+    m_Name: Attack 3
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a38532f9-6275-4606-bc31-ca2f1f25708e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 56126b08-49e8-4b39-81ae-93c773558738
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  dash:
+    m_Name: Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bd31303a-e125-4ad5-9b4b-ca16d98ecc8c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  heal:
+    m_Name: Heal
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 12774902-5c8a-4d79-8f75-22a8d06e4e01
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  hook:
+    m_Name: Hook
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b66ccc54-08e2-4499-8e1a-014d5263b9bf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &2019268989
 GameObject:
   m_ObjectHideFlags: 0

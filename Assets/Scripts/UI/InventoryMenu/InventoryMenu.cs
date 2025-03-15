@@ -20,13 +20,13 @@ public class InventoryMenu : ShownUI
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && selectedMenu >= 1)
+        if (GameInputManager.UiSwitchLeft && selectedMenu >= 1)
         {
             selectedMenu -= 1;
             HandleShownMenu();
             SoundManager.instance.PlayUISelection();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && selectedMenu <= 1)
+        else if (GameInputManager.UiSwitchRight && selectedMenu <= 1)
         {
             selectedMenu += 1;
             HandleShownMenu();

@@ -160,13 +160,13 @@ public class SettingsData
     public GameSetting game = new();
     public VolumeSetting volume = new();
     public GraphicsSetting graphics = new();
-    public InputMap keyboard = new();
-    public InputMap controller = new();
+    // public InputMap keyboard = new();
+    // public InputMap controller = new();
 
     public SettingsData()
     {
-        keyboard.Init(GameInput.InputType.Keyoard);
-        controller.Init(GameInput.InputType.XboxController);
+        // keyboard.Init(GameInput.InputType.Keyoard);
+        // controller.Init(GameInput.InputType.XboxController);
     }
 
     [System.Serializable]

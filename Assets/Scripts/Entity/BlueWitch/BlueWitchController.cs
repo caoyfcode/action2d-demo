@@ -17,21 +17,12 @@ public class BlueWitchController : EntityController
         {
             return;
         }
-        bool left = Input.GetKey(KeyCode.A);
-        bool right = Input.GetKey(KeyCode.D);
-        float moveX = (left, right) switch
-        {
-            (true, false) => -1,
-            (false, true) => 1,
-            _ => 0,
-        };
-
-        entity.CurrentCommand.speedX = moveX * entity.info.horizontalMoveSpeed;
-        entity.CurrentCommand.startJump = Input.GetButtonDown("Jump");
-        entity.CurrentCommand.holdJump = Input.GetButton("Jump");
-        entity.CurrentCommand.attackHeroKnight = Input.GetButtonDown("Attack");
-        entity.CurrentCommand.dash = Input.GetButtonDown("Dash");
-        entity.CurrentCommand.attackArcaneArcher = Input.GetKeyDown(KeyCode.U);
-        entity.CurrentCommand.defendFireKnight = Input.GetKeyDown(KeyCode.H);
+        entity.CurrentCommand.speedX = GameInputManager.Horizontal * entity.info.horizontalMoveSpeed;
+        entity.CurrentCommand.startJump = GameInputManager.Jump;
+        entity.CurrentCommand.holdJump = GameInputManager.JumpHold;
+        entity.CurrentCommand.dash = GameInputManager.Dash;
+        entity.CurrentCommand.attackHeroKnight = GameInputManager.Attack1;
+        entity.CurrentCommand.defendFireKnight = GameInputManager.Attack2;
+        entity.CurrentCommand.attackArcaneArcher = GameInputManager.Attack3;
     }
 }

@@ -40,14 +40,10 @@ public class UIManager : SingletonBase<UIManager>
         }
 
         /// TODO 添加 UI Shown Selector 枚举, 用 None, ... 来表示这些互斥的 UI 显示状态
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /// 若存在模态窗口(或者UI内的选择状态)，则 UiCancel 不关闭大窗口
+        if (MenuShown && GameInputManager.UiCancel)
         {
-            if (!MenuShown)
-            {
-                pauseMenu.Shown = true;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (pauseMenu.Shown)
+            if (pauseMenu.Shown)
             {
                 pauseMenu.Shown = false;
                 SoundManager.instance.PlayUIConfirm();
@@ -73,7 +69,25 @@ public class UIManager : SingletonBase<UIManager>
                 SoundManager.instance.PlayUIConfirm();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        else if (inventoryMenu.Shown && GameInputManager.Inventory)
+        {
+            inventoryMenu.Shown = false;
+            SoundManager.instance.PlayUIConfirm();
+        }
+        else if (!MenuShown)
+        {
+            if (GameInputManager.Pause)
+            {
+                pauseMenu.Shown = true;
+                SoundManager.instance.PlayUIConfirm();
+            }
+            else if (GameInputManager.Inventory)
+            {
+                inventoryMenu.Shown = true;
+                SoundManager.instance.PlayUIConfirm();
+            }
+        }
+        else if (GameInputManager.Inventory)
         {
             if (!MenuShown)
             {
@@ -87,6 +101,4 @@ public class UIManager : SingletonBase<UIManager>
             }
         }
     }
-
-    
 }

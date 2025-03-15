@@ -14,10 +14,10 @@ public class MainList : ShownUI
 
     void Update()
     {
-        bool up = Input.GetKeyDown(KeyCode.W);
-        bool down = Input.GetKeyDown(KeyCode.S);
+        bool up = GameInputManager.MoveTrigger.y > 0;
+        bool down = GameInputManager.MoveTrigger.y < 0;
         selectGroup.UpdateSelection(down, up);
-        if (Input.GetKeyDown(KeyCode.K))
+        if (GameInputManager.UiConfirm)
         {
             selectGroup.InvokeAction();
         }

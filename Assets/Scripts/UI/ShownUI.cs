@@ -14,4 +14,7 @@ public abstract class ShownUI : MonoBehaviour
             gameObject.SetActive(value);
         }
     }
+
+    // TODO 日后也许有用
+    public virtual bool ShouldHideByUiCancel => true;
 }

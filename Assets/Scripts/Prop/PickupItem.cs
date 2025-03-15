@@ -11,7 +11,7 @@ public class PickupItem : Interactive
         if (playerIn && !UIManager.MenuShown)
         {
             HintShown = true;
-            if (Input.GetKeyDown(KeyCode.W))
+            if (GameInputManager.MoveTrigger.y != 0)
             {
                 HintShown = false;
                 hint.gameObject.SetActive(false);

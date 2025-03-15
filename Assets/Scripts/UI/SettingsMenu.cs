@@ -59,13 +59,13 @@ public class SettingsMenu : ShownUI
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && selected >= 1)
+        if (GameInputManager.UiSwitchLeft && selected >= 1)
         {
             selected -= 1;
             HandleShownMenu();
             SoundManager.instance.PlayUISelection();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && selected <= headers.Count - 2)
+        else if (GameInputManager.UiSwitchRight && selected <= headers.Count - 2)
         {
             selected += 1;
             HandleShownMenu();

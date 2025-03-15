@@ -30,19 +30,19 @@ public class InventoryUI : ShownUI
     {
         if (selectedTable == SelectedTable.Attack)
         {
-            if (Input.GetKeyDown(KeyCode.J))
+            if (GameInputManager.Attack1)
             {
-                // TODO 设置 J 为 selectedId 的技能
+                // TODO 为 selectedId 的技能
                 SoundManager.instance.PlayUIConfirm();
             }
-            if (Input.GetKeyDown(KeyCode.H))
+            if (GameInputManager.Attack2)
             {
-                // TODO 设置 H 为 selectedId 的技能
+                // TODO 为 selectedId 的技能
                 SoundManager.instance.PlayUIConfirm();
             }
-            if (Input.GetKeyDown(KeyCode.U))
+            if (GameInputManager.Attack3)
             {
-                // TODO 设置 U 为 selectedId 的技能
+                // TODO 为 selectedId 的技能
                 SoundManager.instance.PlayUIConfirm();
             }
         }
@@ -57,10 +57,10 @@ public class InventoryUI : ShownUI
 
     void UpdateSelection()
     {
-        bool left = Input.GetKeyDown(KeyCode.A);
-        bool right = Input.GetKeyDown(KeyCode.D);
-        bool up = Input.GetKeyDown(KeyCode.W);
-        bool down = Input.GetKeyDown(KeyCode.S);
+        bool left = GameInputManager.MoveTrigger.x < 0;
+        bool right = GameInputManager.MoveTrigger.x > 0;
+        bool up = GameInputManager.MoveTrigger.y > 0;
+        bool down = GameInputManager.MoveTrigger.y < 0;
         
         // 处理前一帧不可用的选中
         if (selectedTable != SelectedTable.None)
