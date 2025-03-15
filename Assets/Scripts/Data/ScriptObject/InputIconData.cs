@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "InputIconMap", menuName = "ScriptableObject/InputIconMap", order = 1)]
-public class InputIconMap : ScriptableObject
+[CreateAssetMenu(fileName = "InputIconData", menuName = "ScriptableObject/InputIconData", order = 1)]
+public class InputIconData : ScriptableObject
 {
     [Serializable]
     class NameSpritePair
@@ -71,38 +71,38 @@ public class InputIconMap : ScriptableObject
         return switchIcons.ContainsKey(name) ? switchIcons[name] : null;
     }
 
-    // 将 unity InputManager 的键盘名字转换为图标名字
-    public static string KeyboardInputNameToIconName(string name)
-    {
-        if (name == "left shift" || name == "right shift")
-        {
-            return "shift";
-        }
-        else if (name == "left ctrl" || name == "right ctrl")
-        {
-            return "ctrl";
-        }
-        else if (name == "left alt" || name == "right alt")
-        {
-            return "alt";
-        }
-        return name;
-    }
+    // // 将 unity InputManager 的键盘名字转换为图标名字
+    // public static string KeyboardInputNameToIconName(string name)
+    // {
+    //     if (name == "left shift" || name == "right shift")
+    //     {
+    //         return "shift";
+    //     }
+    //     else if (name == "left ctrl" || name == "right ctrl")
+    //     {
+    //         return "ctrl";
+    //     }
+    //     else if (name == "left alt" || name == "right alt")
+    //     {
+    //         return "alt";
+    //     }
+    //     return name;
+    // }
 
-    public static string[] KeyboardIconNameHasTwoVariants(string name)
-    {
-        if (name == "shift")
-        {
-            return new string[] { "left shift", "right shift" };
-        }
-        else if (name == "ctrl")
-        {
-            return new string[] { "left ctrl", "right ctrl" };
-        }
-        else if (name == "alt")
-        {
-            return new string[] { "left alt", "right alt" };
-        }
-        return null;
-    }
+    // public static string[] KeyboardIconNameHasTwoVariants(string name)
+    // {
+    //     if (name == "shift")
+    //     {
+    //         return new string[] { "left shift", "right shift" };
+    //     }
+    //     else if (name == "ctrl")
+    //     {
+    //         return new string[] { "left ctrl", "right ctrl" };
+    //     }
+    //     else if (name == "alt")
+    //     {
+    //         return new string[] { "left alt", "right alt" };
+    //     }
+    //     return null;
+    // }
 }

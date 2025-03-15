@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40f014a6b4c4cb2439768c7f6dd8e211, type: 3}
-  m_Name: InputIconMap
+  m_Name: InputIconData
   m_EditorClassIdentifier: 
   keyboardIconMap:
   - name: 'escape '
@@ -132,29 +132,29 @@ MonoBehaviour:
   - name: right
     sprite: {fileID: 21300000, guid: 907ac2d11da641b4ab331baf29a8c0fe, type: 3}
   xboxIconMap:
-  - name: button_0
+  - name: buttonSouth
     sprite: {fileID: 21300000, guid: 13f36c32fae176e4abced97e1cea8d3e, type: 3}
-  - name: button_1
+  - name: buttonEast
     sprite: {fileID: 21300000, guid: f0f1ab21debb81f42bcd0248c8c9319a, type: 3}
-  - name: button_2
+  - name: buttonWest
     sprite: {fileID: 21300000, guid: bb77ca6d9ce56ea4e9318b8e7f043afb, type: 3}
-  - name: button_3
+  - name: buttonNorth
     sprite: {fileID: 21300000, guid: d286bc2b555eb094aaf7f145ecc00bb6, type: 3}
-  - name: button_4
+  - name: leftShoulder
     sprite: {fileID: 21300000, guid: 8d0619e52620268428bc34748a9884c4, type: 3}
-  - name: button_5
+  - name: rightshoulder
     sprite: {fileID: 21300000, guid: 9d4dbd29fc74e0648a16d7762f9c85ea, type: 3}
-  - name: button_6
+  - name: select
     sprite: {fileID: 21300000, guid: 11fba443552bb2447bc71caa9456bc04, type: 3}
-  - name: button_7
+  - name: start
     sprite: {fileID: 21300000, guid: f2a36c267bc7ef54b9c3a23d6b7f50c7, type: 3}
-  - name: left_stick
+  - name: leftStick
     sprite: {fileID: 21300000, guid: 4f62a07925444aa44b4f1e568ad729ee, type: 3}
-  - name: right_stick
+  - name: rightStick
     sprite: {fileID: 21300000, guid: 399e7704217317f47b849291d762acaf, type: 3}
-  - name: left_trigger
+  - name: leftTrigger
     sprite: {fileID: 21300000, guid: 7ada48e0200cc254d9eb570d02c467cb, type: 3}
-  - name: right_trigger
+  - name: rightTrigger
     sprite: {fileID: 21300000, guid: 974b99b0a44ea5a44947745c4b0fce84, type: 3}
   - name: dpad
     sprite: {fileID: 21300000, guid: b80f6e85413496145a856c7c71170b7c, type: 3}

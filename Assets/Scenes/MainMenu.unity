@@ -1842,8 +1842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentInputType: 0
-  horizontal: 0
-  vertical: 0
   actionMap:
     m_Name: Action Map
     m_Id: 741caf07-db85-4b01-8371-bdb7ff8756eb

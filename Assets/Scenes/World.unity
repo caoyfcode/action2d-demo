@@ -12683,7 +12683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 780686882}
-  inputName: button_1
+  inputName: buttonEast
   inputType: 1
 --- !u!114 &780686882
 MonoBehaviour:
@@ -14241,7 +14241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 1160279942}
-  inputName: button_2
+  inputName: buttonWest
   inputType: 1
 --- !u!1 &1160651672
 GameObject:
@@ -16389,7 +16389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 1662646172}
-  inputName: button_3
+  inputName: buttonNorth
   inputType: 1
 --- !u!114 &1662646172
 MonoBehaviour:

@@ -40,27 +40,27 @@ public class FootHint : MonoBehaviour
             Text text = hint.GetComponentInChildren<Text>();
             switch (hints[i]) {
                 case FootHintType.Confirm:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_0"); // A
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonSouth"); // A
                     text.text = "确认";
                     break;
                 case FootHintType.Cancel:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_1"); // B
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonEast"); // B
                     text.text = "取消";
                     break;
                 case FootHintType.Teleport:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_0"); // A
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonSouth"); // A
                     text.text = "传送";
                     break;
                 case FootHintType.Equip1:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_2");
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonWest");
                     text.text = "装备1";
                     break;
                 case FootHintType.Equip2:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_3");
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonNorth");
                     text.text = "装备2";
                     break;
                 case FootHintType.Equip3:
-                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("button_1");
+                    image.sprite = GameManager.instance.gamePreload.inputIconMap.GetXboxIcon("buttonEast");
                     text.text = "装备3";
                     break;
             }

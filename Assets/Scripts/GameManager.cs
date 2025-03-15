@@ -85,7 +85,7 @@ public class GameManager : SingletonBase<GameManager>
     [Serializable]
     public class GamePreload
     {
-        public InputIconMap inputIconMap;
+        public InputIconData inputIconMap;
         public Material whiteMaterial;
     }
 }
