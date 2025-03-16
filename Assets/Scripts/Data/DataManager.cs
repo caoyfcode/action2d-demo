@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+// TODO 重命名为 SaveManager/SaveDataManager
 public class DataManager : SingletonBase<DataManager>
 {
     public SaveSlotData saveSlot;
@@ -24,13 +25,6 @@ public class DataManager : SingletonBase<DataManager>
         string dataPath = Path.Combine(Application.persistentDataPath, string.Format("Save_{0}.json", currentSaveSlotIndex));
         File.WriteAllText(dataPath, json, System.Text.Encoding.UTF8);
         Debug.Log("save to " + dataPath);
-    }
-
-    public void SaveSettings()
-    {
-        string json = JsonUtility.ToJson(settings, true);
-        string dataPath = Path.Combine(Application.persistentDataPath, "Settings.json");
-        File.WriteAllText(dataPath, json, System.Text.Encoding.UTF8);
     }
 
     public void LoadSaveSlot(int index)
@@ -55,11 +49,21 @@ public class DataManager : SingletonBase<DataManager>
         {
             string json = File.ReadAllText(dataPath);
             settings = JsonUtility.FromJson<SettingsData>(json);
+            GameInputManager.instance.LoadSettings(settings.keyboardSettings, settings.controllerSettings);
         }
         else
         {
             Debug.LogError(dataPath + " not exits.");
         }
+    }
+
+    public void SaveSettings()
+    {
+        string json = JsonUtility.ToJson(settings, true);
+        string dataPath = Path.Combine(Application.persistentDataPath, "Settings.json");
+        settings.keyboardSettings = GameInputManager.instance.keyboardSettings;
+        settings.controllerSettings = GameInputManager.instance.controllerSettings;
+        File.WriteAllText(dataPath, json, System.Text.Encoding.UTF8);
     }
 
     public void InitSaveSlot(int index)
@@ -160,14 +164,8 @@ public class SettingsData
     public GameSetting game = new();
     public VolumeSetting volume = new();
     public GraphicsSetting graphics = new();
-    // public InputMap keyboard = new();
-    // public InputMap controller = new();
-
-    public SettingsData()
-    {
-        // keyboard.Init(GameInput.InputType.Keyoard);
-        // controller.Init(GameInput.InputType.XboxController);
-    }
+    public KeyboardSettings keyboardSettings = new();
+    public ControllerSettings controllerSettings = new();
 
     [System.Serializable]
     public class GameSetting

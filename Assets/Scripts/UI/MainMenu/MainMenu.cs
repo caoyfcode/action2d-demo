@@ -23,6 +23,7 @@ public class MainMenu : SingletonBase<MainMenu>
     void Start()
     {
         SoundManager.instance.PlayBackgroundMusic(SoundManager.instance.mainMenuMusic);
+        DataManager.instance.LoadSettings();
     }
 
     void Update()
@@ -30,6 +31,7 @@ public class MainMenu : SingletonBase<MainMenu>
         if (GameInputManager.UiCancel && settingsMenu.Shown)
         {
             CloseSettingsMenu();
+            DataManager.instance.SaveSettings();
             SoundManager.instance.PlayUIConfirm();
         }
     }

@@ -21,8 +21,8 @@ public class GameInputManager : SingletonBase<GameInputManager>
     [SerializeField]
     InputType currentInputType = InputType.Keyoard;
 
-    // public KeyboardInputMap KeyboardInputMap => DataManager.instance.settings.keyboard;
-    // public ControllerInputMap ControllerInputMap => DataManager.instance.settings.controller;WW
+    public KeyboardSettings keyboardSettings = null;
+    public ControllerSettings controllerSettings = null;
 
     public InputActionMap actionMap;
     public InputAction uiSwitch;
@@ -83,11 +83,9 @@ public class GameInputManager : SingletonBase<GameInputManager>
     public static bool Hook => instance.hook.WasPressedThisFrame();
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        // inputMap.Init(currentInputType);
-        // var inputAtions = new InputActionAsset();
-        // actionMap = inputAtions.AddActionMap("Player");
+        base.Awake();
         actionMap = new InputActionMap("GameInput");
         uiSwitch = actionMap.AddAction("UI_Switch");
         uiSwitch.AddCompositeBinding("Axis")
@@ -101,10 +99,10 @@ public class GameInputManager : SingletonBase<GameInputManager>
             .With("Down", "<Keyboard>/s")
             .With("Left", "<Keyboard>/a")
             .With("Right", "<Keyboard>/d")
-            .With("Up", "<Gamepad>/<Dpad>/up")
-            .With("Down", "<Gamepad>/<Dpad>/down")
-            .With("Left", "<Gamepad>/<Dpad>/left")
-            .With("Right", "<Gamepad>/<Dpad>/right");
+            .With("Up", "<Gamepad>/dpad/up")
+            .With("Down", "<Gamepad>/dpad/down")
+            .With("Left", "<Gamepad>/dpad/left")
+            .With("Right", "<Gamepad>/dpad/right");
         inventory = actionMap.AddAction("Inventory", binding: "<Gamepad>/select");
         inventory.AddBinding("<Keyboard>/p");
         pause = actionMap.AddAction("Pause", binding: "<Gamepad>/start");
@@ -124,17 +122,66 @@ public class GameInputManager : SingletonBase<GameInputManager>
         hook = actionMap.AddAction("Hook", binding: "<Gamepad>/leftTrigger");
         hook.AddBinding("<Keyboard>/f");
         actionMap.Enable();
-        // 保存/加载: InputActionMap.ToJson/FromJson
     }
 
-    void LoadSettings(KeyboardSettings keyboard, ControllerSettings controller) {
-        // TODO
+    public void LoadSettings(KeyboardSettings keyboard, ControllerSettings controller) {
+        keyboardSettings = keyboard;
+        controllerSettings = controller;
+        actionMap.Disable();
+
+        foreach (var action in actionMap)
+        {
+            while (action.bindings.Count > 0)
+            {
+                action.ChangeBinding(0).Erase();
+            }
+        }
+        uiSwitch.AddCompositeBinding("Axis")
+            .With("Negative", "<Keyboard>/" + keyboardSettings.uiSwitchLeft)
+            .With("Positive", "<Keyboard>/" + keyboardSettings.uiSwitchRight)
+            .With("Negative", "<Gamepad>/" + controller.uiSwitchLeft)
+            .With("Positive", "<Gamepad>/" + controller.uiSwitchRight);
+        move.AddBinding(path: "<Gamepad>/leftStick", processors: "stickDeadzone(min=0.5,max=1)");
+        move.AddCompositeBinding("2DVector")
+            .With("Up", "<Keyboard>/" + keyboardSettings.up)
+            .With("Down", "<Keyboard>/" + keyboardSettings.down)
+            .With("Left", "<Keyboard>/" + keyboardSettings.left)
+            .With("Right", "<Keyboard>/" + keyboardSettings.right)
+            .With("Up", "<Gamepad>/dpad/up")
+            .With("Down", "<Gamepad>/dpad/down")
+            .With("Left", "<Gamepad>/dpad/left")
+            .With("Right", "<Gamepad>/dpad/right");
+        inventory.AddBinding("<Gamepad>/" + controllerSettings.inventory);
+        inventory.AddBinding("<Keyboard>/" + keyboardSettings.inventory);
+        pause.AddBinding("<Gamepad>/" + controllerSettings.pause);
+        pause.AddBinding("<Keyboard>/escape");
+        attack1.AddBinding("<Gamepad>/" + controllerSettings.attack1);
+        attack1.AddBinding("<Keyboard>/" + keyboardSettings.attack1);
+        attack2.AddBinding("<Gamepad>/" + controllerSettings.attack2);
+        attack2.AddBinding("<Keyboard>/" + keyboardSettings.attack2);
+        attack3.AddBinding("<Gamepad>/" + controllerSettings.attack3);
+        attack3.AddBinding("<Keyboard>/" + keyboardSettings.attack3);
+        jump.AddBinding("<Gamepad>/" + controllerSettings.jump);
+        jump.AddBinding("<Keyboard>/" + keyboardSettings.jump);
+        dash.AddBinding("<Gamepad>/" + controllerSettings.dash);
+        dash.AddBinding("<Keyboard>/" + keyboardSettings.dash);
+        heal.AddBinding("<Gamepad>/" + controllerSettings.heal);
+        heal.AddBinding("<Keyboard>/" + keyboardSettings.heal);
+        hook.AddBinding("<Gamepad>/" + controllerSettings.hook);
+        hook.AddBinding("<Keyboard>/" + keyboardSettings.hook);
+        StartCoroutine(EnableEndFrame());
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    IEnumerator EnableEndFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        actionMap.Enable();
     }
 }
 
@@ -147,8 +194,7 @@ public class KeyboardSettings {
     public string left = "a";
     public string right = "d";
     public string inventory = "p";
-    [NonSerialized]
-    public string pause = "escape";
+    public const string pause = "escape";
     public string attack1 = "j";
     public string attack2 = "h";
     public string attack3 = "u";
@@ -162,13 +208,14 @@ public class KeyboardSettings {
 public class ControllerSettings {
     public string uiSwitchLeft = "leftShoulder"; // LB
     public string uiSwitchRight = "rightShoulder"; // RB
+    public const string move = "leftStick";
     public string inventory = "select"; // view/select
-    public string escape = "start"; // menu/start
+    public string pause = "start"; // menu/start
     public string attack1 = "buttonWest"; // X
     public string attack2 = "buttonNorth"; // Y
     public string attack3 = "buttonEast"; // B
     public string jump = "buttonSouth"; // A
     public string dash = "rightTrigger"; // RT
-    public string heal = "leftShoulder"; // RB
+    public string heal = "leftShoulder"; // LB
     public string hook = "leftTrigger"; // LT
 }
