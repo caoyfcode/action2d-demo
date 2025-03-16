@@ -635,7 +635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 29aaa794ba53e0d4aaefeab80135ea43, type: 3}
       propertyPath: m_Name
-      value: Level_00_00
+      value: Level_002
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 29aaa794ba53e0d4aaefeab80135ea43, type: 3}
       propertyPath: m_IsActive
@@ -4104,7 +4104,7 @@ MonoBehaviour:
         dash: 0
         doubleJump: 0
         wallSlide: 0
-      checkpoint: {x: 0, y: 0}
+      checkpoint: 
       controlConfig:
         attack1: 
         attack2: 
@@ -5312,7 +5312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 7c3491987cbc83d4b9ff11fd6f1d2006, type: 3}
       propertyPath: m_Name
-      value: Level_01_m01
+      value: Level_004
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 7c3491987cbc83d4b9ff11fd6f1d2006, type: 3}
       propertyPath: m_IsActive
@@ -8013,7 +8013,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1529243816164850641, guid: 53f6f4411adfde44282a0a0112bf2fbf, type: 3}
       propertyPath: m_Name
-      value: Level_01_00
+      value: Level_005
       objectReference: {fileID: 0}
     - target: {fileID: 1529243816164850641, guid: 53f6f4411adfde44282a0a0112bf2fbf, type: 3}
       propertyPath: m_IsActive
@@ -10087,7 +10087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_Name
-      value: Level_00_m01
+      value: Level_003
       objectReference: {fileID: 0}
     - target: {fileID: 7749882688885457192, guid: 484f2b780aee3a5469c73b107d04a56b, type: 3}
       propertyPath: m_IsActive

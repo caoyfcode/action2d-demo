@@ -73,7 +73,7 @@ public class DataManager : SingletonBase<DataManager>
         saveSlot.player.maxHealth = 5;
         saveSlot.player.maxMagic = 5;
         saveSlot.player.money = 0;
-        saveSlot.player.checkpoint = new Vector2Int(0, 0);
+        saveSlot.player.checkpoint = "002";
         SaveCurrentSlot();
     }
 
@@ -99,7 +99,7 @@ public class PlayerData
     public float maxMagic;
     public int money;
     public AbilityData ability;
-    public Vector2Int checkpoint;
+    public string checkpoint;
     public ControlConfigData controlConfig;
     public List<InventoryItem> inventory;
 

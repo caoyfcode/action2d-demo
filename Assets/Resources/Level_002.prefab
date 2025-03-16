@@ -3505,7 +3505,7 @@ GameObject:
   - component: {fileID: 3999170560502227257}
   - component: {fileID: 2835093163963001932}
   m_Layer: 0
-  m_Name: Level_00_00
+  m_Name: Level_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3545,7 +3545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaName: 
-  levelIndex: {x: 0, y: 0}
+  id: 
   bgm: {fileID: 0}
   Spawners: {fileID: 6056785279180103520}
 --- !u!1 &8166696033001876947
@@ -3793,6 +3793,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
+      propertyPath: targetLevelId
+      value: 005
+      objectReference: {fileID: 0}
+    - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: targetLevelIndex.x
       value: 1
       objectReference: {fileID: 0}
@@ -3943,6 +3947,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
+      propertyPath: targetLevelId
+      value: 003
+      objectReference: {fileID: 0}
+    - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: targetLevelIndex.y
       value: -1
       objectReference: {fileID: 0}
@@ -3972,7 +3980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2093921699560984734, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.46
+      value: 7.96
       objectReference: {fileID: 0}
     - target: {fileID: 2093921699560984734, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4048,7 +4056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Size.x
-      value: 7.0461245
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Size.y
@@ -4056,7 +4064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Offset.x
-      value: 0.02306223
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Offset.y

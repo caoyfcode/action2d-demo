@@ -50,32 +50,32 @@ public class WorldManager : SingletonBase<WorldManager>
         TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
     }
 
-    public static void TeleportCheckpoint(Vector2Int levelIndex, bool save=true)
+    public static void TeleportCheckpoint(string levelId, bool save=true)
     {
-        Teleport(levelIndex, instance.levelData.GetCheckpointPosition(levelIndex));
+        Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
         if (save)
             DarkScreen.instance.DarkScreenWait(() => {
-                DataManager.instance.PlayerData.checkpoint = levelIndex;
+                DataManager.instance.PlayerData.checkpoint = levelId;
                 DataManager.instance.SaveCurrentSlot();
             });
     }
 
-    public static void Teleport(Vector2Int levelIndex, Vector2 position)
+    public static void Teleport(string levelId, Vector2 position)
     {
         GameManager.Pause = true;
         SoundManager.instance.StopBackgroundMusic();
         DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
-        if (!instance.currentLevel || instance.currentLevel.levelIndex != levelIndex)
+        if (!instance.currentLevel || instance.currentLevel.id!= levelId)
         {
-            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelIndex));
+            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
         }
     }
     
     // 为了不发生冲突, 此协程只能通过 DarkScreen 启动
-    IEnumerator LoadLevel(Vector2Int levelIndex)
+    IEnumerator LoadLevel(string levelId)
     {
         GameManager.Pause = true;
-        string levelPath = levelData.GetResourcePath(levelIndex);
+        string levelPath = levelData.GetResourcePath(levelId);
         if (levelPath != null && !isLoadingLevel)
         {
             isLoadingLevel = true;
@@ -92,7 +92,7 @@ public class WorldManager : SingletonBase<WorldManager>
         }
         else
         {
-            Debug.LogError("Level not found: " + levelIndex);
+            Debug.LogError("Level not found: " + levelId);
         }
         isLoadingLevel = false;
         GameManager.Pause = false;

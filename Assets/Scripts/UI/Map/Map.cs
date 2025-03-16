@@ -6,7 +6,7 @@ public class Map : MonoBehaviour
 {
     public GameObject mapPiecePrefab;
     public float resetScale = 5f;
-    private Dictionary<Vector2Int, MapPiece> piceces = new();
+    private Dictionary<string, MapPiece> piceces = new();
     const float moveSpeed = 600f; // 600pix/s
     const float maxMoveSpeed = 1000f;
 
@@ -28,7 +28,7 @@ public class Map : MonoBehaviour
                 comp.backRectTransform.sizeDelta = new Vector2(level.rect.width, level.rect.height);
                 comp.foreground.sprite = level.mapSprite;
                 comp.backRectTransform.localPosition = new Vector3(level.rect.x, level.rect.y, 0);
-                piceces.Add(level.index, comp);
+                piceces.Add(level.id, comp);
             }
         }
         ResetScale();

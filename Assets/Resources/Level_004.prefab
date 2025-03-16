@@ -10711,7 +10711,7 @@ GameObject:
   - component: {fileID: 3999170560502227257}
   - component: {fileID: 2835093163963001932}
   m_Layer: 0
-  m_Name: Level_01_m01
+  m_Name: Level_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10750,7 +10750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaName: 
-  levelIndex: {x: 1, y: -1}
+  id: 
   bgm: {fileID: 0}
   Spawners: {fileID: 6056785279180103520}
 --- !u!1 &9221187743582718761
@@ -10922,6 +10922,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
+      propertyPath: targetLevelId
+      value: 003
+      objectReference: {fileID: 0}
+    - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: targetLevelIndex.y
       value: -1
       objectReference: {fileID: 0}
@@ -11066,6 +11070,10 @@ PrefabInstance:
     - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: teleportType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
+      propertyPath: targetLevelId
+      value: 003
       objectReference: {fileID: 0}
     - target: {fileID: 11609026094059385, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: targetLevelIndex.y

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelSwitchTrigger : MonoBehaviour
 {
-    public Vector2Int targetLevelIndex;
+    public string targetLevelId;
     bool loading = false;
     public TeleportType teleportType;
     public Vector2[] teleportPositions; // 长度为 0, 1, 2
@@ -56,7 +56,7 @@ public class LevelSwitchTrigger : MonoBehaviour
                 }
                 break;
         }
-        WorldManager.Teleport(targetLevelIndex, targetPosition);
+        WorldManager.Teleport(targetLevelId, targetPosition);
     }
 
 }

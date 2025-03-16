@@ -14,7 +14,7 @@ public class Checkpoint : Interactive
                 HintShown = false;
                 hint.gameObject.SetActive(false);
                 UIManager.CheckpointMenu.Shown = true;
-                DataManager.instance.PlayerData.checkpoint = WorldManager.instance.currentLevel.levelIndex;
+                DataManager.instance.PlayerData.checkpoint = WorldManager.instance.currentLevel.id;
                 DataManager.instance.SaveCurrentSlot();
             }
         }

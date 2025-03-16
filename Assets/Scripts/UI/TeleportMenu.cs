@@ -8,7 +8,7 @@ public class TeleportMenu : ShownUI
     public GameObject itemPrefab;
 
     public GameObject listNode;
-    public List<Vector2Int> levelIds;
+    public List<string> levelIds;
     public Map map;
     
     public int selectedId = -1;
@@ -37,7 +37,7 @@ public class TeleportMenu : ShownUI
                 var obj = Instantiate(itemPrefab, listNode.transform);
                 var textComp = obj.GetComponentInChildren<Text>();
                 textComp.text = checkpoint.name;
-                levelIds.Add(checkpoint.index);
+                levelIds.Add(checkpoint.levelId);
             }
             InitSelection();
         }
@@ -54,8 +54,8 @@ public class TeleportMenu : ShownUI
     {
         if (GameInputManager.UiConfirm)
         {
-            Vector2Int targetLevelId = levelIds[selectedId];
-            if (targetLevelId != WorldManager.CurrentLevel.levelIndex)
+            var targetLevelId = levelIds[selectedId];
+            if (targetLevelId != WorldManager.CurrentLevel.id)
             {
                 // WorldManager.Teleport(targetLevelId, WorldManager.instance.levelData.GetCheckpointPosition(targetLevelId));
                 WorldManager.TeleportCheckpoint(targetLevelId);
@@ -73,7 +73,7 @@ public class TeleportMenu : ShownUI
     void InitSelection()
     {
         int prevSelected = selectedId;
-        selectedId = levelIds.IndexOf(WorldManager.CurrentLevel.levelIndex);
+        selectedId = levelIds.IndexOf(WorldManager.CurrentLevel.id);
         if (prevSelected != selectedId)
         {
             if (prevSelected >= 0 && prevSelected < listNode.transform.childCount)
