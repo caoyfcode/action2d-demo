@@ -23,7 +23,6 @@ public class MainMenu : SingletonBase<MainMenu>
     void Start()
     {
         SoundManager.instance.PlayBackgroundMusic(SoundManager.instance.mainMenuMusic);
-        DataManager.instance.LoadSettings();
     }
 
     void Update()

@@ -46,6 +46,7 @@ public class GameManager : SingletonBase<GameManager>
     {
         // Application.targetFrameRate = 144;
         // isMainMenuScene = true;
+        DataManager.instance.LoadSettings();
     }
 
     void Update()

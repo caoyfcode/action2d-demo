@@ -169,19 +169,13 @@ public class GameInputManager : SingletonBase<GameInputManager>
         heal.AddBinding("<Keyboard>/" + keyboardSettings.heal);
         hook.AddBinding("<Gamepad>/" + controllerSettings.hook);
         hook.AddBinding("<Keyboard>/" + keyboardSettings.hook);
-        StartCoroutine(EnableEndFrame());
+        actionMap.Enable();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    IEnumerator EnableEndFrame()
-    {
-        yield return new WaitForEndOfFrame();
-        actionMap.Enable();
     }
 }
 
