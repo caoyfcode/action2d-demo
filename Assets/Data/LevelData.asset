@@ -49,3 +49,15 @@ MonoBehaviour:
     hasCheckpoint: 1
     checkpointPosition: {x: 53.5, y: 3.08}
     checkpointName: "\u6751\u5E84"
+  - index: {x: 1, y: -1}
+    resourcePath: Level_01_m01
+    rect:
+      serializedVersion: 2
+      x: 40
+      y: -30
+      width: 40
+      height: 20
+    mapSprite: {fileID: 0}
+    hasCheckpoint: 0
+    checkpointPosition: {x: 0, y: 0}
+    checkpointName: 

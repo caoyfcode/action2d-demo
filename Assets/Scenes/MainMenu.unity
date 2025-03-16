@@ -1010,7 +1010,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1829,6 +1829,33 @@ MonoBehaviour:
       effectVolume: 1
     graphics:
       resolution: 1920x1080
+    keyboardSettings:
+      uiSwitchLeft: q
+      uiSwitchRight: e
+      up: w
+      down: s
+      left: a
+      right: d
+      inventory: p
+      attack1: j
+      attack2: h
+      attack3: u
+      jump: k
+      dash: l
+      heal: r
+      hook: f
+    controllerSettings:
+      uiSwitchLeft: leftShoulder
+      uiSwitchRight: rightShoulder
+      inventory: select
+      pause: start
+      attack1: buttonWest
+      attack2: buttonNorth
+      attack3: buttonEast
+      jump: buttonSouth
+      dash: rightTrigger
+      heal: leftShoulder
+      hook: leftTrigger
 --- !u!114 &2014398376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1842,6 +1869,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentInputType: 0
+  keyboardSettings:
+    uiSwitchLeft: q
+    uiSwitchRight: e
+    up: w
+    down: s
+    left: a
+    right: d
+    inventory: p
+    attack1: j
+    attack2: h
+    attack3: u
+    jump: k
+    dash: l
+    heal: r
+    hook: f
+  controllerSettings:
+    uiSwitchLeft: leftShoulder
+    uiSwitchRight: rightShoulder
+    inventory: select
+    pause: start
+    attack1: buttonWest
+    attack2: buttonNorth
+    attack3: buttonEast
+    jump: buttonSouth
+    dash: rightTrigger
+    heal: leftShoulder
+    hook: leftTrigger
   actionMap:
     m_Name: Action Map
     m_Id: 741caf07-db85-4b01-8371-bdb7ff8756eb
