@@ -1811,7 +1811,7 @@ MonoBehaviour:
         dash: 0
         doubleJump: 0
         wallSlide: 0
-      checkpoint: {x: 0, y: 0}
+      checkpoint: 
       controlConfig:
         attack1: 
         attack2: 
