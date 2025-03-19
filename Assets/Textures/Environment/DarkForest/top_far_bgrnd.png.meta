@@ -1,0 +1,985 @@
+fileFormatVersion: 2
+guid: 897b66717aa1b5c45ad0c99d2a5665d9
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: top_far_bgrnd_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 850
+        width: 600
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32152ff3b7a7d6c42bca33e83dc540df
+      internalID: -1262735243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 576
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31e3edbe8dc21fb40a4f8065d5cb6850
+      internalID: -738033606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 752
+        width: 592
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bf0733eba8d116499525067c03d2505
+      internalID: 861022436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 640
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05812ce320ab45645a137a5b9302fac6
+      internalID: -707921222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 640
+        width: 320
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 441de2602c69af44cbce82f41cfcf765
+      internalID: -682043301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 357
+        width: 624
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 020784b88d798d146b925e7c0f025f19
+      internalID: -858273242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 624
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61e08962902f51e47b51e27deedc9c23
+      internalID: 1609496194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 430
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00022377066746a4e8323ec9200cb745
+      internalID: -667842668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_8
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 416
+        width: 80
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8a05f7f9115f3c48acb6178e16f2daf
+      internalID: 876953446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_9
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 416
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1ad80ba0b9e64a428ee314a8bedba0a
+      internalID: -105450060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_10
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 410
+        width: 8
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c7396f8bc3e04c48a9a6526891e1c79
+      internalID: -13618506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_11
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 407
+        width: 7
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a55b0985881fda408a5227f554947d6
+      internalID: -1227862201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_12
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 385
+        width: 80
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f3fd51fec66d4a4dab2fcd45309a876
+      internalID: -1063960337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_13
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 399
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf01a90a830a83d4b9616035011ffd8f
+      internalID: -1673965469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 400
+        width: 5
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63eb9bb65c5858048b6ffaabb7b0351e
+      internalID: 1269685664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_15
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 400
+        width: 7
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 109389371a0dfda41ac588ca0daad1cb
+      internalID: -76049495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_16
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 403
+        width: 8
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56f02510f68b50444940fd855e186c25
+      internalID: -1399011937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_17
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 400
+        width: 5
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27912a62e2127cf42b1e9c139524d35e
+      internalID: -126030665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_18
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 407
+        width: 5
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9193f79038c1a7e4096ee6bded626a2f
+      internalID: 914509144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_19
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 407
+        width: 5
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59eea022e756064bbd7e61e5980dbc7
+      internalID: -587567876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_20
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 363
+        width: 32
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1b523dbfe89a774fbf314b7ae6ffff5
+      internalID: 1829792388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_21
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 363
+        width: 32
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91e79835f2735fa449f01d62c8bdb7fd
+      internalID: -1725153422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_22
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 368
+        width: 4
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 883506179e4458842a176e0411328221
+      internalID: 672367858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_23
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 357
+        width: 4
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d79e01e03c711104288e21cb3c11f0e4
+      internalID: 532965971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_24
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 368
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 302062249a5794a4fa9b10d91c5e0f33
+      internalID: 1097390596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_25
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 368
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eddfa77880b263949bce475a41fd3257
+      internalID: 299775895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_26
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 368
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7558a37a49087ca46a3c868dbf4b30f5
+      internalID: 509303594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_27
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 368
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38be649f077cbe242b0171b70e255aab
+      internalID: 576839653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_28
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 368
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b16134b86ca5c4db9649a17adf6ed7
+      internalID: 1897563163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_29
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 368
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbfabf578c39d6e41a1f5eb277540c2a
+      internalID: 1225071654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_30
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 368
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e8cf075130bc824a8138ead19060e18
+      internalID: 869734014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_31
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 368
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5457510e2012e0142af48395636aa595
+      internalID: 232347639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_32
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 363
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6eb1b6c126a694cab21017656f6e02
+      internalID: -430380626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_33
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 363
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39de8198685a49f4ba8b5e5ae2bfb7f2
+      internalID: 2037968816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_34
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 363
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4423c58f218ab488098b5baed7c8f4
+      internalID: -138662920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_35
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 363
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a459fc20667d74a93c3b72cc2149f1
+      internalID: -1634688693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_36
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 215
+        width: 577
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf448532f0ce56c40a0952ae21f0609b
+      internalID: -1049399415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 37
+        width: 624
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bfc0080621400d4f936b4880a3659f0
+      internalID: 387850714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_far_bgrnd_38
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 101
+        width: 624
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af386462988c49a4a98fe112cc9c7630
+      internalID: -1497733651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      top_far_bgrnd_0: -1262735243
+      top_far_bgrnd_1: -738033606
+      top_far_bgrnd_10: -13618506
+      top_far_bgrnd_11: -1227862201
+      top_far_bgrnd_12: -1063960337
+      top_far_bgrnd_13: -1673965469
+      top_far_bgrnd_14: 1269685664
+      top_far_bgrnd_15: -76049495
+      top_far_bgrnd_16: -1399011937
+      top_far_bgrnd_17: -126030665
+      top_far_bgrnd_18: 914509144
+      top_far_bgrnd_19: -587567876
+      top_far_bgrnd_2: 861022436
+      top_far_bgrnd_20: 1829792388
+      top_far_bgrnd_21: -1725153422
+      top_far_bgrnd_22: 672367858
+      top_far_bgrnd_23: 532965971
+      top_far_bgrnd_24: 1097390596
+      top_far_bgrnd_25: 299775895
+      top_far_bgrnd_26: 509303594
+      top_far_bgrnd_27: 576839653
+      top_far_bgrnd_28: 1897563163
+      top_far_bgrnd_29: 1225071654
+      top_far_bgrnd_3: -707921222
+      top_far_bgrnd_30: 869734014
+      top_far_bgrnd_31: 232347639
+      top_far_bgrnd_32: -430380626
+      top_far_bgrnd_33: 2037968816
+      top_far_bgrnd_34: -138662920
+      top_far_bgrnd_35: -1634688693
+      top_far_bgrnd_36: -1049399415
+      top_far_bgrnd_37: 387850714
+      top_far_bgrnd_38: -1497733651
+      top_far_bgrnd_4: -682043301
+      top_far_bgrnd_5: -858273242
+      top_far_bgrnd_6: 1609496194
+      top_far_bgrnd_7: -667842668
+      top_far_bgrnd_8: 876953446
+      top_far_bgrnd_9: -105450060
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

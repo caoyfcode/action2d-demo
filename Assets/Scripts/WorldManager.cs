@@ -65,7 +65,7 @@ public class WorldManager : SingletonBase<WorldManager>
         GameManager.Pause = true;
         SoundManager.instance.StopBackgroundMusic();
         DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
-        if (!instance.currentLevel || instance.currentLevel.id!= levelId)
+        if (!instance.currentLevel || instance.currentLevel.id != levelId)
         {
             DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
         }
@@ -88,6 +88,7 @@ public class WorldManager : SingletonBase<WorldManager>
             GameObject obj = Instantiate(prefab);
             obj.transform.SetParent(levelContainer.transform);
             currentLevel = obj.GetComponent<Level>();
+            currentLevel.id = levelId;
             yield return Resources.UnloadUnusedAssets();
         }
         else
