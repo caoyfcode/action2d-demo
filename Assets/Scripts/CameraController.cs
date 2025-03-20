@@ -81,8 +81,9 @@ public class CameraController : MonoBehaviour
         shakeExt.Shake(duration, force * 5f, vibration);
     }
 
-    public void SetBoundariesAndMoveInstantly()
+    public void MoveInstantlyAndSetBoundaries()
     {
+        proCamera2D.CenterOnTargets();
         ProCamera2DRooms rooms = FindAnyObjectByType<ProCamera2DRooms>();
         if (rooms == null)
         {
@@ -106,10 +107,9 @@ public class CameraController : MonoBehaviour
             UseLeftBoundary = true,
             LeftBoundary = room.Dimensions.x - room.Dimensions.width / 2,
             UseRightBoundary = true,
-            RightBoundary = room.Dimensions.x + room.Dimensions.width / 2
+            RightBoundary = room.Dimensions.x + room.Dimensions.width / 2,
         };
         numericBoundaries.Settings = numericBoundariesSettings;
-        proCamera2D.CenterOnTargets();
     }
 
     // 用来当某些房间过大时设置边界，在加载新 Level 后调用
@@ -131,15 +131,13 @@ public class CameraController : MonoBehaviour
             {
                 break;
             }
-            if (room.Dimensions.size.x < proCamera2D.ScreenSizeInWorldCoordinates.x)
+            if (room.Dimensions.width < proCamera2D.ScreenSizeInWorldCoordinates.x)
             {
-                // room.Dimensions.x = room.Dimensions.center.x - proCamera2D.ScreenSizeInWorldCoordinates.x / 2;
-                room.Dimensions.width = proCamera2D.ScreenSizeInWorldCoordinates.x;
+                room.Dimensions.width = proCamera2D.ScreenSizeInWorldCoordinates.x + 0.1f; // 加0.1是为了防止浮点误差使得将摄像机稍微缩小
             }
-            if (room.Dimensions.size.y < proCamera2D.ScreenSizeInWorldCoordinates.y)
+            if (room.Dimensions.height < proCamera2D.ScreenSizeInWorldCoordinates.y)
             {
-                // room.Dimensions.y = room.Dimensions.center.y - proCamera2D.ScreenSizeInWorldCoordinates.y / 2;
-                room.Dimensions.height = proCamera2D.ScreenSizeInWorldCoordinates.y;
+                room.Dimensions.height = proCamera2D.ScreenSizeInWorldCoordinates.y + 0.1f;
             }
         }
     }

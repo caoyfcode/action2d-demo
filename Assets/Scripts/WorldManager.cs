@@ -41,7 +41,7 @@ public class WorldManager : SingletonBase<WorldManager>
             currentLevel = level;
             cameraController.FitRoomSize();
             cameraController.SetRoomTriggerTarget();
-            cameraController.SetBoundariesAndMoveInstantly();
+            cameraController.MoveInstantlyAndSetBoundaries();
         }
         // else
         // {
@@ -97,9 +97,10 @@ public class WorldManager : SingletonBase<WorldManager>
         }
         isLoadingLevel = false;
         GameManager.Pause = false;
+        yield return null; // 将后面设置推迟至帧末，保证新加载的对象的 Start 的调用
         cameraController.FitRoomSize();
         cameraController.SetRoomTriggerTarget();
-        cameraController.SetBoundariesAndMoveInstantly();
+        cameraController.MoveInstantlyAndSetBoundaries();
         if (currentLevel && currentLevel.bgm != null)
         {
             SoundManager.instance.PlayBackgroundMusic(currentLevel.bgm);
