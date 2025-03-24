@@ -13,6 +13,17 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   levelDataList:
+  - id: 001
+    rect:
+      serializedVersion: 2
+      x: -75
+      y: -5
+      width: 30
+      height: 50
+    mapSprite: {fileID: 0}
+    hasCheckpoint: 0
+    checkpointPosition: {x: 0, y: 0}
+    checkpointName: 
   - id: 002
     rect:
       serializedVersion: 2
