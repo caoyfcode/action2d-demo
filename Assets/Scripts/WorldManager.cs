@@ -34,19 +34,6 @@ public class WorldManager : SingletonBase<WorldManager>
         {
             DataManager.instance.InitSaveSlot(0);
         }
-        // Game.instance.isMainMenuScene = false;
-        Level level = levelContainer.GetComponentInChildren<Level>();
-        if (level != null)
-        {
-            currentLevel = level;
-            cameraController.FitRoomSize();
-            cameraController.SetRoomTriggerTarget();
-            cameraController.MoveInstantlyAndSetBoundaries();
-        }
-        // else
-        // {
-        //     Teleport(new(0, 0));
-        // }
         TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
     }
 
