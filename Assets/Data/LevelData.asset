@@ -156,3 +156,14 @@ MonoBehaviour:
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
+  - id: 013
+    rect:
+      serializedVersion: 2
+      x: 155
+      y: 65
+      width: 50
+      height: 50
+    mapSprite: {fileID: 0}
+    hasCheckpoint: 1
+    checkpointPosition: {x: 172, y: 69.5}
+    checkpointName: "\u5C71\u9876"
