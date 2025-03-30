@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 83193336330071593}
   - component: {fileID: 6462484391820284761}
   m_Layer: 7
-  m_Name: Envrionment
+  m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33934,11 +33934,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2093921699560984734, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.51
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2093921699560984734, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2093921699560984734, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34010,7 +34010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Size.x
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8032097542957150440, guid: 6c365eb5dd1ea2f4bab3c0a6a7970f3d, type: 3}
       propertyPath: m_Size.y
