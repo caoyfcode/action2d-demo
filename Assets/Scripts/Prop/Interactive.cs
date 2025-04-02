@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-
+    public string id; // unique id for each interactive object, 暂未使用
     public Canvas hint;
     public bool playerIn;
     public bool HintShown

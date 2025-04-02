@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_0
+      name: BasicPackOfHoshin tileset_0
       rect:
         serializedVersion: 2
         x: 16
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_1
+      name: BasicPackOfHoshin tileset_1
       rect:
         serializedVersion: 2
         x: 32
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_2
+      name: BasicPackOfHoshin tileset_2
       rect:
         serializedVersion: 2
         x: 48
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_3
+      name: BasicPackOfHoshin tileset_3
       rect:
         serializedVersion: 2
         x: 80
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_4
+      name: BasicPackOfHoshin tileset_4
       rect:
         serializedVersion: 2
         x: 96
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_5
+      name: BasicPackOfHoshin tileset_5
       rect:
         serializedVersion: 2
         x: 112
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_6
+      name: BasicPackOfHoshin tileset_6
       rect:
         serializedVersion: 2
         x: 16
@@ -257,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_7
+      name: BasicPackOfHoshin tileset_7
       rect:
         serializedVersion: 2
         x: 32
@@ -278,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_8
+      name: BasicPackOfHoshin tileset_8
       rect:
         serializedVersion: 2
         x: 48
@@ -299,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_9
+      name: BasicPackOfHoshin tileset_9
       rect:
         serializedVersion: 2
         x: 80
@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_10
+      name: BasicPackOfHoshin tileset_10
       rect:
         serializedVersion: 2
         x: 112
@@ -341,7 +341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_11
+      name: BasicPackOfHoshin tileset_11
       rect:
         serializedVersion: 2
         x: 16
@@ -362,7 +362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_12
+      name: BasicPackOfHoshin tileset_12
       rect:
         serializedVersion: 2
         x: 32
@@ -383,7 +383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_13
+      name: BasicPackOfHoshin tileset_13
       rect:
         serializedVersion: 2
         x: 48
@@ -404,7 +404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_14
+      name: BasicPackOfHoshin tileset_14
       rect:
         serializedVersion: 2
         x: 80
@@ -425,7 +425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_15
+      name: BasicPackOfHoshin tileset_15
       rect:
         serializedVersion: 2
         x: 96
@@ -446,7 +446,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_16
+      name: BasicPackOfHoshin tileset_16
       rect:
         serializedVersion: 2
         x: 112
@@ -467,7 +467,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_17
+      name: BasicPackOfHoshin tileset_17
       rect:
         serializedVersion: 2
         x: 16
@@ -488,7 +488,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_18
+      name: BasicPackOfHoshin tileset_18
       rect:
         serializedVersion: 2
         x: 32
@@ -509,7 +509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_19
+      name: BasicPackOfHoshin tileset_19
       rect:
         serializedVersion: 2
         x: 80
@@ -530,7 +530,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_20
+      name: BasicPackOfHoshin tileset_20
       rect:
         serializedVersion: 2
         x: 96
@@ -551,7 +551,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_21
+      name: BasicPackOfHoshin tileset_21
       rect:
         serializedVersion: 2
         x: 16
@@ -572,7 +572,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_22
+      name: BasicPackOfHoshin tileset_22
       rect:
         serializedVersion: 2
         x: 32
@@ -593,7 +593,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_23
+      name: BasicPackOfHoshin tileset_23
       rect:
         serializedVersion: 2
         x: 80
@@ -614,7 +614,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_24
+      name: BasicPackOfHoshin tileset_24
       rect:
         serializedVersion: 2
         x: 96
@@ -635,7 +635,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_25
+      name: BasicPackOfHoshin tileset_25
       rect:
         serializedVersion: 2
         x: 16
@@ -656,7 +656,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_26
+      name: BasicPackOfHoshin tileset_26
       rect:
         serializedVersion: 2
         x: 32
@@ -677,7 +677,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_27
+      name: BasicPackOfHoshin tileset_27
       rect:
         serializedVersion: 2
         x: 48
@@ -698,7 +698,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_28
+      name: BasicPackOfHoshin tileset_28
       rect:
         serializedVersion: 2
         x: 64
@@ -719,7 +719,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_29
+      name: BasicPackOfHoshin tileset_29
       rect:
         serializedVersion: 2
         x: 80
@@ -740,7 +740,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_31
+      name: BasicPackOfHoshin tileset_31
       rect:
         serializedVersion: 2
         x: 16
@@ -761,7 +761,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_32
+      name: BasicPackOfHoshin tileset_32
       rect:
         serializedVersion: 2
         x: 32
@@ -782,7 +782,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_33
+      name: BasicPackOfHoshin tileset_33
       rect:
         serializedVersion: 2
         x: 48
@@ -803,7 +803,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_34
+      name: BasicPackOfHoshin tileset_34
       rect:
         serializedVersion: 2
         x: 64
@@ -824,7 +824,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_35
+      name: BasicPackOfHoshin tileset_35
       rect:
         serializedVersion: 2
         x: 80
@@ -845,7 +845,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_39
+      name: BasicPackOfHoshin tileset_39
       rect:
         serializedVersion: 2
         x: 16
@@ -866,7 +866,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_40
+      name: BasicPackOfHoshin tileset_40
       rect:
         serializedVersion: 2
         x: 32
@@ -887,7 +887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_41
+      name: BasicPackOfHoshin tileset_41
       rect:
         serializedVersion: 2
         x: 48
@@ -908,7 +908,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_42
+      name: BasicPackOfHoshin tileset_42
       rect:
         serializedVersion: 2
         x: 64
@@ -929,7 +929,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_45
+      name: BasicPackOfHoshin tileset_45
       rect:
         serializedVersion: 2
         x: 16
@@ -950,7 +950,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_46
+      name: BasicPackOfHoshin tileset_46
       rect:
         serializedVersion: 2
         x: 32
@@ -971,7 +971,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_47
+      name: BasicPackOfHoshin tileset_47
       rect:
         serializedVersion: 2
         x: 48
@@ -992,7 +992,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_48
+      name: BasicPackOfHoshin tileset_48
       rect:
         serializedVersion: 2
         x: 64
@@ -1013,7 +1013,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_49
+      name: BasicPackOfHoshin tileset_49
       rect:
         serializedVersion: 2
         x: 80
@@ -1034,7 +1034,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_50
+      name: BasicPackOfHoshin tileset_50
       rect:
         serializedVersion: 2
         x: 96
@@ -1055,7 +1055,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_30
+      name: BasicPackOfHoshin tileset_30
       rect:
         serializedVersion: 2
         x: 114
@@ -1063,7 +1063,7 @@ TextureImporter:
         width: 12
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1076,7 +1076,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BacsicPackOfHoshin tileset_36
+      name: BasicPackOfHoshin tileset_36
       rect:
         serializedVersion: 2
         x: 83
@@ -1084,7 +1084,7 @@ TextureImporter:
         width: 24
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1107,57 +1107,57 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BacsicPackOfHoshin tileset_0: -17729047
-      BacsicPackOfHoshin tileset_1: -1627677980
-      BacsicPackOfHoshin tileset_10: -797737839
-      BacsicPackOfHoshin tileset_11: 799700890
-      BacsicPackOfHoshin tileset_12: -1572073973
-      BacsicPackOfHoshin tileset_13: -1554874507
-      BacsicPackOfHoshin tileset_14: -823372021
-      BacsicPackOfHoshin tileset_15: 204152761
-      BacsicPackOfHoshin tileset_16: 1383936700
-      BacsicPackOfHoshin tileset_17: 1923139018
-      BacsicPackOfHoshin tileset_18: -103565066
-      BacsicPackOfHoshin tileset_19: 386294088
-      BacsicPackOfHoshin tileset_2: 1254415546
-      BacsicPackOfHoshin tileset_20: -1566513495
-      BacsicPackOfHoshin tileset_21: 540790020
-      BacsicPackOfHoshin tileset_22: 1505211960
-      BacsicPackOfHoshin tileset_23: -333100470
-      BacsicPackOfHoshin tileset_24: -1241912170
-      BacsicPackOfHoshin tileset_25: -1624627784
-      BacsicPackOfHoshin tileset_26: -11816733
-      BacsicPackOfHoshin tileset_27: 66192256
-      BacsicPackOfHoshin tileset_28: -1353216985
-      BacsicPackOfHoshin tileset_29: -207250509
-      BacsicPackOfHoshin tileset_3: 85262260
-      BacsicPackOfHoshin tileset_30: -1239008112
-      BacsicPackOfHoshin tileset_31: -669579832
-      BacsicPackOfHoshin tileset_32: -1890486335
-      BacsicPackOfHoshin tileset_33: 455249202
-      BacsicPackOfHoshin tileset_34: -1423761666
-      BacsicPackOfHoshin tileset_35: 766648810
-      BacsicPackOfHoshin tileset_36: 1604292957
-      BacsicPackOfHoshin tileset_37: -1275989141
-      BacsicPackOfHoshin tileset_38: 399000001
-      BacsicPackOfHoshin tileset_39: 105288266
-      BacsicPackOfHoshin tileset_4: -1415505043
-      BacsicPackOfHoshin tileset_40: -1532397157
-      BacsicPackOfHoshin tileset_41: -327084918
-      BacsicPackOfHoshin tileset_42: 1271251022
-      BacsicPackOfHoshin tileset_43: -588059562
-      BacsicPackOfHoshin tileset_44: -1333775738
-      BacsicPackOfHoshin tileset_45: 1696012603
-      BacsicPackOfHoshin tileset_46: 574348944
-      BacsicPackOfHoshin tileset_47: 7706734
-      BacsicPackOfHoshin tileset_48: -196326816
-      BacsicPackOfHoshin tileset_49: -1306192028
-      BacsicPackOfHoshin tileset_5: 1677902725
-      BacsicPackOfHoshin tileset_50: 1479486695
-      BacsicPackOfHoshin tileset_6: 457854289
-      BacsicPackOfHoshin tileset_7: 955524712
-      BacsicPackOfHoshin tileset_8: -2032026808
-      BacsicPackOfHoshin tileset_9: -219903316
+      BasicPackOfHoshin tileset_0: -17729047
+      BasicPackOfHoshin tileset_1: -1627677980
+      BasicPackOfHoshin tileset_10: -797737839
+      BasicPackOfHoshin tileset_11: 799700890
+      BasicPackOfHoshin tileset_12: -1572073973
+      BasicPackOfHoshin tileset_13: -1554874507
+      BasicPackOfHoshin tileset_14: -823372021
+      BasicPackOfHoshin tileset_15: 204152761
+      BasicPackOfHoshin tileset_16: 1383936700
+      BasicPackOfHoshin tileset_17: 1923139018
+      BasicPackOfHoshin tileset_18: -103565066
+      BasicPackOfHoshin tileset_19: 386294088
+      BasicPackOfHoshin tileset_2: 1254415546
+      BasicPackOfHoshin tileset_20: -1566513495
+      BasicPackOfHoshin tileset_21: 540790020
+      BasicPackOfHoshin tileset_22: 1505211960
+      BasicPackOfHoshin tileset_23: -333100470
+      BasicPackOfHoshin tileset_24: -1241912170
+      BasicPackOfHoshin tileset_25: -1624627784
+      BasicPackOfHoshin tileset_26: -11816733
+      BasicPackOfHoshin tileset_27: 66192256
+      BasicPackOfHoshin tileset_28: -1353216985
+      BasicPackOfHoshin tileset_29: -207250509
+      BasicPackOfHoshin tileset_3: 85262260
+      BasicPackOfHoshin tileset_30: -1239008112
+      BasicPackOfHoshin tileset_31: -669579832
+      BasicPackOfHoshin tileset_32: -1890486335
+      BasicPackOfHoshin tileset_33: 455249202
+      BasicPackOfHoshin tileset_34: -1423761666
+      BasicPackOfHoshin tileset_35: 766648810
+      BasicPackOfHoshin tileset_36: 1604292957
+      BasicPackOfHoshin tileset_37: -1275989141
+      BasicPackOfHoshin tileset_38: 399000001
+      BasicPackOfHoshin tileset_39: 105288266
+      BasicPackOfHoshin tileset_4: -1415505043
+      BasicPackOfHoshin tileset_40: -1532397157
+      BasicPackOfHoshin tileset_41: -327084918
+      BasicPackOfHoshin tileset_42: 1271251022
+      BasicPackOfHoshin tileset_43: -588059562
+      BasicPackOfHoshin tileset_44: -1333775738
+      BasicPackOfHoshin tileset_45: 1696012603
+      BasicPackOfHoshin tileset_46: 574348944
+      BasicPackOfHoshin tileset_47: 7706734
+      BasicPackOfHoshin tileset_48: -196326816
+      BasicPackOfHoshin tileset_49: -1306192028
+      BasicPackOfHoshin tileset_5: 1677902725
+      BasicPackOfHoshin tileset_50: 1479486695
+      BasicPackOfHoshin tileset_6: 457854289
+      BasicPackOfHoshin tileset_7: 955524712
+      BasicPackOfHoshin tileset_8: -2032026808
+      BasicPackOfHoshin tileset_9: -219903316
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
