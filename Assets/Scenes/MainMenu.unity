@@ -1315,7 +1315,10 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    horizontalWrap: 0
+    verticalWrap: 1
     selected: -1
+    gridWidth: 1
 --- !u!1 &1374647023
 GameObject:
   m_ObjectHideFlags: 0

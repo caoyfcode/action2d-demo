@@ -16,7 +16,111 @@ public class SelectGroup
     }
 
     public List<ItemActionPair> itemActions;
+    public bool horizontalWrap = false;
+    public bool verticalWrap = true;
     public int selected = -1; // 初始时什么也不选中
+    public int gridWidth = 1;
+    public int GridX => selected % gridWidth;
+    public int GridY => selected / gridWidth;
+    public int GridXMax => gridWidth - 1;
+    public int GridYMax => (itemActions.Count - 1) / gridWidth;
+
+    public bool IsLeftMost => GridX == 0;
+    public bool IsRightMost => GridX == GridXMax;
+    public bool IsTopMost => GridY == 0;
+    public bool IsBottomMost => GridY == GridYMax;
+
+    public void UpdateSelection()
+    {
+        bool left = GameInputManager.MoveTrigger.x < 0;
+        bool right = GameInputManager.MoveTrigger.x > 0;
+        bool up = GameInputManager.MoveTrigger.y > 0;
+        bool down = GameInputManager.MoveTrigger.y < 0;
+        UpdateSelectionWith(left, right, up, down);
+    }
+
+    public void UpdateSelectionWith(bool left, bool right, bool up, bool down)
+    {
+        int prevSelected = selected;
+        // 在这些变量中考虑了wrap与否，在之后的实现就无脑wrap
+        left = left && (!IsLeftMost || horizontalWrap);
+        right = right && (!IsRightMost || horizontalWrap);
+        up = up && (!IsTopMost || verticalWrap);
+        down = down && (!IsBottomMost || verticalWrap);
+
+        if (left)
+        {
+            if (selected > 0)
+            {
+                selected--;
+            }
+            else
+            {
+                selected = itemActions.Count - 1;
+            }
+        }
+        else if (right)
+        {
+            if (selected < itemActions.Count - 1)
+            {
+                selected++;
+            }
+            else
+            {
+                selected = 0;
+            }
+        }
+        else if (up)
+        {
+            if (selected >= gridWidth)
+            {
+                selected -= gridWidth;
+            }
+            else
+            {
+                // 最顶上再向上，则去往对应水平位置最下方
+                int mod = GridX;
+                selected = GridYMax * gridWidth + mod;
+                // 最后一行可能不满
+                if (selected >= itemActions.Count)
+                {
+                    selected -= gridWidth;
+                }
+            }
+        }
+        else if (down)
+        {
+            if (selected + gridWidth < itemActions.Count)
+            {
+                selected += gridWidth;
+            }
+            else
+            {
+                if (GridY < GridYMax) // 倒数第二行再向下还不到循环，直接到末尾
+                {
+                    selected = itemActions.Count - 1;
+                }
+                else // 最后一行再向下
+                {
+                    selected = GridX;
+                }
+            }
+        }
+        // else 即使 selected 无意义，也不改变
+        // 计算是否真的改变了并应用动画
+        if (prevSelected != selected)
+        {
+            if (prevSelected >= 0 && prevSelected < itemActions.Count)
+            {
+                itemActions[prevSelected].item.selected = false;
+            }
+            if (selected >= 0 && selected < itemActions.Count)
+            {
+                itemActions[selected].item.selected = true;
+                SoundManager.instance.PlayUISelection();
+            }
+        }
+    }
 
     public void UpdateSelection(bool inc, bool dec)
     {
@@ -75,51 +179,4 @@ public class SelectGroup
             itemActions[i].item.SetSelectedInstantly(i == selected);
         }
     }
-
-    // public UnityEvent close;
-
-    // Update is called once per frame
-    // void Update()
-    // {
-    //     var items = GetComponentsInChildren<SelectItem>();
-
-    //     if (Input.GetKeyDown(KeyCode.W))
-    //     {
-    //         selected--;
-    //         if (selected < 0)
-    //         {
-    //             selected = items.Length - 1;
-    //         }
-    //     }
-    //     else if (Input.GetKeyDown(KeyCode.S))
-    //     {
-    //         selected++;
-    //         if (selected > items.Length - 1)
-    //         {
-    //             selected = 0;
-    //         }
-    //     }
-
-    //     for (int i = 0; i < items.Length; i++)
-    //     {
-    //         items[i].selected = selected == i;
-    //     }
-        
-    //     // 取消
-    //     if (Input.GetKeyDown(KeyCode.J))
-    //     {
-    //         Close();
-    //     }
-    // }
-
-    // public void Close()
-    // {
-    //     selected = -1; // 重置
-    //     var items = GetComponentsInChildren<SelectItem>();
-    //     foreach (var item in items)
-    //     {
-    //         item.ImmediateSelcted(false);
-    //     }
-    //     close?.Invoke();
-    // }
 }

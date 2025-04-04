@@ -26,9 +26,10 @@ public class PauseMenu : ShownUI
 
     void Update()
     {
-        bool up = GameInputManager.MoveTrigger.y > 0;
-        bool down = GameInputManager.MoveTrigger.y < 0;
-        selectGroup.UpdateSelection(down, up);
+        // bool up = GameInputManager.MoveTrigger.y > 0;
+        // bool down = GameInputManager.MoveTrigger.y < 0;
+        // selectGroup.UpdateSelection(down, up);
+        selectGroup.UpdateSelection();
         if (GameInputManager.UiConfirm)
         {
             selectGroup.InvokeAction();
