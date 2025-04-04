@@ -2876,12 +2876,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a497eca7e0b5b7a42bfbefb1b294b015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackConfig: {fileID: 251437407}
-  attackTable: {fileID: 1239238838}
-  itemTable: {fileID: 1787884157}
-  description: {fileID: 1153075390}
-  selectedTable: 0
-  selectedId: -1
+  attackConfigRoot: {fileID: 251437407}
+  attackTableRoot: {fileID: 1239238838}
+  itemTableRoot: {fileID: 1787884157}
+  attackConfig:
+    itemActions: []
+    horizontalWrap: 0
+    verticalWrap: 1
+    selected: -1
+    gridWidth: 3
+  attackTable:
+    itemActions: []
+    horizontalWrap: 0
+    verticalWrap: 1
+    selected: -1
+    gridWidth: 4
+  itemTable:
+    itemActions: []
+    horizontalWrap: 0
+    verticalWrap: 1
+    selected: -1
+    gridWidth: 4
+  description:
+    itemActions: []
+    horizontalWrap: 0
+    verticalWrap: 1
+    selected: -1
+    gridWidth: 1
+  state: 0
 --- !u!1 &626779821
 GameObject:
   m_ObjectHideFlags: 0
@@ -4226,7 +4248,10 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    horizontalWrap: 0
+    verticalWrap: 1
     selected: -1
+    gridWidth: 1
 --- !u!1 &890118066
 GameObject:
   m_ObjectHideFlags: 0
@@ -9325,7 +9350,10 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    horizontalWrap: 0
+    verticalWrap: 1
     selected: -1
+    gridWidth: 1
 --- !u!1 &2019820789
 GameObject:
   m_ObjectHideFlags: 0

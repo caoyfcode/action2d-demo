@@ -13,6 +13,12 @@ public class SelectGroup
     {
         public SelectItem item;
         public UnityEvent action;
+
+        public ItemActionPair(SelectItem item, UnityEvent action)
+        {
+            this.item = item;
+            this.action = action;
+        }
     }
 
     public List<ItemActionPair> itemActions;
@@ -29,6 +35,36 @@ public class SelectGroup
     public bool IsRightMost => GridX == GridXMax;
     public bool IsTopMost => GridY == 0;
     public bool IsBottomMost => GridY == GridYMax;
+
+    public void Unselect()
+    {
+        int prevSelected = selected;
+        selected = -1;
+        if (prevSelected >= 0 && prevSelected < itemActions.Count)
+        {
+            itemActions[prevSelected].item.selected = false;
+        }
+    }
+
+    public void Select(int x, int y)
+    {
+        Select(y * gridWidth + x);
+    }
+
+    public void Select(int index)
+    {
+        int prevSelected = selected;
+        selected = index;
+        if (prevSelected >= 0 && prevSelected < itemActions.Count)
+        {
+            itemActions[prevSelected].item.selected = false;
+        }
+        if (selected >= 0 && selected < itemActions.Count)
+        {
+            itemActions[selected].item.selected = true;
+            SoundManager.instance.PlayUISelection();
+        }
+    }
 
     public void UpdateSelection()
     {
@@ -122,52 +158,55 @@ public class SelectGroup
         }
     }
 
-    public void UpdateSelection(bool inc, bool dec)
-    {
-        int prevSelected = selected;
-        if (inc && !dec)
-        {
-            if (selected < itemActions.Count - 1)
-            {
-                selected++;
-            }
-            else
-            {
-                selected = 0;
-            }
-        }
-        else if (!inc && dec)
-        {
-            if (selected > 0)
-            {
-                selected--;
-            }
-            else
-            {
-                selected = itemActions.Count - 1;
-            }
-        }
-        // else 即使 selected 无意义，也不改变
-        if (prevSelected != selected)
-        {
-            if (prevSelected >= 0 && prevSelected < itemActions.Count)
-            {
-                itemActions[prevSelected].item.selected = false;
-            }
-            if (selected >= 0 && selected < itemActions.Count)
-            {
-                itemActions[selected].item.selected = true;
-                SoundManager.instance.PlayUISelection();
-            }
-        }
-    }
+    // public void UpdateSelection(bool inc, bool dec)
+    // {
+    //     int prevSelected = selected;
+    //     if (inc && !dec)
+    //     {
+    //         if (selected < itemActions.Count - 1)
+    //         {
+    //             selected++;
+    //         }
+    //         else
+    //         {
+    //             selected = 0;
+    //         }
+    //     }
+    //     else if (!inc && dec)
+    //     {
+    //         if (selected > 0)
+    //         {
+    //             selected--;
+    //         }
+    //         else
+    //         {
+    //             selected = itemActions.Count - 1;
+    //         }
+    //     }
+    //     // else 即使 selected 无意义，也不改变
+    //     if (prevSelected != selected)
+    //     {
+    //         if (prevSelected >= 0 && prevSelected < itemActions.Count)
+    //         {
+    //             itemActions[prevSelected].item.selected = false;
+    //         }
+    //         if (selected >= 0 && selected < itemActions.Count)
+    //         {
+    //             itemActions[selected].item.selected = true;
+    //             SoundManager.instance.PlayUISelection();
+    //         }
+    //     }
+    // }
 
     public void InvokeAction()
     {
         if (selected >= 0 && selected < itemActions.Count)
         {
-            itemActions[selected].action?.Invoke();
-            SoundManager.instance.PlayUIConfirm();
+            if (itemActions[selected].action != null)
+            {
+                itemActions[selected].action.Invoke();
+                SoundManager.instance.PlayUIConfirm();
+            }
         }
     }
 
@@ -177,6 +216,22 @@ public class SelectGroup
         for (int i = 0; i < itemActions.Count; i++)
         {
             itemActions[i].item.SetSelectedInstantly(i == selected);
+        }
+    }
+
+    public void RefreshItemsFrom(Transform parent)
+    {
+        itemActions.Clear();
+        foreach (Transform child in parent)
+        {
+            if (child.TryGetComponent<SelectItem>(out var item))
+            {
+                itemActions.Add(new ItemActionPair(item, null));
+            }
+        }
+        if (selected >= itemActions.Count)
+        {
+            selected = itemActions.Count - 1;
         }
     }
 }
