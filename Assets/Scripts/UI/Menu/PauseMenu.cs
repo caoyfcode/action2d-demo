@@ -33,6 +33,11 @@ public class PauseMenu : ShownUI
         {
             selectGroup.InvokeAction();
         }
+        if (Shown && (GameInputManager.UiCancel || GameInputManager.Pause))
+        {
+            Shown = false;
+            SoundManager.instance.PlayUIConfirm();
+        }
     }
 
     public void Resume()

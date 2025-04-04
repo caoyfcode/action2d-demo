@@ -17,9 +17,8 @@ public class UIManager : SingletonBase<UIManager>
     public PickupHud pickupHud;
     
     [Header("Menus")]
-    // public PauseMenu pauseMenu;
+    // 部分 ShownUI 是 Menu, 只有一下的是 Menu, Menu 的开启必须利用 UIManager 的函数
     public CheckpointMenu checkpointMenu;
-    // public InventoryMenu inventoryMenu;
     public TeleportMenu teleportMenu;
     public PauseMenu pauseMenu;
     public InventoryMenu inventoryMenu;
@@ -39,64 +38,27 @@ public class UIManager : SingletonBase<UIManager>
             pauseMenu.Shown = debugPauseMenuShown;
         }
 
-        /// TODO 添加 UI Shown Selector 枚举, 用 None, ... 来表示这些互斥的 UI 显示状态
-        /// 若存在模态窗口(或者UI内的选择状态)，则 UiCancel 不关闭大窗口
-        if (MenuShown && GameInputManager.UiCancel)
-        {
-            if (pauseMenu.Shown)
-            {
-                pauseMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (checkpointMenu.Shown)
-            {
-                checkpointMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (teleportMenu.Shown)
-            {
-                teleportMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (inventoryMenu.Shown)
-            {
-                inventoryMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (settingsMenu.Shown)
-            {
-                settingsMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
-            }
-        }
-        else if (inventoryMenu.Shown && GameInputManager.Inventory)
-        {
-            inventoryMenu.Shown = false;
-            SoundManager.instance.PlayUIConfirm();
-        }
-        else if (!MenuShown)
+        // 直接利用按键打开的 Menu, 在 UIManager 中控制开启
+        if (!MenuShown)
         {
             if (GameInputManager.Pause)
             {
-                pauseMenu.Shown = true;
-                SoundManager.instance.PlayUIConfirm();
+                OpenMenu(pauseMenu);
             }
             else if (GameInputManager.Inventory)
             {
-                inventoryMenu.Shown = true;
-                SoundManager.instance.PlayUIConfirm();
+                OpenMenu(inventoryMenu);
             }
         }
-        else if (GameInputManager.Inventory)
+    }
+
+    public void OpenMenu(ShownUI menu)
+    {
+        if (!MenuShown)
         {
-            if (!MenuShown)
+            if (menu == teleportMenu || menu == checkpointMenu || menu == pauseMenu || menu == inventoryMenu || menu == settingsMenu)
             {
-                inventoryMenu.Shown = true;
-                SoundManager.instance.PlayUIConfirm();
-            }
-            else if (inventoryMenu.Shown)
-            {
-                inventoryMenu.Shown = false;
+                menu.Shown = true;
                 SoundManager.instance.PlayUIConfirm();
             }
         }

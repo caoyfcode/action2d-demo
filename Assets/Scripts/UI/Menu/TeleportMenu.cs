@@ -63,7 +63,7 @@ public class TeleportMenu : ShownUI
             Shown = false;
             SoundManager.instance.PlayUIConfirm();
         }
-        else if (GameInputManager.UiCancel)
+        if (Shown && GameInputManager.UiCancel)
         {
             Shown = false;
             SoundManager.instance.PlayUIConfirm();

@@ -71,6 +71,11 @@ public class SettingsMenu : ShownUI
             HandleShownMenu();
             SoundManager.instance.PlayUISelection();
         }
+        if (Shown && GameInputManager.UiCancel)
+        {
+            Shown = false;
+            SoundManager.instance.PlayUIConfirm();
+        }
     }
 
     void HandleShownMenu()

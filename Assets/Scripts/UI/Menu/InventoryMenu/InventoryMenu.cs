@@ -32,6 +32,11 @@ public class InventoryMenu : ShownUI
             HandleShownMenu();
             SoundManager.instance.PlayUISelection();
         }
+        if (Shown && GameInputManager.Inventory)
+        {
+            Shown = false;
+            SoundManager.instance.PlayUIConfirm();
+        }
     }
 
     void HandleShownMenu()

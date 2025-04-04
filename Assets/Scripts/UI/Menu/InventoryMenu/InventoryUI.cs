@@ -46,6 +46,11 @@ public class InventoryUI : ShownUI
                 SoundManager.instance.PlayUIConfirm();
             }
         }
+        if (UIManager.instance.inventoryMenu.Shown && GameInputManager.UiCancel)
+        {
+            UIManager.instance.inventoryMenu.Shown = false;
+            SoundManager.instance.PlayUIConfirm();
+        }
     }
 
     void ChangeDescription()
