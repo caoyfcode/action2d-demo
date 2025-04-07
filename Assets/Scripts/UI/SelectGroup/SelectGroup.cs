@@ -32,7 +32,7 @@ public class SelectGroup
     public int GridYMax => (itemActions.Count - 1) / gridWidth;
 
     public bool IsLeftMost => GridX == 0;
-    public bool IsRightMost => GridX == GridXMax;
+    public bool IsRightMost => GridX == GridXMax || selected == itemActions.Count - 1;
     public bool IsTopMost => GridY == 0;
     public bool IsBottomMost => GridY == GridYMax;
 

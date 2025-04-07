@@ -52,7 +52,7 @@ public class StatusIconList : MonoBehaviour
             for (int i = childCount - 1; i >= num; i--)
             {
                 var child = transform.GetChild(i);
-                Destroy(child.gameObject);
+                DestroyImmediate(child.gameObject);
             }
         }
     }

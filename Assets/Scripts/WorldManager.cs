@@ -94,6 +94,27 @@ public class WorldManager : SingletonBase<WorldManager>
         }
     }
 
+
+    public void InventoryAddItem(InventoryItem item)
+    {
+        var inventory = DataManager.instance.PlayerData.inventory;
+        bool found = false;
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].id == item.id)
+            {
+                inventory[i].quantity += item.quantity;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            inventory.Add(item);
+        }
+        UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
+    }
+
     // [Serializable]
     // public class Preload
     // {

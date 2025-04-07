@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupItem : Interactive
@@ -17,7 +18,14 @@ public class PickupItem : Interactive
                 hint.gameObject.SetActive(false);
                 // WorldManager.Player.PickupItem(item);
                 // Shown Pick Message
-                UIManager.instance.pickupHud.AddItem(item);
+                UIManager.instance.pickupHud.AddItem(new InventoryItem() {
+                    id = item.id,
+                    quantity = item.quantity,
+                });
+                WorldManager.instance.InventoryAddItem(new InventoryItem() {
+                    id = item.id,
+                    quantity = item.quantity,
+                });
                 Destroy(gameObject);
             }
         }

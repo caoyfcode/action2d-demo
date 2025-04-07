@@ -17,17 +17,20 @@ public class InventoryItemUI : SelectItem
     {
         if (hasItem)
         {
-            icon.sprite = WorldManager.instance.itemData.GetItemData(item.id).icon;
+            icon.sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
         }
     }
 
     public void SetItem(InventoryItem item)
     {
-        this.item = item;
+        this.item = new InventoryItem {
+            id = item.id,
+            quantity = item.quantity,
+        };
         if (item != null)
         {
             hasItem = true;
-            icon.sprite = WorldManager.instance.itemData.GetItemData(item.id).icon;
+            icon.sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : ShownUI
 {
@@ -27,8 +28,13 @@ public class InventoryUI : ShownUI
     public SelectGroup attackConfig;
     public SelectGroup attackTable;
     public SelectGroup itemTable;
-    public SelectGroup description;
+    public Text descriptionName;
+    public Text descriptionContent;
     public State state = State.SelectNone;
+
+    public GameObject itemPrefab;
+
+    public bool debugDescriptionShowId = false; 
 
     // public SelectedTable selectedTable = SelectedTable.None;
     // public int selectedId = -1;
@@ -36,14 +42,15 @@ public class InventoryUI : ShownUI
     void Start()
     {
         // TODO 从角色背包数据生成子结点
-        attackConfig.RefreshItemsFrom(attackConfigRoot.transform);
-        attackTable.RefreshItemsFrom(attackTableRoot.transform);
-        itemTable.RefreshItemsFrom(itemTableRoot.transform);
+        RefreshAttackConfig();
+        RefreshAttackTable();
+        RefreshItemTable();
     }
 
     void Update()
     {
         UpdateSelection();
+        UpdateDescription();
         HandleInput();
     }
 
@@ -56,11 +63,50 @@ public class InventoryUI : ShownUI
         }
     }
 
-    void ChangeDescription()
+    void UpdateDescription()
     {
-        // TODO 完善此函数
-        // string name = "";
-        // string description = "";
+        InventoryItemUI itemUI = null;
+        switch (state) {
+            case State.SelectAttackConfig:
+            case State.SelectAttackConfigForAttackTable:
+                if (attackConfig.selected >= 0 && attackConfig.selected < attackConfigRoot.transform.childCount)
+                {
+                    itemUI = attackConfigRoot.transform.GetChild(attackConfig.selected).GetComponent<InventoryItemUI>();
+                }
+                break;
+            case State.SelectAttackTable:
+            case State.SelectAttactTableForAttackConfig:
+                if (attackTable.selected >= 0 && attackTable.selected < attackTableRoot.transform.childCount)
+                {
+                    itemUI = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>();
+                }
+                break;
+            case State.SelectItemTable:
+                if (itemTable.selected >= 0 && itemTable.selected < itemTableRoot.transform.childCount)
+                {
+                    itemUI = itemTableRoot.transform.GetChild(itemTable.selected).GetComponent<InventoryItemUI>();
+                }
+                break;
+        }
+        if (itemUI != null && itemUI.hasItem)
+        {
+            var itemData = WorldManager.instance.itemData.GetItemData(itemUI.item.id);
+            if (itemData != null)
+            {
+                descriptionName.text = itemData.name;
+                if (!debugDescriptionShowId)
+                {
+                    descriptionContent.text = itemData.description;
+                }
+                else
+                {
+                    descriptionContent.text = itemData.description + "\n{" + itemUI.item.id + "}";
+                }
+                return;
+            }
+        }
+        descriptionName.text = "空";
+        descriptionContent.text = "空";
     }
 
     void UpdateSelection()
@@ -79,9 +125,19 @@ public class InventoryUI : ShownUI
             case State.SelectAttackConfig:
                 if (right && attackConfig.IsRightMost)
                 {
-                    state = State.SelectAttackTable;
-                    attackConfig.Unselect();
-                    attackTable.Select(0);
+                    if (attackTable.itemActions.Count > 0)
+                    {
+                        state = State.SelectAttackTable;
+                        attackConfig.Unselect();
+                        attackTable.Select(0);
+                    }
+                    else if (itemTable.itemActions.Count > 0)
+                    {
+                        state = State.SelectItemTable;
+                        attackConfig.Unselect();
+                        itemTable.Select(0);
+                    }
+                    // else do nothing
                 }
                 else
                 {
@@ -97,9 +153,13 @@ public class InventoryUI : ShownUI
                 }
                 else if (right && attackTable.IsRightMost)
                 {
-                    state = State.SelectItemTable;
-                    itemTable.Select(0, attackTable.GridY); // TODO 考虑 scroll
-                    attackTable.Unselect();
+                    if (itemTable.itemActions.Count > 0)
+                    {
+                        state = State.SelectItemTable;
+                        itemTable.Select(0, attackTable.GridY); // TODO 考虑 scroll
+                        attackTable.Unselect();
+                    }
+                    // else do nothing
                 }
                 else
                 {
@@ -109,9 +169,18 @@ public class InventoryUI : ShownUI
             case State.SelectItemTable:
                 if (left && itemTable.IsLeftMost)
                 {
-                    state = State.SelectAttackTable;
-                    attackTable.Select(attackConfig.GridXMax, itemTable.GridY); // TODO 考虑 scroll
-                    itemTable.Unselect();
+                    if (attackTable.itemActions.Count > 0)
+                    {
+                        state = State.SelectAttackTable;
+                        attackTable.Select(attackTable.GridXMax, itemTable.GridY); // TODO 考虑 scroll
+                        itemTable.Unselect();
+                    }
+                    else
+                    {
+                        state = State.SelectAttackConfig;
+                        attackConfig.Select(attackConfig.GridXMax);
+                        itemTable.Unselect();
+                    }
                 }
                 else
                 {
@@ -125,6 +194,52 @@ public class InventoryUI : ShownUI
                 attackTable.UpdateSelection();
                 break;
         }
+    }
+
+    public void RefreshAttackConfig()
+    {
+        var attack1 = attackConfigRoot.transform.GetChild(0).GetComponent<InventoryItemUI>();
+        var attack2 = attackConfigRoot.transform.GetChild(1).GetComponent<InventoryItemUI>();
+        var attack3 = attackConfigRoot.transform.GetChild(2).GetComponent<InventoryItemUI>();
+        // TODO 从角色状态获取三个子结点内容
+        attackConfig.RefreshItemsFrom(attackConfigRoot.transform); // 固定 3 个, 每次修改攻击就刷新
+    }
+
+    public void RefreshAttackTable()
+    {
+        // TODO 从角色身上获取已拥有攻击能力，并转化为物品列表
+        int childCount = attackTableRoot.transform.childCount;
+        // for i < childCount, Instantiate
+        // for i > childCount, Destroy
+        attackTable.RefreshItemsFrom(attackTableRoot.transform); // 每次技能更新就刷新
+    }
+
+    public void RefreshItemTable()
+    {
+        int childCount = itemTableRoot.transform.childCount;
+        var inventory = DataManager.instance.PlayerData.inventory;
+        // TODO 构造新的列表，包含角色的被动能力与 inventory
+        for (int i = 0; i < inventory.Count && i < childCount; i++)
+        {
+            var itemObj = itemTableRoot.transform.GetChild(i).gameObject;
+            itemObj.GetComponent<InventoryItemUI>().SetItem(inventory[i]);
+        }
+        if (inventory.Count > childCount)
+        {
+            for (int i = childCount; i < inventory.Count; i++)
+            {
+                var itemObj = Instantiate(itemPrefab, itemTableRoot.transform);
+                itemObj.GetComponent<InventoryItemUI>().SetItem(inventory[i]);
+            }
+        }
+        else if (inventory.Count < childCount)
+        {
+            for (int i = childCount - 1; i >= inventory.Count; i++)
+            {
+                DestroyImmediate(itemTableRoot.transform.GetChild(i).gameObject);
+            }
+        }
+        itemTable.RefreshItemsFrom(itemTableRoot.transform); // 每次拾取物品就刷新
     }
 
 
