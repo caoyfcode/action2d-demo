@@ -21,3 +21,31 @@ MonoBehaviour:
     name: "\u6D4B\u8BD5\u7269\u54C11"
     icon: {fileID: 21300000, guid: e5b3fcd5b47dfc14daaf967674c3426e, type: 3}
     description: "1\u53F7\u6D4B\u8BD5\u7269\u54C1"
+  - id: 1000
+    name: "\u8FD1\u6218\u653B\u51FB"
+    icon: {fileID: -2129252095, guid: 90b96b3090625b641a7ecde3dc2a4899, type: 3}
+    description: "\u53EC\u5524\u94F6\u767D\u9A91\u58EB\uFF0C\u6267\u884C\u8FD1\u6218\u653B\u51FB\u3002"
+  - id: 1001
+    name: "\u5C04\u7BAD"
+    icon: {fileID: 1138901799, guid: 0315b7126b33f9d45ae8b2984a6cb843, type: 3}
+    description: "\u53EC\u5524\u7D2B\u5C04\u624B\uFF0C\u6267\u884C\u8FDC\u7A0B\u653B\u51FB\u3002"
+  - id: 1002
+    name: "\u9632\u5FA1\u53CD\u51FB"
+    icon: {fileID: -677778567, guid: 70eafa7ac8b5f384084b35aae53102f8, type: 3}
+    description: "\u53EC\u5524\u706B\u7130\u9A91\u58EB\uFF0C\u62B5\u5FA1\u654C\u4EBA\u653B\u51FB\u3002"
+  - id: 1003
+    name: "\u77F3\u5934\u4EBA\u53D1\u5C04"
+    icon: {fileID: -2134412492, guid: 7a30232e97a32be48a034096ec0e66fc, type: 3}
+    description: "\u53EC\u5524\u77F3\u5934\u4EBA\uFF0C\u5411\u524D\u51B2\u523A\u653B\u51FB\u3002"
+  - id: 2000
+    name: "\u51B2\u523A"
+    icon: {fileID: 21300000, guid: ec0c197b934887741970ed74215650a6, type: 3}
+    description: "\u5728\u6C34\u5E73\u65B9\u5411\u8FC5\u901F\u79FB\u52A8\uFF0C\u671F\u95F4\u89C4\u907F\u4F24\u5BB3\u3002"
+  - id: 2001
+    name: "\u4E8C\u6BB5\u8DF3"
+    icon: {fileID: -669146636, guid: f51f34e8210a81c45ae25b50f9a03554, type: 3}
+    description: "\u5728\u7A7A\u4E2D\u53EF\u8DF3\u8DC3\u4E00\u6B21\u3002"
+  - id: 2002
+    name: "\u722C\u5899"
+    icon: {fileID: -388427544, guid: 74069136d962ff04dbea0a5d4ebfaabe, type: 3}
+    description: "\u53EF\u4EE5\u9644\u7740\u5728\u5899\u58C1\u4E0A\uFF0C\u51CF\u6162\u4E0B\u843D\u901F\u5EA6\u3002"

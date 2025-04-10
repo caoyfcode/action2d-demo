@@ -6,6 +6,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObject/ItemData", order = 3)]
 public class ItemData : ScriptableObject
 {
+    public const string HeroKnightItemId = "1000";
+    public const string ArcaneArcherItemId = "1001";
+    public const string FireKnightItemId = "1002";
+    public const string GolemItemId = "1003";
+    public static HashSet<string> AttackItemIds = new HashSet<string>() { HeroKnightItemId, ArcaneArcherItemId, FireKnightItemId, GolemItemId }; // TODO  也许将 Attack 改名为 Skill 更合适 
+
+    public const string DashItemId = "2000";
+    public const string DoubleJumpItemId = "2001";
+    public const string WallSlideItemId = "2002";
+    public static HashSet<string> AbilityItemIds = new HashSet<string>() { DashItemId, DoubleJumpItemId, WallSlideItemId };
+
     [Serializable]
     public class Data
     {
@@ -46,4 +57,11 @@ public class ItemData : ScriptableObject
         return itemMap.ContainsKey(id) ? itemMap[id] : null;
     }
 
+}
+
+[System.Serializable]
+public class InventoryItem
+{
+    public string id;
+    public int quantity;
 }

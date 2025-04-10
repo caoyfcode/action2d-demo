@@ -202,6 +202,26 @@ public class InventoryUI : ShownUI
         var attack2 = attackConfigRoot.transform.GetChild(1).GetComponent<InventoryItemUI>();
         var attack3 = attackConfigRoot.transform.GetChild(2).GetComponent<InventoryItemUI>();
         // TODO 从角色状态获取三个子结点内容
+        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack1))
+        {
+            attack1.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack1, quantity = 1});
+        }
+        else
+        {
+            attack1.UnsetItem();
+        }
+        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack2))
+        {
+            attack2.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack2, quantity = 1 });
+        }
+        else
+        {
+            attack2.UnsetItem();
+        }
+        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack3))
+        {
+            attack3.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack3, quantity = 1 });
+        }
         attackConfig.RefreshItemsFrom(attackConfigRoot.transform); // 固定 3 个, 每次修改攻击就刷新
     }
 
@@ -209,32 +229,53 @@ public class InventoryUI : ShownUI
     {
         // TODO 从角色身上获取已拥有攻击能力，并转化为物品列表
         int childCount = attackTableRoot.transform.childCount;
-        // for i < childCount, Instantiate
-        // for i > childCount, Destroy
+        var attackItems = DataManager.instance.PlayerData.ability.GetAttackItems();
+        for (int i = 0; i < attackItems.Count && i < childCount; i++)
+        {
+            var itemObj = attackTableRoot.transform.GetChild(i).gameObject;
+            itemObj.GetComponent<InventoryItemUI>().SetItem(attackItems[i]);
+        }
+        if (attackItems.Count > childCount)
+        {
+            for (int i = childCount; i < attackItems.Count; i++)
+            {
+                var itemObj = Instantiate(itemPrefab, attackTableRoot.transform);
+                itemObj.GetComponent<InventoryItemUI>().SetItem(attackItems[i]);
+            }
+        }
+        else if (attackItems.Count < childCount)
+        {
+            for (int i = childCount - 1; i >= attackItems.Count; i--)
+            {
+                DestroyImmediate(attackTableRoot.transform.GetChild(i).gameObject);
+            }
+        }
         attackTable.RefreshItemsFrom(attackTableRoot.transform); // 每次技能更新就刷新
     }
 
     public void RefreshItemTable()
     {
         int childCount = itemTableRoot.transform.childCount;
-        var inventory = DataManager.instance.PlayerData.inventory;
+        List<InventoryItem> items = new();
+        items.AddRange(DataManager.instance.PlayerData.ability.GetAbilityItems());
+        items.AddRange(DataManager.instance.PlayerData.inventory);
         // TODO 构造新的列表，包含角色的被动能力与 inventory
-        for (int i = 0; i < inventory.Count && i < childCount; i++)
+        for (int i = 0; i < items.Count && i < childCount; i++)
         {
             var itemObj = itemTableRoot.transform.GetChild(i).gameObject;
-            itemObj.GetComponent<InventoryItemUI>().SetItem(inventory[i]);
+            itemObj.GetComponent<InventoryItemUI>().SetItem(items[i]);
         }
-        if (inventory.Count > childCount)
+        if (items.Count > childCount)
         {
-            for (int i = childCount; i < inventory.Count; i++)
+            for (int i = childCount; i < items.Count; i++)
             {
                 var itemObj = Instantiate(itemPrefab, itemTableRoot.transform);
-                itemObj.GetComponent<InventoryItemUI>().SetItem(inventory[i]);
+                itemObj.GetComponent<InventoryItemUI>().SetItem(items[i]);
             }
         }
-        else if (inventory.Count < childCount)
+        else if (items.Count < childCount)
         {
-            for (int i = childCount - 1; i >= inventory.Count; i++)
+            for (int i = childCount - 1; i >= items.Count; i++)
             {
                 DestroyImmediate(itemTableRoot.transform.GetChild(i).gameObject);
             }

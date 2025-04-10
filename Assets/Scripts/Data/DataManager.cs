@@ -86,13 +86,6 @@ public class DataManager : SingletonBase<DataManager>
 
 
 [System.Serializable]
-public class InventoryItem
-{
-    public string id;
-    public int quantity;
-}
-
-[System.Serializable]
 public class PlayerData
 {
     public float maxHealth;
@@ -115,6 +108,68 @@ public class PlayerData
         public bool dash;
         public bool doubleJump;
         public bool wallSlide;
+
+        public void SetById(string id, bool value=true)
+        {
+            switch (id)
+            {
+                case ItemData.HeroKnightItemId:
+                    attack = value;
+                    break;
+                case ItemData.FireKnightItemId:
+                    defend = value;
+                    break;
+                case ItemData.ArcaneArcherItemId:
+                    arrow = value;
+                    break;
+                case ItemData.DashItemId:
+                    dash = value;
+                    break;
+                case ItemData.DoubleJumpItemId:
+                    doubleJump = value;
+                    break;
+                case ItemData.WallSlideItemId:
+                    wallSlide = value;
+                    break;
+            }
+        }
+
+        public List<InventoryItem> GetAttackItems()
+        {
+            List<InventoryItem> items = new();
+            if (attack)
+            {
+                items.Add(new InventoryItem { id = ItemData.HeroKnightItemId, quantity = 1 });
+            }
+            if (arrow)
+            {
+                items.Add(new InventoryItem { id = ItemData.ArcaneArcherItemId, quantity = 1 });
+            }
+            if (defend)
+            {
+                items.Add(new InventoryItem { id = ItemData.FireKnightItemId, quantity = 1 });
+            }
+            // todo golem
+            return items;
+        }
+
+        public List<InventoryItem> GetAbilityItems()
+        {
+            List<InventoryItem> items = new();
+            if (dash)
+            {
+                items.Add(new InventoryItem { id = ItemData.DashItemId, quantity = 1 });
+            }
+            if (doubleJump)
+            {
+                items.Add(new InventoryItem { id = ItemData.DoubleJumpItemId, quantity = 1 });
+            }
+            if (wallSlide)
+            {
+                items.Add(new InventoryItem { id = ItemData.WallSlideItemId, quantity = 1 });
+            }
+            return items;
+        }
     }
 
     [System.Serializable]

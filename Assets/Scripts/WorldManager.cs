@@ -97,22 +97,31 @@ public class WorldManager : SingletonBase<WorldManager>
 
     public void InventoryAddItem(InventoryItem item)
     {
-        var inventory = DataManager.instance.PlayerData.inventory;
-        bool found = false;
-        for (int i = 0; i < inventory.Count; i++)
+        if (ItemData.AttackItemIds.Contains(item.id))
         {
-            if (inventory[i].id == item.id)
+            DataManager.instance.PlayerData.ability.SetById(item.id);
+            UIManager.instance.inventoryMenu.inventory.RefreshAttackTable();
+        }
+        else
+        {
+            var inventory = DataManager.instance.PlayerData.inventory;
+            bool found = false;
+            for (int i = 0; i < inventory.Count; i++)
             {
-                inventory[i].quantity += item.quantity;
-                found = true;
-                break;
+                if (inventory[i].id == item.id)
+                {
+                    inventory[i].quantity += item.quantity;
+                    found = true;
+                    break;
+                }
             }
+            if (!found)
+            {
+                inventory.Add(item);
+            }
+            UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
         }
-        if (!found)
-        {
-            inventory.Add(item);
-        }
-        UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
+        // TODO 保存存档
     }
 
     // [Serializable]
