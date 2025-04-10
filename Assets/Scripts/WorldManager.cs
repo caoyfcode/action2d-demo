@@ -97,7 +97,7 @@ public class WorldManager : SingletonBase<WorldManager>
 
     public void InventoryAddItem(InventoryItem item)
     {
-        if (ItemData.AttackItemIds.Contains(item.id))
+        if (ItemData.AttackItemIds.Contains(item.id) || ItemData.AbilityItemIds.Contains(item.id))
         {
             DataManager.instance.PlayerData.ability.SetById(item.id);
             UIManager.instance.inventoryMenu.inventory.RefreshAttackTable();
@@ -122,6 +122,33 @@ public class WorldManager : SingletonBase<WorldManager>
             UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
         }
         // TODO 保存存档
+    }
+
+    public void ChangeAttackConfig(int attackIndex, string id)
+    {
+        if (!ItemData.AttackItemIds.Contains(id))
+        {
+            Debug.LogError("Not an attack item: id=" + id);
+            return;
+        }
+        switch (attackIndex)
+        {
+            case 0:
+                DataManager.instance.PlayerData.controlConfig.attack1= id;
+                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                break;
+            case 1:
+                DataManager.instance.PlayerData.controlConfig.attack2 = id;
+                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                break;
+            case 2:
+                DataManager.instance.PlayerData.controlConfig.attack3 = id;
+                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                break;
+            default:
+                Debug.LogError("Invalid attack index: " + attackIndex);
+                break;
+        }
     }
 
     // [Serializable]

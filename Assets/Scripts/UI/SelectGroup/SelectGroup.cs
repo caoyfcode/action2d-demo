@@ -66,6 +66,8 @@ public class SelectGroup
         }
     }
 
+    public bool SelectionValid => selected >= 0 && selected < itemActions.Count;
+
     public void UpdateSelection()
     {
         bool left = GameInputManager.MoveTrigger.x < 0;

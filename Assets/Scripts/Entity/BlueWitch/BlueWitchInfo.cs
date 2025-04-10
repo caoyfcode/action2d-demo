@@ -4,10 +4,6 @@ using UnityEngine;
 [Serializable]
 public class BlueWitchInfo : CharacterInfo
 {
-    [Header("BlueWitch")]
-    public bool secondJumpAbility = true;
-    public bool dashAbility = true;
-    public bool wallSlideAbility = true;
     [Header("BlueWitch Constant")]
     internal float horizontalMoveSpeed = 8f;
     internal float jumpSpeed = 12f;

@@ -19,7 +19,7 @@ public class InventoryUI : ShownUI
         SelectAttackTable,
         SelectItemTable,
         SelectAttackConfigForAttackTable,
-        SelectAttactTableForAttackConfig,
+        SelectAttackTableForAttackConfig,
     }
 
     public GameObject attackConfigRoot;
@@ -39,9 +39,26 @@ public class InventoryUI : ShownUI
     // public SelectedTable selectedTable = SelectedTable.None;
     // public int selectedId = -1;
 
+    public override bool Shown
+    {
+        get { return gameObject.activeSelf; }
+        set
+        {
+            bool prev = gameObject.activeSelf;
+            gameObject.SetActive(value);
+            if (!prev && value)
+            {
+                state = State.SelectNone;
+                RefreshAttackConfig();
+                RefreshAttackTable();
+                RefreshItemTable();
+            }
+        }
+    }
+
     void Start()
     {
-        // TODO 从角色背包数据生成子结点
+        state = State.SelectNone;
         RefreshAttackConfig();
         RefreshAttackTable();
         RefreshItemTable();
@@ -56,10 +73,90 @@ public class InventoryUI : ShownUI
 
     void HandleInput()
     {
-        if (UIManager.instance.inventoryMenu.Shown && GameInputManager.UiCancel)
+        if (UIManager.instance.inventoryMenu.Shown)
         {
-            UIManager.instance.inventoryMenu.Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            if (GameInputManager.UiCancel && state != State.SelectAttackConfigForAttackTable && state != State.SelectAttackTableForAttackConfig)
+            {
+                UIManager.instance.inventoryMenu.Shown = false;
+                SoundManager.instance.PlayUIConfirm();
+                return;
+            }
+
+            switch (state)
+            {
+                case State.SelectAttackConfig:
+                    if (attackConfig.SelectionValid && GameInputManager.UiConfirm && attackTable.itemActions.Count > 0)
+                    {
+                        state = State.SelectAttackTableForAttackConfig;
+                        string id = attackConfigRoot.transform.GetChild(attackConfig.selected).GetComponent<InventoryItemUI>().item.id;
+                        for (int i = 0; i < attackTableRoot.transform.childCount; i++)
+                        {
+                            var itemUI = attackTableRoot.transform.GetChild(i).GetComponent<InventoryItemUI>();
+                            if (itemUI.item.id == id)
+                            {
+                                attackTable.Select(i);
+                                break;
+                            }
+                        }
+                        if (!attackTable.SelectionValid)
+                        {
+                            attackTable.Select(0);
+                        }
+                    }
+                    break;
+                case State.SelectAttackTable:
+                    if (attackTable.SelectionValid && GameInputManager.UiConfirm)
+                    {
+                        string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
+
+                        // bool found = false;
+                        // for (int i = 0; i < attackConfigRoot.transform.childCount; i++)
+                        // {
+                        //     var itemUI = attackConfigRoot.transform.GetChild(i).GetComponent<InventoryItemUI>();
+                        //     if (itemUI.item.id == id)
+                        //     {
+                        //         found = true;
+                        //         break;
+                        //     }
+                        // }
+                        // if (!found)
+                        // {
+                        //     state = State.SelectAttackConfigForAttackTable;
+                        //     attackConfig.Select(0);
+                        // }
+                        state = State.SelectAttackConfigForAttackTable;
+                        attackConfig.Select(0);
+                    }
+                    break;
+                case State.SelectAttackConfigForAttackTable:
+                    if (attackConfig.SelectionValid && GameInputManager.UiConfirm)
+                    {
+                        string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
+                        WorldManager.instance.ChangeAttackConfig(attackConfig.selected, id);
+                        state = State.SelectAttackTable;
+                        attackConfig.Unselect();
+                    }
+                    else if (GameInputManager.UiCancel)
+                    {
+                        state = State.SelectAttackTable;
+                        attackConfig.Unselect();
+                    }
+                    break;
+                case State.SelectAttackTableForAttackConfig:
+                    if (attackTable.SelectionValid && GameInputManager.UiConfirm)
+                    {
+                        string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
+                        WorldManager.instance.ChangeAttackConfig(attackConfig.selected, id);
+                        state = State.SelectAttackConfig;
+                        attackTable.Unselect();
+                    }
+                    else if (GameInputManager.UiCancel)
+                    {
+                        state = State.SelectAttackConfig;
+                        attackTable.Unselect();
+                    }
+                    break;
+            }
         }
     }
 
@@ -75,7 +172,7 @@ public class InventoryUI : ShownUI
                 }
                 break;
             case State.SelectAttackTable:
-            case State.SelectAttactTableForAttackConfig:
+            case State.SelectAttackTableForAttackConfig:
                 if (attackTable.selected >= 0 && attackTable.selected < attackTableRoot.transform.childCount)
                 {
                     itemUI = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>();
@@ -190,7 +287,7 @@ public class InventoryUI : ShownUI
             case State.SelectAttackConfigForAttackTable:
                 attackConfig.UpdateSelection();
                 break;
-            case State.SelectAttactTableForAttackConfig:
+            case State.SelectAttackTableForAttackConfig:
                 attackTable.UpdateSelection();
                 break;
         }
