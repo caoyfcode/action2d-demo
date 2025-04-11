@@ -121,7 +121,7 @@ public class WorldManager : SingletonBase<WorldManager>
             }
             UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
         }
-        // TODO 保存存档
+        DataManager.instance.SaveCurrentSlot();
     }
 
     public void ChangeAttackConfig(int attackIndex, string id)
@@ -134,21 +134,34 @@ public class WorldManager : SingletonBase<WorldManager>
         switch (attackIndex)
         {
             case 0:
-                DataManager.instance.PlayerData.controlConfig.attack1= id;
+                DataManager.instance.PlayerData.controlConfig.attack1 = id;
+                if (DataManager.instance.PlayerData.controlConfig.attack2 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack2 = "";
+                if (DataManager.instance.PlayerData.controlConfig.attack3 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack3 = "";
                 UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             case 1:
                 DataManager.instance.PlayerData.controlConfig.attack2 = id;
+                if (DataManager.instance.PlayerData.controlConfig.attack1 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack1 = "";
+                if (DataManager.instance.PlayerData.controlConfig.attack3 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack3 = "";
                 UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             case 2:
                 DataManager.instance.PlayerData.controlConfig.attack3 = id;
+                if (DataManager.instance.PlayerData.controlConfig.attack1 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack1 = "";
+                if (DataManager.instance.PlayerData.controlConfig.attack2 == id)
+                    DataManager.instance.PlayerData.controlConfig.attack2 = "";
                 UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             default:
                 Debug.LogError("Invalid attack index: " + attackIndex);
                 break;
         }
+        DataManager.instance.SaveCurrentSlot();
     }
 
     // [Serializable]

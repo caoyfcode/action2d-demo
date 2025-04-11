@@ -9,7 +9,11 @@ public class InventoryItemUI : SelectItem
     public Image icon;
     // TODO count ui
 
-    public InventoryItem item;
+    // nonnull
+    public InventoryItem item = new() {
+        id = "",
+        quantity = 0,
+    };
     public bool hasItem = false;
 
     // Start is called before the first frame update
@@ -17,39 +21,35 @@ public class InventoryItemUI : SelectItem
     {
         if (hasItem)
         {
-            icon.enabled = true;
-            icon.sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
+            SetItem(item);
         }
         else
         {
-            icon.sprite = null;
-            icon.enabled = false;
+            UnsetItem();
         }
     }
 
     public void SetItem(InventoryItem item)
     {
-        if (item != null)
+        var sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
+        if (sprite == null)
         {
-            this.item = new InventoryItem {
-                id = item.id,
-                quantity = item.quantity,
-            };
-            hasItem = true;
-            icon.enabled = true;
-            icon.sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
+            UnsetItem();
+            return;
         }
-        else
-        {
-            this.item = null;
-            hasItem = false;
-            icon.sprite = null;
-            icon.enabled = false;
-        }
+        this.item.id = item.id;
+        this.item.quantity = item.quantity;
+        hasItem = true;
+        icon.enabled = true;
+        icon.sprite = sprite;
     }
 
     public void UnsetItem()
     {
-        SetItem(null);
+        item.id = "";
+        item.quantity = 0;
+        hasItem = false;
+        icon.sprite = null;
+        icon.enabled = false;
     }
 }

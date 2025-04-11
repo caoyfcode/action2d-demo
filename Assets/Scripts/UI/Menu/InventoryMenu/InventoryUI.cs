@@ -89,6 +89,7 @@ public class InventoryUI : ShownUI
                     {
                         state = State.SelectAttackTableForAttackConfig;
                         string id = attackConfigRoot.transform.GetChild(attackConfig.selected).GetComponent<InventoryItemUI>().item.id;
+                        attackTable.Unselect();
                         for (int i = 0; i < attackTableRoot.transform.childCount; i++)
                         {
                             var itemUI = attackTableRoot.transform.GetChild(i).GetComponent<InventoryItemUI>();
@@ -107,23 +108,6 @@ public class InventoryUI : ShownUI
                 case State.SelectAttackTable:
                     if (attackTable.SelectionValid && GameInputManager.UiConfirm)
                     {
-                        string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
-
-                        // bool found = false;
-                        // for (int i = 0; i < attackConfigRoot.transform.childCount; i++)
-                        // {
-                        //     var itemUI = attackConfigRoot.transform.GetChild(i).GetComponent<InventoryItemUI>();
-                        //     if (itemUI.item.id == id)
-                        //     {
-                        //         found = true;
-                        //         break;
-                        //     }
-                        // }
-                        // if (!found)
-                        // {
-                        //     state = State.SelectAttackConfigForAttackTable;
-                        //     attackConfig.Select(0);
-                        // }
                         state = State.SelectAttackConfigForAttackTable;
                         attackConfig.Select(0);
                     }
@@ -203,7 +187,7 @@ public class InventoryUI : ShownUI
             }
         }
         descriptionName.text = "空";
-        descriptionContent.text = "空";
+        descriptionContent.text = "";
     }
 
     void UpdateSelection()
@@ -298,7 +282,6 @@ public class InventoryUI : ShownUI
         var attack1 = attackConfigRoot.transform.GetChild(0).GetComponent<InventoryItemUI>();
         var attack2 = attackConfigRoot.transform.GetChild(1).GetComponent<InventoryItemUI>();
         var attack3 = attackConfigRoot.transform.GetChild(2).GetComponent<InventoryItemUI>();
-        // TODO 从角色状态获取三个子结点内容
         if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack1))
         {
             attack1.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack1, quantity = 1});
@@ -319,12 +302,15 @@ public class InventoryUI : ShownUI
         {
             attack3.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack3, quantity = 1 });
         }
+        else
+        {
+            attack3.UnsetItem();
+        }
         attackConfig.RefreshItemsFrom(attackConfigRoot.transform); // 固定 3 个, 每次修改攻击就刷新
     }
 
     public void RefreshAttackTable()
     {
-        // TODO 从角色身上获取已拥有攻击能力，并转化为物品列表
         int childCount = attackTableRoot.transform.childCount;
         var attackItems = DataManager.instance.PlayerData.ability.GetAttackItems();
         for (int i = 0; i < attackItems.Count && i < childCount; i++)
@@ -354,9 +340,9 @@ public class InventoryUI : ShownUI
     {
         int childCount = itemTableRoot.transform.childCount;
         List<InventoryItem> items = new();
+        // 包含被动能力以及物品列表
         items.AddRange(DataManager.instance.PlayerData.ability.GetAbilityItems());
         items.AddRange(DataManager.instance.PlayerData.inventory);
-        // TODO 构造新的列表，包含角色的被动能力与 inventory
         for (int i = 0; i < items.Count && i < childCount; i++)
         {
             var itemObj = itemTableRoot.transform.GetChild(i).gameObject;
@@ -379,181 +365,4 @@ public class InventoryUI : ShownUI
         }
         itemTable.RefreshItemsFrom(itemTableRoot.transform); // 每次拾取物品就刷新
     }
-
-
-    // void UpdateSelection()
-    // {
-    //     bool left = GameInputManager.MoveTrigger.x < 0;
-    //     bool right = GameInputManager.MoveTrigger.x > 0;
-    //     bool up = GameInputManager.MoveTrigger.y > 0;
-    //     bool down = GameInputManager.MoveTrigger.y < 0;
-        
-    //     // 处理前一帧不可用的选中
-    //     if (selectedTable != SelectedTable.None)
-    //     {
-    //         GameObject table = selectedTable switch 
-    //         {
-    //             SelectedTable.Attack => attackTable,
-    //             SelectedTable.Item => itemTable,
-    //             _ => attackConfig,
-    //         };
-    //         if (selectedId < 0 || selectedId >= table.transform.childCount)
-    //         {
-    //             selectedTable = SelectedTable.None;
-    //             selectedId = -1;
-    //         }
-    //     }
-
-    //     // 计算新的选中
-    //     int prevSelected = selectedId;
-    //     SelectedTable prevSelectedTable = selectedTable;
-    //     if (prevSelectedTable == SelectedTable.None) // 无旧选项
-    //     {
-    //         if (left || right || up || down)
-    //         {
-    //             selectedTable = SelectedTable.AttackConfig;
-    //             selectedId = 0;
-    //         }
-    //     }
-    //     else if ((up && !down) || (down && !up))  // 旧选项存在，且上下运动
-    //     {
-    //         if (prevSelectedTable != SelectedTable.AttackConfig)
-    //         {
-    //             GameObject table = prevSelectedTable == SelectedTable.Attack ? attackTable : itemTable;
-    //             if (up && prevSelected >= 4)
-    //             {
-    //                 selectedId -= 4;
-    //             }
-    //             else if (down)
-    //             {
-    //                 if (prevSelected + 4 < table.transform.childCount)
-    //                     selectedId += 4;
-    //                 else if ((table.transform.childCount - 1) / 4 > prevSelected / 4)
-    //                     selectedId = table.transform.childCount - 1;
-    //             }
-    //         }
-    //     }
-    //     else if ((left && !right) || (right && !left)) // 旧选项存在，且左右运动
-    //     {
-    //         if (prevSelectedTable  == SelectedTable.AttackConfig)
-    //         {
-    //             if (left && prevSelected > 0)
-    //             {
-    //                 selectedId--;
-    //             }
-    //             else if (right)
-    //             {
-    //                 if (prevSelected < attackConfig.transform.childCount - 1)
-    //                 {
-    //                     selectedId++;
-    //                 }
-    //                 else if (attackTable.transform.childCount > 0)
-    //                 {
-    //                     selectedTable = SelectedTable.Attack;
-    //                     selectedId = 0;
-    //                 }
-    //                 else if (itemTable.transform.childCount > 0)
-    //                 {
-    //                     selectedTable = SelectedTable.Item;
-    //                     selectedId = 0;
-    //                 }
-    //             }
-    //         }
-    //         else if (prevSelectedTable  == SelectedTable.Attack)
-    //         {
-    //             int div = prevSelected / 4;
-    //             int mod = prevSelected % 4;
-    //             if (left)
-    //             {
-    //                 if (mod == 0)
-    //                 {
-    //                     selectedTable = SelectedTable.AttackConfig;
-    //                     selectedId = attackConfig.transform.childCount - 1;
-    //                 }
-    //                 else
-    //                 {
-    //                     mod--;
-    //                     selectedId = div * 4 + mod;
-    //                 }
-    //             }
-    //             else // right
-    //             {
-    //                 if (mod == 3 || prevSelected == attackTable.transform.childCount - 1)
-    //                 {
-    //                     if (itemTable.transform.childCount > 0)
-    //                     {
-    //                         selectedTable = SelectedTable.Item;
-    //                         selectedId = Mathf.Min(4 * div, (itemTable.transform.childCount - 1) / 4 * 4);
-    //                     }
-    //                 }
-    //                 else
-    //                 {
-    //                     mod++;
-    //                     selectedId = div * 4 + mod;
-    //                 }
-    //             }
-    //         }
-    //         else // item table
-    //         {
-    //             int div = prevSelected / 4;
-    //             int mod = prevSelected % 4;
-    //             if (right)
-    //             {
-    //                 if (mod == 3 || prevSelected == itemTable.transform.childCount - 1)
-    //                 {
-    //                     // nothing
-    //                 }
-    //                 else
-    //                 {
-    //                     mod++;
-    //                     selectedId = div * 4 + mod;
-    //                 }
-    //             }
-    //             else // left
-    //             {
-    //                 if (mod > 0)
-    //                 {
-    //                     mod--;
-    //                     selectedId = div * 4 + mod;
-    //                 }
-    //                 else if (attackTable.transform.childCount > 0)
-    //                 {
-    //                     selectedTable = SelectedTable.Attack;
-    //                     selectedId = Mathf.Min(4 * div + 3, attackTable.transform.childCount - 1);
-    //                 }
-    //                 else if (attackConfig.transform.childCount > 0)
-    //                 {
-    //                     selectedTable = SelectedTable.AttackConfig;
-    //                     selectedId = attackConfig.transform.childCount - 1;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     // 旧选项存在且与新选项不同时，取消旧选项
-    //     if (prevSelectedTable != SelectedTable.None &&
-    //         (prevSelectedTable != selectedTable || prevSelected != selectedId))
-    //     {
-    //         GameObject pervTable = prevSelectedTable switch 
-    //         {
-    //             SelectedTable.Attack => attackTable,
-    //             SelectedTable.Item => itemTable,
-    //             _ => attackConfig,
-    //         };
-    //         pervTable.transform.GetChild(prevSelected).GetComponent<SelectItem>().selected = false;
-    //     }
-    //     // 新选项存在且与旧选项不同时，选中新选项
-    //     if (selectedTable != SelectedTable.None &&
-    //         (prevSelectedTable != selectedTable || prevSelected != selectedId))
-    //     {
-    //         GameObject table = selectedTable switch
-    //         {
-    //             SelectedTable.Attack => attackTable,
-    //             SelectedTable.Item => itemTable,
-    //             _ => attackConfig,
-    //         };
-    //         table.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
-    //         ChangeDescription();
-    //         SoundManager.instance.PlayUISelection();
-    //     }
-    // }
 }
