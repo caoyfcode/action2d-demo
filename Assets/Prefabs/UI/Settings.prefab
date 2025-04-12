@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 6966238467080366157}
-  itemImage: {fileID: 0}
   unSelectedShape: 1
   selected: 0
 --- !u!1 &535767343725437707
@@ -570,7 +569,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 2574249445415956436}
-  itemImage: {fileID: 0}
   unSelectedShape: 1
   selected: 0
 --- !u!1 &3363534527576811985
@@ -742,7 +740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 5006027731392389119}
-  itemImage: {fileID: 0}
   unSelectedShape: 1
   selected: 0
 --- !u!1 &3713607307324315281
@@ -910,6 +907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 847955268712357003}
+  inputAction: 0
   inputName: q
   inputType: 0
 --- !u!1 &4110300409718057050
@@ -1002,7 +1000,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 1406567435120517305}
-  itemImage: {fileID: 0}
   unSelectedShape: 1
   selected: 0
 --- !u!1 &4194252769584841568
@@ -1174,7 +1171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 5101978941285353158}
-  itemImage: {fileID: 0}
   unSelectedShape: 1
   selected: 0
 --- !u!1 &6689366186102845728
@@ -1362,6 +1358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 5387995933654916365}
+  inputAction: 1
   inputName: e
   inputType: 0
 --- !u!1 &9100945622988054370

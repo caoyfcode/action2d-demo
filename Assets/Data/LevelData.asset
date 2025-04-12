@@ -42,7 +42,7 @@ MonoBehaviour:
       height: 20
     hasCheckpoint: 1
     checkpointPosition: {x: 0, y: 3.2}
-    checkpointName: "\u539F\u70B9(\u5F85\u5220\u9664)"
+    checkpointName: "\u6751\u5E84\u524D"
   - id: 003
     rect:
       serializedVersion: 2
@@ -156,9 +156,9 @@ MonoBehaviour:
   - id: 014
     rect:
       serializedVersion: 2
-      x: 110
-      y: 80
-      width: 40
+      x: 60
+      y: 90
+      width: 60
       height: 20
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}

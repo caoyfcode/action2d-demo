@@ -119,7 +119,7 @@ public class Map : MonoBehaviour
             piece.foreground.sprite = levelData.GetMapSprite();
             piece.backRectTransform.localPosition = new Vector3(levelData.rect.x, levelData.rect.y, 0);
         }
-        for (int i = openMaps.Count; i < childCount; i++)
+        for (int i = childCount - 1; i >= openMaps.Count; i--)
         {
             Destroy(transform.GetChild(i).gameObject);
         }

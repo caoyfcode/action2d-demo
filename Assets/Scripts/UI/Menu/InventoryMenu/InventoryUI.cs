@@ -68,6 +68,7 @@ public class InventoryUI : ShownUI
         UpdateSelection();
         UpdateDescription();
         HandleInput();
+        UpdateFootHint(); // TODO 不一定每帧都调用
     }
 
     void HandleInput()
@@ -252,7 +253,11 @@ public class InventoryUI : ShownUI
                     if (attackTable.itemActions.Count > 0)
                     {
                         state = State.SelectAttackTable;
-                        attackTable.Select(attackTable.GridXMax, itemTable.GridY); // TODO 考虑 scroll
+                        // TODO 考虑 scroll
+                        if (attackTable.IndexOf(attackTable.GridXMax, itemTable.GridY) < attackTable.itemActions.Count)
+                            attackTable.Select(attackTable.GridXMax, itemTable.GridY); 
+                        else
+                            attackTable.Select(attackTable.itemActions.Count - 1);
                         itemTable.Unselect();
                     }
                     else
@@ -274,6 +279,33 @@ public class InventoryUI : ShownUI
                 attackTable.UpdateSelection();
                 break;
         }
+    }
+
+
+    public void UpdateFootHint()
+    {
+        var footHint = UIManager.instance.inventoryMenu.footHint;
+        switch (state)
+        {
+            case State.SelectNone:
+            case State.SelectItemTable:
+                footHint.SetHints(new());
+                break;
+            case State.SelectAttackConfig:
+                footHint.SetHints(new(){FootHint.FootHintType.EquipSwitch});
+                break;
+            case State.SelectAttackTable:
+                footHint.SetHints(new(){FootHint.FootHintType.Equip});
+                break;
+            case State.SelectAttackConfigForAttackTable:
+                footHint.SetHints(new(){FootHint.FootHintType.EquipSwitch, FootHint.FootHintType.Cancel});
+                break;
+            
+            case State.SelectAttackTableForAttackConfig:
+                footHint.SetHints(new(){FootHint.FootHintType.Equip, FootHint.FootHintType.Cancel});
+                break;
+        }
+            
     }
 
     public void RefreshAttackConfig()

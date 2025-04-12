@@ -5,11 +5,13 @@ using UnityEngine;
 public class InventoryMenu : ShownUI
 {
     public GameObject header;
+    public FootHint footHint;
     public SelectItem mapHeader;
     public SelectItem inventoryHeader;
     public SelectItem questHeader;
     public MapUI map;
     public InventoryUI inventory;
+    public QuestUI quest;
     public int selectedMenu = 1; // 0: Map, 1: Inventory, 2: Quest
     
 
@@ -49,6 +51,7 @@ public class InventoryMenu : ShownUI
                 questHeader.selected = false;
                 map.Shown = true;
                 inventory.Shown = false;
+                quest.Shown = false;
                 break;
             case 1:
                 mapHeader.selected = false;
@@ -56,11 +59,13 @@ public class InventoryMenu : ShownUI
                 questHeader.selected = false;
                 map.Shown = false;
                 inventory.Shown = true;
+                quest.Shown = false;
                 break;
             case 2:
                 mapHeader.selected = false;
                 inventoryHeader.selected = false;
                 questHeader.selected = true;
+                quest.Shown = true;
                 map.Shown = false;
                 inventory.Shown = false;
                 break;

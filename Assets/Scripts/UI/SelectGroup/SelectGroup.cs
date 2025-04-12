@@ -46,6 +46,11 @@ public class SelectGroup
         }
     }
 
+    public int IndexOf(int x, int y)
+    {
+        return y * gridWidth + x;
+    }
+
     public void Select(int x, int y)
     {
         Select(y * gridWidth + x);

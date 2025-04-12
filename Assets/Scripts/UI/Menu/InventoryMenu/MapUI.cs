@@ -10,22 +10,17 @@ public class MapUI : ShownUI
     void Update()
     {
         map.Move(GameInputManager.Move);
+        UIManager.instance.inventoryMenu.footHint.SetHints(new(){FootHint.FootHintType.ZoomUp, FootHint.FootHintType.ZoomDown});
 
         /// TODO 调整 scale 改为单独的按键
-        // bool scaleBig = GameInputManager.Attack3;
-        // bool scaleSmall = GameInputManager.Jump;
-        // float scaleAdd = (scaleBig, scaleSmall) switch
-        // {
-        //     (true, false) => 1f,
-        //     (false, true) => -1f,
-        //     _ => 0
-        // };
-        // map.ChangeScale(scaleAdd * 2);
-
-        if (UIManager.instance.inventoryMenu.Shown && GameInputManager.UiCancel)
+        bool zoomUp = GameInputManager.UIMapZoomUp;
+        bool zoomDown = GameInputManager.UIMapZoomDown;
+        float scaleAdd = (zoomUp, zoomDown) switch
         {
-            UIManager.instance.inventoryMenu.Shown = false;
-            SoundManager.instance.PlayUIConfirm();
-        }
+            (true, false) => 1f,
+            (false, true) => -1f,
+            _ => 0
+        };
+        map.ChangeScale(scaleAdd * 2);
     }
 }

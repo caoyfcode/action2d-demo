@@ -71,6 +71,8 @@ public class GameInputManager : SingletonBase<GameInputManager>
     // public static float UiSwitch => instance.uiSwitch.ReadValue<float>();
     public static bool UiConfirm => instance.jump.WasPressedThisFrame();
     public static bool UiCancel => instance.attack1.WasPressedThisFrame() || instance.attack3.WasPressedThisFrame() || Keyboard.current.escapeKey.wasPressedThisFrame;
+    public static bool UIMapZoomUp => JumpHold;
+    public static bool UIMapZoomDown => instance.attack1.ReadValue<float>() > 0;
     public static bool Inventory => instance.inventory.WasPressedThisFrame();
     public static bool Pause => instance.pause.WasPressedThisFrame();
     public static bool Attack1 => instance.attack1.WasPressedThisFrame();
@@ -87,7 +89,7 @@ public class GameInputManager : SingletonBase<GameInputManager>
     {
         base.Awake();
         actionMap = new InputActionMap("GameInput");
-        uiSwitch = actionMap.AddAction("UI_Switch");
+        uiSwitch = actionMap.AddAction("UiSwitch");
         uiSwitch.AddCompositeBinding("Axis")
             .With("Negative", "<Keyboard>/q")
             .With("Positive", "<Keyboard>/e")
@@ -175,7 +177,93 @@ public class GameInputManager : SingletonBase<GameInputManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+        {
+            currentInputType = InputType.XboxController;
+        }
+        else if (Keyboard.current != null && Keyboard.current.wasUpdatedThisFrame)
+        {
+            currentInputType = InputType.Keyoard;
+        }
+    }
+
+    public void SwitchInputType(InputType inputType)
+    {
+        currentInputType = inputType;
+    }
+
+    public enum InputActionEnum
+    {
+        UiSwitchLeft,
+        UiSwitchRight,
+        Up,
+        Down,
+        Left,
+        Right,
+        Inventory,
+        Pause,
+        Attack1,
+        Attack2,
+        Attack3,
+        Jump,
+        Dash,
+        Heal,
+        Hook,
+        UiConfirm,
+        UiCancel,
+    }
+
+    public Sprite GetInputIcon(InputActionEnum iae)
+    {
+        string inputName;
+        switch (currentInputType)
+        {
+            case InputType.Keyoard:
+                inputName = iae switch {
+                    InputActionEnum.UiSwitchLeft => keyboardSettings.uiSwitchLeft,
+                    InputActionEnum.UiSwitchRight => keyboardSettings.uiSwitchRight,
+                    InputActionEnum.Up => keyboardSettings.up,
+                    InputActionEnum.Down => keyboardSettings.down,
+                    InputActionEnum.Left => keyboardSettings.left,
+                    InputActionEnum.Right => keyboardSettings.right,
+                    InputActionEnum.Inventory => keyboardSettings.inventory,
+                    InputActionEnum.Pause => keyboardSettings.pause,
+                    InputActionEnum.Attack1 => keyboardSettings.attack1,
+                    InputActionEnum.Attack2 => keyboardSettings.attack2,
+                    InputActionEnum.Attack3 => keyboardSettings.attack3,
+                    InputActionEnum.Jump => keyboardSettings.jump,
+                    InputActionEnum.Dash => keyboardSettings.dash,
+                    InputActionEnum.Heal => keyboardSettings.heal,
+                    InputActionEnum.Hook => keyboardSettings.hook,
+                    InputActionEnum.UiConfirm => keyboardSettings.jump,
+                    InputActionEnum.UiCancel => keyboardSettings.attack1, // J
+                    _ => keyboardSettings.pause,
+                };
+                return GameManager.instance.gamePreload.inputIconMap.GetKeyboardIcon(inputName);
+            default:
+                inputName = iae switch {
+                    InputActionEnum.UiSwitchLeft => controllerSettings.uiSwitchLeft,
+                    InputActionEnum.UiSwitchRight => controllerSettings.uiSwitchRight,
+                    InputActionEnum.Up => "dpadUp",
+                    InputActionEnum.Down => "dpadDown",
+                    InputActionEnum.Left => "dpadLeft",
+                    InputActionEnum.Right => "dpadRight",
+                    InputActionEnum.Inventory => controllerSettings.inventory,
+                    InputActionEnum.Pause => controllerSettings.pause,
+                    InputActionEnum.Attack1 => controllerSettings.attack1,
+                    InputActionEnum.Attack2 => controllerSettings.attack2,
+                    InputActionEnum.Attack3 => controllerSettings.attack3,
+                    InputActionEnum.Jump => controllerSettings.jump,
+                    InputActionEnum.Dash => controllerSettings.dash,
+                    InputActionEnum.Heal => controllerSettings.heal,
+                    InputActionEnum.Hook => controllerSettings.hook,
+                    InputActionEnum.UiConfirm => controllerSettings.jump,
+                    InputActionEnum.UiCancel => controllerSettings.attack3, // East
+                    _ => controllerSettings.pause,
+                };
+                return GameManager.instance.gamePreload.inputIconMap.GetXboxIcon(inputName);
+        }
+
     }
 }
 
@@ -188,7 +276,8 @@ public class KeyboardSettings {
     public string left = "a";
     public string right = "d";
     public string inventory = "p";
-    public const string pause = "escape";
+    [NonSerialized]
+    public readonly string pause = "escape";
     public string attack1 = "j";
     public string attack2 = "h";
     public string attack3 = "u";
@@ -202,7 +291,7 @@ public class KeyboardSettings {
 public class ControllerSettings {
     public string uiSwitchLeft = "leftShoulder"; // LB
     public string uiSwitchRight = "rightShoulder"; // RB
-    public const string move = "leftStick";
+    public readonly string move = "leftStick";
     public string inventory = "select"; // view/select
     public string pause = "start"; // menu/start
     public string attack1 = "buttonWest"; // X

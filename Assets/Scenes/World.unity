@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 71832015}
+  inputAction: 1
   inputName: e
   inputType: 0
 --- !u!1 &80895751
@@ -1408,11 +1409,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: {fileID: 1271198387}
+  footHint: {fileID: 1362850983}
   mapHeader: {fileID: 382010241}
   inventoryHeader: {fileID: 1532507394}
   questHeader: {fileID: 562531779}
   map: {fileID: 448217751}
   inventory: {fileID: 604521406}
+  quest: {fileID: 629018214}
   selectedMenu: 1
 --- !u!1 &519420028
 GameObject:
@@ -2228,6 +2231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 626779823}
+  inputAction: 0
   inputName: q
   inputType: 0
 --- !u!1 &629018212
@@ -2239,6 +2243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629018213}
+  - component: {fileID: 629018214}
   m_Layer: 5
   m_Name: Quest
   m_TagString: Untagged
@@ -2262,11 +2267,23 @@ RectTransform:
   - {fileID: 738085589}
   m_Father: {fileID: 1160651673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &629018214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629018212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed324059e88d474cba35fb6dfdb248f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &635119710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,6 +2639,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 738085589}
+  - component: {fileID: 738085591}
+  - component: {fileID: 738085590}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -2643,11 +2662,49 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 629018213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.4, y: 0}
+  m_AnchorMax: {x: 0.8, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &738085590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738085588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1921858032, guid: dcfcc53caa5203747aaa05b4d9cf9bba, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &738085591
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738085588}
+  m_CullTransparentMesh: 1
 --- !u!1 &802601106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2958,6 +3015,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 863300316}
+  - component: {fileID: 863300318}
+  - component: {fileID: 863300317}
   m_Layer: 5
   m_Name: SubjectList
   m_TagString: Untagged
@@ -2979,11 +3038,49 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 629018213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.2, y: 0}
+  m_AnchorMax: {x: 0.39, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &863300317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863300315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1921858032, guid: dcfcc53caa5203747aaa05b4d9cf9bba, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &863300318
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863300315}
+  m_CullTransparentMesh: 1
 --- !u!1 &875757159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 883378917}
+  inputAction: 8
   inputName: buttonWest
   inputType: 1
 --- !u!114 &883378917
@@ -4550,7 +4648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69eafc7c8d5551419a2faec5ec76e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hints: 030000000400000005000000
+  hints: 
   hintPrefab: {fileID: 3498376421602808213, guid: 5a2b198266ce66342858b0d7d06083dd, type: 3}
 --- !u!1001 &1364549205
 PrefabInstance:
@@ -5110,6 +5208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 1583752345}
+  inputAction: 9
   inputName: buttonNorth
   inputType: 1
 --- !u!114 &1583752345
@@ -6548,6 +6647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 1914968396}
+  inputAction: 10
   inputName: buttonEast
   inputType: 1
 --- !u!114 &1914968396

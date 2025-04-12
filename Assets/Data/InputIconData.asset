@@ -142,7 +142,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: d286bc2b555eb094aaf7f145ecc00bb6, type: 3}
   - name: leftShoulder
     sprite: {fileID: 21300000, guid: 8d0619e52620268428bc34748a9884c4, type: 3}
-  - name: rightshoulder
+  - name: rightShoulder
     sprite: {fileID: 21300000, guid: 9d4dbd29fc74e0648a16d7762f9c85ea, type: 3}
   - name: select
     sprite: {fileID: 21300000, guid: 11fba443552bb2447bc71caa9456bc04, type: 3}
@@ -158,5 +158,13 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 974b99b0a44ea5a44947745c4b0fce84, type: 3}
   - name: dpad
     sprite: {fileID: 21300000, guid: b80f6e85413496145a856c7c71170b7c, type: 3}
+  - name: dpadLeft
+    sprite: {fileID: 21300000, guid: 9e66d6eeb3cead041a2364a98ec0fbbf, type: 3}
+  - name: dpadRight
+    sprite: {fileID: 21300000, guid: a9a385ed60dec05488451af3d0c9c91c, type: 3}
+  - name: dpadUp
+    sprite: {fileID: 21300000, guid: a04b60707e3146941be9488ff1108c6b, type: 3}
+  - name: dpad_down
+    sprite: {fileID: 21300000, guid: ef36dd5671afb034a9fca292af85c683, type: 3}
   psIconMap: []
   switchIconMap: []
