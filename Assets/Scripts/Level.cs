@@ -16,7 +16,7 @@ public class Level : MonoBehaviour
     {
         DataManager.instance.CurrentLevelData.open = true;
         DataManager.instance.SaveCurrentSlot();
-        var spawners = GetComponentsInChildren<Spawner>();
+        var spawners = GetComponentsInChildren<Spawner>(false);
         foreach (var spawner in spawners)
         {
             if (spawner is not BossSpawner)
@@ -35,8 +35,7 @@ public class Level : MonoBehaviour
     {
         for (int i = 0; i < dynamicGeneratedPickupsRoot.transform.childCount; i++)
         {
-            var instance = dynamicGeneratedPickupsRoot.transform.GetChild(i).GetComponent<PickupItem>();
-            if (instance != null)
+            if (dynamicGeneratedPickupsRoot.transform.GetChild(i).TryGetComponent<PickupItem>(out var instance))
             {
                 instance.SaveDataIfDynamicGenerated();
             }

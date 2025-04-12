@@ -38,6 +38,7 @@ public class WorldManager : SingletonBase<WorldManager>
         TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
     }
 
+    // save 目的是传送后修改复活点(对于到传送点的传送需要，对于边界传送不需要)
     public static void TeleportCheckpoint(string levelId, bool save=true)
     {
         Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
@@ -48,6 +49,7 @@ public class WorldManager : SingletonBase<WorldManager>
             });
     }
 
+    
     public static void Teleport(string levelId, Vector2 position)
     {
         GameManager.Pause = true;
@@ -56,6 +58,21 @@ public class WorldManager : SingletonBase<WorldManager>
         if (!instance.currentLevel || instance.currentLevel.id != levelId)
         {
             DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
+        }
+    }
+
+    // 与 Teleport 非常相似
+    public static void ReloadCurrentLevel()
+    {
+        if (instance.currentLevel)
+        {
+            GameManager.Pause = true;
+            SoundManager.instance.StopBackgroundMusic();
+            string id = instance.currentLevel.id;
+            GameObject obj = instance.currentLevel.gameObject;
+            instance.currentLevel = null;
+            DarkScreen.instance.DarkScreenWait(() => DestroyImmediate(obj));
+            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(id));
         }
     }
     

@@ -9,14 +9,13 @@ public class BossSystem : MonoBehaviour
 
     public void StartBossFight(Entity boss, Rect room)
     {
-        if (!bossFightStarted && boss)
+        if (!bossFightStarted && boss != null)
         {
             this.boss = boss;
             bossFightStarted = true;
             UIManager.BossHeathBar.valueBar.maxValue = boss.CharacterInfo.maxHealth;
             UIManager.BossHeathBar.valueBar.value = boss.CharacterInfo.health;
             UIManager.BossHeathBar.Shown = true;
-            boss.onDeath.AddListener(EndBossFight);
             boss.controller.SetBossRoom(room);
             boss.controller.OnStartBossFight();
         }
@@ -28,8 +27,6 @@ public class BossSystem : MonoBehaviour
         {
             bossFightStarted = false;
             UIManager.BossHeathBar.Shown = false;
-            if (boss != null)
-                boss.onDeath.RemoveListener(EndBossFight);
             boss = null;
         }
     }
@@ -41,6 +38,10 @@ public class BossSystem : MonoBehaviour
             Debug.Log("Boss Health: " + boss.CharacterInfo.health);
             Debug.Log("Bar value: " + UIManager.BossHeathBar.valueBar.value);
             UIManager.BossHeathBar.valueBar.value = boss.CharacterInfo.health;
+        }
+        if (bossFightStarted && boss == null)
+        {
+            EndBossFight();
         }
     }
 }

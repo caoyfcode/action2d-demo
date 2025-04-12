@@ -89,4 +89,17 @@ public class GameManager : SingletonBase<GameManager>
         public InputIconData inputIconMap;
         public Material whiteMaterial;
     }
+
+    public void OnApplicationQuit()
+    {
+        if (!IsMainMenuScene && WorldManager.instance != null)
+        {
+            if (WorldManager.CurrentLevel != null)
+            {
+                DestroyImmediate(WorldManager.CurrentLevel.gameObject); // 立即释放场景以执行其中的OnDestory的保存与清理
+            }
+        }
+        Debug.Log("Application quit");       
+    }
+
 }
