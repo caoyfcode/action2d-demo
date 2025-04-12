@@ -13,11 +13,21 @@ public class LevelData : ScriptableObject
         public string id;
         [Tooltip("(x, y) 中心点坐标, (W, H) 地图宽高, 用于地图绘制")]
         public Rect rect;
-        [Tooltip("地图块的 Sprite, 用于地图绘制")]
-        public Sprite mapSprite;
+        
         public bool hasCheckpoint;
         public Vector2 checkpointPosition;
         public string checkpointName = "默认名称";
+
+
+        private Sprite mapSprite;
+        public Sprite GetMapSprite()
+        {
+            if (mapSprite == null)
+            {
+                mapSprite = Resources.Load<Sprite>("LevelMaps/Level_" + id);
+            }
+            return mapSprite;
+        }
     }
 
     public class CheckpointData
@@ -64,5 +74,11 @@ public class LevelData : ScriptableObject
             return levelDataMap[id].checkpointPosition;
         }
         return Vector2.zero;
+    }
+
+    public Data GetLevelData(string id)
+    {
+        levelDataMap.TryGetValue(id, out var data);
+        return data;
     }
 }

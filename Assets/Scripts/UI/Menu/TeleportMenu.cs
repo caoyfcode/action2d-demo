@@ -30,6 +30,7 @@ public class TeleportMenu : ShownUI
     // 第一次打卡时初始化列表
     void Start()
     {
+        // TODO 换成 OnEnable 中从存档读取
         if (listNode.transform.childCount == 0)
         {
             foreach (var checkpoint in WorldManager.instance.levelData.checkpointList)

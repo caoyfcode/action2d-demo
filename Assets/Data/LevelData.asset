@@ -20,7 +20,6 @@ MonoBehaviour:
       y: -20
       width: 30
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 1
     checkpointPosition: {x: -111, y: -27}
     checkpointName: "\u51FA\u751F\u70B9"
@@ -31,7 +30,6 @@ MonoBehaviour:
       y: -5
       width: 30
       height: 50
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -42,7 +40,6 @@ MonoBehaviour:
       y: 10
       width: 80
       height: 20
-    mapSprite: {fileID: 21300000, guid: 7673bd44f30c39b4c807c8643d5bc70f, type: 3}
     hasCheckpoint: 1
     checkpointPosition: {x: 0, y: 3.2}
     checkpointName: "\u539F\u70B9(\u5F85\u5220\u9664)"
@@ -53,7 +50,6 @@ MonoBehaviour:
       y: -20
       width: 60
       height: 40
-    mapSprite: {fileID: 21300000, guid: c2cfa3c5087745848a7bfd9e08f2ccf2, type: 3}
     hasCheckpoint: 1
     checkpointPosition: {x: -33.8, y: -35.78}
     checkpointName: "\u77F3\u5934\u4EBA\u524D"
@@ -64,7 +60,6 @@ MonoBehaviour:
       y: -30
       width: 40
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -75,7 +70,6 @@ MonoBehaviour:
       y: 10
       width: 80
       height: 20
-    mapSprite: {fileID: 21300000, guid: 9a65bc5a6b8b0b8418bed37aa6c43d06, type: 3}
     hasCheckpoint: 1
     checkpointPosition: {x: 53.5, y: 5.08}
     checkpointName: "\u6751\u5E84"
@@ -86,7 +80,6 @@ MonoBehaviour:
       y: 10
       width: 80
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -97,7 +90,6 @@ MonoBehaviour:
       y: -5
       width: 40
       height: 30
-    mapSprite: {fileID: 0}
     hasCheckpoint: 1
     checkpointPosition: {x: 198.4, y: -6.97}
     checkpointName: "\u4E1C\u90E8\u5C71\u6D1E"
@@ -108,7 +100,6 @@ MonoBehaviour:
       y: 30
       width: 40
       height: 40
-    mapSprite: {fileID: 0}
     hasCheckpoint: 1
     checkpointPosition: {x: 190.39, y: 22.14}
     checkpointName: "\u4E0A\u5C71\u8DEF"
@@ -119,7 +110,6 @@ MonoBehaviour:
       y: -15
       width: 80
       height: 30
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -130,7 +120,6 @@ MonoBehaviour:
       y: 25
       width: 40
       height: 50
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -141,7 +130,6 @@ MonoBehaviour:
       y: -10
       width: 20
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -152,7 +140,6 @@ MonoBehaviour:
       y: -20
       width: 80
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
@@ -163,7 +150,6 @@ MonoBehaviour:
       y: 65
       width: 50
       height: 50
-    mapSprite: {fileID: 0}
     hasCheckpoint: 1
     checkpointPosition: {x: 172, y: 69.5}
     checkpointName: "\u5C71\u9876"
@@ -174,7 +160,6 @@ MonoBehaviour:
       y: 80
       width: 40
       height: 20
-    mapSprite: {fileID: 0}
     hasCheckpoint: 0
     checkpointPosition: {x: 0, y: 0}
     checkpointName: 
