@@ -67,6 +67,26 @@ public class DataManager : SingletonBase<DataManager>
         }
     }
 
+    public SaveSlotData.BossSaveData GetBossData(string entityId)
+    {
+        return saveSlot.bosses.Find(x => x.id== entityId);
+    }
+
+    public void SaveBossData(string entityId, bool dead)
+    {
+        var bossData = GetBossData(entityId);
+        if (bossData == null)
+        {
+            bossData = new()
+            {
+                id = entityId
+            };
+            saveSlot.bosses.Add(bossData);
+        }
+        bossData.dead = dead;
+        SaveCurrentSlot();
+    }
+
     public void LoadSettings()
     {
         string dataPath = Path.Combine(Application.persistentDataPath, "Settings.json");

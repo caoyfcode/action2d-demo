@@ -3066,10 +3066,10 @@ MonoBehaviour:
         attack2: 
         attack3: 
       inventory: []
-    boss: []
-    checkpoint: []
-    level: []
-    dynamicPickupItem: []
+    bosses: []
+    checkpoints: []
+    levels: []
+    dynamicPickupItems: []
   settings:
     game:
       fps: 60

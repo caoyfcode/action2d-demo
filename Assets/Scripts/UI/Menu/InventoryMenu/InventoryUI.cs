@@ -55,8 +55,7 @@ public class InventoryUI : ShownUI
             }
         }
     }
-
-    void Start()
+    void OnEnable()
     {
         state = State.SelectNone;
         RefreshAttackConfig();

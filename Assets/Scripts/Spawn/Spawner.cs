@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    // TODO 改为按 id 寻找 prefab, 然后生成
     public GameObject enemyPrefab;
     public GameObject spawnedObject;
     public bool spawned = false;
