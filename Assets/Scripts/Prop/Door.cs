@@ -29,9 +29,20 @@ public class Door : Interactive
     protected override void Start()
     {
         base.Start();
-        // TODO 从存档查询状态
-        HintShown = false;
-        IsOpen = false;
+        var found = DataManager.instance.CurrentLevelData.doors.Find(x => x.id == id);
+        if (found == null)
+        {
+            IsOpen = sr.sprite == openSprite; // 利用默认状态来初始化
+            DataManager.instance.CurrentLevelData.doors.Add(new(){
+                id = id,
+                open = IsOpen,
+            });
+            DataManager.instance.SaveCurrentSlot();
+        }
+        else
+        {
+            IsOpen = found.open;
+        }
     }
 
     // Update is called once per frame
@@ -46,6 +57,19 @@ public class Door : Interactive
                 {
                     HintShown = false;
                     IsOpen = true;
+                    var found = DataManager.instance.CurrentLevelData.doors.Find(x => x.id == id);
+                    if (found != null)
+                    {
+                        found.open = true;
+                    }
+                    else // 估计这里不会发生
+                    {
+                        DataManager.instance.CurrentLevelData.doors.Add(new(){
+                            id = id,
+                            open = true,
+                        });
+                    }
+                    DataManager.instance.SaveCurrentSlot();
                 }
             }
             else
@@ -58,4 +82,12 @@ public class Door : Interactive
             HintShown = false;
         }
     }
+}
+
+
+[System.Serializable]
+public class LevelDoorSaveData
+{
+    public string id;
+    public bool open;
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
-{
-    public string id; // unique id for each interactive object, 暂未使用
+{   
+    public string id; // 用于在同一 Level 内区分不同的同一类物体
     public Canvas hint;
     public bool playerIn;
     public bool HintShown

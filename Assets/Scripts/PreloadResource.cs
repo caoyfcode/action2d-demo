@@ -10,4 +10,5 @@ public class PreloadResource : SingletonBase<PreloadResource>
     public Material whiteMaterial;
     public GameObject bloodEffectPrefab;
     public GameObject explosionPrefab;
+    public GameObject pickupItemPrefab;
 }

@@ -964,6 +964,7 @@ MonoBehaviour:
   whiteMaterial: {fileID: 2100000, guid: 9e850c8a53093be4c829f9148b57c5a2, type: 2}
   bloodEffectPrefab: {fileID: 3661891618808958100, guid: 9d0bb4f066c1aca4f9b324b4a8284dfa, type: 3}
   explosionPrefab: {fileID: 7682755277468068732, guid: 425a59d90162aa84e860cb1109a49c50, type: 3}
+  pickupItemPrefab: {fileID: 9133623813399423233, guid: f15723e799fed3c4d924af613e598d2f, type: 3}
 --- !u!1 &447431190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,6 +3069,7 @@ MonoBehaviour:
     boss: []
     checkpoint: []
     level: []
+    dynamicPickupItem: []
   settings:
     game:
       fps: 60

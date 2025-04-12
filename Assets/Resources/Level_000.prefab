@@ -121,6 +121,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 75969849860785149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &647862209094764595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7274365733394800337}
+  m_Layer: 0
+  m_Name: DynamicPickupItems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7274365733394800337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647862209094764595}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 75969849860785149}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963220926171255799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,6 +2032,7 @@ Transform:
   - {fileID: 2608283223121046309}
   - {fileID: 2376524202585667885}
   - {fileID: 7936813864338041175}
+  - {fileID: 7274365733394800337}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6602974905075082805
@@ -2019,6 +2051,8 @@ MonoBehaviour:
   id: 006
   bgm: {fileID: 0}
   Spawners: {fileID: 542383716261634873}
+  dynamicGeneratedPickupsRoot: {fileID: 647862209094764595}
+  pickupItemPrefab: {fileID: 9133623813399423233, guid: f15723e799fed3c4d924af613e598d2f, type: 3}
 --- !u!1 &8565133366337611439
 GameObject:
   m_ObjectHideFlags: 0

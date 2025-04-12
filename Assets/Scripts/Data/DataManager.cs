@@ -8,8 +8,25 @@ public class DataManager : SingletonBase<DataManager>
 {
     public SaveSlotData saveSlot;
     public SettingsData settings;
+    private static int _newInstanceId = 0; // 用于生成唯一 instanceId, 目前只用在动态生成的拾取物
+    public static int NewInstanceId()
+    {
+        return _newInstanceId++;
+    }
+    
 
     public PlayerData PlayerData => saveSlot.player;
+    public SaveSlotData.LevelSaveData CurrentLevelData
+    {
+        get
+        {
+            if (WorldManager.CurrentLevel != null)
+            {
+                return saveSlot.levels.Find(x => x.id == WorldManager.CurrentLevel.id);
+            }
+            return null;
+        }
+    }
 
     private int currentSaveSlotIndex = 0;
 
@@ -35,6 +52,14 @@ public class DataManager : SingletonBase<DataManager>
         {
             string json = File.ReadAllText(dataPath);
             saveSlot = JsonUtility.FromJson<SaveSlotData>(json);
+            _newInstanceId = 0;
+            foreach (var pickup in saveSlot.dynamicPickupItems)
+            {
+                if (pickup.instanceId >= _newInstanceId)
+                {
+                    _newInstanceId = pickup.instanceId + 1;
+                }
+            }
         }
         else
         {
@@ -185,10 +210,10 @@ public class PlayerData
 public class SaveSlotData
 {
     public PlayerData player = new();
-    public List<BossSaveData> boss = new();
-    public List<CheckpointSaveData> checkpoint = new();
-    public List<LevelSaveData> level = new();
-
+    public List<BossSaveData> bosses = new();
+    public List<CheckpointSaveData> checkpoints = new();
+    public List<LevelSaveData> levels = new();
+    public List<DynamicPickupItemSaveData> dynamicPickupItems = new(); // 动态生成的拾取物，譬如怪物掉落等，在 Level 处统一进行对象的生成与删除，当拾取后删除项
 
     [System.Serializable]
     public class BossSaveData
@@ -200,16 +225,17 @@ public class SaveSlotData
     [System.Serializable]
     public class CheckpointSaveData
     {
-        Vector2Int index;
+        public string id;
         public bool open;
     }
 
     [System.Serializable]
     public class LevelSaveData
     {
-        public Vector2Int index;
+        public string id;
         public bool open;
-        // TODO mechanism data list or interactive data list
+        public List<LevelPickupItemSaveData> pickupItems = new();
+        public List<LevelDoorSaveData> doors = new();
     }
 }
 

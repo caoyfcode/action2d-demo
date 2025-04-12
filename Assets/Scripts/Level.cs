@@ -8,16 +8,38 @@ public class Level : MonoBehaviour
     public string areaName = "";
     public string id;
     public AudioClip bgm;
-    public GameObject Spawners;
+    public GameObject Spawners; // entity spawners
+    public GameObject dynamicGeneratedPickupsRoot;
 
 
     void Start()
     {
+        DataManager.instance.CurrentLevelData.open = true;
+        DataManager.instance.SaveCurrentSlot();
         var spawners = GetComponentsInChildren<Spawner>();
         foreach (var spawner in spawners)
         {
             if (spawner is not BossSpawner)
                 spawner.Spawn();
+        }
+        foreach (var item in DataManager.instance.saveSlot.dynamicPickupItems)
+        {
+            if (item.levelId == id)
+            {
+                PickupItem.DynamicGeneratePickupItem(item, PreloadResource.instance.pickupItemPrefab, dynamicGeneratedPickupsRoot, item.position);
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        for (int i = 0; i < dynamicGeneratedPickupsRoot.transform.childCount; i++)
+        {
+            var instance = dynamicGeneratedPickupsRoot.transform.GetChild(i).GetComponent<PickupItem>();
+            if (instance != null)
+            {
+                instance.SaveDataIfDynamicGenerated();
+            }
         }
     }
 

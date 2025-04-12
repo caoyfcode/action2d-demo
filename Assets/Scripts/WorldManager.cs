@@ -16,6 +16,7 @@ public class WorldManager : SingletonBase<WorldManager>
     public GameObject levelContainer;
     public BossSystem bossSystem;
 
+    // TODO 迁移到 PreloadResource
     public LevelData levelData;
     public ItemData itemData;
 
@@ -76,6 +77,12 @@ public class WorldManager : SingletonBase<WorldManager>
             obj.transform.SetParent(levelContainer.transform);
             currentLevel = obj.GetComponent<Level>();
             currentLevel.id = levelId;
+            if (DataManager.instance.CurrentLevelData == null)
+            {
+                DataManager.instance.saveSlot.levels.Add(new (){
+                    id = levelId,
+                });
+            }
             yield return Resources.UnloadUnusedAssets();
         }
         else

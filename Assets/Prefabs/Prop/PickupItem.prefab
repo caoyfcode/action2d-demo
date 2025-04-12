@@ -475,8 +475,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d383b7f5f823848bdeab8126c5a185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
   hint: {fileID: 7708680437743827874}
   playerIn: 0
+  instanceId: 0
+  item:
+    id: 
+    quantity: 0
+  rb: {fileID: 0}
+  dynamicGenerated: 0
 --- !u!58 &7401013555063932701
 CircleCollider2D:
   m_ObjectHideFlags: 0
