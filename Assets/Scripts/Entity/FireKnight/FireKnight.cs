@@ -527,7 +527,7 @@ public class FireKnight : Entity
 
         bool DefendCheck(HitInfo hitInfo)
         {
-            return hitInfo.force.x * entity.FacingDirection < 0;
+            return hitInfo.force.x * entity.FacingDirection <= 0;
         }
 
         void OnDefendSuccess(HitInfo hitInfo)

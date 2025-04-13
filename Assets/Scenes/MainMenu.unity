@@ -1820,9 +1820,10 @@ MonoBehaviour:
         attack2: 
         attack3: 
       inventory: []
-    boss: []
-    checkpoint: []
-    level: []
+    bosses: []
+    checkpoints: []
+    levels: []
+    dynamicPickupItems: []
   settings:
     game:
       fps: 60
