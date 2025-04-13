@@ -16,6 +16,10 @@ public class CheckpointMenu : ShownUI
         {
             selectGroup.InvokeAction();
         }
+        if (GameInputManager.UiCancel)
+        {
+            Shown = false;
+        }
     }
 
     public void Heal()
