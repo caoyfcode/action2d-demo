@@ -475,3 +475,41 @@ public class BlueWitchWallSlide : BlueWitchState
         entity.wallSlideCrow.SetActive(false);
     }
 }
+
+public class BlueWitchDeath: BlueWitchState
+{
+    public BlueWitchDeath(BlueWitch entity, StateMachine<BlueWitchState> machine) : base(entity, machine)
+    {
+    }
+
+    public override void Enter()
+    {
+        entity.stateControlInvincible = true;
+        entity.animator.Play(BlueWitch.ANIM_DEATH);
+        entity.animEnd = false;
+    }
+
+    public override bool Transition()
+    {
+        // if (entity.animEnd || entity.animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != BlueWitch.ANIM_DEATH) // 这里后一个判断是因为有时候动画切换了但是状态却没有切换
+        if (entity.animEnd) 
+        {
+            stateMachine.ChangeState(entity.groundFreeState);
+            return true;
+        }
+        return false;
+    }
+
+    public override void Update()
+    {
+        entity.velocity.x = 0;
+        entity.velocity.y = 0;
+    }
+
+    public override void Exit()
+    {
+        entity.stateControlInvincible = false;
+        WorldManager.TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
+        DarkScreen.instance.DarkScreenWait(() => entity.Heal());
+    }
+}

@@ -39,19 +39,33 @@ public class WorldManager : SingletonBase<WorldManager>
     }
 
     // save 目的是传送后修改复活点(对于到传送点的传送需要，对于边界传送不需要)
-    public static void TeleportCheckpoint(string levelId, bool save=true)
+    public static void TeleportCheckpoint(string levelId, bool saveCheckpoint=true)
     {
-        Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
-        if (save)
+        if (saveCheckpoint)
+        {
+            if (!instance.currentLevel || instance.currentLevel.id != levelId)
+            {
+                Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
+            }
+            else
+            {
+                ReloadCurrentLevel();
+            }
             DarkScreen.instance.DarkScreenWait(() => {
                 DataManager.instance.PlayerData.checkpoint = levelId;
                 DataManager.instance.SaveCurrentSlot();
             });
+        }
+        else
+        {
+            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
+        }   
     }
 
     
     public static void Teleport(string levelId, Vector2 position)
     {
+        Player.teleportInvincibleTimer = 0.5f;
         GameManager.Pause = true;
         SoundManager.instance.StopBackgroundMusic();
         DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
@@ -66,6 +80,7 @@ public class WorldManager : SingletonBase<WorldManager>
     {
         if (instance.currentLevel)
         {
+            Player.teleportInvincibleTimer = 0.5f;
             GameManager.Pause = true;
             SoundManager.instance.StopBackgroundMusic();
             string id = instance.currentLevel.id;

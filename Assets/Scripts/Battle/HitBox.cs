@@ -20,6 +20,7 @@ public class HitBox : MonoBehaviour
     public HitContinuousType hitContinuousType = HitContinuousType.Discrete;
     protected HashSet<Entity> hurtEntities = new(); // 在离散类型攻击中
 
+    // TODO 改名为 DoHitType/DoDamageType
     public enum HitContinuousType
     {
         Discrete, // 一次攻击

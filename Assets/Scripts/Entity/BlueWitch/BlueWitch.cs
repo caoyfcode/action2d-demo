@@ -11,6 +11,7 @@ public class BlueWitch : Entity
     internal const string ANIM_RUN = "Run";
     internal const string ANIM_ATTACK = "Attack";
     internal const string ANIM_CHARGE = "Charge";
+    internal const string ANIM_DEATH = "Death";
     #endregion
 
     public SummonAttack summonAttack;
@@ -94,8 +95,10 @@ public class BlueWitch : Entity
     internal int airDashCount = 0;
     internal float dashCoolDownTimer = 0;
     internal float hitInvincibleTimer = 0;
+    internal float teleportInvincibleTimer = 0f; // 这个设置非常重要，假如在陷阱上死亡，那么当死亡动画结束后，如果不无敌，将导致还未重生时受到陷阱伤害，又进入死亡状态
     internal float hitStunTimer = 0; // hitstun 用来表示受击后无法控制移动的状态，此时水平由 forceMove 控制, 竖直方向受到重力影响
     internal bool stateControlInvincible = false;
+    public bool animEnd = false; // 只在需要的动画里设置
     public BlueWitchInfo info;
     public void ResetAirAttackCount() => airAttackCount = 0; // 暂时只有一个
     public void AddAirAttackCount(AttackType type)
@@ -121,7 +124,7 @@ public class BlueWitch : Entity
                 return false;
         }
     }
-    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
+    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || teleportInvincibleTimer > 0 || stateControlInvincible;
     public bool IsHitStun => hitStunTimer > 0 || forceMove != 0;
     #endregion
 
@@ -133,6 +136,8 @@ public class BlueWitch : Entity
     internal BlueWitchAttack attackState;
     internal BlueWitchDash dashState;
     internal BlueWitchWallSlide wallSlideState;
+    internal BlueWitchDeath deathState;
+    public string debugShowStateName;
     // 状态转换条件中的通用部分
     internal bool DashCondition => DataManager.instance.PlayerData.ability.dash && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal AttackType CurrentAttack
@@ -167,6 +172,7 @@ public class BlueWitch : Entity
         attackState = new BlueWitchAttack(this, stateMachine);
         dashState = new BlueWitchDash(this, stateMachine);
         wallSlideState = new BlueWitchWallSlide(this, stateMachine);
+        deathState = new BlueWitchDeath(this, stateMachine);
         stateMachine.Init(airFreeState);
         wallSlideCrow.SetActive(false);
     }
@@ -182,6 +188,7 @@ public class BlueWitch : Entity
         stateMachine.Update();
         MergeVelocity();
         rb.velocity = velocity;
+        debugShowStateName = stateMachine.CurrentState.GetType().Name;
     }
 
     protected virtual void FixedUpdate()
@@ -215,6 +222,8 @@ public class BlueWitch : Entity
             dashCoolDownTimer -= Time.deltaTime;
         if (hitInvincibleTimer > 0)
             hitInvincibleTimer -= Time.deltaTime;
+        if (teleportInvincibleTimer > 0)
+            teleportInvincibleTimer -= Time.deltaTime;
         if (hitStunTimer > 0)
             hitStunTimer -= Time.deltaTime;
     }
@@ -238,12 +247,23 @@ public class BlueWitch : Entity
     public override void TakeHit(HitInfo hitInfo)
     {
         base.TakeHit(hitInfo);
-        WorldManager.CameraController.StartShake(hitInfo.force, 0.2f, 10);
+        WorldManager.CameraController.StartShake(new Vector2(hitInfo.force.x, 0f), 0.2f, 10);
         info.health -= hitInfo.damage;
         hitInvincibleTimer = info.hitInvincibleTime;
         hitStunTimer = info.hitStunTime;
         AddForce(hitInfo.force);
-        // TODO 死亡后重新加载, 与主动坐火刷新同时实现
+        airJumpCount = 0;
+        ResetAirAttackCount();
+        if (info.health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public override void Die()
+    {
+        // do not call base.Die();
+        stateMachine.ChangeState(deathState);
     }
 
     public void Heal()

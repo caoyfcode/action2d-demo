@@ -39,7 +39,7 @@ public class Map : MonoBehaviour
     {
         RefreshMapPiceces();
         ResetScale();
-        WorldPosition = WorldManager.Player.transform.position;
+        CenterPosition = WorldManager.Player.transform.position;
     }
 
     public void ResetScale()
@@ -55,12 +55,6 @@ public class Map : MonoBehaviour
     {
         get => -transform.localPosition / Scale;
         set => transform.localPosition = -value * Scale;
-    }
-
-    public Vector2 WorldPosition
-    {
-        get => -transform.localPosition * 10;
-        set => transform.localPosition = -value / 10;
     }
 
     // 移动速度单位为屏幕像素

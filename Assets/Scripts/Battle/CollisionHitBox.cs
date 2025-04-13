@@ -6,11 +6,21 @@ using UnityEngine;
 public class CollisionHitBox : HitBox
 {
 
+    public float damage = 1;
+
+    public enum HitDirection
+    {
+        HorizontalTargetVerticalUp,
+        HitBoxLocalUp,
+    }
+    public HitDirection hitDirection = HitDirection.HorizontalTargetVerticalUp;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        genHitInfoEntity = GenHitInfoEntity;
+        if (genHitInfoEntity == null)
+            genHitInfoEntity = GenHitInfoEntity;
         hitContinuousType = HitContinuousType.Continuous;
     }
 
@@ -26,11 +36,15 @@ public class CollisionHitBox : HitBox
     {
         float diffX = target.transform.position.x - attacker.transform.position.x;
         float directionX = Mathf.Abs(diffX) > Mathf.Epsilon ? Mathf.Sign(diffX) : -target.FacingDirection;
+        var force = hitDirection switch {
+            HitDirection.HorizontalTargetVerticalUp => new Vector3(directionX * 3, 1),
+            _ => transform.up * 3,
+        };
         return new HitInfo()
         {
             attacker = attacker,
-            damage = 1,
-            force = new Vector2(directionX * 3, 1),
+            damage = damage,
+            force = force,
             hitCollider = hitCollider,
             hitType = HitType.BodyCollision,
             hurtCollider = hitResults[0],
