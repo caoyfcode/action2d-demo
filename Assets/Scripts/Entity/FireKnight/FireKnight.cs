@@ -73,12 +73,14 @@ public class FireKnight : Entity
     public bool animEnd = false; // 只在需要的动画里设置
     public bool animPreBreakable = false; // 前摇
     public bool animPostBreakable = false; // 后摇
+    public bool animDefendCouldAttack = true; // 防御到后是否可以反击
     internal int airAttackCount = 0;
     internal float hitInvincibleTimer = 0;
+    internal float defendSuccInvincibleTimer = 0;
     internal bool stateControlInvincible = false;
     
     public FireKnightInfo info;
-    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible;
+    public override bool IsInvincible => base.IsInvincible || hitInvincibleTimer > 0 || stateControlInvincible || defendSuccInvincibleTimer > 0;
     public override CharacterInfo CharacterInfo => info; 
     #endregion
 
@@ -142,10 +144,14 @@ public class FireKnight : Entity
         {
             hitInvincibleTimer -= Time.deltaTime;
         }
+        if (defendSuccInvincibleTimer > 0)
+        {
+            defendSuccInvincibleTimer -= Time.deltaTime;
+        }
     }
 
     // 防御状态只有背后能受到攻击
-    public override bool TakeHitCheck(HitInfo hitInfo) => base.TakeHitCheck(hitInfo) && !(stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection < 0);
+    public override bool TakeHitCheck(HitInfo hitInfo) => base.TakeHitCheck(hitInfo) && !(stateMachine.CurrentState == defendState && hitInfo.force.x * FacingDirection <= 0);
 
     public override void TakeHit(HitInfo hitInfo)
     {
@@ -161,7 +167,11 @@ public class FireKnight : Entity
         }
         else
         {
-            if (stateMachine.CurrentState != attackState)
+            if (info.health <= info.maxHealth / 2)
+            {
+                info.stage = 2;
+            }
+            if (stateMachine.CurrentState != attackState) // defendState 也是可以被打断的
             {
                 stateMachine.ChangeState(takeHitState);
             }
@@ -435,6 +445,7 @@ public class FireKnight : Entity
             // TODO 添加 GenHitInfo
             if (entity.hitBoxEnabled)
             {
+                entity.hitBox.genHitInfoEntity = GenHitInfo;
                 entity.hitBox.DoHit();
             }
         }
@@ -446,6 +457,30 @@ public class FireKnight : Entity
         }
 
         public AttackType AttackType => attackType;
+
+        public HitInfo GenHitInfo(Entity target)
+        {
+            Vector2 force = new Vector2(entity.FacingDirection, 1);
+            float damage = 1f;
+            float diff = Mathf.Sign(target.transform.position.x - entity.transform.position.x);
+            switch (attackType) {
+                case AttackType.Attack2:
+                    force = new(diff, 1);
+                    break;
+                case AttackType.SuperAttack:
+                    damage = 2f;
+                    break;
+                default:
+                    break;
+            }
+            return new() {
+                attacker = entity,
+                damage = damage,
+                force = force,
+                hitCollider = entity.hitBox.hitCollider,
+                hitType = HitType.EntityAttack,
+            };
+        }
     }
 
     public class DefendState : State
@@ -501,7 +536,9 @@ public class FireKnight : Entity
             {
                 return;
             }
-            stateMachine.ChangeState(entity.attackState);
+            entity.defendSuccInvincibleTimer = 0.5f;
+            if (entity.animDefendCouldAttack)
+                stateMachine.ChangeState(entity.attackState);
         }
     }
 

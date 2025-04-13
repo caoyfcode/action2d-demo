@@ -28,6 +28,7 @@ public class FireKnightController : EntityController
     private float waitTimer = 0f;
     private float airAttackCoolDownTimer = 0f;
     private float attackComboCoolDownTimer = 0f;
+    private float defendCoolDownTimer = 0f;
     private BehaviourTree behaviourTree;
 
     void Awake()
@@ -83,15 +84,22 @@ public class FireKnightController : EntityController
 
         BTNode defendAndAttack = new BTBuilder()
             .Sequence()
-                .Condition(() => true) // 检测自己是否正在角色攻击范围且角色攻击前摇
-                .Action(() => BTNodeStatus.Running) // 开始防御
-                .NeverFail()
-                    .Sequence()
-                        .Action(() => BTNodeStatus.Running) // 检测防御结束或被攻击到
-                        .Action(() => BTNodeStatus.Success) // 被攻击到则开始反击
-                        .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState) // 直到攻击结束
-                    .End()
-                .End()
+                .Condition(() => 
+                    DetectTargetInAttackRange(AttackType.SuperAttack)
+                ) // 检测自己是否正在角色攻击范围且角色攻击前摇
+                .Action(() => {
+                    tryDenfendTimer = 0.2f;
+                    return BTNodeStatus.Success;
+                })
+                .Action(StartDefend) // 开始防御
+                .WaitUntil(() => entity.stateMachine.CurrentState != entity.defendState)
+                // .NeverFail()
+                //     .Sequence()
+                //         .Action(() => BTNodeStatus.Running) // 检测防御结束或被攻击到
+                //         .Action(() => BTNodeStatus.Success) // 被攻击到则开始反击
+                //         .WaitUntil(() => entity.stateMachine.CurrentState != entity.attackState) // 直到攻击结束
+                //     .End()
+                // .End()
             .End()
             .BuildNode();
         BTNode rollAttack = new BTBuilder()
@@ -108,12 +116,18 @@ public class FireKnightController : EntityController
                 // .Condition(DetectTarget)
                 .Fallback()
                     .Sequence()
+                        .Condition(() => defendCoolDownTimer <= 0f)
+                        .Node(defendAndAttack)
+                    .End()
+                    .Sequence()
                         .Condition(() => airAttackCoolDownTimer <= 0f)
                         .Node(jumpAndAttack)
+                        .WaitUntil(() => waitTimer <= 0f, () => waitTimer = Random.Range(0.1f, 0.3f))
                     .End()
                     .Sequence()
                         .Condition(() => attackComboCoolDownTimer <= 0f)
                         .Node(attackCombo)
+                        .WaitUntil(() => waitTimer <= 0f, () => waitTimer = Random.Range(0.1f, 0.3f))
                     .End()
                 .End()
             .End()
@@ -164,6 +178,10 @@ public class FireKnightController : EntityController
         {
             attackComboCoolDownTimer -= Time.deltaTime;
         }
+        if (defendCoolDownTimer > 0f)
+            defendCoolDownTimer -= Time.deltaTime;
+        if (tryDenfendTimer > 0f)
+            tryDenfendTimer -= Time.deltaTime;
     }
 
     // bool DetectTarget()
@@ -194,13 +212,19 @@ public class FireKnightController : EntityController
 
     bool DetectTargetInAttackRange(AttackType attackType)
     {
-        Debug.Log("DetectTargetInAttackRange");
+        Debug.Log("DetectTargetInAttackRange " + attackType);
         if (!WorldManager.Player)
         {
             return false;
         }
         Collider2D hitCollider = entity.GetHitCollider(attackType);
-        if (hitCollider.IsTouching(WorldManager.Player.col))
+        // if (hitCollider.IsTouching(WorldManager.Player.col))
+        // {
+        //     Debug.Log(true);
+        //     return true;
+        // }
+        // 不用精细的 IsTouching 了，用 bounds 检测
+        if (hitCollider.bounds.Intersects(WorldManager.Player.col.bounds))
         {
             Debug.Log(true);
             return true;
@@ -380,6 +404,26 @@ public class FireKnightController : EntityController
         }
         entity.CurrentCommand.SpeedX(entity.FacingDirection * entity.info.horizontalMoveSpeed);
         return BTNodeStatus.Running;
+    }
+
+    private float tryDenfendTimer = 0;
+    BTNodeStatus StartDefend()
+    {
+        Debug.Log("Start defend");
+        if (entity.stateMachine.CurrentState == entity.defendState)
+        {
+            Debug.Log("Start Defend Success");
+            defendCoolDownTimer = Random.Range(2f, 5f);
+            return BTNodeStatus.Success;
+        }
+        if (!entity.isDead && tryDenfendTimer > 0)
+        {
+            entity.CurrentCommand.Defend(true);
+            Debug.Log("Starting Defend");
+            return BTNodeStatus.Running;
+        }
+        Debug.Log(BTNodeStatus.Failure);
+        return BTNodeStatus.Failure;
     }
 
     void OnDrawGizmosSelected()

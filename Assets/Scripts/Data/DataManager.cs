@@ -118,7 +118,7 @@ public class DataManager : SingletonBase<DataManager>
         saveSlot.player.maxHealth = 5;
         saveSlot.player.maxMagic = 5;
         saveSlot.player.money = 0;
-        saveSlot.player.checkpoint = "002";
+        saveSlot.player.checkpoint = "001";
         SaveCurrentSlot();
     }
 

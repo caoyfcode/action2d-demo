@@ -43,14 +43,7 @@ public class WorldManager : SingletonBase<WorldManager>
     {
         if (saveCheckpoint)
         {
-            if (!instance.currentLevel || instance.currentLevel.id != levelId)
-            {
-                Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
-            }
-            else
-            {
-                ReloadCurrentLevel();
-            }
+            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId), true);
             DarkScreen.instance.DarkScreenWait(() => {
                 DataManager.instance.PlayerData.checkpoint = levelId;
                 DataManager.instance.SaveCurrentSlot();
@@ -58,36 +51,26 @@ public class WorldManager : SingletonBase<WorldManager>
         }
         else
         {
-            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId));
+            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId), false);
         }   
     }
 
     
-    public static void Teleport(string levelId, Vector2 position)
+    public static void Teleport(string levelId, Vector2 position, bool reloadIfSameLevel = false)
     {
         Player.teleportInvincibleTimer = 0.5f;
         GameManager.Pause = true;
         SoundManager.instance.StopBackgroundMusic();
         DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
-        if (!instance.currentLevel || instance.currentLevel.id != levelId)
+        if (instance.currentLevel && instance.currentLevel.id == levelId && reloadIfSameLevel) // should reload
         {
-            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
-        }
-    }
-
-    // 与 Teleport 非常相似
-    public static void ReloadCurrentLevel()
-    {
-        if (instance.currentLevel)
-        {
-            Player.teleportInvincibleTimer = 0.5f;
-            GameManager.Pause = true;
-            SoundManager.instance.StopBackgroundMusic();
-            string id = instance.currentLevel.id;
             GameObject obj = instance.currentLevel.gameObject;
             instance.currentLevel = null;
             DarkScreen.instance.DarkScreenWait(() => DestroyImmediate(obj));
-            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(id));
+        }
+        if (!instance.currentLevel || instance.currentLevel.id != levelId)
+        {
+            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
         }
     }
     

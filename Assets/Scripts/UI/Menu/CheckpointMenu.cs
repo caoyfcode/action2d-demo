@@ -26,7 +26,8 @@ public class CheckpointMenu : ShownUI
     {
         WorldManager.Player.Heal();
         Shown = false;
-        WorldManager.ReloadCurrentLevel();
+        // WorldManager.ReloadCurrentLevel();
+        WorldManager.TeleportCheckpoint(WorldManager.instance.currentLevel.id);
     }
 
     public void Teleport()
