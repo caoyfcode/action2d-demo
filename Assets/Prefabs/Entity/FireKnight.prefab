@@ -850,8 +850,8 @@ MonoBehaviour:
   animPreBreakable: 0
   animPostBreakable: 0
   info:
-    maxHealth: 5
-    health: 5
+    maxHealth: 20
+    health: 20
     maxMagic: 0
     magic: 0
     attack: 0

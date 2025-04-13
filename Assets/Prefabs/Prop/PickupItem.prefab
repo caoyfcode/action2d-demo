@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: a3d58fdc
+  m_ApplyToSortingLayers: a3d58fdc556a55e8f3c3a762
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -482,7 +482,6 @@ MonoBehaviour:
   item:
     id: 
     quantity: 0
-  rb: {fileID: 0}
   dynamicGenerated: 0
 --- !u!58 &7401013555063932701
 CircleCollider2D:

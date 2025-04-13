@@ -166,16 +166,16 @@ public class PickupItem : Interactive
     }
 
     // 用于在加载关卡式生成或是在游戏内生成
-    public static void DynamicGeneratePickupItem(DynamicPickupItemSaveData item, GameObject prefab, GameObject parent=null, Vector2 position=default, Vector2 velocity=default)
+    public static void DynamicGeneratePickupItem(DynamicPickupItemSaveData item, GameObject prefab, GameObject parent=null, Vector2 velocity=default)
     {
-        GameObject obj = Instantiate(prefab, position, Quaternion.identity, parent.transform);
+        GameObject obj = Instantiate(prefab, item.position, Quaternion.identity, parent.transform);
         var pickup = obj.GetComponent<PickupItem>();
         pickup.dynamicGenerated = true;
         pickup.id = DYNAMIC_GENERATED_ID;
         pickup.instanceId = item.instanceId;
         pickup.item.id = item.data.id;
         pickup.item.quantity = item.data.quantity;
-        obj.transform.position = position;
+        obj.transform.position = item.position;
         pickup.velocity = velocity;
         pickup.SaveDataIfDynamicGenerated(); // 照理来说需要区分是游戏内生成还是加载后生成的，如果是加载后生成的就不用，但是做了也没关系
     }

@@ -12,6 +12,7 @@ public class BossSpawner : Spawner
     // 3. 在休息前不刷新的怪物(不需要存档，但是需要有运行时的数据)
     // 4. 按某种条件生成的怪物(譬如某个点定时刷新)
     // 对于切换Level就刷新的怪物，直接手动放置Level预制件里面
+    // TODO 将 ProCamera 的 Room 切换改为手动， 并根据boss是否已经打败来决定是否切换
     public string entityId; 
     public Collider2D roomCollider;
     public Rect room;

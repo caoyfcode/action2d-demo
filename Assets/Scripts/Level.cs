@@ -26,9 +26,24 @@ public class Level : MonoBehaviour
         {
             if (item.levelId == id)
             {
-                PickupItem.DynamicGeneratePickupItem(item, PreloadResource.instance.pickupItemPrefab, dynamicGeneratedPickupsRoot, item.position);
+                PickupItem.DynamicGeneratePickupItem(item, PreloadResource.instance.pickupItemPrefab, dynamicGeneratedPickupsRoot);
             }
         }
+    }
+
+    public void DynamicGenerattePickupItem(InventoryItem item, Vector2 position, Vector2 velocity)
+    {
+        PickupItem.DynamicGeneratePickupItem(
+            item: new() {
+                levelId = id,
+                instanceId = DataManager.NewInstanceId(),
+                position = position,
+                data = item,
+            },
+            prefab: PreloadResource.instance.pickupItemPrefab,
+            parent: dynamicGeneratedPickupsRoot,
+            velocity: velocity
+        );
     }
 
     void OnDestroy()

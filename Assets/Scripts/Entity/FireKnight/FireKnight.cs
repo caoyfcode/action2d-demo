@@ -171,6 +171,14 @@ public class FireKnight : Entity
     public override void Die()
     {
         base.Die();
+        WorldManager.CurrentLevel.DynamicGenerattePickupItem(
+            item: new() {
+                    id = ItemData.FireKnightItemId,
+                    quantity = 1,
+            },
+            position: transform.position,
+            velocity: new Vector2(0f, 15f)
+        );
         stateMachine.ChangeState(deathState);
     }
 
