@@ -81,7 +81,7 @@ public class HitBox : MonoBehaviour
             var hitInfo = genHitInfoEntity?.Invoke(target) ?? genHitInfo?.Invoke() ?? new HitInfo
             {
                 attacker = attacker,
-                damage = 0,
+                damage = 1,
                 force = new Vector2(attacker.FacingDirection, 0),
                 hitCollider = hitCollider,
                 hitType = HitType.EntityAttack,

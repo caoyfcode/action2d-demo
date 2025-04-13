@@ -38,6 +38,8 @@ public class GolemController : EntityController
             attackCoolDown -= Time.deltaTime;
         if (sprintCoolDown > 0)
             sprintCoolDown -= Time.deltaTime;
+        if (airMoveBackwardTimer > 0)
+            airMoveBackwardTimer -= Time.deltaTime;
     }
 
     public override void OnStartBossFight()
@@ -155,7 +157,7 @@ public class GolemController : EntityController
         {
             return Status.Success;
         }
-        FollowPlayer(0.5f, 2);
+        FollowPlayer(0.5f, 2.5f);
         return Status.Running;
     }
     public Status StartLand()
@@ -221,6 +223,25 @@ public class GolemController : EntityController
             entity.CurrentControl.speedX = entity.info.sprintSpeed * entity.FacingDirection;
             return Status.Running;
         }
+    }
+
+    private float airMoveBackwardTimer = 0f;
+    private bool airMoveBackwardStarted = false;
+    public Status AirMoveBackward(float time)
+    {
+        if (!airMoveBackwardStarted)
+        {
+            airMoveBackwardTimer = time;
+            airMoveBackwardStarted = true;
+        }
+        if (airMoveBackwardTimer < 0)
+        {
+            entity.CurrentControl.speedX = 0;
+            airMoveBackwardStarted = false;
+            return Status.Success;
+        }
+        entity.CurrentControl.speedX = -entity.info.moveSpeed * 4 * entity.FacingDirection;
+        return Status.Running;
     }
 
     #endregion

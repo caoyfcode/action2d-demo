@@ -182,6 +182,14 @@ public class Golem : Entity
         velocity.y = 0;
         hitBox.hitCollider = attack1 ? attack1Collider : attack3Collider;
         hitBox.PreDiscreteHit();
+        hitBox.genHitInfo = () => new HitInfo
+        {
+            attacker = this,
+            damage = 1,
+            force = new Vector2(FacingDirection, 0),
+            hitCollider = hitBox.hitCollider,
+            hitType = HitType.EntityAttack,
+        };
     }
 
     public void UpdateAttack13()
@@ -209,6 +217,14 @@ public class Golem : Entity
         hitBox.hitCollider = attack2Collider;
         hitBox.PreDiscreteHit();
         attack2SpeedY = 0;
+        hitBox.genHitInfo = () => new HitInfo
+        {
+            attacker = this,
+            damage = 1,
+            force = new Vector2(FacingDirection, 0),
+            hitCollider = hitBox.hitCollider,
+            hitType = HitType.EntityAttack,
+        };
     }
 
     public void UpdateAttack2()
@@ -236,7 +252,7 @@ public class Golem : Entity
 
     public bool jumpGiveSpeed = false;
     float jumpInitHeight = 0f;
-    bool JumpHighEnough => transform.position.y - jumpInitHeight > 4;
+    bool JumpHighEnough => transform.position.y - jumpInitHeight > 3.5;
     public void EnterJump()
     {
         animEnd = false;
@@ -288,7 +304,8 @@ public class Golem : Entity
         velocity.y = -30;
         hitBox.hitCollider = landAttackCollider;
         hitBox.PreDiscreteHit();
-        hitBox.genHitInfoEntity += GenLandAttackHitInfo;
+        hitBox.genHitInfo = null; // 将其它攻击的取消
+        hitBox.genHitInfoEntity = GenLandAttackHitInfo;
     }
 
     public void UpdateLandAttack()
@@ -306,6 +323,7 @@ public class Golem : Entity
             if (info.stage == 2)
             {
                 // TODO 地波spawner发生地波攻击
+                // NOTE 暂时不想实现了
             }
         }
         if (hitBoxEnabled)
@@ -324,7 +342,7 @@ public class Golem : Entity
     HitInfo GenLandAttackHitInfo(Entity target) => new()
     {
         attacker = this,
-        damage = 0,
+        damage = 1,
         force = new Vector2(target.transform.position.x - transform.position.x > 0 ? 1 : -1, 0),
         hitCollider = landAttackCollider,
         hitType = HitType.EntityAttack,
@@ -334,6 +352,14 @@ public class Golem : Entity
     {
         sprintHitBox.hitContinuousType = HitBox.HitContinuousType.Continuous;
         animator.Play(ANIM_SPRINT);
+        sprintHitBox.genHitInfo = () => new()
+        {
+            attacker = this,
+            damage = 1,
+            force = new Vector2(0, 1), // 方向只向上
+            hitCollider = sprintHitBox.hitCollider,
+            hitType = HitType.EntityAttack,
+        };
     }
 
     public void UpdateSprint()
