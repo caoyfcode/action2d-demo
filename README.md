@@ -1,10 +1,12 @@
 # Action2D -- BlueWitch
 
 <figure>
-  <img src="Doc/fig/Title.png" alt="标题图片" width="200" />
-  <img src="Doc/fig/Inventory.png" alt="背包图片" width="200" />
-  <img src="Doc/fig/InventoryMap.png" alt="地图图片" width="200" />
-  <img src="Doc/fig/MapDesign.png" alt="地图设计" width="200" />
+  <img src="Doc/fig/Title.png" alt="标题图片" width="400" />
+  <img src="Doc/fig/Inventory.png" alt="背包图片" width="400" />
+</figure>
+<figure>
+  <img src="Doc/fig/InventoryMap.png" alt="地图图片" width="400" />
+  <img src="Doc/fig/MapDesign.png" alt="地图设计" width="400" />
 </figure>
 
 一个较为完整的类银河恶魔城 Demo, 使用 Unity 引擎开发，包含了无缝地图、战斗系统、存档系统、怪物行为与AI、世界物品与机关交互、音乐音效播放、背包与技能配置、HUD与UI、多设备输入等功能。
@@ -16,7 +18,7 @@
 ### 无缝地图
 
 无缝地图的实现基于预先保存的每块地图区域的预制件，当玩家处于地图区域边缘处或进行传送时借助 `Resources ` 异步加载与卸载。
-地图 UI 的实现基于预先绘制的每块地图区域的图片，在运行时动态拼接 `Image` 组件，并适当计算位置映射。
+地图 UI 的实现基于预先绘制的每块地图区域的图片，在运行时动态拼接 `Image` 组件，并适当计算位置映射。地图自动加载、传送、死亡传送、地图UI如图：
 
 <figure>
   <img src="Doc/fig/AutoTeleport.gif" alt="边缘传送" width="200" />
@@ -54,14 +56,27 @@
 ### 怪物 AI
 
 怪物的行为与 AI 采用分层设计，状态机控制基础动作与基础过渡，行为树进行高级决策并影响状态机以影响基础动作。
-最初采用自己编写的状态机和行为树进行怪物 AI 的实现，后来发现 Debug 过于繁琐，就将后来编写的怪物采用了 Canvas2D 的状态机和行为树。
+最初采用自己编写的状态机和行为树(左图)进行怪物 AI 的实现，后来发现 Debug 过于繁琐，就将后来编写的怪物采用了 Canvas2D 的状态机和行为树(右图)。
 
+<table>
+<tr>
+    <td style="border-style: none;">
+        <img src="Doc/fig/CodeBT.png" alt="我的行为树代码" width=230 />
+    </td>
+    <td style="border-style: none;">
+        <table>
+        <tr><td style="border-style: none;"><img src="Doc/fig/SM.gif" alt="状态机" width=300 /></td></tr>
+        <tr><td style="border-style: none;"><img src="Doc/fig/BT.gif" alt="行为树" width=300 /></td></tr>
+        </table>
+    </td>
+</tr>
+</table>
 
-<figure>
-  <img src="Doc/fig/CodeBT.png" alt="我的行为树代码" width=100 />
-  <img src="Doc/fig/SM.gif" alt="状态机" width=200 />
-  <img src="Doc/fig/BT.gif" alt="行为树" width=200 />
-</figure>
+<!-- <figure>
+  <img src="Doc/fig/CodeBT.png" alt="我的行为树代码" width=200 />
+  <img src="Doc/fig/SM.gif" alt="状态机" width=300 />
+  <img src="Doc/fig/BT.gif" alt="行为树" width=300 />
+</figure> -->
 
 
 
@@ -74,15 +89,9 @@
 {
     "player": {
         "maxHealth": 5.0,
-        "maxMagic": 5.0,
-        "money": 0,
+        // ...
         "ability": {
-            "attack": true,
-            "defend": true,
-            "arrow": true,
-            "dash": true,
-            "doubleJump": true,
-            "wallSlide": true
+            // ...
         },
         "checkpoint": "008",
         "controlConfig": {
@@ -91,10 +100,7 @@
             "attack3": "1001"
         },
         "inventory": [
-            {
-                "id": "0000",
-                "quantity": 2
-            }
+            // ...
         ]
     },
     "bosses": [
@@ -102,12 +108,11 @@
             "id": "001",
             "dead": true
         },
-        {
-            "id": "002",
-            "dead": false
-        }
+        // ...
     ],
-    "checkpoints": [],
+    "checkpoints": [
+        // ...
+    ],
     "levels": [
         {
             "id": "003",
@@ -133,17 +138,7 @@
                 }
             ]
         },
-        {
-            "id": "004",
-            "open": true,
-            "pickupItems": [
-                {
-                    "id": "000",
-                    "picked": true
-                }
-            ],
-            "doors": []
-        },
+        // ...
     ]
 }
 ```
