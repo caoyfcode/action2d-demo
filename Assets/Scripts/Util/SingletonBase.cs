@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SingletonBase<T>: MonoBehaviour where T : MonoBehaviour
+public abstract class MonoSingletonBase<T>: MonoBehaviour where T : MonoBehaviour
 {
     public static T instance {get; protected set;} = null;
 
@@ -12,5 +12,22 @@ public class SingletonBase<T>: MonoBehaviour where T : MonoBehaviour
             instance = GetComponent<T>();
         else
             Destroy(gameObject);
+    }
+}
+
+public abstract class SingletonBase<T> where T : class, new()
+{
+    private static T instance = null;
+
+    public static T Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new T();
+            }
+            return instance;
+        }
     }
 }

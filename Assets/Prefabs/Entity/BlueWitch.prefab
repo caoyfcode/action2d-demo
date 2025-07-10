@@ -716,8 +716,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.69, y: 0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.51, y: 1.51, z: 1.51}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2447832732049689933}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2500,6 +2500,7 @@ MonoBehaviour:
   landingSFX: {fileID: 5444659149649194856}
   dashSFX: {fileID: 2077715279184508368}
   enterWallSFX: {fileID: 330751958685834565}
+  animEnd: 0
   info:
     maxHealth: 5
     health: 5
@@ -2507,9 +2508,7 @@ MonoBehaviour:
     magic: 5
     attack: 0
     defence: 0
-    secondJumpAbility: 1
-    dashAbility: 1
-    wallSlideAbility: 1
+  debugShowStateName: 
 --- !u!114 &5420220995527051328
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class PreloadResource : SingletonBase<PreloadResource>
+public class PreloadResource : MonoSingletonBase<PreloadResource>
 {
 
     public GameObject smokeRingPrefab;

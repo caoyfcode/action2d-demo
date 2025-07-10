@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 // TODO 重命名为 SaveManager/SaveDataManager
-public class DataManager : SingletonBase<DataManager>
+public class DataManager : MonoSingletonBase<DataManager>
 {
     public SaveSlotData saveSlot;
     public SettingsData settings;

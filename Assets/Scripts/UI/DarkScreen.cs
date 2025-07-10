@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DarkScreen : SingletonBase<DarkScreen>
+public class DarkScreen : MonoSingletonBase<DarkScreen>
 {
     const string ANIM_FADEOUT = "FadeOut";
     public Animator animator;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 // TODO 改名 GameInputManager
-public class GameInputManager : SingletonBase<GameInputManager>
+public class GameInputManager : MonoSingletonBase<GameInputManager>
 {
     // Start is called before the first frame update
     public enum InputType

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,24 @@ using UnityEngine;
 public class CheckpointMenu : ShownUI
 {
     public SelectGroup selectGroup;
+
+    private void OnEnable()
+    {
+        var found = DataManager.instance.saveSlot.checkpoints.Find(p => p.id == WorldManager.instance.currentLevel.id);
+        if (found != null)
+        {
+            found.open = true;
+        }
+        else
+        {
+            DataManager.instance.saveSlot.checkpoints.Add(new SaveSlotData.CheckpointSaveData()
+            {
+                id = WorldManager.instance.currentLevel.id,
+                open = true,
+            });
+        }
+        DataManager.instance.SaveCurrentSlot();
+    }
 
     void Update()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,28 +20,93 @@ public class TeleportMenu : ShownUI
     }
 
     // 每当 SetActive 或是初始时
-    void Awake()
+    // void OnEnable()
+    // {
+    //     RefreshCheckpointList();
+    //     if (listNode.transform.childCount > 0)
+    //     {
+    //         InitSelection();
+    //     }
+    // }
+    //
+    // // 第一次打卡时初始化列表
+    // void Start()
+    // {
+    //     // TODO 换成 OnEnable 中从存档读取
+    //     if (listNode.transform.childCount == 0)
+    //     {
+    //         foreach (var checkpoint in WorldManager.instance.levelData.checkpointList)
+    //         {
+    //             var obj = Instantiate(itemPrefab, listNode.transform);
+    //             var textComp = obj.GetComponentInChildren<Text>();
+    //             textComp.text = checkpoint.name;
+    //             levelIds.Add(checkpoint.levelId);
+    //         }
+    //         InitSelection();
+    //     }
+    // }
+    
+
+    private void OnEnable()
     {
+        RefreshCheckpointList();
         if (listNode.transform.childCount > 0)
         {
             InitSelection();
         }
     }
 
-    // 第一次打卡时初始化列表
-    void Start()
+    // void RefreshCheckpointList()
+    // {
+    //     HashSet<string> openCheckpoints = new();
+    //     foreach (var checkpointSave in DataManager.instance.saveSlot.checkpoints)
+    //     {
+    //         if (checkpointSave.open)
+    //         {
+    //             openCheckpoints.Add(checkpointSave.id);
+    //         }
+    //     }
+    //
+    //     var childCount = listNode.transform.childCount;
+    //     for (int i = 0; i < childCount && i < levelIds.Count; i++)
+    //     {
+    //         if (levelIds[i])
+    //     }
+    // }
+
+    void RefreshCheckpointList()
     {
-        // TODO 换成 OnEnable 中从存档读取
-        if (listNode.transform.childCount == 0)
+        HashSet<string> openCheckpoints = new();
+        foreach (var checkpointSave in DataManager.instance.saveSlot.checkpoints)
         {
-            foreach (var checkpoint in WorldManager.instance.levelData.checkpointList)
+            if (checkpointSave.open)
             {
-                var obj = Instantiate(itemPrefab, listNode.transform);
-                var textComp = obj.GetComponentInChildren<Text>();
-                textComp.text = checkpoint.name;
-                levelIds.Add(checkpoint.levelId);
+                openCheckpoints.Add(checkpointSave.id);
             }
-            InitSelection();
+        }
+    
+        var openCheckpointData =
+            WorldManager.instance.levelData.checkpointList.FindAll(p => openCheckpoints.Contains(p.levelId));
+        levelIds.Clear();
+        int childCount = listNode.transform.childCount;
+        for (int i = 0; i < openCheckpointData.Count && i < childCount; i++)
+        {
+            var textComp = listNode.transform.GetChild(i).GetComponentInChildren<Text>();
+            textComp.text = openCheckpointData[i].name ?? "";
+            levelIds.Add(openCheckpointData[i].levelId);
+        }
+    
+        for (int i = childCount; i < openCheckpointData.Count; i++)
+        {
+            var obj = Instantiate(itemPrefab, listNode.transform);
+            var textComp = obj.GetComponentInChildren<Text>();
+            textComp.text = openCheckpointData[i].name;
+            levelIds.Add(openCheckpointData[i].levelId);
+        }
+    
+        for (int i = childCount - 1; i >= openCheckpointData.Count; i--)
+        {
+            Destroy(listNode.transform.GetChild(i).gameObject);
         }
     }
 
@@ -53,7 +119,7 @@ public class TeleportMenu : ShownUI
 
     void HandleInput()
     {
-        if (GameInputManager.UiConfirm)
+        if (GameInputManager.UiConfirm && selectedId >= 0 && selectedId < levelIds.Count)
         {
             var targetLevelId = levelIds[selectedId];
             if (targetLevelId != WorldManager.CurrentLevel.id)
@@ -131,7 +197,7 @@ public class TeleportMenu : ShownUI
 
     void HandleMapPosition()
     {
-        if (selectedId < 0 || selectedId >= listNode.transform.childCount)
+        if (selectedId < 0 || selectedId >= listNode.transform.childCount || selectedId >= levelIds.Count)
         {
             return;
         }

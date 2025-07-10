@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : SingletonBase<SoundManager>
+public class SoundManager : MonoSingletonBase<SoundManager>
 {
 
     public AudioClip uiSelectionClip;

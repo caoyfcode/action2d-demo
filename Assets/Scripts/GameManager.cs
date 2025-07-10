@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 // 单例，提供公共变量的访问点以及一些游戏系统函数
-public class GameManager : SingletonBase<GameManager>
+public class GameManager : MonoSingletonBase<GameManager>
 {
     public static bool Pause
     {

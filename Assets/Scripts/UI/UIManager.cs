@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : SingletonBase<UIManager>
+public class UIManager : MonoSingletonBase<UIManager>
 {
     public static BossHeathBar BossHeathBar => instance.bossHeathBar;
     public static CheckpointMenu CheckpointMenu => instance.checkpointMenu;

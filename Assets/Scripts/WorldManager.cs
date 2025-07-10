@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldManager : SingletonBase<WorldManager>
+public class WorldManager : MonoSingletonBase<WorldManager>
 {
     public static BlueWitch Player => instance.player;
     public static Camera Camera => instance.cam;
