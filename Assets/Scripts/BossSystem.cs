@@ -6,22 +6,27 @@ public class BossSystem : MonoBehaviour
     public Entity boss;
     public bool bossFightStarted = false;
 
-
-    public void StartBossFight(Entity boss, Rect room)
+    private void Awake()
     {
-        if (!bossFightStarted && boss != null)
+        EventManager.Instance.Register<EvtStartBossFight>(StartBossFight);
+        EventManager.Instance.Register<EvtStopBossFight>(StopBossFight);
+    }
+
+    void StartBossFight(EvtStartBossFight evt)
+    {
+        if (!bossFightStarted && evt.boss != null)
         {
-            this.boss = boss;
+            boss = evt.boss;
             bossFightStarted = true;
             UIManager.BossHeathBar.valueBar.maxValue = boss.CharacterInfo.maxHealth;
             UIManager.BossHeathBar.valueBar.value = boss.CharacterInfo.health;
             UIManager.BossHeathBar.Shown = true;
-            boss.controller.SetBossRoom(room);
+            boss.controller.SetBossRoom(evt.bossRoom);
             boss.controller.OnStartBossFight();
         }
     }
 
-    public void EndBossFight()
+    void StopBossFight(EvtStopBossFight evt)
     {
         if (bossFightStarted)
         {
@@ -41,7 +46,7 @@ public class BossSystem : MonoBehaviour
         }
         if (bossFightStarted && boss == null)
         {
-            EndBossFight();
+            EventManager.Instance.TriggerEvent(new EvtStopBossFight());
         }
     }
 }

@@ -49,10 +49,15 @@ public class BossSpawner : Spawner
             var entity = spawnedObject.GetComponent<Entity>();
             entity.onDeath.AddListener(() => DataManager.instance.SaveBossData(entityId, true)); // 当死亡时保存数据
             // TODO 按照具体 boss id 获取组件传递参数
-            WorldManager.instance.bossSystem.StartBossFight(
-                entity,
-                room
-            );
+            // WorldManager.instance.bossSystem.StartBossFight(
+            //     entity,
+            //     room
+            // );
+            EventManager.Instance.TriggerEvent(new EvtStartBossFight()
+            {
+                boss = entity,
+                bossRoom = room,
+            });
         }
     }
 }
