@@ -15,6 +15,8 @@ public class MonoEntity : MonoBehaviour
     public bool HasComponent<T>() where T : EntityComponent => componentsDic.ContainsKey(typeof(T));
     #endregion
     
+    public int id = -1;
+    
     public void RefreshEntityComponents()
     {
         // collect all components
@@ -48,7 +50,6 @@ public class MonoEntity : MonoBehaviour
             PhaseFlag.PostEntityLateUpdate,
             PhaseFlag.OnEntityDisable,
             PhaseFlag.OnEntityDestroy,
-            PhaseFlag.OnEntityDrawGizmos,
         };
         
         foreach (var comp in components)
@@ -70,6 +71,8 @@ public class MonoEntity : MonoBehaviour
     
     protected void Awake()
     {
+        id = -1;
+        EntityManager.Instance.RegisterEntity(this);
         RefreshEntityComponents();
         foreach (var comp in phaseComponents[PhaseFlag.OnEntityAwake])
         {
@@ -161,6 +164,13 @@ public class MonoEntity : MonoBehaviour
     // 不采用额外编写的 DestroyEntity 来替代 Object.Destroy,
     // 原本这样做是避免在 OnDestroy 中有未定义的 Instantiate 逻辑(例如场景卸载也会调用Destroy,那么就不应该做逻辑相关的东西)
     // 我们日后采用消息系统调用 Destroy, 而非手动调用, 这样在消息系统中就可以编写删除前的逻辑了
+
+	public static void DestroyEntity(MonoEntity entity) 
+	{
+		
+	}
+
+
     protected void OnDestroy()
     {
         foreach (var comp in phaseComponents[PhaseFlag.OnEntityDestroy])
@@ -168,16 +178,5 @@ public class MonoEntity : MonoBehaviour
             comp.OnEntityDestroy();
         }
     }
-    
-    #if UNITY_EDITOR
-    // protected void OnDrawGizmos()
-    // {
-    //     if (!phaseComponents.ContainsKey(PhaseFlag.OnEntityDrawGizmos))
-    //         return;
-    //     foreach (var comp in phaseComponents[PhaseFlag.OnEntityDrawGizmos])
-    //     {
-    //         comp.OnEntityDrawGizmos();
-    //     }
-    // }
-    #endif
+   
 }

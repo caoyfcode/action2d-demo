@@ -22,6 +22,7 @@ public class EntityUpdateBase : MonoBehaviour
     public virtual void PostEntityLateUpdate() {}
     
     public virtual void OnEntityDisable() {}
+	public virtual void PreEntityDestroy() {}
     public virtual void OnEntityDestroy() {}
 
 
@@ -142,10 +143,9 @@ public enum PhaseFlag : uint
     PostEntityLateUpdate = 1 << 11,
     
     OnEntityDisable =  1 << 12,
+	PreEntityDestroy = 1 << 13,
     OnEntityDestroy = 1 << 13,
-    
-    // Editor Only
-    OnEntityDrawGizmos = 1 << 14,
+   
 }
 
 public static class EnumFlagsExtension
