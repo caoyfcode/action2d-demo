@@ -94,7 +94,7 @@ public class DataManager : MonoSingletonBase<DataManager>
         {
             string json = File.ReadAllText(dataPath);
             settings = JsonUtility.FromJson<SettingsData>(json);
-            GameInputManager.instance.LoadSettings(settings.keyboardSettings, settings.controllerSettings);
+            GameInputManager.Ins.LoadSettings(settings.keyboardSettings, settings.controllerSettings);
         }
         else
         {
@@ -106,8 +106,8 @@ public class DataManager : MonoSingletonBase<DataManager>
     {
         string json = JsonUtility.ToJson(settings, true);
         string dataPath = Path.Combine(Application.persistentDataPath, "Settings.json");
-        settings.keyboardSettings = GameInputManager.instance.keyboardSettings;
-        settings.controllerSettings = GameInputManager.instance.controllerSettings;
+        settings.keyboardSettings = GameInputManager.Ins.keyboardSettings;
+        settings.controllerSettings = GameInputManager.Ins.controllerSettings;
         File.WriteAllText(dataPath, json, System.Text.Encoding.UTF8);
     }
 

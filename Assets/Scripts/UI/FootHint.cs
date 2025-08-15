@@ -40,31 +40,31 @@ public class FootHint : MonoBehaviour
         Text text = child.GetComponentInChildren<Text>();
         switch (hintType) {
             case FootHintType.Confirm:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
                 text.text = "确认";
                 break;
             case FootHintType.Cancel:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiCancel);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiCancel);
                 text.text = "取消";
                 break;
             case FootHintType.Teleport:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm); // A
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm); // A
                 text.text = "传送";
                 break;
             case FootHintType.Equip:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
                 text.text = "装备";
                 break;
             case FootHintType.EquipSwitch:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
                 text.text = "切换";
                 break;
             case FootHintType.ZoomUp:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.UiConfirm);
                 text.text = "放大";
                 break;
             case FootHintType.ZoomDown:
-                image.sprite = GameInputManager.instance.GetInputIcon(GameInputManager.InputActionEnum.Attack1);
+                image.sprite = GameInputManager.Ins.GetInputIcon(GameInputManager.InputActionEnum.Attack1);
                 text.text = "缩小";
                 break;
         }

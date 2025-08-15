@@ -24,7 +24,7 @@ public class GameManager : MonoSingletonBase<GameManager>
         }
     }
 
-    public static bool IsMainMenuScene => MainMenu.instance != null;
+    public static bool IsMainMenuScene => MainMenu.Ins != null;
 
     public GamePreload gamePreload;
 
@@ -39,14 +39,14 @@ public class GameManager : MonoSingletonBase<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(Ins);
     }
 
     void Start()
     {
         // Application.targetFrameRate = 144;
         // isMainMenuScene = true;
-        DataManager.instance.LoadSettings();
+        DataManager.Ins.LoadSettings();
     }
 
     void Update()
@@ -79,7 +79,7 @@ public class GameManager : MonoSingletonBase<GameManager>
 
     public static void PauseForSeconds(float seconds)
     {
-        instance.pauseTimer = seconds;
+        Ins.pauseTimer = seconds;
         Pause = true;
     }
 
@@ -92,7 +92,7 @@ public class GameManager : MonoSingletonBase<GameManager>
 
     public void OnApplicationQuit()
     {
-        if (!IsMainMenuScene && WorldManager.instance != null)
+        if (!IsMainMenuScene && WorldManager.Ins != null)
         {
             if (WorldManager.CurrentLevel != null)
             {

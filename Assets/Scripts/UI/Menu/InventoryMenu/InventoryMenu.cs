@@ -26,18 +26,18 @@ public class InventoryMenu : ShownUI
         {
             selectedMenu -= 1;
             HandleShownMenu();
-            SoundManager.instance.PlayUISelection();
+            SoundManager.Ins.PlayUISelection();
         }
         else if (GameInputManager.UiSwitchRight && selectedMenu <= 1)
         {
             selectedMenu += 1;
             HandleShownMenu();
-            SoundManager.instance.PlayUISelection();
+            SoundManager.Ins.PlayUISelection();
         }
         if (Shown && GameInputManager.Inventory)
         {
             Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            SoundManager.Ins.PlayUIConfirm();
         }
     }
 

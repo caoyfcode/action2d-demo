@@ -25,13 +25,13 @@ public class BlueWitchController : EntityController
             entity.CurrentCommand.speedX = GameInputManager.Horizontal * entity.info.horizontalMoveSpeed;
             entity.CurrentCommand.startJump = GameInputManager.Jump;
             entity.CurrentCommand.holdJump = GameInputManager.JumpHold;
-            entity.CurrentCommand.dash = DataManager.instance.PlayerData.ability.dash && GameInputManager.Dash; // 前一个判断不是很必要，因为 entity 内有判断
+            entity.CurrentCommand.dash = DataManager.Ins.PlayerData.ability.dash && GameInputManager.Dash; // 前一个判断不是很必要，因为 entity 内有判断
             entity.CurrentCommand.attackHeroKnight = false;
             entity.CurrentCommand.defendFireKnight = false;
             entity.CurrentCommand.attackArcaneArcher = false;
-            UpdateAttack(DataManager.instance.PlayerData.controlConfig.attack1, GameInputManager.Attack1);
-            UpdateAttack(DataManager.instance.PlayerData.controlConfig.attack2, GameInputManager.Attack2);
-            UpdateAttack(DataManager.instance.PlayerData.controlConfig.attack3, GameInputManager.Attack3);
+            UpdateAttack(DataManager.Ins.PlayerData.controlConfig.attack1, GameInputManager.Attack1);
+            UpdateAttack(DataManager.Ins.PlayerData.controlConfig.attack2, GameInputManager.Attack2);
+            UpdateAttack(DataManager.Ins.PlayerData.controlConfig.attack3, GameInputManager.Attack3);
             // entity.CurrentCommand.attackHeroKnight = GameInputManager.Attack1;
             // entity.CurrentCommand.defendFireKnight = GameInputManager.Attack2;
             // entity.CurrentCommand.attackArcaneArcher = GameInputManager.Attack3;

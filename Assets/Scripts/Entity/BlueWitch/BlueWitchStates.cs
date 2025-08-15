@@ -232,7 +232,7 @@ public class BlueWitchAirFree : BlueWitchAirState
             entity.velocity.y = entity.info.airJumpSpeed;
             entity.airJumpCount++;
             entity.ResetAirAttackCount(); // 跳跃重置攻击
-            UnityEngine.Object.Instantiate(PreloadResource.instance.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
+            UnityEngine.Object.Instantiate(PreloadResource.Ins.smokeRingPrefab, new Vector3(entity.transform.position.x, entity.transform.position.y - 0.59f, 0), Quaternion.identity);
             entity.jumpSFX.pitch = 2f;
             entity.jumpSFX.Play();
         }
@@ -509,7 +509,7 @@ public class BlueWitchDeath: BlueWitchState
     public override void Exit()
     {
         entity.stateControlInvincible = false;
-        WorldManager.TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
-        DarkScreen.instance.DarkScreenWait(() => entity.Heal());
+        WorldManager.TeleportCheckpoint(DataManager.Ins.PlayerData.checkpoint);
+        DarkScreen.Ins.DarkScreenWait(() => entity.Heal());
     }
 }

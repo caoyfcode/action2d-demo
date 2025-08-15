@@ -12,21 +12,21 @@ public class MonoEntityUpdater : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        EntityManager.Instance.Init();
+        EntityManager.Ins.Init();
     }
 
     void Update()
     {
-        EntityManager.Instance.UpdateAll();
+        EntityManager.Ins.UpdateAll();
     }
 
     void FixedUpdate()
     {
-        EntityManager.Instance.FixedUpdateAll();
+        EntityManager.Ins.FixedUpdateAll();
     }
 
     void LateUpdate()
     {
-        EntityManager.Instance.LateUpdateAll();
+        EntityManager.Ins.LateUpdateAll();
     }
 }

@@ -37,7 +37,7 @@ public class PauseMenu : ShownUI
         if (Shown && (GameInputManager.UiCancel || GameInputManager.Pause))
         {
             Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            SoundManager.Ins.PlayUIConfirm();
         }
     }
 
@@ -49,12 +49,12 @@ public class PauseMenu : ShownUI
     public void Settings()
     {
         Shown = false;
-        UIManager.instance.settingsMenu.Shown = true;
+        UIManager.Ins.settingsMenu.Shown = true;
     }
 
     public void Exit()
     {
-        DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("MainMenu"));
-        SoundManager.instance.StopBackgroundMusic();
+        DarkScreen.Ins.DarkScreenWait(SceneManager.LoadSceneAsync("MainMenu"));
+        SoundManager.Ins.StopBackgroundMusic();
     }
 }

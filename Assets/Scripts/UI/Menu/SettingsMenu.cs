@@ -63,18 +63,18 @@ public class SettingsMenu : ShownUI
         {
             selected -= 1;
             HandleShownMenu();
-            SoundManager.instance.PlayUISelection();
+            SoundManager.Ins.PlayUISelection();
         }
         else if (GameInputManager.UiSwitchRight && selected <= headers.Count - 2)
         {
             selected += 1;
             HandleShownMenu();
-            SoundManager.instance.PlayUISelection();
+            SoundManager.Ins.PlayUISelection();
         }
         if (Shown && GameInputManager.UiCancel)
         {
             Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            SoundManager.Ins.PlayUIConfirm();
         }
     }
 

@@ -27,14 +27,14 @@ public class MainList : ShownUI
     public void StartGame()
     {
         // TODO 打开存档列表
-        DarkScreen.instance.DarkScreenWait(SceneManager.LoadSceneAsync("World"));
-        SoundManager.instance.StopBackgroundMusic();
+        DarkScreen.Ins.DarkScreenWait(SceneManager.LoadSceneAsync("World"));
+        SoundManager.Ins.StopBackgroundMusic();
         // TODO DataManager 加载数据
     }
 
     public void OpenSettingsMenu()
     {
-        MainMenu.instance.OpenSettingsMenu();
+        MainMenu.Ins.OpenSettingsMenu();
     }
 
     public void ExitGame()

@@ -22,7 +22,7 @@ public class MainMenu : MonoSingletonBase<MainMenu>
 
     void Start()
     {
-        SoundManager.instance.PlayBackgroundMusic(SoundManager.instance.mainMenuMusic);
+        SoundManager.Ins.PlayBackgroundMusic(SoundManager.Ins.mainMenuMusic);
     }
 
     void Update()
@@ -30,15 +30,15 @@ public class MainMenu : MonoSingletonBase<MainMenu>
         if (GameInputManager.UiCancel && settingsMenu.Shown)
         {
             CloseSettingsMenu();
-            DataManager.instance.SaveSettings();
-            SoundManager.instance.PlayUIConfirm();
+            DataManager.Ins.SaveSettings();
+            SoundManager.Ins.PlayUIConfirm();
         }
     }
 
 
     void OnDestroy()
     {
-        instance = null;
+        Ins = null;
     }
 
     public void OpenSettingsMenu()

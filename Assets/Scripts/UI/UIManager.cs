@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class UIManager : MonoSingletonBase<UIManager>
 {
-    public static BossHeathBar BossHeathBar => instance.bossHeathBar;
-    public static CheckpointMenu CheckpointMenu => instance.checkpointMenu;
-    public static TeleportMenu TeleportMenu => instance.teleportMenu;
-    public static bool MenuShown => instance.pauseMenu.Shown || instance.checkpointMenu.Shown || instance.teleportMenu.Shown || instance.inventoryMenu.Shown || instance.settingsMenu.Shown;
+    public static BossHeathBar BossHeathBar => Ins.bossHeathBar;
+    public static CheckpointMenu CheckpointMenu => Ins.checkpointMenu;
+    public static TeleportMenu TeleportMenu => Ins.teleportMenu;
+    public static bool MenuShown => Ins.pauseMenu.Shown || Ins.checkpointMenu.Shown || Ins.teleportMenu.Shown || Ins.inventoryMenu.Shown || Ins.settingsMenu.Shown;
 
     [Header("HUD")]
     // public StatusIconList playerHeath;
@@ -59,7 +59,7 @@ public class UIManager : MonoSingletonBase<UIManager>
             if (menu == teleportMenu || menu == checkpointMenu || menu == pauseMenu || menu == inventoryMenu || menu == settingsMenu)
             {
                 menu.Shown = true;
-                SoundManager.instance.PlayUIConfirm();
+                SoundManager.Ins.PlayUIConfirm();
             }
         }
     }

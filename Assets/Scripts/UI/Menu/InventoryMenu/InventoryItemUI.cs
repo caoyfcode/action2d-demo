@@ -31,7 +31,7 @@ public class InventoryItemUI : SelectItem
 
     public void SetItem(InventoryItem item)
     {
-        var sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
+        var sprite = WorldManager.Ins.itemData.GetItemSprite(item.id);
         if (sprite == null)
         {
             UnsetItem();

@@ -87,7 +87,7 @@ public class Map : MonoBehaviour
     void RefreshMapPiceces()
     {
         List<string> openMaps = new();
-        foreach (var level in DataManager.instance.saveSlot.levels)
+        foreach (var level in DataManager.Ins.saveSlot.levels)
         {
             if (level.open)
             {
@@ -99,7 +99,7 @@ public class Map : MonoBehaviour
         {
             var child = transform.GetChild(i);
             var piece = child.GetComponent<MapPiece>();
-            var levelData = WorldManager.instance.levelData.GetLevelData(openMaps[i]);
+            var levelData = WorldManager.Ins.levelData.GetLevelData(openMaps[i]);
             piece.backRectTransform.sizeDelta = new Vector2(levelData.rect.width, levelData.rect.height);
             piece.foreground.sprite = levelData.GetMapSprite();
             piece.backRectTransform.localPosition = new Vector3(levelData.rect.x, levelData.rect.y, 0);
@@ -108,7 +108,7 @@ public class Map : MonoBehaviour
         {
             var obj = Instantiate(mapPiecePrefab, transform);
             var piece = obj.GetComponent<MapPiece>();
-            var levelData = WorldManager.instance.levelData.GetLevelData(openMaps[i]);
+            var levelData = WorldManager.Ins.levelData.GetLevelData(openMaps[i]);
             piece.backRectTransform.sizeDelta = new Vector2(levelData.rect.width, levelData.rect.height);
             piece.foreground.sprite = levelData.GetMapSprite();
             piece.backRectTransform.localPosition = new Vector3(levelData.rect.x, levelData.rect.y, 0);

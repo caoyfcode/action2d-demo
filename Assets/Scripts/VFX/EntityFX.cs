@@ -21,7 +21,7 @@ public class EntityFX : MonoBehaviour
     {
         flashStarted = true;
         originalMaterial = flashedSprite.material;
-        flashedSprite.material = PreloadResource.instance.whiteMaterial;
+        flashedSprite.material = PreloadResource.Ins.whiteMaterial;
         yield return new WaitForSeconds(flashDuration);
         flashedSprite.material = originalMaterial;
         flashStarted = false;
@@ -29,7 +29,7 @@ public class EntityFX : MonoBehaviour
 
     public void StartBloodFX(Vector2 position, Vector2 hitDirection)
     {
-        var obj = Instantiate(PreloadResource.instance.bloodEffectPrefab);
+        var obj = Instantiate(PreloadResource.Ins.bloodEffectPrefab);
         if (hitDirection.x < 0)
         {
             obj.transform.Rotate(0f, 180f, 0f);
@@ -44,7 +44,7 @@ public class EntityFX : MonoBehaviour
 
     public void StartDeathFX(Vector2 position)
     {
-        var obj = Instantiate(PreloadResource.instance.explosionPrefab);
+        var obj = Instantiate(PreloadResource.Ins.explosionPrefab);
         obj.transform.position = position;
     }
 

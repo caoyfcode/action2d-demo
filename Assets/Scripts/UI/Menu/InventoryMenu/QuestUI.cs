@@ -14,7 +14,7 @@ public class QuestUI : ShownUI
 
     void OnEnable()
     {
-        UIManager.instance.inventoryMenu.footHint.SetHints(new()); // 空
+        UIManager.Ins.inventoryMenu.footHint.SetHints(new()); // 空
     }
 
     // Update is called once per frame

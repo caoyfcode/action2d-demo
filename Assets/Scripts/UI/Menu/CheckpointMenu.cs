@@ -9,20 +9,20 @@ public class CheckpointMenu : ShownUI
 
     private void OnEnable()
     {
-        var found = DataManager.instance.saveSlot.checkpoints.Find(p => p.id == WorldManager.instance.currentLevel.id);
+        var found = DataManager.Ins.saveSlot.checkpoints.Find(p => p.id == WorldManager.Ins.currentLevel.id);
         if (found != null)
         {
             found.open = true;
         }
         else
         {
-            DataManager.instance.saveSlot.checkpoints.Add(new SaveSlotData.CheckpointSaveData()
+            DataManager.Ins.saveSlot.checkpoints.Add(new SaveSlotData.CheckpointSaveData()
             {
-                id = WorldManager.instance.currentLevel.id,
+                id = WorldManager.Ins.currentLevel.id,
                 open = true,
             });
         }
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.SaveCurrentSlot();
     }
 
     void Update()
@@ -46,7 +46,7 @@ public class CheckpointMenu : ShownUI
         WorldManager.Player.Heal();
         Shown = false;
         // WorldManager.ReloadCurrentLevel();
-        WorldManager.TeleportCheckpoint(WorldManager.instance.currentLevel.id);
+        WorldManager.TeleportCheckpoint(WorldManager.Ins.currentLevel.id);
     }
 
     public void Teleport()

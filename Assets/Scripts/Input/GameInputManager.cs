@@ -16,7 +16,7 @@ public class GameInputManager : MonoSingletonBase<GameInputManager>
         SwitchController, // does not use
     }
 
-    public static InputType CurrentInputType => instance.currentInputType;
+    public static InputType CurrentInputType => Ins.currentInputType;
 
     [SerializeField]
     InputType currentInputType = InputType.Keyoard;
@@ -43,7 +43,7 @@ public class GameInputManager : MonoSingletonBase<GameInputManager>
         get
         {
             // 限制移动的斜率
-            Vector2 v = instance.move.ReadValue<Vector2>();
+            Vector2 v = Ins.move.ReadValue<Vector2>();
             if (v.x == 0 || v.y == 0)
             {
                 return v;
@@ -63,26 +63,26 @@ public class GameInputManager : MonoSingletonBase<GameInputManager>
             }
         }
     }
-    public static Vector2 MoveTrigger => instance.move.WasPressedThisFrame() ? Move : Vector2.zero;
+    public static Vector2 MoveTrigger => Ins.move.WasPressedThisFrame() ? Move : Vector2.zero;
     public static float Horizontal => Move.x;
     public static float Vertical => Move.y;
-    public static bool UiSwitchLeft => instance.uiSwitch.WasPressedThisFrame() && instance.uiSwitch.ReadValue<float>() < 0;
-    public static bool UiSwitchRight => instance.uiSwitch.WasPressedThisFrame() && instance.uiSwitch.ReadValue<float>() > 0;
+    public static bool UiSwitchLeft => Ins.uiSwitch.WasPressedThisFrame() && Ins.uiSwitch.ReadValue<float>() < 0;
+    public static bool UiSwitchRight => Ins.uiSwitch.WasPressedThisFrame() && Ins.uiSwitch.ReadValue<float>() > 0;
     // public static float UiSwitch => instance.uiSwitch.ReadValue<float>();
-    public static bool UiConfirm => instance.jump.WasPressedThisFrame();
-    public static bool UiCancel => instance.attack1.WasPressedThisFrame() || instance.attack3.WasPressedThisFrame() || Keyboard.current.escapeKey.wasPressedThisFrame;
+    public static bool UiConfirm => Ins.jump.WasPressedThisFrame();
+    public static bool UiCancel => Ins.attack1.WasPressedThisFrame() || Ins.attack3.WasPressedThisFrame() || Keyboard.current.escapeKey.wasPressedThisFrame;
     public static bool UIMapZoomUp => JumpHold;
-    public static bool UIMapZoomDown => instance.attack1.ReadValue<float>() > 0;
-    public static bool Inventory => instance.inventory.WasPressedThisFrame();
-    public static bool Pause => instance.pause.WasPressedThisFrame();
-    public static bool Attack1 => instance.attack1.WasPressedThisFrame();
-    public static bool Attack2 => instance.attack2.WasPressedThisFrame();
-    public static bool Attack3 => instance.attack3.WasPressedThisFrame();
-    public static bool Jump => instance.jump.WasPressedThisFrame();
-    public static bool JumpHold => instance.jump.ReadValue<float>() > 0;
-    public static bool Dash => instance.dash.WasPressedThisFrame();
-    public static bool Heal => instance.heal.WasPressedThisFrame();
-    public static bool Hook => instance.hook.WasPressedThisFrame();
+    public static bool UIMapZoomDown => Ins.attack1.ReadValue<float>() > 0;
+    public static bool Inventory => Ins.inventory.WasPressedThisFrame();
+    public static bool Pause => Ins.pause.WasPressedThisFrame();
+    public static bool Attack1 => Ins.attack1.WasPressedThisFrame();
+    public static bool Attack2 => Ins.attack2.WasPressedThisFrame();
+    public static bool Attack3 => Ins.attack3.WasPressedThisFrame();
+    public static bool Jump => Ins.jump.WasPressedThisFrame();
+    public static bool JumpHold => Ins.jump.ReadValue<float>() > 0;
+    public static bool Dash => Ins.dash.WasPressedThisFrame();
+    public static bool Heal => Ins.heal.WasPressedThisFrame();
+    public static bool Hook => Ins.hook.WasPressedThisFrame();
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -239,7 +239,7 @@ public class GameInputManager : MonoSingletonBase<GameInputManager>
                     InputActionEnum.UiCancel => keyboardSettings.attack1, // J
                     _ => keyboardSettings.pause,
                 };
-                return GameManager.instance.gamePreload.inputIconMap.GetKeyboardIcon(inputName);
+                return GameManager.Ins.gamePreload.inputIconMap.GetKeyboardIcon(inputName);
             default:
                 inputName = iae switch {
                     InputActionEnum.UiSwitchLeft => controllerSettings.uiSwitchLeft,
@@ -261,7 +261,7 @@ public class GameInputManager : MonoSingletonBase<GameInputManager>
                     InputActionEnum.UiCancel => controllerSettings.attack3, // East
                     _ => controllerSettings.pause,
                 };
-                return GameManager.instance.gamePreload.inputIconMap.GetXboxIcon(inputName);
+                return GameManager.Ins.gamePreload.inputIconMap.GetXboxIcon(inputName);
         }
 
     }

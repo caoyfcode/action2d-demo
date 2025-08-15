@@ -77,7 +77,7 @@ public class TeleportMenu : ShownUI
     void RefreshCheckpointList()
     {
         HashSet<string> openCheckpoints = new();
-        foreach (var checkpointSave in DataManager.instance.saveSlot.checkpoints)
+        foreach (var checkpointSave in DataManager.Ins.saveSlot.checkpoints)
         {
             if (checkpointSave.open)
             {
@@ -86,7 +86,7 @@ public class TeleportMenu : ShownUI
         }
     
         var openCheckpointData =
-            WorldManager.instance.levelData.checkpointList.FindAll(p => openCheckpoints.Contains(p.levelId));
+            WorldManager.Ins.levelData.checkpointList.FindAll(p => openCheckpoints.Contains(p.levelId));
         levelIds.Clear();
         int childCount = listNode.transform.childCount;
         for (int i = 0; i < openCheckpointData.Count && i < childCount; i++)
@@ -128,12 +128,12 @@ public class TeleportMenu : ShownUI
                 WorldManager.TeleportCheckpoint(targetLevelId);
             }
             Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            SoundManager.Ins.PlayUIConfirm();
         }
         if (Shown && GameInputManager.UiCancel)
         {
             Shown = false;
-            SoundManager.instance.PlayUIConfirm();
+            SoundManager.Ins.PlayUIConfirm();
         }
     }
 
@@ -190,7 +190,7 @@ public class TeleportMenu : ShownUI
             if (selectedId >= 0 && selectedId < listNode.transform.childCount)
             {
                 listNode.transform.GetChild(selectedId).GetComponent<SelectItem>().selected = true;
-                SoundManager.instance.PlayUISelection();
+                SoundManager.Ins.PlayUISelection();
             }
         }
     }
@@ -201,6 +201,6 @@ public class TeleportMenu : ShownUI
         {
             return;
         }
-        map.MoveTo(WorldManager.instance.levelData.GetCheckpointPosition(levelIds[selectedId]));
+        map.MoveTo(WorldManager.Ins.levelData.GetCheckpointPosition(levelIds[selectedId]));
     }
 }

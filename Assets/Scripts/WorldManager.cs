@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class WorldManager : MonoSingletonBase<WorldManager>
 {
-    public static BlueWitch Player => instance.player;
-    public static Camera Camera => instance.cam;
-    public static CameraController CameraController => instance.cameraController;
-    public static Level CurrentLevel => instance.currentLevel;
+    public static BlueWitch Player => Ins.player;
+    public static Camera Camera => Ins.cam;
+    public static CameraController CameraController => Ins.cameraController;
+    public static Level CurrentLevel => Ins.currentLevel;
 
     public BlueWitch player;
     public Camera cam;
@@ -27,15 +27,15 @@ public class WorldManager : MonoSingletonBase<WorldManager>
     void Start()
     {
         // TODO 在完成主场景后将
-        if (DataManager.instance.CheckSaveSlotExits(0))
+        if (DataManager.Ins.CheckSaveSlotExits(0))
         {
-            DataManager.instance.LoadSaveSlot(0);
+            DataManager.Ins.LoadSaveSlot(0);
         }
         else
         {
-            DataManager.instance.InitSaveSlot(0);
+            DataManager.Ins.InitSaveSlot(0);
         }
-        TeleportCheckpoint(DataManager.instance.PlayerData.checkpoint);
+        TeleportCheckpoint(DataManager.Ins.PlayerData.checkpoint);
     }
 
     // save 目的是传送后修改复活点(对于到传送点的传送需要，对于边界传送不需要)
@@ -43,15 +43,15 @@ public class WorldManager : MonoSingletonBase<WorldManager>
     {
         if (saveCheckpoint)
         {
-            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId), true);
-            DarkScreen.instance.DarkScreenWait(() => {
-                DataManager.instance.PlayerData.checkpoint = levelId;
-                DataManager.instance.SaveCurrentSlot();
+            Teleport(levelId, Ins.levelData.GetCheckpointPosition(levelId), true);
+            DarkScreen.Ins.DarkScreenWait(() => {
+                DataManager.Ins.PlayerData.checkpoint = levelId;
+                DataManager.Ins.SaveCurrentSlot();
             });
         }
         else
         {
-            Teleport(levelId, instance.levelData.GetCheckpointPosition(levelId), false);
+            Teleport(levelId, Ins.levelData.GetCheckpointPosition(levelId), false);
         }   
     }
 
@@ -60,17 +60,17 @@ public class WorldManager : MonoSingletonBase<WorldManager>
     {
         Player.teleportInvincibleTimer = 0.5f;
         GameManager.Pause = true;
-        SoundManager.instance.StopBackgroundMusic();
-        DarkScreen.instance.DarkScreenWait(() => instance.player.transform.position = position);
-        if (instance.currentLevel && instance.currentLevel.id == levelId && reloadIfSameLevel) // should reload
+        SoundManager.Ins.StopBackgroundMusic();
+        DarkScreen.Ins.DarkScreenWait(() => Ins.player.transform.position = position);
+        if (Ins.currentLevel && Ins.currentLevel.id == levelId && reloadIfSameLevel) // should reload
         {
-            GameObject obj = instance.currentLevel.gameObject;
-            instance.currentLevel = null;
-            DarkScreen.instance.DarkScreenWait(() => DestroyImmediate(obj));
+            GameObject obj = Ins.currentLevel.gameObject;
+            Ins.currentLevel = null;
+            DarkScreen.Ins.DarkScreenWait(() => DestroyImmediate(obj));
         }
-        if (!instance.currentLevel || instance.currentLevel.id != levelId)
+        if (!Ins.currentLevel || Ins.currentLevel.id != levelId)
         {
-            DarkScreen.instance.DarkScreenWait(instance.LoadLevel(levelId));
+            DarkScreen.Ins.DarkScreenWait(Ins.LoadLevel(levelId));
         }
     }
     
@@ -92,9 +92,9 @@ public class WorldManager : MonoSingletonBase<WorldManager>
             obj.transform.SetParent(levelContainer.transform);
             currentLevel = obj.GetComponent<Level>();
             currentLevel.id = levelId;
-            if (DataManager.instance.CurrentLevelData == null)
+            if (DataManager.Ins.CurrentLevelData == null)
             {
-                DataManager.instance.saveSlot.levels.Add(new (){
+                DataManager.Ins.saveSlot.levels.Add(new (){
                     id = levelId,
                 });
             }
@@ -112,7 +112,7 @@ public class WorldManager : MonoSingletonBase<WorldManager>
         cameraController.MoveInstantlyAndSetBoundaries();
         if (currentLevel && currentLevel.bgm != null)
         {
-            SoundManager.instance.PlayBackgroundMusic(currentLevel.bgm);
+            SoundManager.Ins.PlayBackgroundMusic(currentLevel.bgm);
         }
     }
 
@@ -121,12 +121,12 @@ public class WorldManager : MonoSingletonBase<WorldManager>
     {
         if (ItemData.AttackItemIds.Contains(item.id) || ItemData.AbilityItemIds.Contains(item.id))
         {
-            DataManager.instance.PlayerData.ability.SetById(item.id);
-            UIManager.instance.inventoryMenu.inventory.RefreshAttackTable();
+            DataManager.Ins.PlayerData.ability.SetById(item.id);
+            UIManager.Ins.inventoryMenu.inventory.RefreshAttackTable();
         }
         else
         {
-            var inventory = DataManager.instance.PlayerData.inventory;
+            var inventory = DataManager.Ins.PlayerData.inventory;
             bool found = false;
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -141,9 +141,9 @@ public class WorldManager : MonoSingletonBase<WorldManager>
             {
                 inventory.Add(item);
             }
-            UIManager.instance.inventoryMenu.inventory.RefreshItemTable();
+            UIManager.Ins.inventoryMenu.inventory.RefreshItemTable();
         }
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.SaveCurrentSlot();
     }
 
     public void ChangeAttackConfig(int attackIndex, string id)
@@ -156,34 +156,34 @@ public class WorldManager : MonoSingletonBase<WorldManager>
         switch (attackIndex)
         {
             case 0:
-                DataManager.instance.PlayerData.controlConfig.attack1 = id;
-                if (DataManager.instance.PlayerData.controlConfig.attack2 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack2 = "";
-                if (DataManager.instance.PlayerData.controlConfig.attack3 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack3 = "";
-                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                DataManager.Ins.PlayerData.controlConfig.attack1 = id;
+                if (DataManager.Ins.PlayerData.controlConfig.attack2 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack2 = "";
+                if (DataManager.Ins.PlayerData.controlConfig.attack3 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack3 = "";
+                UIManager.Ins.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             case 1:
-                DataManager.instance.PlayerData.controlConfig.attack2 = id;
-                if (DataManager.instance.PlayerData.controlConfig.attack1 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack1 = "";
-                if (DataManager.instance.PlayerData.controlConfig.attack3 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack3 = "";
-                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                DataManager.Ins.PlayerData.controlConfig.attack2 = id;
+                if (DataManager.Ins.PlayerData.controlConfig.attack1 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack1 = "";
+                if (DataManager.Ins.PlayerData.controlConfig.attack3 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack3 = "";
+                UIManager.Ins.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             case 2:
-                DataManager.instance.PlayerData.controlConfig.attack3 = id;
-                if (DataManager.instance.PlayerData.controlConfig.attack1 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack1 = "";
-                if (DataManager.instance.PlayerData.controlConfig.attack2 == id)
-                    DataManager.instance.PlayerData.controlConfig.attack2 = "";
-                UIManager.instance.inventoryMenu.inventory.RefreshAttackConfig();
+                DataManager.Ins.PlayerData.controlConfig.attack3 = id;
+                if (DataManager.Ins.PlayerData.controlConfig.attack1 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack1 = "";
+                if (DataManager.Ins.PlayerData.controlConfig.attack2 == id)
+                    DataManager.Ins.PlayerData.controlConfig.attack2 = "";
+                UIManager.Ins.inventoryMenu.inventory.RefreshAttackConfig();
                 break;
             default:
                 Debug.LogError("Invalid attack index: " + attackIndex);
                 break;
         }
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.SaveCurrentSlot();
     }
 
     // [Serializable]

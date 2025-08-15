@@ -75,7 +75,7 @@ public class PickupHud : MonoBehaviour
                 HudShown = true;
                 InventoryItem item = items.Dequeue();
                 text.text = "x " + item.quantity;
-                icon.sprite = WorldManager.instance.itemData.GetItemSprite(item.id);
+                icon.sprite = WorldManager.Ins.itemData.GetItemSprite(item.id);
             }
             else
             {

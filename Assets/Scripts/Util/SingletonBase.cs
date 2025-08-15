@@ -3,13 +3,13 @@ using UnityEngine;
 
 public abstract class MonoSingletonBase<T>: MonoBehaviour where T : MonoBehaviour
 {
-    public static T instance {get; protected set;} = null;
+    public static T Ins {get; protected set;} = null;
 
 
     protected virtual void Awake()
     {
-        if (instance == null)
-            instance = GetComponent<T>();
+        if (Ins == null)
+            Ins = GetComponent<T>();
         else
             Destroy(gameObject);
     }
@@ -19,7 +19,7 @@ public abstract class SingletonBase<T> where T : class, new()
 {
     private static T instance = null;
 
-    public static T Instance
+    public static T Ins
     {
         get
         {

@@ -139,7 +139,7 @@ public class BlueWitch : Entity
     internal BlueWitchDeath deathState;
     public string debugShowStateName;
     // 状态转换条件中的通用部分
-    internal bool DashCondition => DataManager.instance.PlayerData.ability.dash && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
+    internal bool DashCondition => DataManager.Ins.PlayerData.ability.dash && CurrentCommand.dash && dashCoolDownTimer <= 0 && airDashCount == 0;
     internal AttackType CurrentAttack
     {
         get
@@ -157,8 +157,8 @@ public class BlueWitch : Entity
     }
     internal bool AttackCondition => CurrentAttack != AttackType.None;
     internal bool JumpCondition => CurrentCommand.startJump && !isOnCeiling;
-    internal bool AirJumpCondition => DataManager.instance.PlayerData.ability.doubleJump && airJumpCount <= 0 && JumpCondition;
-    internal bool WallSlideCondition => DataManager.instance.PlayerData.ability.wallSlide && !isOnGround && IsFacingWall;
+    internal bool AirJumpCondition => DataManager.Ins.PlayerData.ability.doubleJump && airJumpCount <= 0 && JumpCondition;
+    internal bool WallSlideCondition => DataManager.Ins.PlayerData.ability.wallSlide && !isOnGround && IsFacingWall;
     #endregion
 
     // Start is called before the first frame update

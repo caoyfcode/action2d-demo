@@ -10,7 +10,7 @@ public class MapUI : ShownUI
     void Update()
     {
         map.Move(GameInputManager.Move);
-        UIManager.instance.inventoryMenu.footHint.SetHints(new(){FootHint.FootHintType.ZoomUp, FootHint.FootHintType.ZoomDown});
+        UIManager.Ins.inventoryMenu.footHint.SetHints(new(){FootHint.FootHintType.ZoomUp, FootHint.FootHintType.ZoomDown});
 
         /// TODO 调整 scale 改为单独的按键
         bool zoomUp = GameInputManager.UIMapZoomUp;

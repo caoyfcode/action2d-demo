@@ -73,12 +73,12 @@ public class InventoryUI : ShownUI
 
     void HandleInput()
     {
-        if (UIManager.instance.inventoryMenu.Shown)
+        if (UIManager.Ins.inventoryMenu.Shown)
         {
             if (GameInputManager.UiCancel && state != State.SelectAttackConfigForAttackTable && state != State.SelectAttackTableForAttackConfig)
             {
-                UIManager.instance.inventoryMenu.Shown = false;
-                SoundManager.instance.PlayUIConfirm();
+                UIManager.Ins.inventoryMenu.Shown = false;
+                SoundManager.Ins.PlayUIConfirm();
                 return;
             }
 
@@ -116,7 +116,7 @@ public class InventoryUI : ShownUI
                     if (attackConfig.SelectionValid && GameInputManager.UiConfirm)
                     {
                         string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
-                        WorldManager.instance.ChangeAttackConfig(attackConfig.selected, id);
+                        WorldManager.Ins.ChangeAttackConfig(attackConfig.selected, id);
                         state = State.SelectAttackTable;
                         attackConfig.Unselect();
                     }
@@ -130,7 +130,7 @@ public class InventoryUI : ShownUI
                     if (attackTable.SelectionValid && GameInputManager.UiConfirm)
                     {
                         string id = attackTableRoot.transform.GetChild(attackTable.selected).GetComponent<InventoryItemUI>().item.id;
-                        WorldManager.instance.ChangeAttackConfig(attackConfig.selected, id);
+                        WorldManager.Ins.ChangeAttackConfig(attackConfig.selected, id);
                         state = State.SelectAttackConfig;
                         attackTable.Unselect();
                     }
@@ -171,7 +171,7 @@ public class InventoryUI : ShownUI
         }
         if (itemUI != null && itemUI.hasItem)
         {
-            var itemData = WorldManager.instance.itemData.GetItemData(itemUI.item.id);
+            var itemData = WorldManager.Ins.itemData.GetItemData(itemUI.item.id);
             if (itemData != null)
             {
                 descriptionName.text = itemData.name;
@@ -284,7 +284,7 @@ public class InventoryUI : ShownUI
 
     public void UpdateFootHint()
     {
-        var footHint = UIManager.instance.inventoryMenu.footHint;
+        var footHint = UIManager.Ins.inventoryMenu.footHint;
         switch (state)
         {
             case State.SelectNone:
@@ -313,25 +313,25 @@ public class InventoryUI : ShownUI
         var attack1 = attackConfigRoot.transform.GetChild(0).GetComponent<InventoryItemUI>();
         var attack2 = attackConfigRoot.transform.GetChild(1).GetComponent<InventoryItemUI>();
         var attack3 = attackConfigRoot.transform.GetChild(2).GetComponent<InventoryItemUI>();
-        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack1))
+        if (ItemData.AttackItemIds.Contains(DataManager.Ins.PlayerData.controlConfig.attack1))
         {
-            attack1.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack1, quantity = 1});
+            attack1.SetItem(new InventoryItem { id = DataManager.Ins.PlayerData.controlConfig.attack1, quantity = 1});
         }
         else
         {
             attack1.UnsetItem();
         }
-        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack2))
+        if (ItemData.AttackItemIds.Contains(DataManager.Ins.PlayerData.controlConfig.attack2))
         {
-            attack2.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack2, quantity = 1 });
+            attack2.SetItem(new InventoryItem { id = DataManager.Ins.PlayerData.controlConfig.attack2, quantity = 1 });
         }
         else
         {
             attack2.UnsetItem();
         }
-        if (ItemData.AttackItemIds.Contains(DataManager.instance.PlayerData.controlConfig.attack3))
+        if (ItemData.AttackItemIds.Contains(DataManager.Ins.PlayerData.controlConfig.attack3))
         {
-            attack3.SetItem(new InventoryItem { id = DataManager.instance.PlayerData.controlConfig.attack3, quantity = 1 });
+            attack3.SetItem(new InventoryItem { id = DataManager.Ins.PlayerData.controlConfig.attack3, quantity = 1 });
         }
         else
         {
@@ -343,7 +343,7 @@ public class InventoryUI : ShownUI
     public void RefreshAttackTable()
     {
         int childCount = attackTableRoot.transform.childCount;
-        var attackItems = DataManager.instance.PlayerData.ability.GetAttackItems();
+        var attackItems = DataManager.Ins.PlayerData.ability.GetAttackItems();
         for (int i = 0; i < attackItems.Count && i < childCount; i++)
         {
             var itemObj = attackTableRoot.transform.GetChild(i).gameObject;
@@ -372,8 +372,8 @@ public class InventoryUI : ShownUI
         int childCount = itemTableRoot.transform.childCount;
         List<InventoryItem> items = new();
         // 包含被动能力以及物品列表
-        items.AddRange(DataManager.instance.PlayerData.ability.GetAbilityItems());
-        items.AddRange(DataManager.instance.PlayerData.inventory);
+        items.AddRange(DataManager.Ins.PlayerData.ability.GetAbilityItems());
+        items.AddRange(DataManager.Ins.PlayerData.inventory);
         for (int i = 0; i < items.Count && i < childCount; i++)
         {
             var itemObj = itemTableRoot.transform.GetChild(i).gameObject;

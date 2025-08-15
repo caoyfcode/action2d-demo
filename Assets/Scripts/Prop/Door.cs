@@ -29,15 +29,15 @@ public class Door : Interactive
     protected override void Start()
     {
         base.Start();
-        var found = DataManager.instance.CurrentLevelData.doors.Find(x => x.id == id);
+        var found = DataManager.Ins.CurrentLevelData.doors.Find(x => x.id == id);
         if (found == null)
         {
             IsOpen = sr.sprite == openSprite; // 利用默认状态来初始化
-            DataManager.instance.CurrentLevelData.doors.Add(new(){
+            DataManager.Ins.CurrentLevelData.doors.Add(new(){
                 id = id,
                 open = IsOpen,
             });
-            DataManager.instance.SaveCurrentSlot();
+            DataManager.Ins.SaveCurrentSlot();
         }
         else
         {
@@ -57,19 +57,19 @@ public class Door : Interactive
                 {
                     HintShown = false;
                     IsOpen = true;
-                    var found = DataManager.instance.CurrentLevelData.doors.Find(x => x.id == id);
+                    var found = DataManager.Ins.CurrentLevelData.doors.Find(x => x.id == id);
                     if (found != null)
                     {
                         found.open = true;
                     }
                     else // 估计这里不会发生
                     {
-                        DataManager.instance.CurrentLevelData.doors.Add(new(){
+                        DataManager.Ins.CurrentLevelData.doors.Add(new(){
                             id = id,
                             open = true,
                         });
                     }
-                    DataManager.instance.SaveCurrentSlot();
+                    DataManager.Ins.SaveCurrentSlot();
                 }
             }
             else

@@ -67,7 +67,7 @@ public class SelectGroup
         if (selected >= 0 && selected < itemActions.Count)
         {
             itemActions[selected].item.selected = true;
-            SoundManager.instance.PlayUISelection();
+            SoundManager.Ins.PlayUISelection();
         }
     }
 
@@ -160,7 +160,7 @@ public class SelectGroup
             if (selected >= 0 && selected < itemActions.Count)
             {
                 itemActions[selected].item.selected = true;
-                SoundManager.instance.PlayUISelection();
+                SoundManager.Ins.PlayUISelection();
             }
         }
     }
@@ -212,7 +212,7 @@ public class SelectGroup
             if (itemActions[selected].action != null)
             {
                 itemActions[selected].action.Invoke();
-                SoundManager.instance.PlayUIConfirm();
+                SoundManager.Ins.PlayUIConfirm();
             }
         }
     }

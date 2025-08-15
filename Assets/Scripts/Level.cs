@@ -14,19 +14,19 @@ public class Level : MonoBehaviour
 
     void Start()
     {
-        DataManager.instance.CurrentLevelData.open = true;
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.CurrentLevelData.open = true;
+        DataManager.Ins.SaveCurrentSlot();
         var spawners = GetComponentsInChildren<Spawner>(false);
         foreach (var spawner in spawners)
         {
             if (spawner is not BossSpawner)
                 spawner.Spawn();
         }
-        foreach (var item in DataManager.instance.saveSlot.dynamicPickupItems)
+        foreach (var item in DataManager.Ins.saveSlot.dynamicPickupItems)
         {
             if (item.levelId == id)
             {
-                PickupItem.DynamicGeneratePickupItem(item, PreloadResource.instance.pickupItemPrefab, dynamicGeneratedPickupsRoot);
+                PickupItem.DynamicGeneratePickupItem(item, PreloadResource.Ins.pickupItemPrefab, dynamicGeneratedPickupsRoot);
             }
         }
     }
@@ -40,7 +40,7 @@ public class Level : MonoBehaviour
                 position = position,
                 data = item,
             },
-            prefab: PreloadResource.instance.pickupItemPrefab,
+            prefab: PreloadResource.Ins.pickupItemPrefab,
             parent: dynamicGeneratedPickupsRoot,
             velocity: velocity
         );

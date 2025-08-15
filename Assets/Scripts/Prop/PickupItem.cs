@@ -19,14 +19,14 @@ public class PickupItem : Interactive
         
         if (!dynamicGenerated)// non dynamic generated, 若已经 interacted 则消耗对象
         {
-            var found = DataManager.instance.CurrentLevelData.pickupItems.Find(x => x.id == id);
+            var found = DataManager.Ins.CurrentLevelData.pickupItems.Find(x => x.id == id);
             if (found == null)
             {
-                DataManager.instance.CurrentLevelData.pickupItems.Add(new() {
+                DataManager.Ins.CurrentLevelData.pickupItems.Add(new() {
                     id = id,
                     picked = false,
                 });
-                DataManager.instance.SaveCurrentSlot();
+                DataManager.Ins.SaveCurrentSlot();
             }
             else
             {
@@ -47,11 +47,11 @@ public class PickupItem : Interactive
                 HintShown = false;
                 hint.gameObject.SetActive(false);
                 // Show Pick Message
-                UIManager.instance.pickupHud.AddItem(new InventoryItem() {
+                UIManager.Ins.pickupHud.AddItem(new InventoryItem() {
                     id = item.id,
                     quantity = item.quantity,
                 });
-                WorldManager.instance.InventoryAddItem(new InventoryItem() {
+                WorldManager.Ins.InventoryAddItem(new InventoryItem() {
                     id = item.id,
                     quantity = item.quantity,
                 });
@@ -112,14 +112,14 @@ public class PickupItem : Interactive
     {
         if (!dynamicGenerated)
         {
-            var found = DataManager.instance.CurrentLevelData.pickupItems.Find(x => x.id == id);
+            var found = DataManager.Ins.CurrentLevelData.pickupItems.Find(x => x.id == id);
             if (found != null)
             {
                 found.picked = true;
             }
             else // 这个条件预计不会达到
             {
-                DataManager.instance.CurrentLevelData.pickupItems.Add(new() {
+                DataManager.Ins.CurrentLevelData.pickupItems.Add(new() {
                     id = id,
                     picked = false,
                 });
@@ -127,13 +127,13 @@ public class PickupItem : Interactive
         }
         else
         {
-            var found = DataManager.instance.saveSlot.dynamicPickupItems.Find(x => x.instanceId == instanceId);
+            var found = DataManager.Ins.saveSlot.dynamicPickupItems.Find(x => x.instanceId == instanceId);
             if (found != null)
             {
-                DataManager.instance.saveSlot.dynamicPickupItems.Remove(found);
+                DataManager.Ins.saveSlot.dynamicPickupItems.Remove(found);
             }
         }
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.SaveCurrentSlot();
     }
 
     // 当新动态生成的物体被创建时，或是在 Level Destory 时，或是游戏关闭时调用
@@ -141,7 +141,7 @@ public class PickupItem : Interactive
     {
         if (!dynamicGenerated)
             return;
-        var found = DataManager.instance.saveSlot.dynamicPickupItems.Find(x => x.instanceId == instanceId);
+        var found = DataManager.Ins.saveSlot.dynamicPickupItems.Find(x => x.instanceId == instanceId);
         if (found != null)
         {
             found.position = transform.position;
@@ -152,8 +152,8 @@ public class PickupItem : Interactive
         }
         else
         {
-            DataManager.instance.saveSlot.dynamicPickupItems.Add(new DynamicPickupItemSaveData() {
-                levelId = WorldManager.instance.currentLevel.id,
+            DataManager.Ins.saveSlot.dynamicPickupItems.Add(new DynamicPickupItemSaveData() {
+                levelId = WorldManager.Ins.currentLevel.id,
                 instanceId = instanceId,
                 position = transform.position,
                 data = new InventoryItem() {
@@ -162,7 +162,7 @@ public class PickupItem : Interactive
                 }
             });
         }
-        DataManager.instance.SaveCurrentSlot();
+        DataManager.Ins.SaveCurrentSlot();
     }
 
     // 用于在加载关卡式生成或是在游戏内生成

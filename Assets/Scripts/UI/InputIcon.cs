@@ -26,6 +26,6 @@ public class InputIcon : MonoBehaviour
 
     void Update()
     {
-        iconImage.sprite = GameInputManager.instance.GetInputIcon(inputAction);
+        iconImage.sprite = GameInputManager.Ins.GetInputIcon(inputAction);
     }
 }

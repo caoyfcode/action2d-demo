@@ -34,10 +34,10 @@ public class BossSpawner : Spawner
     {
         if (collision.CompareTag("Player") && !spawned)
         {
-            var found = DataManager.instance.GetBossData(entityId);
+            var found = DataManager.Ins.GetBossData(entityId);
             if (found == null)
             {
-                DataManager.instance.SaveBossData(entityId, false);
+                DataManager.Ins.SaveBossData(entityId, false);
             }
             else
             {
@@ -47,13 +47,13 @@ public class BossSpawner : Spawner
             //spawn boss
             Spawn();
             var entity = spawnedObject.GetComponent<Entity>();
-            entity.onDeath.AddListener(() => DataManager.instance.SaveBossData(entityId, true)); // 当死亡时保存数据
+            entity.onDeath.AddListener(() => DataManager.Ins.SaveBossData(entityId, true)); // 当死亡时保存数据
             // TODO 按照具体 boss id 获取组件传递参数
             // WorldManager.instance.bossSystem.StartBossFight(
             //     entity,
             //     room
             // );
-            EventManager.Instance.TriggerEvent(new EvtStartBossFight()
+            EventManager.Ins.TriggerEvent(new EvtStartBossFight()
             {
                 boss = entity,
                 bossRoom = room,

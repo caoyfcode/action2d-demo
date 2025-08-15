@@ -81,7 +81,7 @@ public class MonoEntity : MonoBehaviour
         id = -1;
         started = false;
         RefreshEntityComponents();
-        EntityManager.Instance.RegisterEntity(this);
+        EntityManager.Ins.RegisterEntity(this);
         foreach (var comp in phaseComponents[PhaseFlag.OnEntityAwake])
         {
             comp.OnEntityAwake();

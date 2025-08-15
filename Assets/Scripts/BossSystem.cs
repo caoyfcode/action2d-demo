@@ -8,8 +8,8 @@ public class BossSystem : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.Instance.Register<EvtStartBossFight>(StartBossFight);
-        EventManager.Instance.Register<EvtStopBossFight>(StopBossFight);
+        EventManager.Ins.Register<EvtStartBossFight>(StartBossFight);
+        EventManager.Ins.Register<EvtStopBossFight>(StopBossFight);
     }
 
     void StartBossFight(EvtStartBossFight evt)
@@ -46,7 +46,7 @@ public class BossSystem : MonoBehaviour
         }
         if (bossFightStarted && boss == null)
         {
-            EventManager.Instance.TriggerEvent(new EvtStopBossFight());
+            EventManager.Ins.TriggerEvent(new EvtStopBossFight());
         }
     }
 }
