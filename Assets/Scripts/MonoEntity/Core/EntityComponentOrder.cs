@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System;
 
-public partial class EntityComponentOrder
+public static partial class EntityComponentOrder
 {
+    public static int TypeCount => componentTypes.Count;
     private static Dictionary<Type, int> componentTypeIndexDic = null;
 
     private static void CalculateOrders()

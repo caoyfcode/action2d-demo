@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 // 其实如果不是为了方便与其它插件关联，完全没必要继承 Mono, 只要有 SubClass 即可
-public class EntityUpdateBase : MonoBehaviour
+public abstract class EntityUpdateBase : MonoBehaviour
 {
     public virtual void OnEntityAwake() {}
     public virtual void OnEntityEnable() {}
@@ -56,6 +56,7 @@ public class EntityUpdateBase : MonoBehaviour
         Action selfOnEntityLateUpdate = OnEntityLateUpdate;
         Action selfPostEntityLateUpdate = PostEntityLateUpdate;
         Action selfOnEntityDisable = OnEntityDisable;
+        Action selfPreEntityDestroy = PreEntityDestroy;
         Action selfOnEntityDestroy = OnEntityDestroy;
         
         var phaseFlag = PhaseFlag.None;
@@ -111,6 +112,11 @@ public class EntityUpdateBase : MonoBehaviour
         if (selfOnEntityDisable.Method.DeclaringType != typeof(EntityUpdateBase))
         {
             phaseFlag |= PhaseFlag.OnEntityDisable;
+        }
+
+        if (selfPreEntityDestroy.Method.DeclaringType != typeof(EntityUpdateBase))
+        {
+            phaseFlag |= PhaseFlag.PreEntityDestroy;
         }
         if (selfOnEntityDestroy.Method.DeclaringType != typeof(EntityUpdateBase))
         {
