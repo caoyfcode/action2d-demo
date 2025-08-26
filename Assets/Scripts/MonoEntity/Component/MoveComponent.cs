@@ -12,7 +12,7 @@ public class MoveComponent : EntityComponent
     public Vector2 velocityMax;
     
     [Header("Base Movement")]
-    public MoveType baseMove;
+    public MoveType baseMoveType;
     public Vector2 setVelocity;
     public float setDirection;
     public Vector2 setAccelerate;
@@ -22,20 +22,21 @@ public class MoveComponent : EntityComponent
 
     private float cachedDirection = 1;
     public float CurrentDirection => cachedDirection;
+    public Vector2 FinalVelocity => baseVelocity;
     
     // TODO 添加 SurroundingsDetectComponent, 其中可以选择性检测哪里, 每一帧检测结果
     
     public override void OnEntityAwake()
     {
         rb = GetComponent<Rigidbody2D>();
-        cachedDirection = Mathf.Abs(transform.rotation.eulerAngles.y) <= 90 ? 1 : -1;
+        cachedDirection = transform.right.x > 0 ? 1 : -1;
     }
 
     public override void OnEntityUpdate()
     {
         float timeScale = 1f;
         float scaledDeltaTime = timeScale * Time.deltaTime;
-        switch (baseMove.horizontalMoveType)
+        switch (baseMoveType.horizontalMoveType)
         {
             case HorizontalMoveType.None:
                 baseVelocity.x = 0f;
@@ -48,7 +49,7 @@ public class MoveComponent : EntityComponent
                 break;
         }
 
-        switch (baseMove.verticalMoveType)
+        switch (baseMoveType.verticalMoveType)
         {
             case VerticalMoveType.None:
                 baseVelocity.y = 0f;
@@ -65,7 +66,7 @@ public class MoveComponent : EntityComponent
         }
 
         var finalDirection = cachedDirection;
-        switch (baseMove.directionType)
+        switch (baseMoveType.directionType)
         {
             case DirectionType.Keep:
                 break;

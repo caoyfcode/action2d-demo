@@ -13,7 +13,7 @@ public class MonoEntity : MonoBehaviour
     internal Dictionary<PhaseFlag, List<EntityComponent>> phaseComponents = new();
     public List<EntityComponent> Components => components;
     public T GetEntityComponent<T>() where T : EntityComponent => componentsDic.ContainsKey(typeof(T)) ? (T)componentsDic[typeof(T)] : null;
-    public bool HasComponent<T>() where T : EntityComponent => componentsDic.ContainsKey(typeof(T));
+    public bool HasEntityComponent<T>() where T : EntityComponent => componentsDic.ContainsKey(typeof(T));
     #endregion
     
     public int id = -1;
