@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EntityManager : SingletonBase<EntityManager>
@@ -72,6 +73,7 @@ public class EntityManager : SingletonBase<EntityManager>
 		}
     }
 
+    #region Tick
     // TODO 这个 update 何时调用?
     public void UpdateAll()
     {
@@ -119,46 +121,6 @@ public class EntityManager : SingletonBase<EntityManager>
 			    }
 		    }
 	    }
-	    
-	    // // update every entity
-	    // // TODO 下面只分了阶段, 没有将不同实体的组件顺序分开，未来可以考虑
-	    // // TODO 或者未来不考虑分开，只用阶段作为不同entity的tick排序, 用组件顺序作为entity内部tick顺序
-	    // foreach (var entity in allEntity)
-	    // {
-		   //  if (!entity.enabled || !entity.Started)
-		   //  {
-			  //   continue;
-		   //  }
-		   //  foreach (var comp in entity.phaseComponents[PhaseFlag.PreEntityUpdate])
-		   //  {
-			  //   // 不关心 comp 本身的 enabled
-			  //   comp.PreEntityUpdate();
-		   //  }
-	    // }
-	    // foreach (var entity in allEntity)
-	    // {
-		   //  if (!entity.enabled || !entity.Started)
-		   //  {
-			  //   continue;
-		   //  }
-		   //  foreach (var comp in entity.phaseComponents[PhaseFlag.OnEntityUpdate])
-		   //  {
-			  //   // 不关心 comp 本身的 enabled
-			  //   comp.OnEntityUpdate();
-		   //  }
-	    // }
-	    // foreach (var entity in allEntity)
-	    // {
-		   //  if (!entity.enabled || !entity.Started)
-		   //  {
-			  //   continue;
-		   //  }
-		   //  foreach (var comp in entity.phaseComponents[PhaseFlag.PostEntityUpdate])
-		   //  {
-			  //   // 不关心 comp 本身的 enabled
-			  //   comp.PostEntityUpdate();
-		   //  }
-	    // }
     }
 
     public void FixedUpdateAll()
@@ -256,27 +218,38 @@ public class EntityManager : SingletonBase<EntityManager>
 		    }
 	    }
     }
+    #endregion
+    
+    // 不一定有用
+	#region Singleton
+    public T GetSingletonComponent<T>() where T : EntityComponent
+    {
+	    int order = EntityComponentOrder.GetOrder(typeof(T));
+	    int length = allComponents[order].Count;
+	    if (length == 0)
+	    {
+		    Debug.LogError($"EntityManager: No singleton component found for type {typeof(T).Name}");
+		    return null;
+	    }
+	    else if (length > 1)
+	    {
+		    Debug.LogWarning($"EntityManager: Multiple singleton components found for type {typeof(T).Name}");
+	    }
 
-
-    // 下面的实现是错的, 因为 T 如果是 EntityComponent 子类, 就已经不可能是 MonoSingletonBase<T> 子类了
-    // public T GetSingletonComponent<T>() where T : MonoSingletonBase<T>
-    // {
-	   //  var inst = MonoSingletonBase<T>.instance;
-	   //  if (inst == null)
-	   //  {
-		  //   return null;
-	   //  }
-	   //  return inst;
-    // }
-    //
-    // public MonoEntity GetSingletonEntity<T>() where T : MonoSingletonBase<T>
-    // {
-	   //  var inst = GetSingletonComponent<T>();
-	   //  if (inst == null)
-	   //  {
-		  //   return null;
-	   //  }
-    //
-	   //  return inst.GetComponent<MonoEntity>();
-    // }
+	    return (T)allComponents[order].ElementAt(0);
+    }
+    
+    public MonoEntity GetSingletonEntity<T>() where T : EntityComponent
+    {
+	    var comp = GetSingletonComponent<T>();
+	    if (comp == null)
+	    {
+		    return null;
+	    }
+	    else
+	    {
+		    return comp.entity;
+	    }
+    }
+    #endregion
 }

@@ -153,9 +153,19 @@ public enum DirectionType
 [System.Serializable]
 public sealed class MoveType
 {
+    public static readonly MoveType None = new MoveType(HorizontalMoveType.None,  VerticalMoveType.None, DirectionType.Keep);
+    public static readonly MoveType Horizontal = new MoveType(HorizontalMoveType.Speed, VerticalMoveType.None, DirectionType.SameAsVelocity);
+    
     public HorizontalMoveType horizontalMoveType;
     public VerticalMoveType verticalMoveType;
     public DirectionType directionType;
+
+    public MoveType(HorizontalMoveType horizontalMoveType=HorizontalMoveType.None, VerticalMoveType verticalMoveType=VerticalMoveType.None, DirectionType directionType=DirectionType.Keep)
+    {
+        this.horizontalMoveType = horizontalMoveType;
+        this.verticalMoveType = verticalMoveType;
+        this.directionType = directionType;
+    }
 }
 
 /*

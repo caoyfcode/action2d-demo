@@ -183,12 +183,12 @@ public class MonoEntity : MonoBehaviour
     }
 
 
-    protected void OnDestroy()
-    {
-        foreach (var comp in phaseComponents[PhaseFlag.OnEntityDestroy])
-        {
-            comp.OnEntityDestroy();
-        }
-    }
+    // protected void OnDestroy()
+    // {
+    //     foreach (var comp in phaseComponents[PhaseFlag.OnEntityDestroy])
+    //     {
+    //         comp.OnEntityDestroy();
+    //     }
+    // }
    
 }

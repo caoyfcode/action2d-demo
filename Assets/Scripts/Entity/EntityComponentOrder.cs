@@ -8,6 +8,7 @@ public static partial class EntityComponentOrder
         typeof(AnimatorComponent),
         typeof(DetectSurroundComponent),
         typeof(TestControllerComponent),
+        typeof(GameTaskComponent),
         typeof(MoveComponent),
     };
 }
